@@ -26,10 +26,10 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/7mlabs/sdk-astro.git",
+    "url": "git+https://github.com/7mLabs/sdk-astro.git",
     "directory": "bindings/node"
   },
   "bugs": {
-    "url": "https://github.com/7mlabs/sdk-astro/issues"
+    "url": "https://github.com/7mLabs/sdk-astro/issues"
   }
 }

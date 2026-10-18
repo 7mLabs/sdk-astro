@@ -24,7 +24,7 @@ jobs:
 
   publish:
     if: >-
-      github.repository == '7mlabs/sdk-astro' &&
+      github.repository == '7mLabs/sdk-astro' &&
       (startsWith(github.ref, 'refs/tags/v') || inputs.publish == true)
     needs: candidates
     runs-on: ubuntu-24.04
@@ -77,9 +77,13 @@ jobs:
           else
             python scripts/check-npm-release.py --manifest artifacts/npm-release/manifest.json --commit "$GITHUB_SHA" --reports artifacts/npm-reports
           fi
+      - name: Require GitHub OIDC request permissions
+        run: |
+          test -n "$ACTIONS_ID_TOKEN_REQUEST_URL"
+          test -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN"
       - name: Publish the verified release with npm OIDC
         run: |
           RELEASE_TAG=$(python -c 'import json; from pathlib import Path; print(json.loads(Path("artifacts/npm-release/manifest.json").read_text())["tag"])')
-          node artifacts/npm-cli/node_modules/npm/bin/npm-cli.js publish artifacts/npm-release/*.tgz --access public --tag "$RELEASE_TAG" --registry=https://registry.npmjs.org/
+          node artifacts/npm-cli/node_modules/npm/bin/npm-cli.js publish artifacts/npm-release/*.tgz --access public --tag "$RELEASE_TAG" --registry=https://registry.npmjs.org/ --loglevel verbose
       - name: Verify registry received the exact tested tarball
         run: python scripts/check-npm-registry.py --manifest artifacts/npm-release/manifest.json
