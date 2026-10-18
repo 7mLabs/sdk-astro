@@ -21,9 +21,9 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://7mlabs.com/astro/"
-Repository = "https://github.com/7mlabs/sdk-astro"
+Repository = "https://github.com/7mLabs/sdk-astro"
 Documentation = "https://sevenmlabs-packages.velikho.chatgpt.site/docs/astro/"
-Issues = "https://github.com/7mlabs/sdk-astro/issues"
+Issues = "https://github.com/7mLabs/sdk-astro/issues"
 
 [tool.setuptools.package-data]
 sevenmlabs_astrology = ["native/*/*", "third-party/*", "source/*"]

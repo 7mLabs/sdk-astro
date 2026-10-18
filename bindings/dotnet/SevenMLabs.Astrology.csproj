@@ -9,7 +9,7 @@
     <Version>1.0.0</Version>
     <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/7mlabs/sdk-astro</RepositoryUrl>
+    <RepositoryUrl>https://github.com/7mLabs/sdk-astro</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://7mlabs.com/astro/</PackageProjectUrl>
     <Description>7mlabs Astro SDK: offline astrology calculations, IANA birth-time conversion and modular SVG charts.</Description>

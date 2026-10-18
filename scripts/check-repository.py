@@ -84,7 +84,7 @@ def check_source():
         example = load_json(filename)
         require(example["version"] == version and example["peerDependencies"][node["name"]] == version,
                 f"Integration example package/core versions differ: {filename}")
-    repository = "https://github.com/7mlabs/sdk-astro"
+    repository = "https://github.com/7mLabs/sdk-astro"
     node_repository = node.get("repository", {}).get("url", "").removeprefix("git+").removesuffix(".git")
     require(node_repository == repository, "npm repository metadata differs from destination")
     require(python.get("urls", {}).get("Repository") == repository,
