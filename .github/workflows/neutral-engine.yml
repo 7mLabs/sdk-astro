@@ -90,7 +90,7 @@ jobs:
           from pathlib import Path
           manifest = json.loads(Path('artifacts/packages/manifest.json').read_text())
           provenance = {
-              'repository': os.environ['GITHUB_REPOSITORY'],
+              'repository': os.environ['GITHUB_REPOSITORY'].lower(),
               'commitSha': os.environ['GITHUB_SHA'],
               'platform': os.environ['CANDIDATE_PLATFORM'],
               'arch': os.environ['CANDIDATE_ARCH'],
