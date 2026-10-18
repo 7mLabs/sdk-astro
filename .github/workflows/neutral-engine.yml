@@ -46,6 +46,10 @@ jobs:
         run: |
           rustup toolchain install 1.99.1 --profile minimal --component clippy --component rustfmt --no-self-update
           rustup default 1.99.1
+      - name: Fetch locked core and reference CLI dependencies
+        run: |
+          cargo fetch --manifest-path neutral-engine/Cargo.toml --locked
+          cargo fetch --manifest-path examples/rust/Cargo.toml --locked
       - name: Rust tests
         run: |
           cargo fmt --manifest-path neutral-engine/Cargo.toml --all -- --check
