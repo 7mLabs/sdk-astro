@@ -2,9 +2,9 @@
 
 # 7mlabs Astrology
 
-## Local candidate: time conversion and standalone SVG
+## SDK 1.0.0: time conversion and modular SVG
 
-Source candidate **1.0.0** adds optional offline IANA civil-time helpers and a separate native SVG chart renderer. UTC `calculate` remains compatible. This candidate is not yet published to registries. See [time/SVG API and runnable preview](docs/time-and-svg.md). Public stable packages do not gain these APIs until a verified release.
+**1.0.0 is published on npm and PyPI.** NuGet 1.0.0 has been submitted and is awaiting registry validation/indexing. This release adds optional offline IANA civil-time helpers, extended natal points and a separate modular SVG chart renderer. UTC `calculate` remains compatible. See [time/SVG API](docs/time-and-svg.md) and [release verification](docs/release-1.0.md).
 
 An offline astrology engine with a shared Rust core and native SDKs. Turn birth data into structured chart, relationship and forecast payloads directly inside your application.
 
@@ -48,7 +48,7 @@ console.log({
 // { sun: 'Capricorn', planets: 10, houses: 12 }
 ```
 
-Input time is **UTC**; convert local civil time before calling the SDK. Coordinates use degrees, with north/east positive. The response includes calculation metadata, warnings and errors alongside `data`. [View a complete request and response →](docs/natal.md)
+`calculate` accepts **UTC**. Convert in your backend or use the optional SDK `resolveBirthTime` / `calculateFromLocal` helpers. Coordinates use degrees, with north/east positive. The response includes calculation metadata, warnings and errors alongside `data`. [View a complete request and response →](docs/natal.md)
 
 TypeScript declarations are included. `calculate()` is synchronous and throws an error with `.code` and `.result` on calculation failure; `calculateJson()` returns a JSON string containing the envelope. Use a worker for long month/year scans in interactive applications.
 
@@ -100,9 +100,9 @@ const restored = expandContext(context);
 
 | Language | Distribution | Status |
 | --- | --- | --- |
-| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `0.10.1` (`latest`) |
-| Python | `sevenmlabs-astrology` | Local `0.10.0` wheels; PyPI release pending |
-| .NET | `SevenMLabs.Astrology` | Local `0.10.0` NuGet artifacts; public release pending |
+| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `1.0.0` (`latest`) |
+| Python | `sevenmlabs-astrology` | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
+| .NET | `SevenMLabs.Astrology` | `1.0.0` submitted; registry validation/indexing pending |
 | Rust / C | Core crates and C ABI | Source integration examples |
 
 The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requires **glibc 2.38+** and `libgcc_s.so.1`. Node.js 18/24 were tested on both targets; Node.js 22 or 24 is recommended for new applications. Windows, macOS Intel, Linux ARM64 and Alpine/musl binaries are not included. [Full platform requirements →](docs/node-release.md)
@@ -110,7 +110,7 @@ The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requi
 Update explicitly with `npm install @7mlabs/astrology@latest`. To pin this release:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@0.10.1
+npm install --save-exact @7mlabs/astrology@1.0.0
 ```
 
 Commit your application's lockfile and use `npm ci` for reproducible installs. [Other language installation guides →](docs/packages.md)
@@ -131,9 +131,9 @@ Most detailed guides are currently written in Vietnamese; API identifiers and JS
 
 ## Calculation scope and validation
 
-Birth calculations currently support Gregorian UTC **1800–2399**, tropical geocentric positions, and **Placidus** or **Whole Sign** houses. Swiss Ephemeris uses the bundled Moshier model. UTC callers retain control; optional offline IANA/offset helpers and standalone basic/advanced/professional SVG are available in the local candidate. Opt-in natal Chiron, mean/true nodes and lunar apogees include explicit definitions and embedded data provenance. Sidereal/topocentric charts, Davison, progressions and return charts remain future work. See [time and SVG services](docs/time-and-svg.md). [Calculation scope →](docs/natal.md)
+Birth calculations currently support Gregorian UTC **1800–2399**, tropical geocentric positions, and **Placidus** or **Whole Sign** houses. Swiss Ephemeris uses the bundled Moshier model. UTC callers retain control; optional offline IANA/offset helpers and standalone basic/advanced/professional SVG are available in 1.0.0. Opt-in natal Chiron, mean/true nodes and lunar apogees include explicit definitions and embedded data provenance. Sidereal/topocentric charts, Davison, progressions and return charts remain future work. See [time and SVG services](docs/time-and-svg.md). [Calculation scope →](docs/natal.md)
 
-The stable **0.10.0** tarball passed **339 conformance cases** on each of four macOS ARM64/Linux x64 × Node.js 18/24 combinations, along with query, compression and TypeScript checks. All seven build/validation jobs passed, and npm OIDC publication succeeded. The workflow’s post-publish registry check timed out during propagation; subsequent registry integrity checks and a fresh install on macOS ARM64 verified `0.10.0` on `latest`. [Release run](https://github.com/7mlabs/sdk-astro/actions/runs/37098509933) · [Validation details](docs/testing.md)
+The **1.0.0** release passed 339 cross-binding conformance cases on both native build targets, plus Rust, concurrency, time/SVG, schema, compression and TypeScript checks. Final npm archives passed Node 18/24 on Mac/Linux; final Python wheels passed Python 3.10/3.13 on Mac; the final .NET archive passed on Mac/Linux. npm/PyPI registry bytes match their verified artifacts. NuGet registry validation is pending. [Release run](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132) · [Release evidence](docs/release-1.0.md).
 
 For source development, start with the [build instructions](docs/github-setup.md). Suggestions and reproducible bug reports are welcome in [GitHub Issues](https://github.com/7mlabs/sdk-astro/issues).
 

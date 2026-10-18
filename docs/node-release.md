@@ -1,5 +1,16 @@
 # Phát hành package Node.js
 
+## Bản hiện tại: 1.0.0
+
+npm `latest` là **1.0.0**, phát hành bằng OIDC và xác minh registry trong
+[run 39097183132](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132).
+Tarball SHA256 `02d191f639316fda0008f92bdfb93c557896b4769e52e3bd79fb3a1f70756109`.
+Đủ bốn final consumers Mac ARM64/Linux x64 × Node 18/24 đã qua.
+Các nền tảng và giới hạn vẫn như [release contract 1.0](release-1.0.md).
+Trusted publisher dùng đúng tên phân biệt chữ hoa/thường `7mLabs/sdk-astro`,
+workflow `npm-release.yml`, environment `npm-release`.
+Các phiên bản và runs bên dưới được giữ lại làm lịch sử và ví dụ quy trình.
+
 Package [@7mlabs/astrology `0.10.0`](https://www.npmjs.com/package/@7mlabs/astrology) đã phát hành public trên npm ngày 2026-10-03, kênh ổn định `latest`. Source trong `bindings/node/package.json` vẫn đặt `private: true`; chỉ artifact đã qua kiểm tra release được chuyển sang metadata có thể publish. Python/.NET có version `0.10.0` nhưng chưa phát hành registry. UI renderer giữ version riêng `0.9.0-alpha.1` và chưa phát hành registry.
 
 ## Cài đặt và cập nhật

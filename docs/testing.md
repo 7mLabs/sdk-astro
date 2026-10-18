@@ -1,5 +1,20 @@
 # Kết quả cài đặt và kiểm thử trực tiếp
 
+## SDK 1.0.0 — 2026-10-18
+
+[Release run 39097183132](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132)
+đã hoàn tất thành công, source tag `v1.0.0`, commit
+`9b54f8dd85860feae8738278afabeefb613870a7`. Cả hai native candidates qua 339
+cross-binding cases, Rust/concurrency, reference points, time/SVG, schema,
+compression và TypeScript. Bốn final npm consumers (Mac/Linux × Node 18/24)
+và ba final managed consumers (Mac Python 3.10/3.13, Linux .NET) đều qua, với
+archive hashes và commit được đối chiếu. npm/PyPI public bytes đã khớp;
+NuGet đã upload và đang chờ registry validation/indexing.
+Xem [manifest scope và registry proof](release-1.0.md).
+
+Các phần bên dưới là bằng chứng lịch sử; trạng thái candidate cũ không mô tả
+bản 1.0.0 hiện tại.
+
 ## Time helpers và SVG: candidate 0.11.0-alpha.1, ngày 2026-10-17
 
 Bản này mới build/cài local trên **macOS ARM64**, chưa publish npm/PyPI/NuGet. Ba artifacts được cài offline trong fresh consumer `3f9d8865feb9`; Python mang version `0.11.0a1`. Những kết quả lịch sử bên dưới không thay thế bằng chứng của candidate này.

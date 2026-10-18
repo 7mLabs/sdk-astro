@@ -66,3 +66,24 @@ The candidate workflow has read-only repository permissions and never publishes.
 The existing npm trusted publisher remains restricted to npm-release.yml and its
 release environment. First PyPI/NuGet uploads use the authenticated owner account;
 future trusted publishers can be configured independently after ownership is proven.
+
+## Registry verification on 2026-10-18
+
+Source tag `v1.0.0` points to `9b54f8dd85860feae8738278afabeefb613870a7`.
+[Release run 39097183132](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132)
+completed successfully: both native candidates, final npm Node 18/24 checks on both
+platforms, final Python 3.10/3.13 Mac checks and final .NET checks on Mac/Linux.
+All seven final consumer reports match their exact archive hashes and source commit.
+
+- npm 1.0.0 is on `latest`; downloaded public bytes match SHA256
+  `02d191f639316fda0008f92bdfb93c557896b4769e52e3bd79fb3a1f70756109`.
+- PyPI 1.0.0 is public; its Mac ARM64 wheel matches SHA256
+  `9ca9d8ee070d71b6be7382c93f78c47318334a050135344f9845fcc8d4b2ef4f`.
+- NuGet 1.0.0 was successfully uploaded and is awaiting registry validation/indexing.
+  Submitted archive SHA256:
+  `5e5bd53ccadcb6312d27d4d0cabf1d52a6cc61e06aec170271a321f4c9e8e867`.
+
+The previous npm authentication failure was resolved after aligning the package
+repository URL and trusted publisher to the case-sensitive GitHub owner `7mLabs`.
+The new publish and exact registry verification both succeeded. The old 0.10.1
+attestation names the previous lowercase repository spelling.

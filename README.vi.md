@@ -2,9 +2,9 @@
 
 # 7mlabs Astrology
 
-## Candidate local: đổi giờ và xuất biểu đồ SVG
+## SDK 1.0.0: đổi giờ và biểu đồ SVG linh hoạt
 
-Source **1.0.0** có helper IANA offline và renderer SVG native tách riêng. `calculate` nhận UTC như cũ. Candidate này **chưa phát hành registry**. Xem [API và cách chạy preview](docs/time-and-svg.md); không cài npm stable cũ rồi kỳ vọng có API mới.
+**1.0.0 đã phát hành npm và PyPI.** NuGet 1.0.0 đã gửi, đang chờ registry xác thực/lập chỉ mục. Bản này có helper IANA offline, điểm mở rộng natal và renderer SVG tách riêng thành các phần linh hoạt. `calculate` nhận UTC như cũ. Xem [API time/SVG](docs/time-and-svg.md) và [bằng chứng phát hành](docs/release-1.0.md).
 
 Engine chiêm tinh chạy offline, dùng chung lõi Rust qua các SDK native. Nhận dữ liệu sinh để tính lá số, quan hệ và dự báo ngay trong ứng dụng của bạn.
 
@@ -48,7 +48,7 @@ console.log({
 // { sun: 'Capricorn', planets: 10, houses: 12 }
 ```
 
-Giờ đầu vào là **UTC**; ứng dụng cần đổi giờ địa phương trước khi gọi SDK. Tọa độ tính bằng độ, bắc/đông dương. Response gồm metadata tính toán, warnings và errors bên cạnh `data`. [Request và response đầy đủ →](docs/natal.md)
+`calculate` nhận **UTC**. Backend có thể tự đổi giờ hoặc dùng helper tùy chọn `resolveBirthTime` / `calculateFromLocal` của SDK. Tọa độ tính bằng độ, bắc/đông dương. Response gồm metadata tính toán, warnings và errors bên cạnh `data`. [Request và response đầy đủ →](docs/natal.md)
 
 Package có TypeScript declarations. `calculate()` chạy đồng bộ và throw lỗi có `.code`/`.result` khi tính toán thất bại; `calculateJson()` trả chuỗi JSON chứa envelope. Dùng worker cho các lượt quét tháng/năm dài trong ứng dụng tương tác.
 
@@ -100,9 +100,9 @@ const restored = expandContext(context);
 
 | Ngôn ngữ | Phân phối | Trạng thái |
 | --- | --- | --- |
-| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm ổn định: `0.10.0` (`latest`) |
-| Python | `sevenmlabs-astrology` | Wheel local `0.10.0`; chưa phát hành PyPI |
-| .NET | `SevenMLabs.Astrology` | Artifact NuGet local `0.10.0`; chưa phát hành public |
+| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm ổn định: `1.0.0` (`latest`) |
+| Python | `sevenmlabs-astrology` | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
+| .NET | `SevenMLabs.Astrology` | Đã gửi `1.0.0`; chờ xác thực/lập chỉ mục |
 | Rust / C | Core crates và C ABI | Có source mẫu tích hợp |
 
 Bản npm có binary cho **macOS ARM64** và **Linux x64**. Linux cần **glibc 2.38+** và `libgcc_s.so.1`. Đã kiểm thử Node.js 18/24 trên cả hai target; khuyến nghị Node.js 22 hoặc 24 cho ứng dụng mới. Chưa có binary Windows, macOS Intel, Linux ARM64 hoặc Alpine/musl. [Yêu cầu nền tảng đầy đủ →](docs/node-release.md)
@@ -110,7 +110,7 @@ Bản npm có binary cho **macOS ARM64** và **Linux x64**. Linux cần **glibc 
 Cập nhật tường minh bằng `npm install @7mlabs/astrology@latest`. Để giữ đúng bản hiện tại:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@0.10.1
+npm install --save-exact @7mlabs/astrology@1.0.0
 ```
 
 Commit lockfile của ứng dụng và dùng `npm ci` để cài lại đúng dependencies. [Hướng dẫn cài các ngôn ngữ khác →](docs/packages.md)
@@ -129,9 +129,9 @@ Commit lockfile của ứng dụng và dùng `npm ci` để cài lại đúng de
 
 ## Phạm vi tính toán và kiểm chứng
 
-Tính từ dữ liệu sinh hỗ trợ Gregorian UTC **1800–2399**, tropical geocentric và hệ nhà **Placidus** hoặc **Whole Sign**. Swiss Ephemeris dùng mô hình Moshier tích hợp. Caller phụ trách chuyển timezone; IANA timezone, sidereal/topocentric, Davison, progression và return charts thuộc lộ trình tiếp theo. [Phạm vi tính toán →](docs/natal.md)
+Tính từ dữ liệu sinh hỗ trợ Gregorian UTC **1800–2399**, tropical geocentric và hệ nhà **Placidus** hoặc **Whole Sign**. Swiss Ephemeris dùng mô hình Moshier tích hợp. Caller có thể truyền UTC hoặc dùng helper IANA/fixed offset offline tùy chọn. SVG có preset cơ bản/nâng cao/chuyên sâu, các phần độc lập và JSON model. Điểm mở rộng natal được bật rõ ràng. Sidereal/topocentric, Davison, progression và return charts vẫn thuộc lộ trình tiếp theo. [Phạm vi tính toán →](docs/natal.md)
 
-Tarball ổn định **0.10.0** qua **339 conformance cases** trên từng tổ hợp trong bốn tổ hợp macOS ARM64/Linux x64 × Node.js 18/24, cùng query, compression và TypeScript checks. Cả bảy jobs build/kiểm chứng qua và npm publish bằng OIDC thành công. Bước kiểm tra registry sau publish hết thời gian trong lúc metadata lan truyền; kiểm tra integrity và cài mới trên macOS ARM64 sau đó đã xác minh `0.10.0` trên `latest`. [Release run](https://github.com/7mlabs/sdk-astro/actions/runs/37098509933) · [Chi tiết kiểm thử](docs/testing.md)
+Bản **1.0.0** qua 339 ca đối chiếu giữa các binding trên cả hai target, cùng Rust, gọi lặp/đồng thời, time/SVG, schema, compression và TypeScript. Gói npm cuối qua Node 18/24 trên Mac/Linux; wheel Python cuối qua Python 3.10/3.13 trên Mac; gói .NET cuối qua Mac/Linux. Bytes public npm/PyPI khớp artifacts đã kiểm thử; NuGet đang chờ registry xác thực. [Release run](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132) · [Bằng chứng release](docs/release-1.0.md).
 
 Để phát triển từ source, bắt đầu với [hướng dẫn build](docs/github-setup.md). Góp ý và báo lỗi kèm cách tái hiện tại [GitHub Issues](https://github.com/7mlabs/sdk-astro/issues).
 

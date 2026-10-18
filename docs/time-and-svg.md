@@ -1,11 +1,11 @@
 # Civil time và SVG chart — 1.0.0
 
-Đã triển khai trong source ngày 17/10/2026. Đây là **candidate local**, chưa phát hành npm/PyPI/NuGet. npm stable cũ chưa có các APIs này. Các lời gọi cũ giữ nguyên kết quả; `calculate` nay có điểm mở rộng natal khi bật rõ. Không thay đổi cách tính mặc định của `calculate` hoặc bắt caller UTC phải đổi thời gian lần nữa.
+Các API dưới đây có trong **1.0.0** đã phát hành npm/PyPI; NuGet 1.0.0 đang chờ registry xác thực/lập chỉ mục. [Trạng thái và bằng chứng release](release-1.0.md). Các lời gọi UTC cũ giữ nguyên hành vi; đổi giờ và điểm mở rộng là tùy chọn rõ ràng.
 
 ## Hai luồng tích hợp
 
 ```js
-// Node: require package candidate đã build/cài, không phải npm stable cũ.
+// Node: npm install @7mlabs/astrology@1.0.0
 const {
   calculate, resolveBirthTime, calculateFromLocal,
   renderChartSvg, renderChartSvgResult, getCapabilities
