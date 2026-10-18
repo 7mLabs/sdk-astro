@@ -1,0 +1,44 @@
+{
+  "releaseRun": "https://github.com/7mLabs/sdk-astro/actions/runs/39097183132",
+  "sourceTag": "v1.0.0",
+  "registryVerification": {
+    "version": "1.0.0",
+    "commitSha": "9b54f8dd85860feae8738278afabeefb613870a7",
+    "registries": {
+      "npm": {
+        "sha256": "02d191f639316fda0008f92bdfb93c557896b4769e52e3bd79fb3a1f70756109",
+        "version": "1.0.0"
+      },
+      "pypi": {
+        "sha256": "9ca9d8ee070d71b6be7382c93f78c47318334a050135344f9845fcc8d4b2ef4f",
+        "version": "1.0.0"
+      },
+      "nuget": {
+        "registryArchiveSha256": "8c1918b04e3683bf708e4387147ba199b42af2b6f4d208ffd5949cb5b02c2853",
+        "uploadedArchiveSha256": "5e5bd53ccadcb6312d27d4d0cabf1d52a6cc61e06aec170271a321f4c9e8e867",
+        "payloadEntriesVerified": true,
+        "version": "1.0.0"
+      }
+    },
+    "result": "passed"
+  },
+  "freshPublicInstallation": {
+    "result": "passed",
+    "version": "1.0.0",
+    "registryInstalls": [
+      "npm",
+      "pypi",
+      "nuget"
+    ],
+    "platform": "darwin-arm64",
+    "checks": [
+      "civil time",
+      "all 7 extended points",
+      "modular SVG",
+      "JSON model",
+      "house focus",
+      "exact calculation/model and SVG drawing; semantic JSON metadata",
+      "native checksum"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 # Cài package và chạy source mẫu
 
-npm `@7mlabs/astrology` và PyPI `sevenmlabs-astrology` đã public **1.0.0**. NuGet `SevenMLabs.Astrology` 1.0.0 đã upload, đang chờ xác thực/lập chỉ mục. Xem [phạm vi nền tảng và bằng chứng release](release-1.0.md). Artifacts local từ builder chỉ chứa binary của host; bản npm/NuGet cuối ghép Mac ARM64 và Linux x64.
+npm `@7mlabs/astrology`, PyPI `sevenmlabs-astrology` và NuGet `SevenMLabs.Astrology` đã public **1.0.0**; cả ba đã được tải về xác minh và cài thử mới. Xem [phạm vi nền tảng và bằng chứng release](release-1.0.md). Artifacts local từ builder chỉ chứa binary của host; bản npm/NuGet cuối ghép Mac ARM64 và Linux x64.
 
 ## Build từ repo
 
@@ -60,10 +60,10 @@ Wheel public 1.0.0 chỉ hỗ trợ macOS ARM64, Python 3.10+; Linux Python cầ
 
 ## .NET
 
-Sample `examples/dotnet/Example.csproj` có PackageReference đúng tên/version. Cài từ local feed:
+Thêm SDK vào ứng dụng .NET 10 bằng `dotnet add package SevenMLabs.Astrology --version 1.0.0`. Package gồm Mac ARM64 và Linux x64/glibc 2.38+; không có Windows native binary. Sample `examples/dotnet/Example.csproj` đã có PackageReference đúng tên/version:
 
 ```bash
-dotnet restore examples/dotnet/Example.csproj --source /absolute/path/to/artifacts/packages
+dotnet restore examples/dotnet/Example.csproj --source https://api.nuget.org/v3/index.json
 dotnet run --project examples/dotnet/Example.csproj --no-restore
 ```
 
@@ -117,7 +117,7 @@ Dedicated examples: `node forecast.cjs`, `python forecast.py`, `.NET Example --f
 
 ## Các registry còn lại
 
-PyPI 1.0.0 đã phát hành và xác minh checksum. NuGet 1.0.0 đang chờ registry xác thực/lập chỉ mục; dùng local feed trong lúc chờ. Rust crates.io chưa phát hành. SDK tính cục bộ, không cần credential hoặc tải ephemeris lúc import.
+PyPI/NuGet 1.0.0 đã phát hành, xác minh payload và cài mới thành công. Python public wheel chỉ dành cho Mac ARM64; .NET public package cần .NET 10 và host Mac ARM64/Linux x64. Rust crates.io chưa phát hành. SDK tính cục bộ, không cần credential hoặc tải ephemeris lúc import.
 
 ## Bộ nén payload riêng
 

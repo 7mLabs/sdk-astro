@@ -8,8 +8,7 @@
 cross-binding cases, Rust/concurrency, reference points, time/SVG, schema,
 compression và TypeScript. Bốn final npm consumers (Mac/Linux × Node 18/24)
 và ba final managed consumers (Mac Python 3.10/3.13, Linux .NET) đều qua, với
-archive hashes và commit được đối chiếu. npm/PyPI public bytes đã khớp;
-NuGet đã upload và đang chờ registry validation/indexing.
+archive hashes và commit được đối chiếu. Payload public npm/PyPI/NuGet đã khớp artifacts. Cài mới từ cả ba registry trên Mac ARM64 đã qua đổi giờ địa phương, 7 điểm mở rộng, SVG linh hoạt, JSON model, chọn nhà và native checksum. Calculation/model khớp hoàn toàn; phần vẽ SVG khớp, metadata JSON được so sánh theo giá trị vì `0` và `0.0` có thể khác cách viết giữa serializers.
 Xem [manifest scope và registry proof](release-1.0.md).
 
 Các phần bên dưới là bằng chứng lịch sử; trạng thái candidate cũ không mô tả

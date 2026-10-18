@@ -79,7 +79,11 @@ All seven final consumer reports match their exact archive hashes and source com
   `02d191f639316fda0008f92bdfb93c557896b4769e52e3bd79fb3a1f70756109`.
 - PyPI 1.0.0 is public; its Mac ARM64 wheel matches SHA256
   `9ca9d8ee070d71b6be7382c93f78c47318334a050135344f9845fcc8d4b2ef4f`.
-- NuGet 1.0.0 was successfully uploaded and is awaiting registry validation/indexing.
+- NuGet 1.0.0 is public and installable. All original package entries (other than
+  the content-types signature declaration) match the uploaded archive byte-for-byte;
+  both native RID binaries match. NuGet added its repository signature.
+  Signed registry archive SHA256:
+  `8c1918b04e3683bf708e4387147ba199b42af2b6f4d208ffd5949cb5b02c2853`.
   Submitted archive SHA256:
   `5e5bd53ccadcb6312d27d4d0cabf1d52a6cc61e06aec170271a321f4c9e8e867`.
 
@@ -87,3 +91,13 @@ The previous npm authentication failure was resolved after aligning the package
 repository URL and trusted publisher to the case-sensitive GitHub owner `7mLabs`.
 The new publish and exact registry verification both succeeded. The old 0.10.1
 attestation names the previous lowercase repository spelling.
+
+A fresh consumer on macOS ARM64 installed all three packages from the official
+registries. Civil time, all seven extended points, modular SVG, JSON models,
+house focus and the installed native checksum passed. Calculation and model JSON
+agree exactly across the three wrappers. SVG drawing agrees exactly; embedded
+source metadata is compared as JSON values because serializers may spell a number
+as `0` or `0.0`. This is not a change in coordinates or drawing geometry.
+Linux installation evidence is the final CI package test, not a separate registry
+smoke on Linux. Machine-readable public proof:
+[release-1.0-verification.json](release-1.0-verification.json).

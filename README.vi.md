@@ -4,7 +4,7 @@
 
 ## SDK 1.0.0: đổi giờ và biểu đồ SVG linh hoạt
 
-**1.0.0 đã phát hành npm và PyPI.** NuGet 1.0.0 đã gửi, đang chờ registry xác thực/lập chỉ mục. Bản này có helper IANA offline, điểm mở rộng natal và renderer SVG tách riêng thành các phần linh hoạt. `calculate` nhận UTC như cũ. Xem [API time/SVG](docs/time-and-svg.md) và [bằng chứng phát hành](docs/release-1.0.md).
+**1.0.0 đã phát hành npm, PyPI và NuGet.** Cả ba gói public đã được tải về, xác minh và cài thử mới. Bản này có helper IANA offline, điểm mở rộng natal và renderer SVG tách riêng thành các phần linh hoạt. `calculate` nhận UTC như cũ. Xem [API time/SVG](docs/time-and-svg.md) và [bằng chứng phát hành](docs/release-1.0.md).
 
 Engine chiêm tinh chạy offline, dùng chung lõi Rust qua các SDK native. Nhận dữ liệu sinh để tính lá số, quan hệ và dự báo ngay trong ứng dụng của bạn.
 
@@ -102,7 +102,7 @@ const restored = expandContext(context);
 | --- | --- | --- |
 | Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm ổn định: `1.0.0` (`latest`) |
 | Python | `sevenmlabs-astrology` | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
-| .NET | `SevenMLabs.Astrology` | Đã gửi `1.0.0`; chờ xác thực/lập chỉ mục |
+| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.0.0) | Public NuGet `1.0.0`; .NET 10, Mac ARM64/Linux x64 |
 | Rust / C | Core crates và C ABI | Có source mẫu tích hợp |
 
 Bản npm có binary cho **macOS ARM64** và **Linux x64**. Linux cần **glibc 2.38+** và `libgcc_s.so.1`. Đã kiểm thử Node.js 18/24 trên cả hai target; khuyến nghị Node.js 22 hoặc 24 cho ứng dụng mới. Chưa có binary Windows, macOS Intel, Linux ARM64 hoặc Alpine/musl. [Yêu cầu nền tảng đầy đủ →](docs/node-release.md)
@@ -131,7 +131,7 @@ Commit lockfile của ứng dụng và dùng `npm ci` để cài lại đúng de
 
 Tính từ dữ liệu sinh hỗ trợ Gregorian UTC **1800–2399**, tropical geocentric và hệ nhà **Placidus** hoặc **Whole Sign**. Swiss Ephemeris dùng mô hình Moshier tích hợp. Caller có thể truyền UTC hoặc dùng helper IANA/fixed offset offline tùy chọn. SVG có preset cơ bản/nâng cao/chuyên sâu, các phần độc lập và JSON model. Điểm mở rộng natal được bật rõ ràng. Sidereal/topocentric, Davison, progression và return charts vẫn thuộc lộ trình tiếp theo. [Phạm vi tính toán →](docs/natal.md)
 
-Bản **1.0.0** qua 339 ca đối chiếu giữa các binding trên cả hai target, cùng Rust, gọi lặp/đồng thời, time/SVG, schema, compression và TypeScript. Gói npm cuối qua Node 18/24 trên Mac/Linux; wheel Python cuối qua Python 3.10/3.13 trên Mac; gói .NET cuối qua Mac/Linux. Bytes public npm/PyPI khớp artifacts đã kiểm thử; NuGet đang chờ registry xác thực. [Release run](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132) · [Bằng chứng release](docs/release-1.0.md).
+Bản **1.0.0** qua 339 ca đối chiếu giữa các binding trên cả hai target, cùng Rust, gọi lặp/đồng thời, time/SVG, schema, compression và TypeScript. Gói npm cuối qua Node 18/24 trên Mac/Linux; wheel Python cuối qua Python 3.10/3.13 trên Mac; gói .NET cuối qua Mac/Linux. Payload của cả ba registry khớp artifacts đã kiểm thử; cài mới từ registry trên Mac ARM64 đã qua tính toán, đổi giờ, điểm mở rộng, SVG và JSON model ở cả Node/Python/.NET. [Release run](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132) · [Bằng chứng release](docs/release-1.0.md).
 
 Để phát triển từ source, bắt đầu với [hướng dẫn build](docs/github-setup.md). Góp ý và báo lỗi kèm cách tái hiện tại [GitHub Issues](https://github.com/7mlabs/sdk-astro/issues).
 

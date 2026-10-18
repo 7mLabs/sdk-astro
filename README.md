@@ -4,7 +4,7 @@
 
 ## SDK 1.0.0: time conversion and modular SVG
 
-**1.0.0 is published on npm and PyPI.** NuGet 1.0.0 has been submitted and is awaiting registry validation/indexing. This release adds optional offline IANA civil-time helpers, extended natal points and a separate modular SVG chart renderer. UTC `calculate` remains compatible. See [time/SVG API](docs/time-and-svg.md) and [release verification](docs/release-1.0.md).
+**1.0.0 is published on npm, PyPI and NuGet.** All three public packages have been downloaded, verified and freshly installed. This release adds optional offline IANA civil-time helpers, extended natal points and a separate modular SVG chart renderer. UTC `calculate` remains compatible. See [time/SVG API](docs/time-and-svg.md) and [release verification](docs/release-1.0.md).
 
 An offline astrology engine with a shared Rust core and native SDKs. Turn birth data into structured chart, relationship and forecast payloads directly inside your application.
 
@@ -102,7 +102,7 @@ const restored = expandContext(context);
 | --- | --- | --- |
 | Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `1.0.0` (`latest`) |
 | Python | `sevenmlabs-astrology` | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
-| .NET | `SevenMLabs.Astrology` | `1.0.0` submitted; registry validation/indexing pending |
+| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.0.0) | Public NuGet `1.0.0`; .NET 10, Mac ARM64/Linux x64 |
 | Rust / C | Core crates and C ABI | Source integration examples |
 
 The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requires **glibc 2.38+** and `libgcc_s.so.1`. Node.js 18/24 were tested on both targets; Node.js 22 or 24 is recommended for new applications. Windows, macOS Intel, Linux ARM64 and Alpine/musl binaries are not included. [Full platform requirements →](docs/node-release.md)
@@ -133,7 +133,7 @@ Most detailed guides are currently written in Vietnamese; API identifiers and JS
 
 Birth calculations currently support Gregorian UTC **1800–2399**, tropical geocentric positions, and **Placidus** or **Whole Sign** houses. Swiss Ephemeris uses the bundled Moshier model. UTC callers retain control; optional offline IANA/offset helpers and standalone basic/advanced/professional SVG are available in 1.0.0. Opt-in natal Chiron, mean/true nodes and lunar apogees include explicit definitions and embedded data provenance. Sidereal/topocentric charts, Davison, progressions and return charts remain future work. See [time and SVG services](docs/time-and-svg.md). [Calculation scope →](docs/natal.md)
 
-The **1.0.0** release passed 339 cross-binding conformance cases on both native build targets, plus Rust, concurrency, time/SVG, schema, compression and TypeScript checks. Final npm archives passed Node 18/24 on Mac/Linux; final Python wheels passed Python 3.10/3.13 on Mac; the final .NET archive passed on Mac/Linux. npm/PyPI registry bytes match their verified artifacts. NuGet registry validation is pending. [Release run](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132) · [Release evidence](docs/release-1.0.md).
+The **1.0.0** release passed 339 cross-binding conformance cases on both native build targets, plus Rust, concurrency, time/SVG, schema, compression and TypeScript checks. Final npm archives passed Node 18/24 on Mac/Linux; final Python wheels passed Python 3.10/3.13 on Mac; the final .NET archive passed on Mac/Linux. All three registry payloads match their verified artifacts; a fresh public installation on Mac ARM64 passed calculation, time, extended-point, SVG and JSON-model checks across Node, Python and .NET. [Release run](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132) · [Release evidence](docs/release-1.0.md).
 
 For source development, start with the [build instructions](docs/github-setup.md). Suggestions and reproducible bug reports are welcome in [GitHub Issues](https://github.com/7mlabs/sdk-astro/issues).
 

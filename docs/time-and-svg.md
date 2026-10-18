@@ -1,6 +1,6 @@
 # Civil time và SVG chart — 1.0.0
 
-Các API dưới đây có trong **1.0.0** đã phát hành npm/PyPI; NuGet 1.0.0 đang chờ registry xác thực/lập chỉ mục. [Trạng thái và bằng chứng release](release-1.0.md). Các lời gọi UTC cũ giữ nguyên hành vi; đổi giờ và điểm mở rộng là tùy chọn rõ ràng.
+Các API dưới đây có trong **1.0.0** đã phát hành và xác minh trên npm/PyPI/NuGet. [Trạng thái và bằng chứng release](release-1.0.md). Các lời gọi UTC cũ giữ nguyên hành vi; đổi giờ và điểm mở rộng là tùy chọn rõ ràng.
 
 ## Hai luồng tích hợp
 
