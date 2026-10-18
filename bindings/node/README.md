@@ -8,7 +8,7 @@ Offline natal, synastry, composite, forecasts and astronomical event data using 
 npm install @7mlabs/astrology
 ```
 
-This release uses version `0.10.1` and the stable `latest` channel. Update explicitly with the same command. Pin `@7mlabs/astrology@0.10.1` and commit your application's lockfile to reproduce a specific release; `npm ci` restores that lockfile. New applications should use Node.js 22 or 24. Minimum supported Node.js is 18.
+This release uses version `1.0.0` and the stable `latest` channel. Update explicitly with the same command. Pin `@7mlabs/astrology@1.0.0` and commit your application's lockfile to reproduce a specific release; `npm ci` restores that lockfile. New applications should use Node.js 22 or 24. Minimum supported Node.js is 18.
 
 The public tarball includes both `darwin-arm64` (Apple Silicon) and `linux-x64` (glibc **2.38+**, with `libgcc_s.so.1`) addons. macOS 15 and Ubuntu 24.04 are the verified build/test environments. The macOS addon targets macOS 11+, but your Node.js version can require a newer OS. Windows, macOS Intel, Linux ARM64 and Alpine/musl are not included. See [platform and release details](https://github.com/7mlabs/sdk-astro/blob/main/docs/node-release.md).
 
@@ -63,3 +63,47 @@ Methods: geometry.normalize/separation/midpoint, aspects.between/inspect, houses
 ## Payload context preparation
 
 Version 0.10 adds a separate shared-core compressor with compact/focused/budgeted modes, explicit omission/coverage metadata, and a reversible compact representation. Calculation APIs remain synchronous and unchanged. See `docs/payload-compression.md` in the repository for the cross-language API, budget semantics, and complete examples. Native binaries from earlier versions do not export this feature.
+
+## 1.0.0: civil time and SVG
+
+Existing UTC calculation stays unchanged. Optional local-time helpers and standalone native SVG rendering require the matching binary. `local`, `timeZone`/`zone` and `location` below are caller inputs; import the SDK as `sdk` (Node/Python).
+
+```js
+const resolved = sdk.resolveBirthTime({ local, timeZone });
+const payload = sdk.calculate({ operation: 'natal', utc: resolved.utc, location });
+const svg = sdk.renderChartSvg(payload, { detail: 'advanced' });
+```
+
+Use the composed `calculateFromLocal` / `calculate_from_local` / `Engine.CalculateFromLocal` to resolve and calculate in one call. IANA gaps are rejected; folds require an explicit earlier/later choice. SVG uses source coordinates, inline vector glyphs and outlined text. See [time and SVG contracts](../../docs/time-and-svg.md). This native renderer uses the SDK license; font/dependency notices retain their upstream terms.
+
+
+## Modular charts and extended points
+
+`calculateFromLocal` optionally converts birth time before using the same core.
+`additionalPoints: "standard"` selects Chiron, true north node and mean Lilith;
+`"all"` selects the seven supported definitions. They are separate from Sun–Pluto
+and are currently supported for `natal` / `natalDomains` only.
+
+`renderChartPart(payload, part, options)` returns one standalone SVG;
+`buildChartModel(payload, options)` returns JSON geometry/context without SVG.
+Parts are `wheel`, `positions`, `houses`, `aspectMatrix`, `aspects`, `houseFocus`.
+Use `sections` to compose views, `focus` to highlight/isolate source house or point
+relations, and `aspectColors` to customize groups/types. House-ruler focus uses
+source context from `natalDomains`; changing a view does not recalculate astronomy.
+
+```js
+const payload = sdk.calculateFromLocal({
+  operation: 'natalDomains',
+  local: { year: 1995, month: 6, day: 15, hour: 14, minute: 30 },
+  timeZone: 'Asia/Ho_Chi_Minh',
+  location: { latitude: 10.8231, longitude: 106.6297 },
+  domains: ['identity'], additionalPoints: 'standard'
+});
+const svg = sdk.renderChartSvg(payload, {
+  sections: ['wheel', 'houseFocus'], focus: { house: 7, mode: 'highlight' },
+  aspectColors: { harmonious: '#54CFAA', challenging: '#F57891' }
+});
+const model = sdk.buildChartModel(payload, { sections: ['wheel'] });
+```
+
+See [the 1.0 release contract](https://github.com/7mlabs/sdk-astro/blob/main/docs/release-1.0.md).

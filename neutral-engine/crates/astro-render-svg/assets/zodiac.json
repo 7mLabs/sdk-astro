@@ -1,0 +1,280 @@
+{
+  "id": "7mlabs-zodiac",
+  "version": "0.5.0-draft",
+  "grid": 32,
+  "strokeWidth": 1.8,
+  "symbols": {
+    "aries": {
+      "label": "Bạch Dương",
+      "english": "Aries",
+      "signIndex": 0,
+      "unicode": "U+2648",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "path",
+          {
+            "d": "M16 26V14C16 7 12 5 9 7C5 9 7 15 10 15M16 14C16 7 20 5 23 7C27 9 25 15 22 15"
+          }
+        ]
+      ]
+    },
+    "taurus": {
+      "label": "Kim Ngưu",
+      "english": "Taurus",
+      "signIndex": 1,
+      "unicode": "U+2649",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "circle",
+          {
+            "cx": 16,
+            "cy": 20,
+            "r": 7
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M8 5C8 16 24 16 24 5"
+          }
+        ]
+      ]
+    },
+    "gemini": {
+      "label": "Song Tử",
+      "english": "Gemini",
+      "signIndex": 2,
+      "unicode": "U+264A",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "path",
+          {
+            "d": "M7 6Q16 10 25 6M7 26Q16 22 25 26M11 8V24M21 8V24"
+          }
+        ]
+      ]
+    },
+    "cancer": {
+      "label": "Cự Giải",
+      "english": "Cancer",
+      "signIndex": 3,
+      "unicode": "U+264B",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "circle",
+          {
+            "cx": 10,
+            "cy": 12,
+            "r": 4
+          }
+        ],
+        [
+          "circle",
+          {
+            "cx": 22,
+            "cy": 20,
+            "r": 4
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M6 12C7 4 21 3 27 9M26 20C25 28 11 29 5 23"
+          }
+        ]
+      ]
+    },
+    "leo": {
+      "label": "Sư Tử",
+      "english": "Leo",
+      "signIndex": 4,
+      "unicode": "U+264C",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "circle",
+          {
+            "cx": 9,
+            "cy": 21,
+            "r": 4.5
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M13 19C17 14 12 9 17 6C23 2 28 9 23 16L20 22C16 28 24 29 27 24"
+          }
+        ]
+      ]
+    },
+    "virgo": {
+      "label": "Xử Nữ",
+      "english": "Virgo",
+      "signIndex": 5,
+      "unicode": "U+264D",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "path",
+          {
+            "d": "M6 25V10C6 5 12 5 12 10V24M12 10C12 5 18 5 18 10V24M18 12C21 6 26 8 26 13C26 20 19 21 18 24C18 27 24 28 27 26"
+          }
+        ]
+      ]
+    },
+    "libra": {
+      "label": "Thiên Bình",
+      "english": "Libra",
+      "signIndex": 6,
+      "unicode": "U+264E",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "path",
+          {
+            "d": "M5 21H10A8 8 0 1 1 22 21H27M5 27H27"
+          }
+        ]
+      ]
+    },
+    "scorpio": {
+      "label": "Bọ Cạp",
+      "english": "Scorpio",
+      "signIndex": 7,
+      "unicode": "U+264F",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "path",
+          {
+            "d": "M5 25V10C5 5 11 5 11 10V24M11 10C11 5 17 5 17 10V21Q17 25 22 25H27M24 22L27 25L24 28"
+          }
+        ]
+      ]
+    },
+    "sagittarius": {
+      "label": "Nhân Mã",
+      "english": "Sagittarius",
+      "signIndex": 8,
+      "unicode": "U+2650",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "path",
+          {
+            "d": "M7 25L25 7M15 7H25V17M9 15L17 23"
+          }
+        ]
+      ]
+    },
+    "capricorn": {
+      "label": "Ma Kết",
+      "english": "Capricorn",
+      "signIndex": 9,
+      "unicode": "U+2651",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "path",
+          {
+            "d": "M5 10L9 6L14 25M10 14C15 2 22 5 19 16L17 23C15 28 25 29 27 22C29 15 20 16 19 22"
+          }
+        ]
+      ]
+    },
+    "aquarius": {
+      "label": "Bảo Bình",
+      "english": "Aquarius",
+      "signIndex": 10,
+      "unicode": "U+2652",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "path",
+          {
+            "d": "M4 13L9 9L14 13L19 9L24 13L28 9M4 23L9 19L14 23L19 19L24 23L28 19"
+          }
+        ]
+      ]
+    },
+    "pisces": {
+      "label": "Song Ngư",
+      "english": "Pisces",
+      "signIndex": 11,
+      "unicode": "U+2653",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "nodes": [
+        [
+          "path",
+          {
+            "d": "M8 5C17 11 17 21 8 27M24 5C15 11 15 21 24 27M6 16H26"
+          }
+        ]
+      ]
+    }
+  }
+}

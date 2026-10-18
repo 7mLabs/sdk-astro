@@ -6,6 +6,7 @@ static PROVIDER: Mutex<()> = Mutex::new(());
 const FLAGS: c_int = 4 | 256; // SEFLG_MOSEPH | SEFLG_SPEED
 
 extern "C" {
+    fn astro_enable_builtin_asteroids(value: c_int);
     fn swe_utc_to_jd(
         y: c_int,
         m: c_int,
@@ -88,6 +89,7 @@ fn message(buffer: &[c_char; 256]) -> String {
 fn reset_provider() {
     unsafe {
         swe_close();
+        astro_enable_builtin_asteroids(0);
         // The public Moshier delta-T call initializes the cold context without
         // selecting an external ephemeris or leaving any planetary cache.
         swe_deltat_ex(2451545., 4, std::ptr::null_mut());
@@ -325,6 +327,46 @@ impl Drop for EphemerisSession {
             swe_close();
         }
     }
+}
+
+/// Additional natal points. IDs are explicit definitions, not interchangeable aliases.
+/// Chiron uses the embedded Swiss asteroid series; lunar points use Moshier.
+pub fn additional_points(jd_ut1: f64, ids: &[(&str, i32)]) -> Result<Vec<[f64; 6]>, String> {
+    let _guard = PROVIDER.lock().map_err(|_| "Provider lock is poisoned")?;
+    reset_provider();
+    struct Cleanup;
+    impl Drop for Cleanup {
+        fn drop(&mut self) {
+            unsafe {
+                swe_close();
+                astro_enable_builtin_asteroids(0);
+            }
+        }
+    }
+    let _cleanup = Cleanup;
+    unsafe {
+        astro_enable_builtin_asteroids(1);
+    }
+    let mut result = Vec::new();
+    for (_, body) in ids {
+        if ![10, 11, 12, 13, 15].contains(body) {
+            return Err("Unsupported additional point".into());
+        }
+        let mut pos = [0.; 6];
+        let mut err = [0 as c_char; 256];
+        let flags =
+            unsafe { swe_calc_ut(jd_ut1, *body, FLAGS, pos.as_mut_ptr(), err.as_mut_ptr()) };
+        if flags < 0 {
+            return Err(message(&err));
+        }
+        if flags & 7 != 4 || pos.iter().any(|n| !n.is_finite()) {
+            return Err(format!(
+                "Additional point did not return finite Moshier-reference coordinates: {flags}"
+            ));
+        }
+        result.push(pos);
+    }
+    Ok(result)
 }
 
 #[cfg(test)]

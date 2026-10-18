@@ -1,5 +1,6 @@
 # Generated build and installation outputs
 artifacts/
+examples/svg-output/
 **/target/
 **/node_modules/
 **/__pycache__/
@@ -32,3 +33,4 @@ bindings/dotnet/native/
 # External ephemeris data is not part of the Moshier build
 *.bsp
 *.se1
+!neutral-engine/crates/astro-provider-swiss/data/seas_18.se1

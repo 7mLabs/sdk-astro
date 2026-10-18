@@ -1,5 +1,21 @@
 # Kết quả cài đặt và kiểm thử trực tiếp
 
+## Time helpers và SVG: candidate 0.11.0-alpha.1, ngày 2026-10-17
+
+Bản này mới build/cài local trên **macOS ARM64**, chưa publish npm/PyPI/NuGet. Ba artifacts được cài offline trong fresh consumer `3f9d8865feb9`; Python mang version `0.11.0a1`. Những kết quả lịch sử bên dưới không thay thế bằng chứng của candidate này.
+
+- Rust workspace **123 tests qua**; fmt và Clippy all-targets `-D warnings` qua. Time helper kiểm tra UTC rollover, giây lẻ, DST fold/gap, Lord Howe/Samoa, offset lịch sử và recurring DST tới 2399. Tzdb bundled **2026e**, không đọc timezone của máy. Raw integer literals không bị làm tròn trước validation.
+- Calculation: **339/339** toàn bộ decoded JSON giống nhau qua Node/Python/.NET/Rust/C; repeated/concurrent checks và bốn natal references tiếp tục qua. Đối chiếu riêng cùng 339 requests với npm **0.10.1** giữ nguyên toàn bộ decoded calculation JSON sau khi bỏ duy nhất top-level `engineVersion`.
+- New services: Node/Python/.NET/C cho toàn bộ JSON và SVG bytes giống nhau trên **9 time cases, 3 local calculation cases, 5 SVG cases**; TypeScript strict trên package đã cài qua. Node service suite còn kiểm tra **4 theme/detail variants và 6 chart adapters**, custom symbols, SVG safety, source coordinates, coverage và determinism. Ba request schemas compile bằng Ajv 8.20.0 strict; **43 structural/implementation checks** qua. Runtime vẫn chịu trách nhiệm Gregorian dates, IANA semantics và geometry.
+- Existing integrations: worker bridge **11 checks**, loopback HTTP **44 checks / 10 operations** qua. Compression **106 checks / 13 real fixture roundtrips** qua; Node/Python/.NET compression helpers và TypeScript contracts trên fresh packages qua.
+- Browser: Chrome desktop **1440×1000** và mobile **390×844** qua actual SVG decode, theme change, download, DST gap/fold reject/earlier/later, console và overflow checks. Browser plugin không có ở lượt đầu nên dùng Playwright theo frontend-testing-debugging; lượt cuối kiểm tra lại installed candidate bằng Codex in-app browser. SVG download là vector thật, không phải ảnh mẫu. Browser harness là công cụ local, chưa tích hợp Payload production.
+
+Bằng chứng local: `artifacts/test-results.json`, `artifacts/time-svg-tests.json`, `artifacts/time-svg-baseline-parity.json`, các compression reports và `artifacts/packages/manifest.json`. Chạy lại `scripts/build-packages.py`, `scripts/test-packages.py`, `scripts/check-time-svg-bindings.py --typescript <tsc.js>`; schema check dùng `AJV_2020_MODULE=<ajv/dist/2020.js> node tests/services/schemas.cjs`.
+
+Lượt tinh chỉnh trình bày SVG: ký hiệu lớn hơn, vùng cung có nền nhẹ, phân màu trục, nhãn độ/phút một lớp, chú giải góc và bảng placements có tiêu đề cột. Sáu unit tests của renderer và Clippy `-D warnings` qua; gói local đã rebuild, cài mới và kiểm tra lại 339 ca parity cùng bộ services. Preview IAB/CUA đã kiểm tra dark/light, basic/advanced, zoom/vừa khung tại 1440×1000 và 390×844; ảnh SVG decode được, không có console error/warning và không tràn ngang trang. Bắt sự kiện download trong IAB bị timeout ở lượt này, nên không ghi nhận tải file qua UI là đã được kiểm chứng lại; xuất bốn SVG trực tiếp từ gói SDK đã cài và parity SVG giữa binding đều qua. Chưa kiểm thử Safari/Firefox.
+
+Giới hạn: chưa kiểm chứng candidate trên Linux/Windows/iOS/Android hoặc browser WASM; chưa phát hành registry. Advanced SVG gồm wheel, houses/angles, aspects và bảng placements; chưa xuất mọi report/pattern/fact annotation. Helper IANA xử lý **birth time**; period windows của forecast vẫn dùng fixed offset. Xem [API và giới hạn hiện tại](time-and-svg.md).
+
 Tài liệu ghi riêng bằng chứng npm stable hiện tại và các đối chứng lịch sử. Các lượt local trước stable chạy trên macOS ARM64, Node.js 24.19.0, Python 3.13.3, .NET SDK 10.0.101 và Rust 1.83.0, xác minh geometry, natal, báo cáo cá nhân, synastry, midpoint composite C, events, forecast, grouped queries và bộ nén của `0.10.0-alpha.1`; không xác minh toàn bộ source legacy.
 
 ## Xác minh bản ổn định 0.10.0
@@ -234,3 +250,80 @@ artifacts/python-build/bin/python scripts/test-packages.py
 ```
 
 Các lần phát hành tiếp theo giữ fresh registry install verification và mở rộng OS/runtime matrix theo binary thực tế. Memory sanitizers, fuzz, data coverage rộng hơn và browser/native parity cần bổ sung khi triển khai phần tương ứng; không coi registry smoke hoặc parity cùng core là bằng chứng những kiểm tra đó đã chạy.
+
+## Additional points and professional SVG — 2026-10-18
+
+Local candidate remains 0.11.0-alpha.1 (not registry-published), darwin-arm64.
+Current fresh package consumer: `3f1a8406693c`.
+
+- Workspace Rust tests: 128 passed, including seven additional definitions at
+  historical/future dates, antipodal South Nodes, unchanged ten-body placements,
+  palette precedence, filters, custom point symbols, matrix and table limits.
+  `cargo fmt --all --check` and Clippy all targets with `-D warnings` passed.
+- Fresh package consumers: 339 full JSON parity cases through Node, Python,
+  .NET, Rust and C; existing concurrency checks passed. Evidence:
+  `artifacts/test-results.json`.
+- `scripts/check-additional-points.py` compares the embedded read-only adapter
+  with standard Swiss file I/O using the same pinned source and data, on nine
+  dates including 1800-01-01 and 2399-12-31. Difference was zero in longitude,
+  latitude, distance and speed. This checks integration parity, **not** an
+  independent JPL accuracy claim. Checksum and details are recorded in
+  `artifacts/additional-points-tests.json`.
+- `scripts/check-svg-point-schema.cjs`: 31 request/response/options cases;
+  existing domain schema checker also passed 38 request cases plus the baseline
+  response, rejecting its malformed mutations. Ajv 8.17.1 is installed only in
+  ignored development artifacts, not consumer runtime dependencies.
+- Playground: IAB desktop 1440×1000 and mobile 390×844. Professional render,
+  all seven definitions, extended rules, harmonious filter, classic palette,
+  dark/light and fit/zoom exercised. Native SVG decoded; no page overflow,
+  mobile zoom scrolls inside the chart frame, no browser warn/error logs.
+  The standard 13-point sample shows 39 major aspects, of which 27 are
+  non-conjunction lines, matching the reconstructed legacy chart's population.
+  Final legend was moved below the IC label. Browser download capture retains
+  the previously documented IAB limitation; generated standalone SVG files are
+  verified separately by XML parsing and binding parity.
+
+Reproduce services with `scripts/check-time-svg-bindings.py --typescript <tsc.js>`;
+its report records the package fingerprint, nine time cases, four local
+calculation cases, nine SVG cases and complete JSON/SVG byte parity through
+Node/Python/.NET/C. Use `examples/node/time-svg.cjs examples/svg-output` for
+basic/advanced/professional and extended dark/light standalone exports.
+Extended calculations are opt-in for natal/natalDomains. Other operations retain
+their existing populations and reject unsupported nested point options. Only the
+current macOS ARM64 build is verified here; no additional platform or registry
+release is implied.
+
+## Modular renderer and interaction model — 2026-10-18
+
+Renderer 1.2.0-alpha.1, local package candidate 0.11.0-alpha.1, darwin-arm64.
+Fresh installed consumer fingerprint: `6e5449fbc269`.
+
+- Twelve renderer unit tests cover independent parts, ordered composition,
+  model-only output with no SVG, point/house focus, source rulership, preserved
+  geometry, one-hop related endpoints, invalid states, cross-chart namespaces,
+  custom symbols and existing render adapters. Workspace tests and Clippy
+  all-targets `-D warnings` passed; format/diff checks passed.
+- Fresh packages passed the existing 339 full JSON calculation parity cases.
+  New service probes compare complete results (including SVG and model) through
+  Node/Python/.NET/C: 9 time, 5 local calculation and 15 SVG cases, plus model-only
+  transport. Installed Node, Python and .NET model convenience helpers were
+  exercised. Strict TypeScript consumer declarations passed.
+- Modular request/schema validation has 40 cases. Runtime rejects unavailable
+  house rulership instead of fabricating it; table-only views omit wheel geometry
+  and hit targets. Generated modular SVG examples parse as standalone XML.
+- IAB desktop 1440×1000 and mobile 390×844 exercised functional views, direct
+  point and H7 hit targets, highlight/isolate, body-only versus cusp/angle
+  relations, fit/zoom, and light/dark. Source payload counter stayed #2 across
+  selections/view changes after the explicit sample form calculation.
+  Mobile zoom uses a 1000px internal surface while document width stays 390px.
+  Image decode succeeded, no relevant browser warn/error logs were observed.
+- Standalone files and model JSON are generated under `examples/svg-output` by
+  `examples/node/time-svg.cjs`. Browser download event capture retains the IAB
+  limitation documented above; no claim of a completed browser file-save check.
+
+Evidence: `artifacts/test-results.json`, `artifacts/time-svg-tests.json`,
+`/tmp/astro-modular-rust.log`, `/tmp/astro-modular-services.log`,
+`/tmp/astro-modular-houses-desktop.png`, `/tmp/astro-modular-mobile.png`,
+`/tmp/astro-modular-mobile-zoom.png`.
+No registry or production deployment is included. Non-macOS builds remain outside
+this run's verification.

@@ -1,12 +1,14 @@
 # Astro UI và native runtime local
 
+Candidate `1.0.0` có playground riêng ở **`/ui/svg.html`**: nhập giờ sinh địa phương/IANA, tính natal, đổi theme/detail và tải SVG vector. Dùng gói candidate đã build/cài local; các API mới chưa có trong npm stable 0.10.1. [Hướng dẫn time helpers và SVG](../../docs/time-and-svg.md) mô tả đầy đủ contract và giới hạn.
+
 Frontend này có thể dùng độc lập hoặc nhúng vào website. Browser gửi JSON cho **Node worker local**, worker gọi SDK native đã cài và trả nguyên engine envelope. Cả 10 operation hoạt động với dữ liệu người dùng: `chart`, `harmonic`, `synastry`, `natal`, `natalDomains`, `couple`, `composite`, `events`, `forecast`, `query`.
 
 Không cần backend hosted. Host chỉ lắng nghe `127.0.0.1`, chạy khi bạn mở ứng dụng và dừng bằng `Ctrl+C`. Bản website static có thể xem tài liệu/payload mẫu; muốn tính input mới bằng native engine, mở UI từ host local. Đây chưa phải browser WASM.
 
 ## Chạy ngay trong checkout
 
-Yêu cầu Node.js 18+; môi trường đã kiểm tra dùng Node.js 24.19.0 / macOS ARM64. Từ thư mục **astrology/examples/frontend**:
+Yêu cầu Node.js 18+; môi trường đã kiểm tra dùng Node.js 24.19.0 / macOS ARM64. Từ thư mục **sdk-astro/examples/frontend**:
 
 ```sh
 node host.cjs
@@ -23,14 +25,14 @@ export ASTRO_NODE_BIN="$HOME/.cache/codex-runtimes/codex-primary-runtime/depende
 "$ASTRO_NODE_BIN" host.cjs
 ```
 
-Chạy lệnh trong `astrology/examples/frontend`; không chạy `host.cjs` từ thư mục website. Đường dẫn workspace hiện tại có dấu cách ở cuối tên thư mục cha, vì vậy luôn đặt path trong dấu nháy khi `cd`.
+Chạy lệnh trong `sdk-astro/examples/frontend`; không chạy `host.cjs` từ thư mục website. Đường dẫn workspace hiện tại có dấu cách ở cuối tên thư mục cha, vì vậy luôn đặt path trong dấu nháy khi `cd`.
 
 ## Cài SDK khi dùng frontend riêng
 
 Với Node/npm đã cài, từ thư mục frontend:
 
 ```sh
-npm install --offline --ignore-scripts --no-audit --no-fund ../../artifacts/packages/7mlabs-astrology-0.9.0-alpha.1.tgz
+npm install --offline --ignore-scripts --no-audit --no-fund ../../artifacts/packages/7mlabs-astrology-1.0.0.tgz
 npm start
 ```
 
@@ -65,6 +67,8 @@ await engine.close();
 Server ghép cần lắng nghe `127.0.0.1`. Handler chỉ nhận loopback Host đúng port hiện tại, Origin cùng trang local và Fetch Metadata phù hợp. Không bật CORS cho website khác. `GET /api/astro/status` thực hiện probe `query.geometry.normalize` thật; response có `available`, `engineVersion`, `runtime`, `operations`, giới hạn input và số request đang xử lý. SDK thiếu/bị lỗi trả status 503.
 
 `POST /api/astro/calculate` nhận `Content-Type: application/json`, body là **raw engine request**, không thêm wrapper `{request:...}`. Giới hạn 4 MiB và tối đa 8 request pending, gồm cả request đang đọc body. Hết chỗ trả 429; body quá lớn trả 413; sai Origin/Host trả 403. Không lưu birth input/payload, không gửi dữ liệu ra mạng.
+
+Candidate thêm POST `/api/astro/resolve-birth-time` (16 KiB), `/api/astro/calculate-from-local` (4 MiB), `/api/astro/render-svg` (32 MiB, body `{payload,options}`) và `/api/astro/capabilities`. Các route dùng cùng kiểm tra loopback Host/Origin, queue và engine envelope; bản core `calculate` tiếp tục nhận UTC.
 
 Response 200 là nguyên envelope: `schemaVersion`, `engineVersion`, `calculation` khi thành công, `data`, `warnings`, `errors`. Engine validation errors cũng trả 200 với `data: null`; transport/runtime errors trả non-2xx và `{error:{code,message}}`. Không biến payload mẫu thành kết quả tính thực.
 

@@ -2,6 +2,10 @@
 
 # 7mlabs Astrology
 
+## Candidate local: đổi giờ và xuất biểu đồ SVG
+
+Source **1.0.0** có helper IANA offline và renderer SVG native tách riêng. `calculate` nhận UTC như cũ. Candidate này **chưa phát hành registry**. Xem [API và cách chạy preview](docs/time-and-svg.md); không cài npm stable cũ rồi kỳ vọng có API mới.
+
 Engine chiêm tinh chạy offline, dùng chung lõi Rust qua các SDK native. Nhận dữ liệu sinh để tính lá số, quan hệ và dự báo ngay trong ứng dụng của bạn.
 
 [![npm](https://img.shields.io/npm/v/%407mlabs%2Fastrology/latest?label=npm&color=afe8cc)](https://www.npmjs.com/package/@7mlabs/astrology)
@@ -106,7 +110,7 @@ Bản npm có binary cho **macOS ARM64** và **Linux x64**. Linux cần **glibc 
 Cập nhật tường minh bằng `npm install @7mlabs/astrology@latest`. Để giữ đúng bản hiện tại:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@0.10.0
+npm install --save-exact @7mlabs/astrology@0.10.1
 ```
 
 Commit lockfile của ứng dụng và dùng `npm ci` để cài lại đúng dependencies. [Hướng dẫn cài các ngôn ngữ khác →](docs/packages.md)

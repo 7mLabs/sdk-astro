@@ -416,7 +416,10 @@
           "enum": [
             "body",
             "angle",
-            "houseCusp"
+            "houseCusp",
+            "minorBody",
+            "lunarNode",
+            "lunarApogee"
           ]
         },
         "longitude": {
@@ -746,6 +749,13 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/natalAspect"
+          }
+        },
+        "additionalPoints": {
+          "type": "array",
+          "maxItems": 7,
+          "items": {
+            "$ref": "#/$defs/additionalPoint"
           }
         }
       }
@@ -2137,7 +2147,7 @@
             "type": "string"
           },
           "minItems": 1,
-          "maxItems": 26,
+          "maxItems": 33,
           "uniqueItems": true
         },
         "houses": {
@@ -2154,7 +2164,7 @@
             "$ref": "#/$defs/contextPoint"
           },
           "minItems": 1,
-          "maxItems": 26
+          "maxItems": 33
         },
         "aspects": {
           "type": "array",
@@ -2382,7 +2392,7 @@
             "type": "string"
           },
           "minItems": 1,
-          "maxItems": 26,
+          "maxItems": 33,
           "uniqueItems": true
         },
         "relationIds": {
@@ -2446,7 +2456,7 @@
             "$ref": "#/$defs/contextPoint"
           },
           "minItems": 26,
-          "maxItems": 26
+          "maxItems": 33
         },
         "houses": {
           "type": "array",
@@ -2470,7 +2480,7 @@
             "$ref": "#/$defs/pointRelation"
           },
           "minItems": 325,
-          "maxItems": 325
+          "maxItems": 528
         },
         "aspects": {
           "type": "array",
@@ -2509,10 +2519,24 @@
               "const": 12
             },
             "pointPairs": {
-              "const": 325
+              "enum": [
+                325,
+                351,
+                378,
+                406,
+                435,
+                465,
+                496,
+                528
+              ]
             },
             "aspectMatching": {
               "const": "configuredRulesOnly"
+            },
+            "additionalPoints": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7
             }
           }
         }
@@ -3189,7 +3213,7 @@
             "type": "string"
           },
           "minItems": 1,
-          "maxItems": 26,
+          "maxItems": 33,
           "uniqueItems": true
         },
         "focusHouseIds": {
@@ -3341,6 +3365,58 @@
                   }
                 }
               }
+            }
+          }
+        }
+      ]
+    },
+    "additionalPoint": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/contextPoint"
+        },
+        {
+          "type": "object",
+          "required": [
+            "definition",
+            "ephemeris",
+            "kind"
+          ],
+          "properties": {
+            "id": {
+              "enum": [
+                "chiron",
+                "trueNorthNode",
+                "trueSouthNode",
+                "meanNorthNode",
+                "meanSouthNode",
+                "meanLilith",
+                "osculatingLilith"
+              ]
+            },
+            "definition": {
+              "enum": [
+                "chiron",
+                "trueNorthNode",
+                "trueSouthNode",
+                "meanNorthNode",
+                "meanSouthNode",
+                "meanLilith",
+                "osculatingLilith"
+              ]
+            },
+            "kind": {
+              "enum": [
+                "minorBody",
+                "lunarNode",
+                "lunarApogee"
+              ]
+            },
+            "ephemeris": {
+              "enum": [
+                "moshier",
+                "swiss-asteroid-seas_18-with-moshier-reference"
+              ]
             }
           }
         }

@@ -17,6 +17,17 @@ export interface NatalRequest {
   location: { latitude: number; longitude: number; };
   houseSystem?: 'placidus' | 'wholeSign';
   aspectRules?: AspectRule[];
+  /** Default major; mutually exclusive with aspectRules. */
+  aspectPreset?: 'major' | 'extended';
+  /** Opt-in natal points. standard = Chiron, true North Node and mean Lilith. */
+  additionalPoints?: 'standard' | 'all' | AdditionalPointId[];
+}
+export type AdditionalPointId = 'chiron' | 'trueNorthNode' | 'trueSouthNode' | 'meanNorthNode' | 'meanSouthNode' | 'meanLilith' | 'osculatingLilith';
+export type ChartBodyId = NatalBodyId | AdditionalPointId;
+export interface AdditionalPoint extends Placement {
+  id: AdditionalPointId; definition: AdditionalPointId;
+  kind: 'minorBody' | 'lunarNode' | 'lunarApogee';
+  ephemeris: 'moshier' | 'swiss-asteroid-seas_18-with-moshier-reference';
 }
 export type DomainName = 'career' | 'love' | 'relationships' | 'family' | 'finance'
   | 'identity' | 'learning' | 'creativity' | 'innerLife' | 'dailyLife';
@@ -157,14 +168,14 @@ export interface Aspect {
 }
 export interface Midpoint { body1: string; body2: string; longitude: number | null; ambiguous: boolean; }
 export interface NatalData {
-  utc: NatalRequest['utc']; location: NatalRequest['location']; placements: Placement[];
+  utc: NatalRequest['utc']; location: NatalRequest['location']; placements: Placement[]; additionalPoints?: AdditionalPoint[];
   angles: Placement[]; houses: House[]; houseCusps: number[]; aspects: Aspect[];
 }
 export interface DomainHouse extends House {
   id: string; signIndex: number; occupants: Placement[]; rulerBodyId: string; rulerPlacement: Placement;
 }
 export interface ContextPoint {
-  id: string; kind: 'body' | 'angle' | 'houseCusp'; longitude: number;
+  id: string; kind: 'body' | 'angle' | 'houseCusp' | 'minorBody' | 'lunarNode' | 'lunarApogee'; longitude: number;
   signIndex: number; sign: string; degreeInSign: number; speed: number | null;
   house?: number | null; houseNumber?: number; isRetrograde?: boolean | null;
   latitude?: number; distanceAu?: number;
@@ -289,7 +300,7 @@ export interface NatalContext {
   dispositors: Array<{ bodyId: string; sign: string; dispositorBodyId: string; dispositorPlacement: Placement; }>;
   /** All 66 unordered pairs of the twelve houses, including pairs with the same ruler. */
   houseRulerRelations: HouseRulerRelation[]; advanced: NatalAdvancedFacts;
-  coverage: { bodies: number; angles: number; houseCusps: number; pointPairs: number; aspectMatching: string; };
+  coverage: { additionalPoints?: number; bodies: number; angles: number; houseCusps: number; pointPairs: number; aspectMatching: string; };
 }
 export interface NatalDomainsData {
   chartKind: 'individualNatal'; subjectCount: 1;
@@ -304,7 +315,7 @@ export interface Result {
   data: { natal?: NatalData; context?: NatalContext; domains?: Partial<Record<DomainName, DomainView>>;
     customDomains?: Record<string, DomainView>; profileCatalog?: ProfileDefinition[];
     utc?: NatalRequest["utc"]; location?: NatalRequest["location"];
-    houses?: House[]; houseCusps?: number[]; angles?: Placement[]; placements?: Placement[]; aspects?: Aspect[]; midpoints?: Midpoint[]; harmonic?: number;
+    houses?: House[]; houseCusps?: number[]; angles?: Placement[]; placements?: Placement[]; additionalPoints?: AdditionalPoint[]; aspects?: Aspect[]; midpoints?: Midpoint[]; harmonic?: number;
     personA?: Placement[]; personB?: Placement[]; crossAspects?: Aspect[];
     overlaysAtoB?: Placement[]; overlaysBtoA?: Placement[]; };
   warnings: string[]; errors: Array<{ code: string; message: string }>;
@@ -829,4 +840,109 @@ export type CalculationResultFor<R extends Request> =
 export function calculateWithContext<R extends Request>(input: R, options?: CompressionOptions): {
   result: CalculationResultFor<R>;
   context: ContextResult;
+};
+
+/** Optional offline civil-time services; calculation core still accepts UTC unchanged. */
+export type CivilTime = NatalRequest['utc'];
+export type BirthTimeInput = { local: CivilTime; disambiguation?: 'reject' | 'earlier' | 'later'; } & (
+  | { timeZone: string; utcOffsetSeconds?: never; }
+  | { timeZone?: never; utcOffsetSeconds: number; disambiguation?: 'reject'; }
+);
+export interface ResolvedBirthTime {
+  utc: CivilTime; local: CivilTime; timeZone: string | null; utcOffsetSeconds: number;
+  tzdbVersion: string | null; resolution: 'unique' | 'earlier' | 'later' | 'explicitOffset';
+  precision: string; warnings: string[];
+}
+export type LocalBirthInput = Omit<BirthInput, 'utc'> & BirthTimeInput;
+type LocalRequestFor<R> = R extends { utc: CivilTime } ? Omit<R, 'utc'> & BirthTimeInput :
+  R extends { personA: BirthInput; personB: BirthInput } ? Omit<R, 'personA' | 'personB'> & (
+    { personA: LocalBirthInput; personB: BirthInput | LocalBirthInput } | { personA: BirthInput; personB: LocalBirthInput }) :
+  R extends { birth: BirthInput } ? Omit<R, 'birth'> & { birth: LocalBirthInput } : never;
+export type LocalCalculationRequest = LocalRequestFor<Request>;
+export type WithTimeResolution<T extends { calculation: object }> = T & {
+  calculation: T['calculation'] & { timeResolution: Record<string, ResolvedBirthTime> };
+};
+export function resolveBirthTime(input: BirthTimeInput): ResolvedBirthTime;
+/** Raw JSON services return standard result envelopes, including errors. */
+export function resolveBirthTimeJson(inputJson: string): string;
+export function calculateFromLocal(input: Omit<NatalRequest, 'utc' | 'operation'> & BirthTimeInput & { operation?: 'natal' }): WithTimeResolution<Result>;
+export function calculateFromLocal<R extends LocalCalculationRequest>(input: R): WithTimeResolution<CalculationResultFor<Extract<Request, { operation: R['operation'] }> & R>>;
+export function calculateFromLocalJson(inputJson: string): string;
+export type VectorNodeName = 'path' | 'circle' | 'ellipse' | 'line' | 'rect' | 'polygon' | 'polyline';
+export interface VectorSymbol {
+  viewBox: [number, number, number, number];
+  nodes: Array<[VectorNodeName, Record<string, string | number>]>;
+  label?: string; english?: string; unicode?: string; signIndex?: number;
+}
+export type ZodiacSymbolId = 'aries' | 'taurus' | 'gemini' | 'cancer' | 'leo' | 'virgo' | 'libra' | 'scorpio' | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces';
+export type AspectColorGroup = 'harmonious' | 'challenging' | 'neutral' | 'minor' | 'other';
+export type AspectColorType = 'conjunction' | 'sextile' | 'square' | 'trine' | 'opposition' | 'semisextile' | 'semisquare' | 'quintile' | 'sesquiquadrate' | 'biquintile' | 'quincunx';
+export interface SvgDisplayOptions {
+  degreeTicks?: boolean; planetDegrees?: boolean; houses?: boolean; angles?: boolean;
+  positionsTable?: boolean; housesTable?: boolean; aspectTable?: boolean; aspectMatrix?: boolean; legend?: boolean;
+}
+export type ChartPart = 'wheel' | 'positions' | 'houses' | 'aspectMatrix' | 'aspects' | 'houseFocus';
+export type ChartFocus = ({ house: number; layer?: 'N' | 'A' | 'B' | 'C'; pointIds?: never; } | { pointIds: string[]; house?: never; layer?: never; }) & { mode?: 'highlight' | 'isolate'; };
+export interface ChartCoordinate { x: number; y: number; }
+export interface ChartSection { part: ChartPart; x: number; y: number; width: number; height: number; }
+export interface ChartModelPoint {
+  id: string; body: ChartBodyId; layer: string; longitude: number; house: number | null; isRetrograde: boolean | null;
+  selected: boolean; opacity: number; signIndex: number; signId: ZodiacSymbolId; displayDms: string; labelPosition: ChartCoordinate | null; markerPosition: ChartCoordinate | null;
+}
+export interface ChartModelHouse {
+  id: string; layer: string; number: number; longitude: number; width: number; occupantIds: string[];
+  rulerId: string | null; rulerPlacement: { id: string; longitude: number; house: number | null; } | null;
+  rulership: string | null; rulershipAvailable: boolean;
+}
+export interface ChartModel {
+  modelVersion: string; chart: string; viewBox: [number, number, number, number]; sections: ChartSection[];
+  points: ChartModelPoint[]; houses: ChartModelHouse[];
+  aspects: Array<{ point1?: string; point2?: string; body1?: string; body2?: string; orb?: number; maxOrb?: number; applying?: boolean | null; endpoint1: string; endpoint2: string; angle: number;
+    start: ChartCoordinate | null; end: ChartCoordinate | null;
+    style: { type: string; group: string; color: string; width: number; opacity: number; dash: number[]; }; }>;
+  angles: Array<{ id: string; layer: string; longitude: number; }>;
+  focus: ContextJsonValue; selectedPointIds: string[]; relatedPointIds: string[]; shiftedLabels: number; houseContextAvailable: boolean;
+  hitTargets: Array<{ kind: 'point' | 'house'; id: string; layer: string; house?: number; center: ChartCoordinate; radius: number; }>;
+}
+export interface SvgRenderOptions {
+  /** Explicit ordered composition. Omit to retain detail preset composition. */
+  sections?: ChartPart[];
+  focus?: ChartFocus;
+  detail?: 'basic' | 'advanced' | 'professional'; theme?: 'dark' | 'light'; locale?: 'vi' | 'en';
+  /** Pixel width 128..4096; viewBox stays vector. */
+  size?: number;
+  title?: string; instanceId?: string;
+  chart?: 'natal' | 'A' | 'B' | 'C' | 'synastry' | 'transits';
+  orientation?: 'ascendant' | 'aries'; showAspects?: boolean;
+  maxAspectLines?: number; aspectAngles?: number[]; bodyIds?: ChartBodyId[];
+  /** CSS hex only. Specific type overrides group, then theme defaults. */
+  aspectColors?: Partial<Record<AspectColorGroup | AspectColorType, string>>;
+  aspectEndpoints?: 'bodies' | 'bodiesAndAngles' | 'all';
+  aspectGroups?: AspectColorGroup[]; maxOrb?: number; aspectPhase?: 'applying' | 'separating' | 'unknown';
+  display?: SvgDisplayOptions;
+  /** Default 256; reports omitted rows. Does not limit wheel/matrix. */
+  maxAspectRows?: number;
+  zodiacSymbols?: Partial<Record<ZodiacSymbolId, VectorSymbol>>;
+  planetSymbols?: Partial<Record<ChartBodyId, VectorSymbol>>;
+}
+export interface SvgRenderResult {
+  svg: string; model: ChartModel; metadata: Record<string, ContextJsonValue>; warnings: string[];
+  coverage: { availableAspects: number; renderedAspects: number; excluded: Record<string, number>;
+    renderedAspectData: ContextJsonValue[]; availableBodies: number; renderedBodies: number; shiftedLabels: number; aspectTableRows: number; aspectTableOmitted: number; layers: string[]; };
+}
+/** Source-derived geometry/context and hit targets; does not generate SVG or calculate ephemeris. */
+export function buildChartModel(payload: object, options?: SvgRenderOptions): ChartModel;
+/** Standalone SVG for one functional part. */
+export function renderChartPart(payload: object, part: ChartPart, options?: Omit<SvgRenderOptions, 'sections'>): string;
+/** Standalone SVG with vector outlines. Does not calculate or mutate source data. */
+export function renderChartSvg(payload: object, options?: SvgRenderOptions): string;
+export function renderChartSvgResult(payload: object, options?: SvgRenderOptions): SvgRenderResult;
+export function renderChartSvgJson(payloadJson: string, optionsJson?: string): string;
+/** Raw {payload,options} JSON transport envelope; malformed input returns errors. */
+export function renderChartSvgRequestJson(requestJson: string): string;
+export function getCapabilities(): {
+  abiVersion: number; browserWasm: boolean;
+  civilTime: { iana: boolean; tzdbVersion: string; explicitOffsetSeconds: boolean; ambiguousTime: string; nonexistentTime: string; };
+  additionalPoints: { operations: string[]; ids: AdditionalPointId[]; presets: string[]; embeddedChiron: boolean; };
+  svg: { rendererVersion: string; details: string[]; charts: string[]; selfContained: boolean; customZodiacSymbols: boolean; customPlanetSymbols: boolean; aspectColorGroups: AspectColorGroup[]; displayOverrides: boolean; parts: ChartPart[]; modelVersion: string; houseFocus: boolean; };
 };

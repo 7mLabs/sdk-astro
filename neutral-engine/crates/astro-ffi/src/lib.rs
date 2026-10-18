@@ -29,6 +29,31 @@ pub unsafe extern "C" fn astro_expand_context_json(input: *const c_char) -> *mut
     invoke_json(input, astro_core::expand_context_json)
 }
 
+/// # Safety
+/// Readable NUL-terminated JSON input, or null. Free output with astro_free_string.
+#[no_mangle]
+pub unsafe extern "C" fn astro_resolve_birth_time_json(input: *const c_char) -> *mut c_char {
+    invoke_json(input, astro_sdk::resolve_birth_time_json)
+}
+/// # Safety
+/// Readable NUL-terminated JSON input, or null. Free output with astro_free_string.
+#[no_mangle]
+pub unsafe extern "C" fn astro_calculate_from_local_json(input: *const c_char) -> *mut c_char {
+    invoke_json(input, astro_sdk::calculate_from_local_json)
+}
+/// # Safety
+/// Readable NUL-terminated {payload,options} JSON input, or null. Free output once.
+#[no_mangle]
+pub unsafe extern "C" fn astro_render_chart_svg_json(input: *const c_char) -> *mut c_char {
+    invoke_json(input, astro_sdk::render_chart_svg_json)
+}
+/// # Safety
+/// Readable NUL-terminated JSON input, or null. Free output with astro_free_string.
+#[no_mangle]
+pub unsafe extern "C" fn astro_capabilities_json(input: *const c_char) -> *mut c_char {
+    invoke_json(input, astro_sdk::capabilities_json)
+}
+
 unsafe fn invoke_json(input: *const c_char, operation: fn(&str) -> String) -> *mut c_char {
     let result = std::panic::catch_unwind(|| {
         if input.is_null() {
@@ -66,6 +91,10 @@ mod tests {
                 astro_calculate_json,
                 astro_compress_json,
                 astro_expand_context_json,
+                astro_resolve_birth_time_json,
+                astro_calculate_from_local_json,
+                astro_render_chart_svg_json,
+                astro_capabilities_json,
             ] {
                 let result = operation(std::ptr::null());
                 assert!(CStr::from_ptr(result)

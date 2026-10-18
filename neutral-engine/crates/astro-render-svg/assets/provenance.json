@@ -1,0 +1,13 @@
+{
+  "generator": "scripts/sync-service-assets.py",
+  "fontToolsVersion": "4.67.0",
+  "sourceFiles": {
+    "fonts/plusjakartasans/static/PlusJakartaSans-Medium.ttf": "29c18dfd9b93d15bcc38776eba509c04e04e18e5e9d128225f285988f05dfe9f",
+    "fonts/plusjakartasans/OFL.txt": "995c7199cab65954f545996326755daee7b63cc6b42b06c13da1f9502ab08a99",
+    "icons/zodiac/registry.json": "ca6c58c9b05c76f782d54c3573e801e2aae985d8dd911597ea323864e3fff944"
+  },
+  "zodiacPack": "7mlabs-zodiac/0.5.0-draft",
+  "fontLicense": "OFL-1.1",
+  "glyphs": 721,
+  "planetGeometry": "Original conventional vector glyph geometry in src/symbols.rs"
+}

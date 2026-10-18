@@ -107,7 +107,56 @@
           }
         }
       }
+    },
+    "additionalPoints": {
+      "description": "Opt-in natal/natalDomains only. standard = Chiron + true North Node + mean lunar apogee; all = all seven explicit definitions. Default ten bodies unchanged.",
+      "oneOf": [
+        {
+          "enum": [
+            "standard",
+            "all"
+          ]
+        },
+        {
+          "type": "array",
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "chiron",
+              "trueNorthNode",
+              "trueSouthNode",
+              "meanNorthNode",
+              "meanSouthNode",
+              "meanLilith",
+              "osculatingLilith"
+            ]
+          }
+        }
+      ]
+    },
+    "aspectPreset": {
+      "enum": [
+        "major",
+        "extended"
+      ],
+      "description": "Mutually exclusive with aspectRules; default major for natal, extended for natalDomains."
     }
   },
-  "$comment": "Gregorian valid day/month/leap-year and unique aspect angles are enforced by core. Integer-valued decimal/exponent JSON numbers are normalized exactly by core; no rounding or string coercion."
+  "$comment": "Gregorian valid day/month/leap-year and unique aspect angles are enforced by core. Integer-valued decimal/exponent JSON numbers are normalized exactly by core; no rounding or string coercion.",
+  "allOf": [
+    {
+      "not": {
+        "required": [
+          "aspectPreset",
+          "aspectRules"
+        ],
+        "type": "object",
+        "properties": {
+          "aspectPreset": {},
+          "aspectRules": {}
+        }
+      }
+    }
+  ]
 }

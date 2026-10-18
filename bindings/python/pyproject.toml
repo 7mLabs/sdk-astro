@@ -4,17 +4,26 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sevenmlabs-astrology"
-version = "0.10.1"
-description = "Offline natal, synastry, composite, forecasts and astronomical event data using a shared native engine"
+version = "1.0.0"
+description = "7mlabs Astro SDK: offline astrology calculations, IANA birth-time conversion and modular SVG charts"
 requires-python = ">=3.10"
 readme = "README.md"
 license = "AGPL-3.0-only"
 license-files = ["LICENSE", "NOTICE", "sevenmlabs_astrology/third-party/*"]
+keywords = ["astrology", "ephemeris", "natal", "svg", "7mlabs"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Rust",
+    "Operating System :: MacOS :: MacOS X",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 
 [project.urls]
+Homepage = "https://7mlabs.com/astro/"
 Repository = "https://github.com/7mlabs/sdk-astro"
 Documentation = "https://sevenmlabs-packages.velikho.chatgpt.site/docs/astro/"
 Issues = "https://github.com/7mlabs/sdk-astro/issues"
 
 [tool.setuptools.package-data]
-sevenmlabs_astrology = ["native/*/*", "third-party/*"]
+sevenmlabs_astrology = ["native/*/*", "third-party/*", "source/*"]

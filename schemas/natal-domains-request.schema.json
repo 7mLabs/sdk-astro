@@ -140,7 +140,8 @@
       "enum": [
         "major",
         "extended"
-      ]
+      ],
+      "description": "Mutually exclusive with aspectRules; default major for natal, extended for natalDomains."
     },
     "customProfiles": {
       "type": "array",
@@ -150,6 +151,33 @@
         "$ref": "#/$defs/customProfile"
       },
       "description": "Custom IDs and section IDs must be unique within their scope; core enforces ID uniqueness."
+    },
+    "additionalPoints": {
+      "description": "Opt-in natal/natalDomains only. standard = Chiron + true North Node + mean lunar apogee; all = all seven explicit definitions. Default ten bodies unchanged.",
+      "oneOf": [
+        {
+          "enum": [
+            "standard",
+            "all"
+          ]
+        },
+        {
+          "type": "array",
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "chiron",
+              "trueNorthNode",
+              "trueSouthNode",
+              "meanNorthNode",
+              "meanSouthNode",
+              "meanLilith",
+              "osculatingLilith"
+            ]
+          }
+        }
+      ]
     }
   },
   "$comment": "Gregorian valid day/month/leap-year and unique aspect angles are enforced by core. Integer-valued decimal/exponent JSON numbers are normalized exactly by core; no rounding or string coercion. Profile and section ID uniqueness is enforced by core. Explicit null is not accepted for any option; selector arrays default empty but each profile and section needs at least one selector.",

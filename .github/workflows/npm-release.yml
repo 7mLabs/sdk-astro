@@ -55,6 +55,21 @@ jobs:
           pattern: npm-verification-*
           merge-multiple: true
           path: artifacts/npm-reports
+      - uses: actions/download-artifact@v7
+        with:
+          name: managed-release
+          path: artifacts/managed-release
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: managed-verification-*
+          merge-multiple: false
+          path: artifacts/managed-reports
+      - name: Require final PyPI and NuGet checks before the coordinated release
+        run: >-
+          python scripts/check-managed-release.py
+          --manifest artifacts/managed-release/manifest.json
+          --reports artifacts/managed-reports
+          --commit "$GITHUB_SHA"
       - name: Require all final tarball evidence before publication
         run: |
           if [ "$GITHUB_REF_TYPE" = tag ]; then

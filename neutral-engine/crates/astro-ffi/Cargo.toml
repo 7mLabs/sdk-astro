@@ -12,3 +12,4 @@ crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
 astro-core.workspace = true
+astro-sdk = { path = "../astro-sdk" }

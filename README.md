@@ -2,6 +2,10 @@
 
 # 7mlabs Astrology
 
+## Local candidate: time conversion and standalone SVG
+
+Source candidate **1.0.0** adds optional offline IANA civil-time helpers and a separate native SVG chart renderer. UTC `calculate` remains compatible. This candidate is not yet published to registries. See [time/SVG API and runnable preview](docs/time-and-svg.md). Public stable packages do not gain these APIs until a verified release.
+
 An offline astrology engine with a shared Rust core and native SDKs. Turn birth data into structured chart, relationship and forecast payloads directly inside your application.
 
 [![npm](https://img.shields.io/npm/v/%407mlabs%2Fastrology/latest?label=npm&color=afe8cc)](https://www.npmjs.com/package/@7mlabs/astrology)
@@ -96,7 +100,7 @@ const restored = expandContext(context);
 
 | Language | Distribution | Status |
 | --- | --- | --- |
-| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `0.10.0` (`latest`) |
+| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `0.10.1` (`latest`) |
 | Python | `sevenmlabs-astrology` | Local `0.10.0` wheels; PyPI release pending |
 | .NET | `SevenMLabs.Astrology` | Local `0.10.0` NuGet artifacts; public release pending |
 | Rust / C | Core crates and C ABI | Source integration examples |
@@ -106,7 +110,7 @@ The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requi
 Update explicitly with `npm install @7mlabs/astrology@latest`. To pin this release:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@0.10.0
+npm install --save-exact @7mlabs/astrology@0.10.1
 ```
 
 Commit your application's lockfile and use `npm ci` for reproducible installs. [Other language installation guides →](docs/packages.md)
@@ -127,7 +131,7 @@ Most detailed guides are currently written in Vietnamese; API identifiers and JS
 
 ## Calculation scope and validation
 
-Birth calculations currently support Gregorian UTC **1800–2399**, tropical geocentric positions, and **Placidus** or **Whole Sign** houses. Swiss Ephemeris uses the bundled Moshier model. Timezone conversion is caller-managed; IANA timezone conversion, sidereal/topocentric charts, Davison, progressions and return charts are future work. [Calculation scope →](docs/natal.md)
+Birth calculations currently support Gregorian UTC **1800–2399**, tropical geocentric positions, and **Placidus** or **Whole Sign** houses. Swiss Ephemeris uses the bundled Moshier model. UTC callers retain control; optional offline IANA/offset helpers and standalone basic/advanced/professional SVG are available in the local candidate. Opt-in natal Chiron, mean/true nodes and lunar apogees include explicit definitions and embedded data provenance. Sidereal/topocentric charts, Davison, progressions and return charts remain future work. See [time and SVG services](docs/time-and-svg.md). [Calculation scope →](docs/natal.md)
 
 The stable **0.10.0** tarball passed **339 conformance cases** on each of four macOS ARM64/Linux x64 × Node.js 18/24 combinations, along with query, compression and TypeScript checks. All seven build/validation jobs passed, and npm OIDC publication succeeded. The workflow’s post-publish registry check timed out during propagation; subsequent registry integrity checks and a fresh install on macOS ARM64 verified `0.10.0` on `latest`. [Release run](https://github.com/7mlabs/sdk-astro/actions/runs/37098509933) · [Validation details](docs/testing.md)
 

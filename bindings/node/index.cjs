@@ -72,5 +72,31 @@ const geometry = Object.freeze({ normalize: queryMethod('geometry', 'normalize')
 const aspects = Object.freeze({ between: queryMethod('aspects', 'between'), inspect: queryMethod('aspects', 'inspect') });
 const houses = Object.freeze({ locate: queryMethod('houses', 'locate'), inspect: queryMethod('houses', 'inspect') });
 const points = Object.freeze({ inspect: queryMethod('points', 'inspect') });
+function service(name, input) {
+  if (typeof input !== 'string') throw new TypeError(`${name} expects a JSON string`);
+  if (typeof addon[name] !== 'function') {
+    const error = new Error('This native binary does not include time/SVG services. Rebuild/install the matching SDK package.');
+    error.code = 'NATIVE_REBUILD_REQUIRED'; throw error;
+  }
+  return addon[name](input);
+}
+const resolveBirthTimeJson = input => service('resolveBirthTimeJson', input);
+const calculateFromLocalJson = input => service('calculateFromLocalJson', input);
+const resolveBirthTime = input => checkedResult(resolveBirthTimeJson(stringifyContextInput(input))).data;
+const calculateFromLocal = input => checkedResult(calculateFromLocalJson(stringifyContextInput(input)));
+function renderChartSvgJson(payloadJson, optionsJson = '{}') {
+  if (typeof payloadJson !== 'string' || typeof optionsJson !== 'string') throw new TypeError('renderChartSvgJson expects JSON strings');
+  return service('renderChartSvgJson', `{"payload":${payloadJson},"options":${optionsJson}}`);
+}
+const renderChartSvgRequestJson = input => service('renderChartSvgJson', input);
+function renderChartSvgResult(payload, options = {}) {
+  return checkedResult(renderChartSvgJson(stringifyContextInput(payload), stringifyContextInput(options))).data;
+}
+const renderChartSvg = (payload, options = {}) => renderChartSvgResult(payload, options).svg;
+const renderChartPart = (payload, part, options = {}) => renderChartSvg(payload, { ...options, sections: [part] });
+const buildChartModel = (payload, options = {}) => checkedResult(renderChartSvgJson(stringifyContextInput(payload), stringifyContextInput({ ...options, output: 'model' }))).data.model;
+const getCapabilities = () => checkedResult(service('capabilitiesJson', '{}')).data;
 module.exports = { calculate, calculateJson, compressPayload, compressPayloadJson,
-  expandContext, expandContextJson, calculateWithContext, geometry, aspects, houses, points };
+  expandContext, expandContextJson, calculateWithContext, geometry, aspects, houses, points,
+  resolveBirthTime, resolveBirthTimeJson, calculateFromLocal, calculateFromLocalJson,
+  renderChartPart, buildChartModel, renderChartSvg, renderChartSvgResult, renderChartSvgJson, renderChartSvgRequestJson, getCapabilities };

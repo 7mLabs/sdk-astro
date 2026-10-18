@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-17",
+  "sourceVersion": "0.10.1",
+  "sourceCommit": "cbfadc1",
+  "node": "v24.19.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "rustTestsPassed": 108,
+  "cargoFmtCheck": "pass",
+  "cargoClippyAllTargetsDenyWarnings": "pass",
+  "repositoryCheck": {"result": "passed", "localLinks": 325, "artifactsVerifiedByThisCheck": false},
+  "fullDecodedJsonParity": {
+    "cases": 339,
+    "passed": 339,
+    "comparison": "fresh Rust source CLI vs integrity-verified public npm 0.10.1",
+    "independentAstronomicalValidation": false
+  },
+  "syntheticNatalStructuralChecks": {
+    "passed": 190,
+    "years": [1800, 1801, 1850, 1899, 1900, 1950, 1969, 1972, 1999, 2000, 2020, 2026, 2050, 2099, 2100, 2200, 2300, 2398, 2399],
+    "latitudes": [-65, -45, 0, 45, 65],
+    "houseSystems": ["placidus", "wholeSign"],
+    "month": 6,
+    "day": 15,
+    "hourUtc": 12,
+    "longitudeFormula": "(year % 361) - 180",
+    "independentAstronomicalValidation": false
+  },
+  "rawCallObservations": [
+    {"example": "natal", "rawJsonBytes": 7213, "oneRunMilliseconds": 0.14},
+    {"example": "natal-domains", "rawJsonBytes": 2145132, "oneRunMilliseconds": 89.9},
+    {"example": "couple", "rawJsonBytes": 2128806, "oneRunMilliseconds": 52.95},
+    {"example": "composite", "rawJsonBytes": 2223299, "oneRunMilliseconds": 97.1},
+    {"example": "forecast-day", "rawJsonBytes": 307833, "oneRunMilliseconds": 14.28},
+    {"example": "forecast-month", "rawJsonBytes": 4322590, "oneRunMilliseconds": 172.68},
+    {"example": "forecast-year", "rawJsonBytes": 1838985, "oneRunMilliseconds": 248.63}
+  ],
+  "measurementLimitations": "One raw calculateJson call per fixture, excluding caller JSON parse, network and rendering. Not a benchmark, percentile, SLA or platform-wide claim."
+}

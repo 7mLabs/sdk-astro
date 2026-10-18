@@ -19,7 +19,8 @@ export const number = (value, places = 2) => typeof value === 'number' && Number
 export const degrees = value => typeof value === 'number' && Number.isFinite(value) ? `${number(value,2)}°` : '—';
 export const degreeInSign = value => {
   if (typeof value !== 'number' || !Number.isFinite(value)) return '—';
-  const total = Math.round(value * 60); return `${Math.floor(total / 60)}° ${String(total % 60).padStart(2,'0')}′`;
+  // Truncate presentation only; never carry into a different sign label.
+  const total = Math.floor(((value % 30) + 30) % 30 * 60); return `${Math.floor(total / 60)}° ${String(total % 60).padStart(2,'0')}′`;
 };
 export const signName = sign => SIGN_NAMES[SIGNS.indexOf(sign)] || sign || '—';
 export const endpoint1 = a => a.point1 ?? a.body1 ?? a.transitPointId;

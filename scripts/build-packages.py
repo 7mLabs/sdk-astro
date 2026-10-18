@@ -55,7 +55,11 @@ for destination, source in [
     (ROOT / f"bindings/dotnet/native/{rid}/{library}", target / library),
 ]:
     destination.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(source, destination)
+    # Atomic replacement avoids invalidating a running macOS process's mapped
+    # code signature when a developer rebuilds with the local preview open.
+    temporary = destination.with_suffix(destination.suffix + ".next")
+    shutil.copy2(source, temporary)
+    temporary.replace(destination)
 
 run(npm + ["pack", "--ignore-scripts", "--cache", ROOT / "artifacts/npm-build-cache", "--pack-destination", packages], ROOT / "bindings/node")
 run([sys.executable, "-m", "pip", "wheel", "--no-deps", "--no-build-isolation", "--no-index", "--wheel-dir", packages, ROOT / "bindings/python"])

@@ -56,9 +56,149 @@ pub(super) struct BirthInput {
     house_system: String,
 }
 
+/// Explicit opt-in: legacy calls retain the ten-body population and byte contract.
+#[derive(Deserialize)]
+#[serde(untagged)]
+enum AdditionalPoints {
+    Preset(String),
+    Ids(Vec<String>),
+}
+impl AdditionalPoints {
+    fn ids(&self) -> Result<Vec<String>, String> {
+        let ids = match self {
+            Self::Preset(p) if p == "standard" => vec!["chiron", "trueNorthNode", "meanLilith"]
+                .into_iter()
+                .map(String::from)
+                .collect(),
+            Self::Preset(p) if p == "all" => vec![
+                "chiron",
+                "trueNorthNode",
+                "trueSouthNode",
+                "meanNorthNode",
+                "meanSouthNode",
+                "meanLilith",
+                "osculatingLilith",
+            ]
+            .into_iter()
+            .map(String::from)
+            .collect(),
+            Self::Preset(_) => return Err("additionalPoints preset must be standard or all".into()),
+            Self::Ids(ids) => ids.clone(),
+        };
+        let mut seen = HashSet::new();
+        if ids.len() > 7
+            || ids.iter().any(|id| {
+                ![
+                    "chiron",
+                    "trueNorthNode",
+                    "trueSouthNode",
+                    "meanNorthNode",
+                    "meanSouthNode",
+                    "meanLilith",
+                    "osculatingLilith",
+                ]
+                .contains(&id.as_str())
+                    || !seen.insert(id)
+            })
+        {
+            return Err("additionalPoints contains an unknown or duplicate ID".into());
+        }
+        Ok(ids)
+    }
+}
+fn extend_natal(
+    natal: &mut Value,
+    calculation: &mut Value,
+    ids: &[String],
+    rules: &[AspectRule],
+) -> Result<(), String> {
+    if ids.is_empty() {
+        return Ok(());
+    }
+    let requested: Vec<_> = ids
+        .iter()
+        .map(|id| {
+            (
+                id.as_str(),
+                match id.as_str() {
+                    "chiron" => 15,
+                    "trueNorthNode" | "trueSouthNode" => 11,
+                    "meanNorthNode" | "meanSouthNode" => 10,
+                    "meanLilith" => 12,
+                    _ => 13,
+                },
+            )
+        })
+        .collect();
+    let coordinates = astro_provider_swiss::additional_points(
+        calculation["julianDayUt1"].as_f64().unwrap(),
+        &requested,
+    )?;
+    let positions: Vec<_> = ids
+        .iter()
+        .zip(&coordinates)
+        .map(|(id, p)| Position {
+            id: id.clone(),
+            longitude: normalize(p[0] + if id.ends_with("SouthNode") { 180. } else { 0. }),
+            speed: Some(p[3]),
+        })
+        .collect();
+    let houses: Vec<_> = natal["houseCusps"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|n| n.as_f64().unwrap())
+        .collect();
+    let mut extra = serde_json::to_value(placements(&positions, Some(&houses))).unwrap();
+    for ((point, id), p) in extra
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .zip(ids)
+        .zip(&coordinates)
+    {
+        point["latitude"] = json!(if id.ends_with("SouthNode") {
+            -p[1]
+        } else {
+            p[1]
+        });
+        point["distanceAu"] = json!(p[2]);
+        point["kind"] = json!(if id == "chiron" {
+            "minorBody"
+        } else if id.contains("Node") {
+            "lunarNode"
+        } else {
+            "lunarApogee"
+        });
+        point["definition"] = json!(id);
+        point["ephemeris"] = json!(if id == "chiron" {
+            "swiss-asteroid-seas_18-with-moshier-reference"
+        } else {
+            "moshier"
+        });
+    }
+    let mut all: Vec<Position> = natal["placements"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|p| Position {
+            id: p["id"].as_str().unwrap().into(),
+            longitude: p["longitude"].as_f64().unwrap(),
+            speed: p["speed"].as_f64(),
+        })
+        .collect();
+    all.extend(positions);
+    natal["additionalPoints"] = extra;
+    natal["aspects"] = json!(aspects(&all, None, rules));
+    calculation["additionalPoints"] = json!({"ids":ids,"definitions":"explicit mean/true node and mean/osculating lunar apogee; South Node is the antipode of its matching North Node","dataFile":if ids.iter().any(|id| id == "chiron") { json!({"name":"seas_18.se1","sha256":"a2cd8fc33807c78ca9a700c91c2e042258b12fc4796519e00781440b5ad8b2e2","delivery":"embedded"}) } else { Value::Null }});
+    Ok(())
+}
+
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct NatalRequest {
+    #[serde(default, deserialize_with = "present")]
+    additional_points: Option<AdditionalPoints>,
     operation: String,
     utc: Utc,
     location: Location,
@@ -81,15 +221,9 @@ fn validate_natal(r: &NatalRequest, rules: &[AspectRule]) -> Result<u8, String> 
         return Err("Expected natal or natalDomains operation".into());
     }
     if r.operation == "natal"
-        && (r.domains.is_some()
-            || r.rulership.is_some()
-            || r.aspect_preset.is_some()
-            || r.custom_profiles.is_some())
+        && (r.domains.is_some() || r.rulership.is_some() || r.custom_profiles.is_some())
     {
-        return Err(
-            "domains, rulership, aspectPreset and customProfiles require operation natalDomains"
-                .into(),
-        );
+        return Err("domains, rulership and customProfiles require operation natalDomains".into());
     }
     let system = validate_birth_parts(&r.utc, &r.location, &r.house_system)?;
     validate_aspect_rules(rules)?;
@@ -218,6 +352,15 @@ pub(super) fn calculate_json(raw: &str) -> String {
         Ok(r) => r,
         Err(e) => return error_json("INVALID_INPUT", &e.to_string()),
     };
+    let ids = match r
+        .additional_points
+        .as_ref()
+        .map(AdditionalPoints::ids)
+        .transpose()
+    {
+        Ok(ids) => ids.unwrap_or_default(),
+        Err(e) => return error_json("INVALID_INPUT", &e),
+    };
     let is_domains = r.operation == "natalDomains";
     let preset =
         r.aspect_preset
@@ -264,10 +407,13 @@ pub(super) fn calculate_json(raw: &str) -> String {
         location: r.location,
         house_system: r.house_system,
     };
-    let (natal, mut calculation) = match compute_birth(&birth, system, &rules) {
+    let (mut natal, mut calculation) = match compute_birth(&birth, system, &rules) {
         Ok(values) => values,
         Err(e) => return error_json("CALCULATION_FAILED", &e),
     };
+    if let Err(e) = extend_natal(&mut natal, &mut calculation, &ids, &rules) {
+        return error_json("CALCULATION_FAILED", &e);
+    }
     calculation["scope"] = json!(if is_domains {
         "natal-domain-data"
     } else {
@@ -283,12 +429,17 @@ pub(super) fn calculate_json(raw: &str) -> String {
         "data":data,
         "warnings":["Moshier analytical ephemeris; no JPL/Swiss data files. Future UTC uses the provider's built-in time model, not live Earth-orientation data."],
         "errors":[]});
-    if is_domains {
+    if ids.iter().any(|id| id == "chiron") {
+        result["warnings"][0] = json!("Sun–Pluto use Moshier. Chiron uses the embedded Swiss asteroid series; additional point definitions and file provenance are in calculation.additionalPoints. Future UTC uses built-in time tables, not live Earth-orientation data.");
+    }
+    if is_domains || r.aspect_preset.is_some() {
         result["calculation"]["aspectPreset"] = json!(if r.aspect_rules.provided {
             "custom"
         } else {
             preset
         });
+    }
+    if is_domains {
         result["calculation"]["rulership"] = json!(rulership);
         result["calculation"]["domainProfile"] =
             json!({"id":"sevenmlabs-domain-selection","version":"2.0"});
@@ -412,5 +563,97 @@ mod tests {
                 });
             }
         });
+    }
+}
+
+#[cfg(test)]
+mod additional_tests {
+    use super::*;
+    fn request(year: i32) -> Value {
+        json!({"operation":"natal","utc":{"year":year,"month":2,"day":7,"hour":23,"minute":0},"location":{"latitude":10.8231,"longitude":106.6297}})
+    }
+    #[test]
+    fn extended_points_are_opt_in_finite_and_preserve_original_bodies() {
+        for year in [1800, 1900, 1997, 2000, 2100, 2399] {
+            let mut r = request(year);
+            let base: Value = serde_json::from_str(&calculate_json(&r.to_string())).unwrap();
+            assert!(base["data"]["additionalPoints"].is_null());
+            r["additionalPoints"] = json!("all");
+            let extra: Value = serde_json::from_str(&calculate_json(&r.to_string())).unwrap();
+            assert_eq!(extra["errors"], json!([]), "{year}: {extra}");
+            assert_eq!(base["data"]["placements"], extra["data"]["placements"]);
+            assert!(extra["calculation"]["domainProfile"].is_null());
+            let points = extra["data"]["additionalPoints"].as_array().unwrap();
+            assert_eq!(points.len(), 7);
+            for p in points {
+                assert!((0.0..360.).contains(&p["longitude"].as_f64().unwrap()));
+                assert!(p["speed"].as_f64().unwrap().is_finite());
+            }
+            for (north, south) in [
+                ("trueNorthNode", "trueSouthNode"),
+                ("meanNorthNode", "meanSouthNode"),
+            ] {
+                let a = points.iter().find(|p| p["id"] == north).unwrap();
+                let b = points.iter().find(|p| p["id"] == south).unwrap();
+                assert!(
+                    (signed_difference(
+                        a["longitude"].as_f64().unwrap(),
+                        b["longitude"].as_f64().unwrap()
+                    )
+                    .abs()
+                        - 180.)
+                        .abs()
+                        < 1e-10
+                );
+                assert_eq!(a["speed"], b["speed"]);
+            }
+        }
+    }
+    #[test]
+    fn natal_aspect_preset_is_not_domain_metadata() {
+        let mut r = request(2000);
+        r["aspectPreset"] = json!("extended");
+        let out: Value = serde_json::from_str(&calculate_json(&r.to_string())).unwrap();
+        assert_eq!(out["errors"], json!([]));
+        assert_eq!(out["calculation"]["aspectPreset"], "extended");
+        assert!(out["calculation"]["domainProfile"].is_null());
+        assert_eq!(out["warnings"].as_array().unwrap().len(), 1);
+    }
+    #[test]
+    fn definitions_validation_and_domain_population() {
+        let mut r = request(1997);
+        r["additionalPoints"] = json!("standard");
+        r["operation"] = json!("natalDomains");
+        let result: Value = serde_json::from_str(&calculate_json(&r.to_string())).unwrap();
+        assert_eq!(result["errors"], json!([]), "{result}");
+        assert_eq!(
+            result["data"]["natal"]["additionalPoints"]
+                .as_array()
+                .unwrap()
+                .len(),
+            3
+        );
+        assert_eq!(
+            result["data"]["natal"]["placements"]
+                .as_array()
+                .unwrap()
+                .len(),
+            10
+        );
+        assert!(result["data"]["context"]["points"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|p| p["id"] == "chiron" && p["kind"] == "minorBody"));
+        for v in [
+            json!("wrong"),
+            json!(["northNode"]),
+            json!(["chiron", "chiron"]),
+            Value::Null,
+        ] {
+            r["additionalPoints"] = v;
+            let out: Value = serde_json::from_str(&calculate_json(&r.to_string())).unwrap();
+            assert!(!out["errors"].as_array().unwrap().is_empty());
+        }
     }
 }

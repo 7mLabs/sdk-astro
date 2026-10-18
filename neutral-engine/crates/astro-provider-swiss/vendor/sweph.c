@@ -2363,7 +2363,13 @@ again:
 FILE *swi_fopen(int ifno, char *fname, char *ephepath, char *serr)
 {
 #ifdef ASTRO_MOSHIER_ONLY
-  /* Modified by 7mlabs on 2026-10-02: use compiled ephemeris/time tables exclusively. */
+  /* 7mlabs 2026-10-18: only the explicitly enabled, embedded asteroid file. */
+  extern FILE *astro_builtin_ephemeris_open(const char *name);
+  FILE *builtin = astro_builtin_ephemeris_open(fname);
+  if (builtin != NULL) {
+    if (ifno >= 0) strcpy(swed.fidat[ifno].fnam, fname);
+    return builtin;
+  }
   if (serr != NULL) strcpy(serr, "External ephemeris files disabled by this build");
   return NULL;
 #endif

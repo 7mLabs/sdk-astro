@@ -214,6 +214,11 @@ pub(super) fn build_with_kind(
             p
         }))
         .collect();
+    // Additional points participate in explicit context relations, while body
+    // dignity, distributions, rulers and occupants keep the ten-body population.
+    if let Some(extra) = natal["additionalPoints"].as_array() {
+        points.extend(extra.iter().cloned());
+    }
     let houses: Vec<Value> = natal["houses"]
         .as_array()
         .unwrap()
@@ -311,7 +316,10 @@ pub(super) fn build_with_kind(
         .iter()
         .map(|id| profiles::builtin(id))
         .collect();
-    let coverage = json!({"bodies":bodies.len(),"angles":angles.len(),"houseCusps":houses.len(),"pointPairs":relations.len(),"aspectMatching":"configuredRulesOnly"});
+    let mut coverage = json!({"bodies":bodies.len(),"angles":angles.len(),"houseCusps":houses.len(),"pointPairs":relations.len(),"aspectMatching":"configuredRulesOnly"});
+    if let Some(extra) = natal["additionalPoints"].as_array() {
+        coverage["additionalPoints"] = json!(extra.len());
+    }
     json!({"chartKind":chart_kind,"subjectCount":1,"natal":natal,"context":{"rulership":rulership,"rulershipRulesVersion":"1.0","houseAssignment":"eclipticLongitude",
         "points":points,"houses":houses,"dispositors":dispositors,"relations":relations,"aspects":aspect_facts,
         "houseRulerRelations":ruler_relations,"advanced":advanced,"coverage":coverage},"domains":views,"customDomains":custom_views,"profileCatalog":catalog})

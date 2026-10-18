@@ -31,8 +31,9 @@ function createEngineBridge(options = {}) {
     rejectPending(new Error(`Astrology worker exited with code ${code}`));
   });
 
-  function asyncCalculate(input) {
+  function asyncService(service, input) {
     if (closed) return Promise.reject(new Error('Astrology bridge is closed'));
+    if (pending.size >= 32) return Promise.reject(Object.assign(new Error('Astrology bridge queue is full'), { code: 'RUNTIME_BUSY' }));
     let requestJson;
     try {
       requestJson = typeof input === 'string' ? input : JSON.stringify(input);
@@ -41,7 +42,7 @@ function createEngineBridge(options = {}) {
     const id = nextId++;
     return new Promise((resolve, reject) => {
       pending.set(id, { resolve, reject });
-      try { worker.postMessage({ id, requestJson }); }
+      try { worker.postMessage({ id, requestJson, service }); }
       catch (error) { pending.delete(id); reject(error); }
     });
   }
@@ -54,6 +55,10 @@ function createEngineBridge(options = {}) {
     }
     return closePromise;
   }
-  return Object.freeze({ asyncCalculate, close });
+  return Object.freeze({ asyncCalculate: input => asyncService('calculateJson', input),
+    asyncCalculateFromLocal: input => asyncService('calculateFromLocalJson', input),
+    asyncResolveBirthTime: input => asyncService('resolveBirthTimeJson', input),
+    asyncRenderChartSvg: input => asyncService('renderChartSvgJson', input),
+    asyncCapabilities: () => asyncService('capabilitiesJson', {}), close });
 }
 module.exports = { createEngineBridge };

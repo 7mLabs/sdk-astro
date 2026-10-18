@@ -34,3 +34,11 @@ are preserved in third-party/rust and copied into SDK third-party folders.
 Their original licenses remain applicable to those components.
 
 Legacy application source and Git history are not included in this repo.
+
+Optional native services (0.11 candidate)
+---------------------------------------
+Civil-time conversion uses pinned Jiff/TZif and bundled IANA data; upstream licenses are inventoried in third-party/rust.
+SVG labels use Plus Jakarta Sans Medium outlines under SIL OFL 1.1. The original font license is included in package third-party/PlusJakartaSans-OFL.txt and the renderer assets.
+The 7mlabs zodiac pack and conventional planet vector geometry are bundled as source geometry; SVG rendering does not fetch fonts or images.
+
+Optional Chiron data: Swiss Ephemeris seas_18.se1, upstream commit aacf962d19d79f8bc921dbcdaacf306d85be1917; SHA-256 a2cd8fc33807c78ca9a700c91c2e042258b12fc4796519e00781440b5ad8b2e2. Embedded in the native library under the existing Swiss Ephemeris license.

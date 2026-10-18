@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:7mlabs:astrology:resolve-birth-time:1.0",
+  "title": "Offline local birth time resolution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "local"
+  ],
+  "properties": {
+    "local": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "year",
+        "month",
+        "day",
+        "hour",
+        "minute"
+      ],
+      "properties": {
+        "year": {
+          "type": "integer",
+          "minimum": 1800,
+          "maximum": 2399
+        },
+        "month": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "day": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 31
+        },
+        "hour": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 23
+        },
+        "minute": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 59
+        },
+        "second": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 60,
+          "default": 0
+        }
+      }
+    },
+    "timeZone": {
+      "type": "string",
+      "minLength": 1,
+      "description": "IANA ID in the pinned bundled tzdb; no host timezone inference."
+    },
+    "utcOffsetSeconds": {
+      "type": "integer",
+      "minimum": -86399,
+      "maximum": 86399
+    },
+    "disambiguation": {
+      "enum": [
+        "reject",
+        "earlier",
+        "later"
+      ],
+      "default": "reject"
+    }
+  },
+  "oneOf": [
+    {
+      "required": [
+        "timeZone"
+      ],
+      "not": {
+        "required": [
+          "utcOffsetSeconds"
+        ],
+        "properties": {
+          "utcOffsetSeconds": {}
+        },
+        "type": "object"
+      },
+      "properties": {
+        "timeZone": {}
+      },
+      "type": "object"
+    },
+    {
+      "required": [
+        "utcOffsetSeconds"
+      ],
+      "not": {
+        "required": [
+          "timeZone"
+        ],
+        "properties": {
+          "timeZone": {}
+        },
+        "type": "object"
+      },
+      "properties": {
+        "disambiguation": {
+          "const": "reject"
+        },
+        "utcOffsetSeconds": {}
+      },
+      "type": "object"
+    }
+  ],
+  "$comment": "Runtime additionally validates the Gregorian calendar, IANA ID, gap/fold semantics and resolved UTC coverage. Civil integers use strict integer deserialization."
+}

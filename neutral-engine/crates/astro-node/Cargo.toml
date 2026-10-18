@@ -13,3 +13,4 @@ doctest = false
 
 [dependencies]
 astro-core.workspace = true
+astro-sdk = { path = "../astro-sdk" }

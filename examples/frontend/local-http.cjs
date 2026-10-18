@@ -97,6 +97,9 @@ function readRawBody(req, maximum) {
 function createLocalEngineHost(options = {}) {
   const maxInputBytes = options.maxInputBytes ?? MAX_INPUT_BYTES;
   const maxPendingRequests = options.maxPendingRequests ?? 8;
+  const maxRenderInputBytes = options.maxRenderInputBytes ?? 32 * 1024 * 1024;
+  if (!Number.isInteger(maxRenderInputBytes) || maxRenderInputBytes < 1 || maxRenderInputBytes > 32 * 1024 * 1024)
+    throw new RangeError('maxRenderInputBytes must be 1..33554432');
   if (!Number.isInteger(maxInputBytes) || maxInputBytes < 1 || maxInputBytes > MAX_INPUT_BYTES)
     throw new RangeError('maxInputBytes must be an integer between1 and4194304');
   if (!Number.isInteger(maxPendingRequests) || maxPendingRequests < 1 || maxPendingRequests > 32)
@@ -104,7 +107,7 @@ function createLocalEngineHost(options = {}) {
   const bridge = createEngineBridge({ engineModule: resolveEngineModule(options) });
   let available = false, engineVersion = null, reason = null, inFlightRequests = 0, closed = false;
   const snapshot = () => ({ available: available && !closed, engineVersion, runtime: 'localNodeWorker',
-    operations: [...OPERATIONS], maxInputBytes, maxPendingRequests, inFlightRequests,
+    operations: [...OPERATIONS], maxInputBytes, maxRenderInputBytes, maxPendingRequests, inFlightRequests,
     ...(reason ? { reason } : {}) });
   // Loading an addon alone is not proof of a usable engine. Probe a genuine call.
   const ready = bridge.asyncCalculate({ operation: 'query', group: 'geometry', action: 'normalize', longitude: 0 })
@@ -135,7 +138,13 @@ function createLocalEngineHost(options = {}) {
         sendJson(res, available && !closed ? 200 : 503, snapshot());
         return true;
       }
-      if (pathname !== '/api/astro/calculate') throw new HostError(404, 'UNKNOWN_ROUTE', 'Unknown local runtime route.');
+      const methods = { '/api/astro/calculate': bridge.asyncCalculate,
+        '/api/astro/calculate-from-local': bridge.asyncCalculateFromLocal,
+        '/api/astro/resolve-birth-time': bridge.asyncResolveBirthTime,
+        '/api/astro/render-svg': bridge.asyncRenderChartSvg,
+        '/api/astro/capabilities': bridge.asyncCapabilities };
+      const method = methods[pathname];
+      if (!method) throw new HostError(404, 'UNKNOWN_ROUTE', 'Unknown local runtime route.');
       if (req.method !== 'POST') {
         sendJson(res, 405, { error: { code: 'METHOD_NOT_ALLOWED', message: 'Use POST for engine requests.' } }, { Allow: 'POST' });
         req.resume(); return true;
@@ -147,9 +156,10 @@ function createLocalEngineHost(options = {}) {
       inFlightRequests++; reserved = true;
       await ready;
       if (!available || closed) throw new HostError(503, 'ENGINE_UNAVAILABLE', reason || 'The local runtime is closed.');
-      const raw = await readRawBody(req, maxInputBytes);
+      const raw = await readRawBody(req, pathname === '/api/astro/render-svg' ? maxRenderInputBytes
+        : pathname === '/api/astro/resolve-birth-time' ? Math.min(maxInputBytes, 16 * 1024) : maxInputBytes);
       // Do not JSON.parse/re-serialize: preserve exact integer literals for Rust.
-      const result = await bridge.asyncCalculate(raw);
+      const result = await method(raw);
       sendJson(res, 200, result);
       return true;
     } catch (error) {

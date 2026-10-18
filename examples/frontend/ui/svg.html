@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Astro SDK · SVG chart playground</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/ui/svg.css"><script type="module" src="/ui/svg.mjs"></script>
+</head>
+<body>
+  <header><a href="/">7mlabs <span>/ Astro SDK</span></a><span class="badge">Time → Chart → SVG</span></header>
+  <main>
+    <section class="controls" aria-labelledby="heading">
+      <p class="eyebrow">SDK PLAYGROUND</p><h1 id="heading">Từ giờ sinh.<br> Đến một bản đồ.</h1>
+      <p class="intro">Đổi giờ offline, tính từ tọa độ gốc và xuất SVG vector độc lập.</p>
+      <form id="birth-form">
+        <label>Ngày sinh<input name="date" type="date" value="1995-06-15" min="1800-01-01" max="2399-12-31" required></label>
+        <label>Giờ địa phương<input name="time" type="time" value="14:30:00" step="0.001" required></label>
+        <label class="wide">Múi giờ IANA<input name="zone" value="Asia/Ho_Chi_Minh" required autocomplete="off"></label>
+        <label>Vĩ độ<input name="lat" type="number" value="10.8231" min="-89.999" max="89.999" step="any" required></label>
+        <label>Kinh độ<input name="lon" type="number" value="106.6297" min="-180" max="180" step="any" required></label>
+        <label>Hệ nhà<select name="houses"><option value="placidus">Placidus</option><option value="wholeSign">Whole Sign</option></select></label>
+        <label>Giờ bị trùng<select name="ambiguity"><option value="reject">Báo để kiểm tra</option><option value="earlier">Lần sớm hơn</option><option value="later">Lần muộn hơn</option></select></label>
+        <label>Điểm mở rộng<select name="points"><option value="standard">Chiron · Node thật · Lilith trung bình</option><option value="all">Đủ 7 định nghĩa</option><option value="none">Chỉ 10 thiên thể</option></select></label>
+        <label>Góc chiếu tính toán<select name="aspects"><option value="major">5 góc chính</option><option value="extended">11 góc chính & phụ</option></select></label>
+        <button id="calculate" class="primary wide" type="submit">Tính và vẽ biểu đồ <span aria-hidden="true">↗</span></button>
+      </form>
+      <div id="status" role="status" aria-live="polite">Đang kết nối SDK…</div>
+      <dl id="resolution"></dl>
+      <details id="diagnostics"><summary>Thông tin kiểm chứng</summary><pre id="evidence"></pre></details>
+      <p class="note">Mẫu là dữ liệu tổng hợp. Giờ không tồn tại sẽ được báo lỗi; SDK không tự dịch giờ. Nhãn DMS cắt xuống, tọa độ tính toán giữ nguyên.</p>
+    </section>
+    <section class="preview" aria-label="Biểu đồ SVG">
+      <div class="view-tabs" role="group" aria-label="Phần bản đồ">
+        <button type="button" data-view="wheel" aria-pressed="true">Bản đồ</button>
+        <button type="button" data-view="positions" aria-pressed="false">Vị trí</button>
+        <button type="button" data-view="houses" aria-pressed="false">Nhà & chủ tinh</button>
+        <button type="button" data-view="relations" aria-pressed="false">Góc chiếu</button>
+        <button type="button" data-view="houseFocus" aria-pressed="false">Khám phá nhà</button>
+        <button type="button" data-view="report" aria-pressed="false">Báo cáo</button>
+      </div>
+      <p class="preview-note" id="calculation-note">Một payload · các phần xem dùng chung dữ liệu.</p>
+      <div class="focus-tools">
+        <label>Chọn nhà<select id="focus-house"><option value="">Không chọn</option><option value="1">H1</option><option value="2">H2</option><option value="3">H3</option><option value="4">H4</option><option value="5">H5</option><option value="6">H6</option><option value="7">H7</option><option value="8">H8</option><option value="9">H9</option><option value="10">H10</option><option value="11">H11</option><option value="12">H12</option></select></label>
+        <label>Chọn điểm<select id="focus-point"><option value="">Không chọn</option></select></label>
+        <label>Cách tập trung<select id="focus-mode"><option value="highlight">Làm nổi bật</option><option value="isolate">Chỉ phần liên quan</option></select></label>
+        <button id="clear-focus" type="button">Bỏ chọn</button>
+      </div>
+      <div id="focus-summary" class="focus-summary" role="status" aria-live="polite" hidden></div>
+      <div class="toolbar">
+        <label>Chi tiết<select id="detail"><option value="advanced">Nâng cao</option><option value="basic">Cơ bản</option><option value="professional">Chuyên sâu</option></select></label>
+        <label>Giao diện<select id="theme"><option value="dark">Tối</option><option value="light">Sáng</option></select></label>
+        <label>Màu góc chiếu<select id="palette"><option value="distinct">Phân biệt từng loại</option><option value="classic">Xanh · lục · đỏ (kiểu cũ)</option><option value="groups">Theo nhóm</option></select></label>
+        <label>Lọc đường<select id="filter"><option value="all">Tất cả góc đã tính</option><option value="harmonious">Hài hòa · 60° / 120°</option><option value="challenging">Thử thách · 90° / 180°</option><option value="minor">Góc phụ</option></select></label>
+        <label>Loại liên kết<select id="endpoints"><option value="bodies">Giữa thiên thể / điểm</option><option value="bodiesAndAngles">Thêm các trục</option><option value="all">Cả nhà & trục</option></select></label>
+        <button id="zoom" type="button" aria-pressed="false" aria-controls="chart-viewport" disabled>Phóng to</button>
+        <button id="download" type="button" disabled>Tải SVG phần này ↓</button>
+        <button id="download-model" type="button" disabled>Tải model JSON ↓</button>
+      </div>
+      <p class="preview-note" id="zoom-note">Bấm vào ký hiệu thiên thể hoặc số nhà trên bản đồ để tập trung. SVG và model dùng chung tọa độ nguồn.</p>
+      <div class="chart-wrap" id="chart-viewport" tabindex="0" role="region" aria-label="Khung xem bản đồ sao" aria-describedby="zoom-note"><div class="chart-surface" id="chart-surface"><img id="chart" alt="Biểu đồ natal SVG xuất trực tiếp từ Astro SDK" hidden><div id="hit-targets" class="hit-targets" role="group" aria-label="Chọn trực tiếp trên bản đồ"></div></div><p id="empty">Biểu đồ sẽ xuất hiện tại đây.</p></div>
+    </section>
+  </main>
+  <footer>7mlabs · Astro là một dự án trong hệ sinh thái 7mlabs. <a href="/">Mở UI dữ liệu đầy đủ ↗</a></footer>
+</body>
+</html>

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.0 — 2026-10-18
+
+- Add optional offline `resolveBirthTime` and composed `calculateFromLocal`; preserve UTC-only calculation semantics. Pin IANA TZif data, reject gaps, require explicit fold choices, retain second offsets and time-resolution provenance.
+- Add separate pure Rust SVG renderer with basic/advanced natal, A/B, synastry, composite and transit snapshot adapters; original-coordinate markers, outlined 7mlabs zodiac/planet glyphs and Plus Jakarta Sans labels, themes, custom symbol maps and coverage diagnostics.
+- Add Node/Python/.NET/C service APIs, additive ABI exports and capabilities; local worker HTTP/preview/download harness.
+- Fix UI in-sign minute formatting at sign boundaries. Upgrade pinned serde for service dependencies; refresh upstream dependency/font notices and verify numerical regressions separately.
+
+- Python distribution: stable `1.0.0`, initial wheel for macOS 11+ ARM64 / Python 3.10+, with matching source snapshot and build instructions included. Other Python wheel targets require separate validation.
+- Add selected extended natal points (Chiron, true/mean nodes, mean/osculating lunar apogee), modular SVG parts, JSON chart model, source-based house focus and grouped aspect colors.
+
 ## 0.10.1 — metadata fix
 
 - Bỏ trường `homepage` của package npm theo lựa chọn của maintainer; trang npm không khai báo Homepage.
@@ -31,3 +41,26 @@
 Tarball npm alpha đã phát hành public với hai native binaries macOS ARM64 và Linux x64 (glibc 2.38+). CI run `37096125672` xác nhận 108 Rust tests, 339 cross-language conformance cases và consumer matrix Node 18/24; registry integrity/tag và cài mới trên macOS ARM64 đã được kiểm tra. Python/.NET vẫn là artifacts local, chưa phát hành PyPI/NuGet. Windows, macOS Intel, Linux ARM64 và Alpine/musl chưa có binary. Engine/SDK dùng AGPL-3.0-only; UI giữ MIT riêng.
 
 UI renderer giữ version riêng `0.9.0-alpha.1`, tương thích payload schema `1.0`.
+
+### Local candidate update — 2026-10-18
+
+- Optional natal/natalDomains Chiron, true/mean North/South Nodes and
+  mean/osculating lunar apogee; explicit point definitions, separate population,
+  embedded pinned Swiss Chiron data and per-request provenance.
+- Professional SVG preset with houses/angles, filtered aspect matrix and list;
+  aspect color overrides by group/type, distinct default colors and line patterns, source-orb
+  and phase filters, section overrides and explicit table truncation coverage.
+- Updated schemas, TypeScript API, capabilities, developer examples and preview.
+  This candidate is local; no registry publication in this change.
+
+### Modular renderer candidate — 2026-10-18
+
+- Independent ordered wheel, positions, houses, matrix, aspect-list and house-focus
+  parts; render one part or compose a report while retaining the existing API.
+- Source-derived JSON chart model with final viewBox coordinates, hit targets,
+  original coordinates, house rulers and occupants, resolved styles and filters.
+  Model-only output does not generate SVG or call the astronomical provider.
+- House/point focus with highlight/isolate, one-hop related endpoints and explicit
+  body/angle/cusp aspect categories. Missing source rulership is an explicit error.
+- Node/Python/.NET convenience helpers, C/Rust JSON transport, schema/type updates
+  and a playground that reuses one calculated payload across interactive views.

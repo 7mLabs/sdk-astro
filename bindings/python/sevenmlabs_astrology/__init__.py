@@ -4,7 +4,7 @@ import json
 import platform
 from pathlib import Path
 
-__version__ = "0.10.1"
+__version__ = "1.0.0"
 _system = {"Darwin": "darwin", "Linux": "linux", "Windows": "win32"}[platform.system()]
 _machine = {"aarch64": "arm64", "arm64": "arm64", "AMD64": "x64", "x86_64": "x64"}.get(platform.machine(), platform.machine())
 _file = {"darwin": "libastro_engine.dylib", "linux": "libastro_engine.so", "win32": "astro_engine.dll"}[_system]
@@ -45,7 +45,7 @@ def _native_json(request, operation, max_bytes, name):
     if b"\0" in encoded:
         raise ValueError("Input JSON cannot contain a literal NUL")
     if len(encoded) > max_bytes:
-        raise ValueError(f"Input exceeds {max_bytes // (1024 * 1024)} MiB")
+        raise ValueError(f"Input exceeds {max_bytes} bytes")
     pointer = operation(encoded)
     if not pointer:
         raise MemoryError("Engine returned a null result")
@@ -134,3 +134,60 @@ geometry = _Geometry()
 aspects = _Aspects()
 houses = _Houses()
 points = _Points()
+
+
+def _service_json(request: str, symbol: str, max_bytes: int) -> str:
+    try:
+        operation = getattr(_lib, symbol)
+    except AttributeError as exc:
+        raise ImportError("Native binary lacks time/SVG services; rebuild/install the matching SDK package") from exc
+    operation.argtypes = [ctypes.c_char_p]
+    operation.restype = ctypes.c_void_p
+    return _native_json(request, operation, max_bytes, symbol)
+
+
+def resolve_birth_time_json(request: str) -> str:
+    return _service_json(request, "astro_resolve_birth_time_json", 16 * 1024)
+
+
+def resolve_birth_time(request: dict) -> dict:
+    """Resolve local+IANA zone or explicit offset seconds; never use host timezone."""
+    return _checked_result(resolve_birth_time_json(json.dumps(request, allow_nan=False)))["data"]
+
+
+def calculate_from_local_json(request: str) -> str:
+    return _service_json(request, "astro_calculate_from_local_json", 4 * 1024 * 1024)
+
+
+def calculate_from_local(request: dict) -> dict:
+    return _checked_result(calculate_from_local_json(json.dumps(request, allow_nan=False)))
+
+
+def render_chart_svg_json(payload_json: str, options_json: str = "{}") -> str:
+    if not isinstance(payload_json, str) or not isinstance(options_json, str):
+        raise TypeError("render_chart_svg_json expects JSON strings")
+    return _service_json('{"payload":' + payload_json + ',"options":' + options_json + '}',
+                         "astro_render_chart_svg_json", 32 * 1024 * 1024)
+
+
+def render_chart_svg_result(payload: dict, options: dict | None = None) -> dict:
+    return _checked_result(render_chart_svg_json(json.dumps(payload, allow_nan=False),
+                           json.dumps({} if options is None else options, allow_nan=False)))["data"]
+
+
+def render_chart_svg(payload: dict, options: dict | None = None) -> str:
+    return render_chart_svg_result(payload, options)["svg"]
+
+
+def get_capabilities() -> dict:
+    return _checked_result(_service_json("{}", "astro_capabilities_json", 16 * 1024))["data"]
+
+
+def render_chart_part(payload: dict, part: str, options: dict | None = None) -> str:
+    """Render one standalone part; source calculations are not repeated."""
+    return render_chart_svg(payload, {**(options or {}), "sections": [part]})
+
+
+def build_chart_model(payload: dict, options: dict | None = None) -> dict:
+    """Return source-derived geometry, house context and hit targets without SVG."""
+    return render_chart_svg_result(payload, {**(options or {}), "output": "model"})["model"]

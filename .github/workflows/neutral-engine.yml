@@ -47,15 +47,33 @@ jobs:
           rustup toolchain install stable --profile minimal --no-self-update
           rustup default stable
       - name: Rust tests
-        run: cargo test --manifest-path neutral-engine/Cargo.toml --locked
+        run: |
+          cargo fmt --manifest-path neutral-engine/Cargo.toml --all -- --check
+          cargo clippy --manifest-path neutral-engine/Cargo.toml --locked --all-targets -- -D warnings
+          cargo test --manifest-path neutral-engine/Cargo.toml --locked
       - name: Packaging dependencies
         run: |
           python -m pip install setuptools wheel
-          npm install --prefix artifacts/ci-tools --ignore-scripts --no-audit --no-fund typescript@5.9.3
+          npm install --prefix artifacts/ci-tools --ignore-scripts --no-audit --no-fund typescript@5.9.3 ajv@8.20.0
       - name: Build packages
         run: python scripts/build-packages.py
+      - name: Extended points against pinned Swiss file adapter
+        run: python scripts/check-additional-points.py
+      - name: Compatibility with the previous public npm package
+        run: |
+          npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@0.10.1
+          node scripts/check-public-compatibility.cjs
       - name: Fresh consumer installation and parity
         run: python scripts/test-packages.py
+      - name: Installed time helpers and SVG service parity
+        run: python scripts/check-time-svg-bindings.py --typescript artifacts/ci-tools/node_modules/typescript/lib/tsc.js
+      - name: Time and SVG request schemas
+        env:
+          AJV_2020_MODULE: ${{ github.workspace }}/artifacts/ci-tools/node_modules/ajv/dist/2020.js
+        run: |
+          node tests/services/schemas.cjs
+          node scripts/check-svg-point-schema.cjs
+          node tests/services/time-svg.cjs
       - name: Compression parity and real payload roundtrips
         run: python scripts/test-compression.py
       - name: Installed compression helpers and TypeScript contracts
@@ -94,6 +112,9 @@ jobs:
             artifacts/packages/sevenmlabs_astrology-*.whl
             artifacts/packages/SevenMLabs.Astrology.*.nupkg
             artifacts/test-results.json
+            artifacts/time-svg-tests.json
+            artifacts/additional-points-tests.json
+            artifacts/public-compatibility.json
             artifacts/compression-test-results.json
             artifacts/compression-binding-tests.json
             artifacts/candidate-provenance.json
@@ -192,3 +213,95 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           path: artifacts/npm-release/test-*.json
+
+  assemble-managed:
+    needs: [packages, assemble]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@v7
+        with:
+          name: candidate-darwin-arm64
+          path: artifacts/candidates/darwin-arm64
+      - uses: actions/download-artifact@v7
+        with:
+          name: candidate-linux-x64
+          path: artifacts/candidates/linux-x64
+      - uses: actions/download-artifact@v7
+        with:
+          name: npm-release
+          path: artifacts/npm-release
+      - name: Assemble PyPI and NuGet from the same verified commit
+        run: >-
+          python scripts/prepare-managed-release.py
+          --darwin artifacts/candidates/darwin-arm64
+          --linux artifacts/candidates/linux-x64
+          --commit "$GITHUB_SHA"
+      - name: Check Python metadata and final managed artifacts
+        run: |
+          python -m pip install twine
+          python -m twine check --strict artifacts/managed-release/*.whl
+          python scripts/check-managed-release.py --manifest artifacts/managed-release/manifest.json --commit "$GITHUB_SHA"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: managed-release
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            artifacts/managed-release/*.whl
+            artifacts/managed-release/*.nupkg
+            artifacts/managed-release/*.tgz
+            artifacts/managed-release/manifest.json
+
+  verify-managed:
+    needs: assemble-managed
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-15
+            rid: osx-arm64
+            python: '3.10'
+          - os: macos-15
+            rid: osx-arm64
+            python: '3.13'
+          - os: ubuntu-24.04
+            rid: linux-x64
+            python: '3.13'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/download-artifact@v7
+        with:
+          name: managed-release
+          path: artifacts/managed-release
+      - name: Fresh final-package installation, 339 cases and time/SVG parity
+        run: >-
+          python scripts/test-managed-release.py
+          --manifest artifacts/managed-release/manifest.json
+          --report artifacts/managed-report.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: managed-verification-${{ matrix.rid }}-py${{ matrix.python }}
+          if-no-files-found: error
+          retention-days: 30
+          path: artifacts/managed-report.json

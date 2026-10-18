@@ -74,6 +74,39 @@ unsafe extern "C" fn expand_context(env: Handle, info: Handle) -> Handle {
     )
 }
 
+unsafe extern "C" fn resolve_birth_time(env: Handle, info: Handle) -> Handle {
+    invoke_json(
+        env,
+        info,
+        astro_sdk::resolve_birth_time_json,
+        astro_sdk::MAX_TIME_BYTES,
+    )
+}
+unsafe extern "C" fn calculate_from_local(env: Handle, info: Handle) -> Handle {
+    invoke_json(
+        env,
+        info,
+        astro_sdk::calculate_from_local_json,
+        astro_core::MAX_REQUEST_BYTES,
+    )
+}
+unsafe extern "C" fn render_chart_svg(env: Handle, info: Handle) -> Handle {
+    invoke_json(
+        env,
+        info,
+        astro_sdk::render_chart_svg_json,
+        astro_sdk::MAX_RENDER_BYTES,
+    )
+}
+unsafe extern "C" fn capabilities(env: Handle, info: Handle) -> Handle {
+    invoke_json(
+        env,
+        info,
+        astro_sdk::capabilities_json,
+        astro_sdk::MAX_TIME_BYTES,
+    )
+}
+
 unsafe fn invoke_json(
     env: Handle,
     info: Handle,
@@ -150,6 +183,22 @@ pub unsafe extern "C" fn napi_register_module_v1(env: Handle, exports: Handle) -
         (
             b"expandContextJson\0".as_slice(),
             expand_context as unsafe extern "C" fn(Handle, Handle) -> Handle,
+        ),
+        (
+            b"resolveBirthTimeJson\0".as_slice(),
+            resolve_birth_time as unsafe extern "C" fn(Handle, Handle) -> Handle,
+        ),
+        (
+            b"calculateFromLocalJson\0".as_slice(),
+            calculate_from_local as unsafe extern "C" fn(Handle, Handle) -> Handle,
+        ),
+        (
+            b"renderChartSvgJson\0".as_slice(),
+            render_chart_svg as unsafe extern "C" fn(Handle, Handle) -> Handle,
+        ),
+        (
+            b"capabilitiesJson\0".as_slice(),
+            capabilities as unsafe extern "C" fn(Handle, Handle) -> Handle,
         ),
     ] {
         let mut function = std::ptr::null_mut();

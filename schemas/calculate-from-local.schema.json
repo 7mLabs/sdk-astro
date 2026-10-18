@@ -1,0 +1,2251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:7mlabs:astrology:calculate-from-local:1.0",
+  "title": "Optional local-time calculation facade",
+  "oneOf": [
+    {
+      "$id": "urn:7mlabs:astrology:local-natal-request:1.0",
+      "title": "Basic natal request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "local",
+        "location"
+      ],
+      "properties": {
+        "operation": {
+          "const": "natal"
+        },
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "latitude",
+            "longitude"
+          ],
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "exclusiveMinimum": -90,
+              "exclusiveMaximum": 90
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        },
+        "houseSystem": {
+          "enum": [
+            "placidus",
+            "wholeSign"
+          ],
+          "default": "placidus"
+        },
+        "aspectRules": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "angle",
+              "maxOrb"
+            ],
+            "properties": {
+              "angle": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 180
+              },
+              "maxOrb": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 15
+              }
+            }
+          }
+        },
+        "local": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "year",
+            "month",
+            "day",
+            "hour",
+            "minute"
+          ],
+          "properties": {
+            "year": {
+              "type": "integer",
+              "minimum": 1800,
+              "maximum": 2399
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31
+            },
+            "hour": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 23
+            },
+            "minute": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 59
+            },
+            "second": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMaximum": 60,
+              "default": 0
+            }
+          }
+        },
+        "timeZone": {
+          "type": "string",
+          "minLength": 1,
+          "description": "IANA ID in the pinned bundled tzdb; no host timezone inference."
+        },
+        "utcOffsetSeconds": {
+          "type": "integer",
+          "minimum": -86399,
+          "maximum": 86399
+        },
+        "disambiguation": {
+          "enum": [
+            "reject",
+            "earlier",
+            "later"
+          ],
+          "default": "reject"
+        },
+        "additionalPoints": {
+          "description": "Opt-in natal/natalDomains only. standard = Chiron + true North Node + mean lunar apogee; all = all seven explicit definitions. Default ten bodies unchanged.",
+          "oneOf": [
+            {
+              "enum": [
+                "standard",
+                "all"
+              ]
+            },
+            {
+              "type": "array",
+              "maxItems": 7,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "chiron",
+                  "trueNorthNode",
+                  "trueSouthNode",
+                  "meanNorthNode",
+                  "meanSouthNode",
+                  "meanLilith",
+                  "osculatingLilith"
+                ]
+              }
+            }
+          ]
+        },
+        "aspectPreset": {
+          "enum": [
+            "major",
+            "extended"
+          ]
+        }
+      },
+      "$comment": "Gregorian valid day/month/leap-year and unique aspect angles are enforced by core. Integer-valued decimal/exponent JSON numbers are normalized exactly by core; no rounding or string coercion.",
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "timeZone"
+              ],
+              "not": {
+                "required": [
+                  "utcOffsetSeconds"
+                ],
+                "properties": {
+                  "utcOffsetSeconds": {}
+                },
+                "type": "object"
+              },
+              "properties": {
+                "timeZone": {}
+              },
+              "type": "object"
+            },
+            {
+              "required": [
+                "utcOffsetSeconds"
+              ],
+              "not": {
+                "required": [
+                  "timeZone"
+                ],
+                "properties": {
+                  "timeZone": {}
+                },
+                "type": "object"
+              },
+              "properties": {
+                "disambiguation": {
+                  "const": "reject"
+                },
+                "utcOffsetSeconds": {}
+              },
+              "type": "object"
+            }
+          ]
+        },
+        {
+          "not": {
+            "required": [
+              "aspectPreset",
+              "aspectRules"
+            ],
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$id": "urn:7mlabs:astrology:local-natal-domains-request:1.0",
+      "title": "Individual natal domain and custom profile request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "local",
+        "location"
+      ],
+      "properties": {
+        "operation": {
+          "const": "natalDomains"
+        },
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "latitude",
+            "longitude"
+          ],
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "exclusiveMinimum": -90,
+              "exclusiveMaximum": 90
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        },
+        "houseSystem": {
+          "enum": [
+            "placidus",
+            "wholeSign"
+          ],
+          "default": "placidus"
+        },
+        "aspectRules": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "angle",
+              "maxOrb"
+            ],
+            "properties": {
+              "angle": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 180
+              },
+              "maxOrb": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 15
+              }
+            }
+          }
+        },
+        "domains": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "career",
+              "love",
+              "relationships",
+              "family",
+              "finance",
+              "identity",
+              "learning",
+              "creativity",
+              "innerLife",
+              "dailyLife"
+            ]
+          },
+          "description": "Absent selects all ten builtins. Empty requires at least one custom profile."
+        },
+        "rulership": {
+          "enum": [
+            "traditional",
+            "modern"
+          ],
+          "default": "traditional"
+        },
+        "aspectPreset": {
+          "enum": [
+            "major",
+            "extended"
+          ]
+        },
+        "customProfiles": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/customProfile"
+          },
+          "description": "Custom IDs and section IDs must be unique within their scope; core enforces ID uniqueness."
+        },
+        "local": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "year",
+            "month",
+            "day",
+            "hour",
+            "minute"
+          ],
+          "properties": {
+            "year": {
+              "type": "integer",
+              "minimum": 1800,
+              "maximum": 2399
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31
+            },
+            "hour": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 23
+            },
+            "minute": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 59
+            },
+            "second": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMaximum": 60,
+              "default": 0
+            }
+          }
+        },
+        "timeZone": {
+          "type": "string",
+          "minLength": 1,
+          "description": "IANA ID in the pinned bundled tzdb; no host timezone inference."
+        },
+        "utcOffsetSeconds": {
+          "type": "integer",
+          "minimum": -86399,
+          "maximum": 86399
+        },
+        "disambiguation": {
+          "enum": [
+            "reject",
+            "earlier",
+            "later"
+          ],
+          "default": "reject"
+        },
+        "additionalPoints": {
+          "description": "Opt-in natal/natalDomains only. standard = Chiron + true North Node + mean lunar apogee; all = all seven explicit definitions. Default ten bodies unchanged.",
+          "oneOf": [
+            {
+              "enum": [
+                "standard",
+                "all"
+              ]
+            },
+            {
+              "type": "array",
+              "maxItems": 7,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "chiron",
+                  "trueNorthNode",
+                  "trueSouthNode",
+                  "meanNorthNode",
+                  "meanSouthNode",
+                  "meanLilith",
+                  "osculatingLilith"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "$comment": "Gregorian valid day/month/leap-year and unique aspect angles are enforced by core. Integer-valued decimal/exponent JSON numbers are normalized exactly by core; no rounding or string coercion. Profile and section ID uniqueness is enforced by core. Explicit null is not accepted for any option; selector arrays default empty but each profile and section needs at least one selector.",
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "aspectRules",
+              "aspectPreset"
+            ],
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "required": [
+              "domains"
+            ],
+            "properties": {
+              "domains": {
+                "type": "array",
+                "maxItems": 0
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "required": [
+              "customProfiles"
+            ],
+            "properties": {
+              "customProfiles": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "timeZone"
+              ],
+              "not": {
+                "required": [
+                  "utcOffsetSeconds"
+                ],
+                "properties": {
+                  "utcOffsetSeconds": {}
+                },
+                "type": "object"
+              },
+              "properties": {
+                "timeZone": {}
+              },
+              "type": "object"
+            },
+            {
+              "required": [
+                "utcOffsetSeconds"
+              ],
+              "not": {
+                "required": [
+                  "timeZone"
+                ],
+                "properties": {
+                  "timeZone": {}
+                },
+                "type": "object"
+              },
+              "properties": {
+                "disambiguation": {
+                  "const": "reject"
+                },
+                "utcOffsetSeconds": {}
+              },
+              "type": "object"
+            }
+          ]
+        },
+        {
+          "not": {
+            "required": [
+              "aspectPreset",
+              "aspectRules"
+            ],
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            }
+          }
+        }
+      ],
+      "$defs": {
+        "profileSection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z][a-zA-Z0-9_-]{0,63}$",
+              "not": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "constructor",
+                      "prototype",
+                      "__proto__"
+                    ]
+                  },
+                  {
+                    "pattern": "[^a-zA-Z0-9_-]"
+                  }
+                ]
+              }
+            },
+            "houses": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12
+              },
+              "maxItems": 12,
+              "uniqueItems": true,
+              "default": []
+            },
+            "bodies": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "sun",
+                  "moon",
+                  "mercury",
+                  "venus",
+                  "mars",
+                  "jupiter",
+                  "saturn",
+                  "uranus",
+                  "neptune",
+                  "pluto"
+                ]
+              },
+              "maxItems": 10,
+              "uniqueItems": true,
+              "default": []
+            },
+            "angles": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "ascendant",
+                  "midheaven",
+                  "descendant",
+                  "imumCoeli"
+                ]
+              },
+              "maxItems": 4,
+              "uniqueItems": true,
+              "default": []
+            }
+          },
+          "anyOf": [
+            {
+              "type": "object",
+              "required": [
+                "houses"
+              ],
+              "properties": {
+                "houses": {
+                  "type": "array",
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "bodies"
+              ],
+              "properties": {
+                "bodies": {
+                  "type": "array",
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "angles"
+              ],
+              "properties": {
+                "angles": {
+                  "type": "array",
+                  "minItems": 1
+                }
+              }
+            }
+          ]
+        },
+        "customProfile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z][a-zA-Z0-9_-]{0,63}$",
+              "not": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "career",
+                      "love",
+                      "relationships",
+                      "family",
+                      "finance",
+                      "identity",
+                      "learning",
+                      "creativity",
+                      "innerLife",
+                      "dailyLife",
+                      "constructor",
+                      "prototype",
+                      "__proto__"
+                    ]
+                  },
+                  {
+                    "pattern": "[^a-zA-Z0-9_-]"
+                  }
+                ]
+              }
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,31}$",
+              "default": "1.0",
+              "not": {
+                "pattern": "[^a-zA-Z0-9._-]"
+              }
+            },
+            "houses": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12
+              },
+              "maxItems": 12,
+              "uniqueItems": true,
+              "default": []
+            },
+            "bodies": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "sun",
+                  "moon",
+                  "mercury",
+                  "venus",
+                  "mars",
+                  "jupiter",
+                  "saturn",
+                  "uranus",
+                  "neptune",
+                  "pluto"
+                ]
+              },
+              "maxItems": 10,
+              "uniqueItems": true,
+              "default": []
+            },
+            "angles": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "ascendant",
+                  "midheaven",
+                  "descendant",
+                  "imumCoeli"
+                ]
+              },
+              "maxItems": 4,
+              "uniqueItems": true,
+              "default": []
+            },
+            "sections": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "$ref": "#/$defs/profileSection"
+              },
+              "default": []
+            }
+          },
+          "anyOf": [
+            {
+              "type": "object",
+              "required": [
+                "houses"
+              ],
+              "properties": {
+                "houses": {
+                  "type": "array",
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "bodies"
+              ],
+              "properties": {
+                "bodies": {
+                  "type": "array",
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "angles"
+              ],
+              "properties": {
+                "angles": {
+                  "type": "array",
+                  "minItems": 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$id": "urn:7mlabs:astrology:local-couple-request:1.0",
+      "title": "Two-person natal synastry report request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "personA",
+        "personB"
+      ],
+      "properties": {
+        "operation": {
+          "const": "couple"
+        },
+        "personA": {
+          "$ref": "#/$defs/birthInput"
+        },
+        "personB": {
+          "$ref": "#/$defs/birthInput"
+        },
+        "aspectRules": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/aspectRules"
+        },
+        "aspectPreset": {
+          "enum": [
+            "major",
+            "extended"
+          ],
+          "default": "extended"
+        },
+        "rulership": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/rulership"
+        },
+        "domains": {
+          "type": "array",
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "attraction",
+              "communication",
+              "emotionalConnection",
+              "longTerm",
+              "sharedResources",
+              "homeFamily"
+            ]
+          },
+          "description": "Absent selects all six builtin pair profiles. Empty requires nonempty customProfiles."
+        },
+        "customProfiles": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/customProfile"
+          }
+        },
+        "composite": {
+          "$ref": "#/$defs/compositeOptions"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "aspectRules",
+              "aspectPreset"
+            ],
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "required": [
+              "domains"
+            ],
+            "properties": {
+              "domains": {
+                "type": "array",
+                "maxItems": 0
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "required": [
+              "customProfiles"
+            ],
+            "properties": {
+              "customProfiles": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "properties": {
+                "personA": {
+                  "required": [
+                    "local"
+                  ],
+                  "properties": {
+                    "local": {}
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "personB": {
+                  "required": [
+                    "local"
+                  ],
+                  "properties": {
+                    "local": {}
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "$defs": {
+        "birthInput": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "utc",
+                "location"
+              ],
+              "properties": {
+                "utc": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/utc"
+                },
+                "location": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/location"
+                },
+                "houseSystem": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/houseSystem"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "local",
+                "location"
+              ],
+              "properties": {
+                "location": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/location"
+                },
+                "houseSystem": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/houseSystem"
+                },
+                "local": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "year",
+                    "month",
+                    "day",
+                    "hour",
+                    "minute"
+                  ],
+                  "properties": {
+                    "year": {
+                      "type": "integer",
+                      "minimum": 1800,
+                      "maximum": 2399
+                    },
+                    "month": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 12
+                    },
+                    "day": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 31
+                    },
+                    "hour": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 23
+                    },
+                    "minute": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 59
+                    },
+                    "second": {
+                      "type": "number",
+                      "minimum": 0,
+                      "exclusiveMaximum": 60,
+                      "default": 0
+                    }
+                  }
+                },
+                "timeZone": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "IANA ID in the pinned bundled tzdb; no host timezone inference."
+                },
+                "utcOffsetSeconds": {
+                  "type": "integer",
+                  "minimum": -86399,
+                  "maximum": 86399
+                },
+                "disambiguation": {
+                  "enum": [
+                    "reject",
+                    "earlier",
+                    "later"
+                  ],
+                  "default": "reject"
+                }
+              },
+              "allOf": [
+                {
+                  "oneOf": [
+                    {
+                      "required": [
+                        "timeZone"
+                      ],
+                      "not": {
+                        "required": [
+                          "utcOffsetSeconds"
+                        ],
+                        "properties": {
+                          "utcOffsetSeconds": {}
+                        },
+                        "type": "object"
+                      },
+                      "properties": {
+                        "timeZone": {}
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "required": [
+                        "utcOffsetSeconds"
+                      ],
+                      "not": {
+                        "required": [
+                          "timeZone"
+                        ],
+                        "properties": {
+                          "timeZone": {}
+                        },
+                        "type": "object"
+                      },
+                      "properties": {
+                        "disambiguation": {
+                          "const": "reject"
+                        },
+                        "utcOffsetSeconds": {}
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "customProfile": {
+          "allOf": [
+            {
+              "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/$defs/customProfile"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "not": {
+                    "enum": [
+                      "attraction",
+                      "communication",
+                      "emotionalConnection",
+                      "longTerm",
+                      "sharedResources",
+                      "homeFamily"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "compositeOptions": {
+          "type": "object",
+          "properties": {
+            "houseMethod": {
+              "enum": [
+                "midpoint",
+                "wholeSignFromMidpointAscendant"
+              ],
+              "default": "midpoint"
+            },
+            "antipodalPolicy": {
+              "enum": [
+                "error",
+                "lowerLongitude"
+              ],
+              "default": "error"
+            },
+            "domains": {
+              "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/domains"
+            },
+            "customProfiles": {
+              "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/customProfiles"
+            }
+          },
+          "required": [],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "type": "object",
+                "required": [
+                  "domains"
+                ],
+                "properties": {
+                  "domains": {
+                    "type": "array",
+                    "maxItems": 0
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "required": [
+                  "customProfiles"
+                ],
+                "properties": {
+                  "customProfiles": {
+                    "type": "array",
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "$comment": "Birth inputs are Gregorian UTC with exact integer-valued calendar components. The same profile selectors are applied independently to both people. Calendar validity, unique custom/section IDs, and unique aspect angles are enforced by core. IDs from all individual and pair builtin profiles are reserved. All $refs resolve through local schema IDs; no network resolution is required."
+    },
+    {
+      "$id": "urn:7mlabs:astrology:local-composite-request:1.0",
+      "title": "Symbolic midpoint composite chart and ten domain reports",
+      "description": "Two strict Gregorian UTC birth inputs; shortest-arc midpoint chart C. Default ambiguous antipodes fail, invalid midpoint house order fails, and no date/location is invented for C. Calendar validity, unique custom IDs and rule angles are enforced by core.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "personA",
+        "personB"
+      ],
+      "properties": {
+        "operation": {
+          "const": "composite"
+        },
+        "personA": {
+          "$ref": "#/$defs/birthInput"
+        },
+        "personB": {
+          "$ref": "#/$defs/birthInput"
+        },
+        "houseMethod": {
+          "enum": [
+            "midpoint",
+            "wholeSignFromMidpointAscendant"
+          ],
+          "default": "midpoint"
+        },
+        "antipodalPolicy": {
+          "enum": [
+            "error",
+            "lowerLongitude"
+          ],
+          "default": "error"
+        },
+        "domains": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/domains"
+        },
+        "customProfiles": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/customProfiles"
+        },
+        "rulership": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/rulership"
+        },
+        "aspectPreset": {
+          "enum": [
+            "major",
+            "extended"
+          ],
+          "default": "extended"
+        },
+        "aspectRules": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/aspectRules"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "aspectRules",
+              "aspectPreset"
+            ],
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "required": [
+              "domains"
+            ],
+            "properties": {
+              "domains": {
+                "type": "array",
+                "maxItems": 0
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "required": [
+              "customProfiles"
+            ],
+            "properties": {
+              "customProfiles": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "properties": {
+                "personA": {
+                  "required": [
+                    "local"
+                  ],
+                  "properties": {
+                    "local": {}
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "personB": {
+                  "required": [
+                    "local"
+                  ],
+                  "properties": {
+                    "local": {}
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "$defs": {
+        "birthInput": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "utc",
+                "location"
+              ],
+              "properties": {
+                "utc": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/utc"
+                },
+                "location": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/location"
+                },
+                "houseSystem": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/houseSystem"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "local",
+                "location"
+              ],
+              "properties": {
+                "location": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/location"
+                },
+                "houseSystem": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/houseSystem"
+                },
+                "local": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "year",
+                    "month",
+                    "day",
+                    "hour",
+                    "minute"
+                  ],
+                  "properties": {
+                    "year": {
+                      "type": "integer",
+                      "minimum": 1800,
+                      "maximum": 2399
+                    },
+                    "month": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 12
+                    },
+                    "day": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 31
+                    },
+                    "hour": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 23
+                    },
+                    "minute": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 59
+                    },
+                    "second": {
+                      "type": "number",
+                      "minimum": 0,
+                      "exclusiveMaximum": 60,
+                      "default": 0
+                    }
+                  }
+                },
+                "timeZone": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "IANA ID in the pinned bundled tzdb; no host timezone inference."
+                },
+                "utcOffsetSeconds": {
+                  "type": "integer",
+                  "minimum": -86399,
+                  "maximum": 86399
+                },
+                "disambiguation": {
+                  "enum": [
+                    "reject",
+                    "earlier",
+                    "later"
+                  ],
+                  "default": "reject"
+                }
+              },
+              "allOf": [
+                {
+                  "oneOf": [
+                    {
+                      "required": [
+                        "timeZone"
+                      ],
+                      "not": {
+                        "required": [
+                          "utcOffsetSeconds"
+                        ],
+                        "properties": {
+                          "utcOffsetSeconds": {}
+                        },
+                        "type": "object"
+                      },
+                      "properties": {
+                        "timeZone": {}
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "required": [
+                        "utcOffsetSeconds"
+                      ],
+                      "not": {
+                        "required": [
+                          "timeZone"
+                        ],
+                        "properties": {
+                          "timeZone": {}
+                        },
+                        "type": "object"
+                      },
+                      "properties": {
+                        "disambiguation": {
+                          "const": "reject"
+                        },
+                        "utcOffsetSeconds": {}
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "houseMethod": {
+              "enum": [
+                "midpoint",
+                "wholeSignFromMidpointAscendant"
+              ],
+              "default": "midpoint"
+            },
+            "antipodalPolicy": {
+              "enum": [
+                "error",
+                "lowerLongitude"
+              ],
+              "default": "error"
+            },
+            "domains": {
+              "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/domains"
+            },
+            "customProfiles": {
+              "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/customProfiles"
+            }
+          },
+          "required": [],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "type": "object",
+                "required": [
+                  "domains"
+                ],
+                "properties": {
+                  "domains": {
+                    "type": "array",
+                    "maxItems": 0
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "required": [
+                  "customProfiles"
+                ],
+                "properties": {
+                  "customProfiles": {
+                    "type": "array",
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$id": "urn:7mlabs:astrology:local-forecast-request:1.0",
+      "title": "Individual natal forecast raw data for a day, month or year",
+      "description": "One strict UTC birth input, a fixed-offset civil period and bounded event search. Snapshot targets use fixed natal points. Calendar and UTC-window limits, unique profile/section IDs and event/contact search budgets are verified by core.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "birth",
+        "period"
+      ],
+      "properties": {
+        "operation": {
+          "const": "forecast"
+        },
+        "period": {
+          "$ref": "#/$defs/period"
+        },
+        "bodies": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "sun",
+              "moon",
+              "mercury",
+              "venus",
+              "mars",
+              "jupiter",
+              "saturn",
+              "uranus",
+              "neptune",
+              "pluto"
+            ]
+          }
+        },
+        "eventTypes": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "ingress",
+              "station",
+              "lunarPhase",
+              "planetaryAspect",
+              "solarEclipse",
+              "lunarEclipse"
+            ]
+          }
+        },
+        "aspectPreset": {
+          "enum": [
+            "major",
+            "extended"
+          ],
+          "default": "major"
+        },
+        "aspectRules": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/aspectRules"
+        },
+        "birth": {
+          "$ref": "#/$defs/birthInput"
+        },
+        "includeNatalTransits": {
+          "type": "boolean",
+          "default": true
+        },
+        "domains": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/domains"
+        },
+        "rulership": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/rulership"
+        },
+        "customProfiles": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/customProfiles"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "aspectRules",
+              "aspectPreset"
+            ],
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "required": [
+              "domains"
+            ],
+            "properties": {
+              "domains": {
+                "type": "array",
+                "maxItems": 0
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "required": [
+              "customProfiles"
+            ],
+            "properties": {
+              "customProfiles": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "$defs": {
+        "period": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "day"
+                },
+                "year": {
+                  "type": "integer",
+                  "minimum": 1800,
+                  "maximum": 2399
+                },
+                "utcOffsetMinutes": {
+                  "type": "integer",
+                  "minimum": -840,
+                  "maximum": 840,
+                  "default": 0
+                },
+                "month": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "day": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 31
+                }
+              },
+              "required": [
+                "kind",
+                "year",
+                "month",
+                "day"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "month"
+                },
+                "year": {
+                  "type": "integer",
+                  "minimum": 1800,
+                  "maximum": 2399
+                },
+                "utcOffsetMinutes": {
+                  "type": "integer",
+                  "minimum": -840,
+                  "maximum": 840,
+                  "default": 0
+                },
+                "month": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                }
+              },
+              "required": [
+                "kind",
+                "year",
+                "month"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "year"
+                },
+                "year": {
+                  "type": "integer",
+                  "minimum": 1800,
+                  "maximum": 2399
+                },
+                "utcOffsetMinutes": {
+                  "type": "integer",
+                  "minimum": -840,
+                  "maximum": 840,
+                  "default": 0
+                }
+              },
+              "required": [
+                "kind",
+                "year"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "birthInput": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "local",
+            "location"
+          ],
+          "properties": {
+            "location": {
+              "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/location"
+            },
+            "houseSystem": {
+              "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/houseSystem"
+            },
+            "local": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "year",
+                "month",
+                "day",
+                "hour",
+                "minute"
+              ],
+              "properties": {
+                "year": {
+                  "type": "integer",
+                  "minimum": 1800,
+                  "maximum": 2399
+                },
+                "month": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "day": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 31
+                },
+                "hour": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 23
+                },
+                "minute": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 59
+                },
+                "second": {
+                  "type": "number",
+                  "minimum": 0,
+                  "exclusiveMaximum": 60,
+                  "default": 0
+                }
+              }
+            },
+            "timeZone": {
+              "type": "string",
+              "minLength": 1,
+              "description": "IANA ID in the pinned bundled tzdb; no host timezone inference."
+            },
+            "utcOffsetSeconds": {
+              "type": "integer",
+              "minimum": -86399,
+              "maximum": 86399
+            },
+            "disambiguation": {
+              "enum": [
+                "reject",
+                "earlier",
+                "later"
+              ],
+              "default": "reject"
+            }
+          },
+          "allOf": [
+            {
+              "oneOf": [
+                {
+                  "required": [
+                    "timeZone"
+                  ],
+                  "not": {
+                    "required": [
+                      "utcOffsetSeconds"
+                    ],
+                    "properties": {
+                      "utcOffsetSeconds": {}
+                    },
+                    "type": "object"
+                  },
+                  "properties": {
+                    "timeZone": {}
+                  },
+                  "type": "object"
+                },
+                {
+                  "required": [
+                    "utcOffsetSeconds"
+                  ],
+                  "not": {
+                    "required": [
+                      "timeZone"
+                    ],
+                    "properties": {
+                      "timeZone": {}
+                    },
+                    "type": "object"
+                  },
+                  "properties": {
+                    "disambiguation": {
+                      "const": "reject"
+                    },
+                    "utcOffsetSeconds": {}
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$id": "urn:7mlabs:astrology:local-query-request:1.0",
+      "title": "Grouped on-demand calculation query",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "operation",
+            "group",
+            "action",
+            "birth"
+          ],
+          "properties": {
+            "operation": {
+              "const": "query"
+            },
+            "group": {
+              "const": "aspects"
+            },
+            "action": {
+              "const": "inspect"
+            },
+            "birth": {
+              "$ref": "#/$defs/birthInput"
+            },
+            "rulership": {
+              "enum": [
+                "traditional",
+                "modern"
+              ]
+            },
+            "aspectPreset": {
+              "enum": [
+                "major",
+                "extended"
+              ]
+            },
+            "aspectRules": {
+              "type": "array",
+              "minItems": 0,
+              "items": {
+                "$ref": "#/$defs/aspectRule"
+              },
+              "maxItems": 16
+            },
+            "pointIds": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "enum": [
+                  "sun",
+                  "moon",
+                  "mercury",
+                  "venus",
+                  "mars",
+                  "jupiter",
+                  "saturn",
+                  "uranus",
+                  "neptune",
+                  "pluto",
+                  "ascendant",
+                  "midheaven",
+                  "descendant",
+                  "imumCoeli",
+                  "H1",
+                  "H2",
+                  "H3",
+                  "H4",
+                  "H5",
+                  "H6",
+                  "H7",
+                  "H8",
+                  "H9",
+                  "H10",
+                  "H11",
+                  "H12"
+                ]
+              },
+              "maxItems": 26,
+              "uniqueItems": true
+            }
+          },
+          "not": {
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            },
+            "required": [
+              "aspectPreset",
+              "aspectRules"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "operation",
+            "group",
+            "action",
+            "birth"
+          ],
+          "properties": {
+            "operation": {
+              "const": "query"
+            },
+            "group": {
+              "const": "points"
+            },
+            "action": {
+              "const": "inspect"
+            },
+            "birth": {
+              "$ref": "#/$defs/birthInput"
+            },
+            "rulership": {
+              "enum": [
+                "traditional",
+                "modern"
+              ]
+            },
+            "aspectPreset": {
+              "enum": [
+                "major",
+                "extended"
+              ]
+            },
+            "aspectRules": {
+              "type": "array",
+              "minItems": 0,
+              "items": {
+                "$ref": "#/$defs/aspectRule"
+              },
+              "maxItems": 16
+            },
+            "pointIds": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "enum": [
+                  "sun",
+                  "moon",
+                  "mercury",
+                  "venus",
+                  "mars",
+                  "jupiter",
+                  "saturn",
+                  "uranus",
+                  "neptune",
+                  "pluto",
+                  "ascendant",
+                  "midheaven",
+                  "descendant",
+                  "imumCoeli",
+                  "H1",
+                  "H2",
+                  "H3",
+                  "H4",
+                  "H5",
+                  "H6",
+                  "H7",
+                  "H8",
+                  "H9",
+                  "H10",
+                  "H11",
+                  "H12"
+                ]
+              },
+              "maxItems": 26,
+              "uniqueItems": true
+            }
+          },
+          "not": {
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            },
+            "required": [
+              "aspectPreset",
+              "aspectRules"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "operation",
+            "group",
+            "action",
+            "birth"
+          ],
+          "properties": {
+            "operation": {
+              "const": "query"
+            },
+            "group": {
+              "const": "houses"
+            },
+            "action": {
+              "const": "inspect"
+            },
+            "birth": {
+              "$ref": "#/$defs/birthInput"
+            },
+            "rulership": {
+              "enum": [
+                "traditional",
+                "modern"
+              ]
+            },
+            "aspectPreset": {
+              "enum": [
+                "major",
+                "extended"
+              ]
+            },
+            "aspectRules": {
+              "type": "array",
+              "minItems": 0,
+              "items": {
+                "$ref": "#/$defs/aspectRule"
+              },
+              "maxItems": 16
+            },
+            "houseNumbers": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12
+              },
+              "maxItems": 12,
+              "uniqueItems": true
+            }
+          },
+          "not": {
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            },
+            "required": [
+              "aspectPreset",
+              "aspectRules"
+            ]
+          }
+        }
+      ],
+      "$defs": {
+        "birthInput": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "local",
+            "location"
+          ],
+          "properties": {
+            "location": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "latitude",
+                "longitude"
+              ],
+              "properties": {
+                "latitude": {
+                  "type": "number",
+                  "exclusiveMinimum": -90,
+                  "exclusiveMaximum": 90
+                },
+                "longitude": {
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180
+                }
+              }
+            },
+            "houseSystem": {
+              "enum": [
+                "placidus",
+                "wholeSign"
+              ],
+              "default": "placidus"
+            },
+            "local": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "year",
+                "month",
+                "day",
+                "hour",
+                "minute"
+              ],
+              "properties": {
+                "year": {
+                  "type": "integer",
+                  "minimum": 1800,
+                  "maximum": 2399
+                },
+                "month": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "day": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 31
+                },
+                "hour": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 23
+                },
+                "minute": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 59
+                },
+                "second": {
+                  "type": "number",
+                  "minimum": 0,
+                  "exclusiveMaximum": 60,
+                  "default": 0
+                }
+              }
+            },
+            "timeZone": {
+              "type": "string",
+              "minLength": 1,
+              "description": "IANA ID in the pinned bundled tzdb; no host timezone inference."
+            },
+            "utcOffsetSeconds": {
+              "type": "integer",
+              "minimum": -86399,
+              "maximum": 86399
+            },
+            "disambiguation": {
+              "enum": [
+                "reject",
+                "earlier",
+                "later"
+              ],
+              "default": "reject"
+            }
+          },
+          "allOf": [
+            {
+              "oneOf": [
+                {
+                  "required": [
+                    "timeZone"
+                  ],
+                  "not": {
+                    "required": [
+                      "utcOffsetSeconds"
+                    ],
+                    "properties": {
+                      "utcOffsetSeconds": {}
+                    },
+                    "type": "object"
+                  },
+                  "properties": {
+                    "timeZone": {}
+                  },
+                  "type": "object"
+                },
+                {
+                  "required": [
+                    "utcOffsetSeconds"
+                  ],
+                  "not": {
+                    "required": [
+                      "timeZone"
+                    ],
+                    "properties": {
+                      "timeZone": {}
+                    },
+                    "type": "object"
+                  },
+                  "properties": {
+                    "disambiguation": {
+                      "const": "reject"
+                    },
+                    "utcOffsetSeconds": {}
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          ]
+        },
+        "aspectRule": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "angle",
+            "maxOrb"
+          ],
+          "properties": {
+            "angle": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 180
+            },
+            "maxOrb": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 15
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "longitude"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "longitude": {
+              "type": "number"
+            },
+            "speed": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        }
+      },
+      "$comment": "Core additionally checks finite arithmetic, unique/nonblank position IDs and 128 UTF-8 byte length, valid Gregorian dates, exact raw JSON integer normalization, and ordered house cusps traversing the zodiac once. Optional selectors and options reject null. Inspection selectors default all; aspectPreset defaults major."
+    }
+  ],
+  "$comment": "UTC operations remain in their existing schemas. This facade requires at least one local birth and resolves it before invoking the unchanged calculation core. Runtime checks calendar, zone rules and UTC bounds."
+}
