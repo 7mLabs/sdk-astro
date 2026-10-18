@@ -72,7 +72,7 @@ run(["dotnet", "build", "Example.csproj", "--no-restore", "--verbosity", "quiet"
 dll = dotnet_dir / "bin/Debug/net10.0/Example.dll"
 run(["dotnet", dll, "--test"], dotnet_dir)
 
-    run(["cargo", "build", "--manifest-path", ROOT / "examples/rust/Cargo.toml", "--locked", "--offline", "--quiet"])
+run(["cargo", "build", "--manifest-path", ROOT / "examples/rust/Cargo.toml", "--locked", "--offline", "--quiet"])
 rust_binary = ROOT / "examples/rust/target/debug/astrology-rust-example"
 c_binary = CONSUMERS / "c-example"
 if sys.platform == "darwin":

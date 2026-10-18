@@ -41,7 +41,9 @@ jobs:
         with:
           dotnet-version: '10.0.x'
       - name: Source, documentation and metadata checks
-        run: python scripts/check-repository.py
+        run: |
+          python -m compileall -q scripts
+          python scripts/check-repository.py
       - name: Select pinned release Rust toolchain
         run: |
           rustup toolchain install 1.99.1 --profile minimal --component clippy --component rustfmt --no-self-update
