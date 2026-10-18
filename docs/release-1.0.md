@@ -47,7 +47,10 @@ not change the release compiler midway through verification.
    five-language conformance cases, concurrency, time/SVG, schema, compression and
    TypeScript checks on each candidate target.
 3. Assemble a single final npm tarball and a single NuGet package with both native
-   targets. Portable wrapper/assembly/notices must agree between candidates. Python
+   targets. Portable wrappers/notices must agree byte-for-byte. Managed assemblies must agree
+   in every PE byte except MVID, timestamps, checksum and debug identities; API and
+   IL hashes must also agree. The original Mac assembly is retained unchanged and
+   that exact DLL is tested on both operating systems. Python
    preserves the tested macOS binary and includes matching source/build instructions.
 4. Reinstall the final npm tarball on Mac/Linux, Node 18/24. Reinstall final managed
    artifacts on Mac Python 3.10/3.13 and Linux .NET 10. Compare all 339 cases plus

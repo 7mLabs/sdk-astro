@@ -54,8 +54,29 @@ mac=entries(candidates[0][0]/name);linux=entries(candidates[1][0]/name)
 mac_path='runtimes/osx-arm64/native/libastro_engine.dylib';linux_path='runtimes/linux-x64/native/libastro_engine.so'
 base.require([p for p in mac if p.startswith('runtimes/')]==[mac_path],'Invalid macOS RID assets')
 base.require([p for p in linux if p.startswith('runtimes/')]==[linux_path],'Invalid Linux RID assets')
-for entry in ['README.md','LICENSE','NOTICE','lib/net10.0/SevenMLabs.Astrology.dll']+[p for p in mac if p.startswith('third-party/')]:
+for entry in ['README.md','LICENSE','NOTICE']+[p for p in mac if p.startswith('third-party/')]:
     base.require(mac[entry]==linux.get(entry),f'Portable NuGet content differs between targets: {entry}')
+# Universal managed IL can have OS-specific deterministic debug identities.
+# Require every other PE byte to agree; retain the original Mac assembly and
+# exercise that exact assembly on both operating systems in the final gate.
+dll_name='lib/net10.0/SevenMLabs.Astrology.dll'
+proof_dir=OUT/'assembly-proof';proof_dir.mkdir(exist_ok=True)
+dll_paths=[]
+for target,payload in [('darwin',mac),('linux',linux)]:
+    path=proof_dir/f'{target}.dll';path.write_bytes(payload[dll_name]);dll_paths.append(path)
+inspection=subprocess.run(['dotnet','run','--project',str(ROOT/'tests/packaging/managed-identity/Inspect.csproj'),
+                          '--configuration','Release','--',*map(str,dll_paths)],check=True,text=True,capture_output=True)
+proof=[json.loads(line) for line in inspection.stdout.splitlines() if line.startswith('{')]
+base.require(len(proof)==2,'Missing managed assembly identity proof')
+for item in proof:
+    base.require(item['identity']=='SevenMLabs.Astrology' and item['version']==version+'.0','Managed assembly identity mismatch')
+    base.require(item['debug']==[dict(Path='/_/bindings/dotnet/obj/Release/net10.0/SevenMLabs.Astrology.pdb',Guid=item['debug'][0]['Guid'],Age=1)],'Unexpected debug identity')
+for key in ('normalizedSha','api','il'):
+    base.require(proof[0][key]==proof[1][key],f'Managed runtime content differs: {key}')
+assembly_proof={'sha256':hashlib.sha256(mac[dll_name]).hexdigest(),
+                'normalizedSha256':proof[0]['normalizedSha'].lower(),
+                'excludedFields':['MVID','COFF timestamp','PE checksum','debug timestamps','CodeView','PDB checksum'],
+                'candidates':[{key:value for key,value in item.items() if key!='file'} for item in proof]}
 for payload in (mac,linux):
     nuspec=ET.fromstring(payload['SevenMLabs.Astrology.nuspec'])
     fields={n.tag.rsplit('}',1)[-1]:n.text for n in nuspec.iter()}
@@ -75,6 +96,6 @@ files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (wheel,nuget,O
 manifest={'schemaVersion':'1.0','version':version,'commitSha':args.commit,'pythonTargets':['darwin-arm64'],
           'nugetTargets':['osx-arm64','linux-x64'],'files':files,'pythonSourceSha256':python_manifest['files'][f'astro-sdk-{version}.tar.gz'],
           'nativeSha256':{'osx-arm64':hashlib.sha256(mac[mac_path]).hexdigest(),'linux-x64':hashlib.sha256(mac[linux_path]).hexdigest()},
-          'candidates':[c[1] for c in candidates]}
+          'managedAssembly':assembly_proof,'candidates':[c[1] for c in candidates]}
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print(json.dumps(manifest,indent=2))

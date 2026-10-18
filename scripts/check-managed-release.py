@@ -17,6 +17,10 @@ assert set(m['files'])==expected
 for name,digest in m['files'].items():
  assert Path(name).name==name and hashlib.sha256((a.manifest.parent/name).read_bytes()).hexdigest()==digest
 with zipfile.ZipFile(a.manifest.parent/f'SevenMLabs.Astrology.{v}.nupkg') as archive:
+ assert hashlib.sha256(archive.read('lib/net10.0/SevenMLabs.Astrology.dll')).hexdigest()==m['managedAssembly']['sha256']
+ proof=m['managedAssembly']['candidates'];assert len(proof)==2
+ assert all(x['normalizedSha'].lower()==m['managedAssembly']['normalizedSha256'] and x['identity']=='SevenMLabs.Astrology' and x['version']==v+'.0' for x in proof)
+ assert proof[0]['il']==proof[1]['il'] and proof[0]['api']==proof[1]['api']
  for rid,filename in [('osx-arm64','libastro_engine.dylib'),('linux-x64','libastro_engine.so')]:
   assert hashlib.sha256(archive.read(f'runtimes/{rid}/native/{filename}')).hexdigest()==m['nativeSha256'][rid]
 with zipfile.ZipFile(a.manifest.parent/f'sevenmlabs_astrology-{v}-py3-none-macosx_11_0_arm64.whl') as archive:
@@ -26,6 +30,7 @@ if a.reports:
  for path in a.reports.rglob('*.json'):
   report=json.loads(path.read_text());assert report['result']=='passed' and report['version']==v and report['commitSha']==a.commit
   assert report['manifestSha256']==hashlib.sha256(a.manifest.read_bytes()).hexdigest()
+  assert report['managedAssemblySha256']==m['managedAssembly']['sha256']
   assert report['nativeSha256']==m['nativeSha256'][report['rid']]
   assert report['checks']=={'conformance':339,'time':9,'extended':2,'svg':12,'model':2}
   key=(report['rid'],'.'.join(report['pythonVersion'].split('.')[:2]))

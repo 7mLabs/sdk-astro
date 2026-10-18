@@ -76,6 +76,7 @@ for line in sys.stdin:
 native_file='libastro_engine.dylib' if system=='darwin' else 'libastro_engine.so'
 installed_native=project/'bin/Release/net10.0/runtimes'/rid/'native'/native_file
 assert hashlib.sha256(installed_native.read_bytes()).hexdigest()==manifest['nativeSha256'][rid]
+assert hashlib.sha256((project/'bin/Release/net10.0/SevenMLabs.Astrology.dll').read_bytes()).hexdigest()==manifest['managedAssembly']['sha256']
 processes={name:subprocess.Popen(list(map(str,cmd)),stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,bufsize=1) for name,cmd in commands.items()}
 
 def invoke(mode,request):
@@ -130,6 +131,6 @@ finally:
         assert process.returncode==0,process.stderr.read()[:2000]
 report={'result':'passed','version':version,'commitSha':manifest['commitSha'],'manifestSha256':manifest_hash,
         'platform':system,'arch':arch,'rid':rid,'pythonVersion':platform.python_version(),'pythonInstalled':python_enabled,
-        'bindings':list(commands),'checks':counts,'nativeSha256':manifest['nativeSha256'][rid],
+        'bindings':list(commands),'checks':counts,'managedAssemblySha256':manifest['managedAssembly']['sha256'],'nativeSha256':manifest['nativeSha256'][rid],
         'nodeVersion':run([node,'--version']).strip(),'dotnetVersion':run(['dotnet','--version']).strip()}
 args.report.parent.mkdir(parents=True,exist_ok=True);args.report.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
