@@ -286,16 +286,13 @@ pub(super) fn compute_birth(
     rules: &[AspectRule],
 ) -> Result<(Value, Value), String> {
     let u = &birth.utc;
-    let sky = match astro_provider_swiss::natal(
+    let sky = astro_provider_swiss::natal(
         [u.year, u.month, u.day, u.hour, u.minute],
         u.second,
         birth.location.latitude,
         birth.location.longitude,
         system,
-    ) {
-        Ok(sky) => sky,
-        Err(e) => return Err(e),
-    };
+    )?;
     validate_houses(&Some(sky.houses.clone()))?;
     let ids = [
         "sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn", "uranus", "neptune",

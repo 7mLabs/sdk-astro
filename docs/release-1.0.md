@@ -35,6 +35,9 @@ deployment target is 11.0; each Node/.NET/Python runtime can impose a newer host
 Windows, Intel Mac, Linux ARM, musl and browser WASM are outside this release.
 The Linux Python candidate is not a portable PyPI wheel and is not published.
 
+CI pins Rust 1.99.1 for release builds and lint checks; a floating toolchain must
+not change the release compiler midway through verification.
+
 ## Gates before publication
 
 1. Rust format, Clippy, tests, pinned-data point reference checks and 339 decoded

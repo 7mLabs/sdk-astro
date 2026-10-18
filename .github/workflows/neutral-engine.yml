@@ -42,10 +42,10 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Source, documentation and metadata checks
         run: python scripts/check-repository.py
-      - name: Select Rust stable explicitly
+      - name: Select pinned release Rust toolchain
         run: |
-          rustup toolchain install stable --profile minimal --no-self-update
-          rustup default stable
+          rustup toolchain install 1.99.1 --profile minimal --component clippy --component rustfmt --no-self-update
+          rustup default 1.99.1
       - name: Rust tests
         run: |
           cargo fmt --manifest-path neutral-engine/Cargo.toml --all -- --check
@@ -190,8 +190,8 @@ jobs:
           package-manager-cache: false
       - name: Build a fresh reference CLI on this host
         run: |
-          rustup toolchain install stable --profile minimal --no-self-update
-          rustup default stable
+          rustup toolchain install 1.99.1 --profile minimal --component clippy --component rustfmt --no-self-update
+          rustup default 1.99.1
           cargo build --manifest-path examples/rust/Cargo.toml --locked
       - name: Install test tools only
         run: npm install --prefix artifacts/npm-test-tools --ignore-scripts --no-audit --no-fund typescript@5.9.3 ajv@8.20.0
