@@ -403,7 +403,7 @@ pub fn render(payload: &Value, options: Options) -> Result<Value, RenderError> {
         } else if options.max_orb.is_some_and(|limit| {
             aspect["orb"]
                 .as_f64()
-                .map_or(true, |n| !n.is_finite() || n > limit)
+                .is_none_or(|n| !n.is_finite() || n > limit)
         }) {
             Some("orbFilter")
         } else if options
