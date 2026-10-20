@@ -12,12 +12,29 @@ An offline astrology engine with a shared Rust core and native SDKs. Turn birth 
 [![CI](https://github.com/7mlabs/sdk-astro/actions/workflows/neutral-engine.yml/badge.svg)](https://github.com/7mlabs/sdk-astro/actions/workflows/neutral-engine.yml)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0-afe8cc)](LICENSE)
 
-**[Documentation](https://sevenmlabs-packages.velikho.chatgpt.site/docs/astrology-node/) · [Explore the engine](https://sevenmlabs-packages.velikho.chatgpt.site/astro/) · [npm](https://www.npmjs.com/package/@7mlabs/astrology) · [Tiếng Việt](README.vi.md)**
+**[SDK overview](https://7mlabs.com/en/astro/sdk/) · [English documentation](https://7mlabs.com/en/astro/sdk/docs/1.0.0/overview/) · [Tài liệu tiếng Việt](https://7mlabs.com/astro/sdk/docs/1.0.0/overview/) · [Tiếng Việt README](README.vi.md)**
 
 - **Local calculation:** native binaries are included in the npm package. No engine server, compiler or runtime data download is required.
 - **Structured results:** planets, houses, aspects, derived facts and evidence references in versioned JSON envelopes.
 - **One calculation core:** Node.js, Python, .NET, Rust and C share the same Rust/Swiss Ephemeris implementation.
 - **Context preparation:** optional payload compression for LLM workflows, with reversible compact encoding and explicit coverage metadata.
+
+## Install
+
+Choose the published package for your runtime. Native target support differs by package; check [platforms](https://7mlabs.com/en/astro/sdk/docs/1.0.0/platforms/) before installing.
+
+```sh
+# JavaScript / TypeScript
+npm install --save-exact @7mlabs/astrology@1.0.0
+
+# Python (macOS ARM64 wheel, Python 3.10+)
+python -m pip install sevenmlabs-astrology==1.0.0
+
+# .NET 10
+dotnet add package SevenMLabs.Astrology --version 1.0.0
+```
+
+[Node.js guide](https://7mlabs.com/en/astro/sdk/docs/1.0.0/node/) · [Python guide](https://7mlabs.com/en/astro/sdk/docs/1.0.0/python/) · [.NET guide](https://7mlabs.com/en/astro/sdk/docs/1.0.0/dotnet/)
 
 ## Quick start
 
@@ -63,6 +80,8 @@ TypeScript declarations are included. `calculate()` is synchronous and throws an
 | Astronomical events | `events` | Day/month/year searches for ingress, stations, Moon phases, aspects and global eclipses |
 | Personal forecasts | `forecast` | Natal transits, event impacts, calendar overviews and domain-specific context |
 | Geometry | `chart`, `harmonic`, `synastry` | Calculations from supplied positions |
+| Time conversion | `resolveBirthTime`, `calculateFromLocal` | Optional offline IANA/offset helpers with explicit DST gap/fold handling |
+| SVG and chart models | `renderChartSvg`, `buildChartModel` | Modular chart parts, presets, symbol/style overrides and source coordinates |
 | On-demand queries | `geometry`, `aspects`, `houses`, `points` | Eight helpers backed by the `query` operation |
 | Payload compression | `compressPayload`, `calculateWithContext` | Compact, focused or budgeted context, with `expandContext` for decoding |
 
@@ -101,7 +120,7 @@ const restored = expandContext(context);
 | Language | Distribution | Status |
 | --- | --- | --- |
 | Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `1.0.0` (`latest`) |
-| Python | `sevenmlabs-astrology` | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
+| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.0.0/) | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
 | .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.0.0) | Public NuGet `1.0.0`; .NET 10, Mac ARM64/Linux x64 |
 | Rust / C | Core crates and C ABI | Source integration examples |
 
@@ -117,7 +136,7 @@ Commit your application's lockfile and use `npm ci` for reproducible installs. [
 
 ## Documentation and examples
 
-Most detailed guides are currently written in Vietnamese; API identifiers and JSON contracts are shared across languages.
+The website provides [English](https://7mlabs.com/en/astro/sdk/docs/1.0.0/overview/) and [Vietnamese](https://7mlabs.com/astro/sdk/docs/1.0.0/overview/) guides for SDK 1.0.0. Repository guides below include additional implementation details, mostly in Vietnamese; API identifiers and JSON contracts are shared across languages.
 
 | Topic | Guides |
 | --- | --- |
@@ -140,3 +159,4 @@ For source development, start with the [build instructions](docs/github-setup.md
 ## License
 
 Engine and SDKs are licensed under **[AGPL-3.0-only](LICENSE)**, using the free AGPL option of Swiss Ephemeris. License text and third-party notices are included in the packages. The independent UI renderer has a [separate MIT license](examples/frontend/ui/LICENSE). See [NOTICE](NOTICE) and the [license guide](docs/license.md) for details.
+
