@@ -12,12 +12,29 @@ Engine chiêm tinh chạy offline, dùng chung lõi Rust qua các SDK native. Nh
 [![CI](https://github.com/7mlabs/sdk-astro/actions/workflows/neutral-engine.yml/badge.svg)](https://github.com/7mlabs/sdk-astro/actions/workflows/neutral-engine.yml)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0-afe8cc)](LICENSE)
 
-**[Tài liệu](https://sevenmlabs-packages.velikho.chatgpt.site/docs/astrology-node/) · [Khám phá engine](https://sevenmlabs-packages.velikho.chatgpt.site/astro/) · [npm](https://www.npmjs.com/package/@7mlabs/astrology) · [English](README.md)**
+**[Giới thiệu SDK](https://7mlabs.com/astro/sdk/) · [Tài liệu tiếng Việt](https://7mlabs.com/astro/sdk/docs/1.0.0/overview/) · [English documentation](https://7mlabs.com/en/astro/sdk/docs/1.0.0/overview/) · [English README](README.md)**
 
 - **Tính cục bộ:** package npm có sẵn binary native; không cần server tính toán, compiler hoặc tải dữ liệu khi chạy.
 - **Kết quả có cấu trúc:** hành tinh, nhà, góc chiếu, facts và tham chiếu bằng chứng trong JSON envelope có version.
 - **Một lõi tính toán:** Node.js, Python, .NET, Rust và C dùng chung triển khai Rust/Swiss Ephemeris.
 - **Chuẩn bị context:** bộ nén riêng cho LLM, có chế độ khôi phục được đầy đủ và metadata về dữ liệu được giữ lại.
+
+## Cài đặt
+
+Chọn gói đã phát hành theo runtime. Phạm vi native target khác nhau giữa các gói; xem [nền tảng hỗ trợ](https://7mlabs.com/astro/sdk/docs/1.0.0/platforms/) trước khi cài.
+
+```sh
+# JavaScript / TypeScript
+npm install --save-exact @7mlabs/astrology@1.0.0
+
+# Python (wheel macOS ARM64, Python 3.10+)
+python -m pip install sevenmlabs-astrology==1.0.0
+
+# .NET 10
+dotnet add package SevenMLabs.Astrology --version 1.0.0
+```
+
+[Hướng dẫn Node.js](https://7mlabs.com/astro/sdk/docs/1.0.0/node/) · [Python](https://7mlabs.com/astro/sdk/docs/1.0.0/python/) · [.NET](https://7mlabs.com/astro/sdk/docs/1.0.0/dotnet/)
 
 ## Bắt đầu nhanh
 
@@ -63,6 +80,8 @@ Package có TypeScript declarations. `calculate()` chạy đồng bộ và throw
 | Sự kiện thiên văn | `events` | Quét ngày/tháng/năm: ingress, stations, pha Mặt Trăng, aspects và nhật/nguyệt thực toàn cầu |
 | Dự báo cá nhân | `forecast` | Natal transits, ảnh hưởng sự kiện, tổng quan lịch và context theo lĩnh vực |
 | Hình học | `chart`, `harmonic`, `synastry` | Tính từ các vị trí do caller cung cấp |
+| Đổi giờ | `resolveBirthTime`, `calculateFromLocal` | Helper IANA/offset offline tùy chọn, xử lý rõ DST gap/fold |
+| SVG và chart model | `renderChartSvg`, `buildChartModel` | Các phần biểu đồ linh hoạt, preset, tùy chỉnh biểu tượng/màu và tọa độ gốc |
 | Truy vấn theo nhu cầu | `geometry`, `aspects`, `houses`, `points` | Tám helpers gọi operation `query` |
 | Nén payload | `compressPayload`, `calculateWithContext` | Context compact/focused/budgeted, giải mã bằng `expandContext` |
 
@@ -101,7 +120,7 @@ const restored = expandContext(context);
 | Ngôn ngữ | Phân phối | Trạng thái |
 | --- | --- | --- |
 | Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm ổn định: `1.0.0` (`latest`) |
-| Python | `sevenmlabs-astrology` | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
+| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.0.0/) | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
 | .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.0.0) | Public NuGet `1.0.0`; .NET 10, Mac ARM64/Linux x64 |
 | Rust / C | Core crates và C ABI | Có source mẫu tích hợp |
 
@@ -138,3 +157,4 @@ Bản **1.0.0** qua 339 ca đối chiếu giữa các binding trên cả hai tar
 ## License
 
 Engine và SDK dùng **[AGPL-3.0-only](LICENSE)**, chọn nhánh AGPL miễn phí của Swiss Ephemeris. Package có đầy đủ license text và third-party notices. UI renderer độc lập có [license MIT riêng](examples/frontend/ui/LICENSE). Xem [NOTICE](NOTICE) và [hướng dẫn license](docs/license.md).
+
