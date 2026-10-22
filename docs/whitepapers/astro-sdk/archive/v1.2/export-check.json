@@ -1,0 +1,18 @@
+{
+  "repeatedTableHeadersExcluded": [
+    {
+      "page": 7,
+      "text": "Mẫu Nguồn byte Context byte R %"
+    }
+  ],
+  "pages": 10,
+  "editableParagraphs": 113,
+  "editableTables": 6,
+  "orderedTextParity": true,
+  "docxCharsWithoutWhitespace": 24256,
+  "pdfCharsWithoutWhitespace": 24256,
+  "files": {
+    "Paper Astro SDK 7MLabs.pdf": "fb3f13c8da91914ad06a4d6a869170179a3b1188fd8923a2155e8f8c98605516",
+    "Paper Astro SDK 7MLabs.docx": "61b20b11b4c730352ecdca668fb83f5e9a2d38881fe9835b97c5644501ecddff"
+  }
+}

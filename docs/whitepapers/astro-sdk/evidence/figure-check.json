@@ -1,0 +1,32 @@
+[
+  {
+    "figure": "01-kien-truc.png",
+    "pdfPage": 2,
+    "pdfSize": [
+      3600,
+      1710
+    ],
+    "meanPixelDifference": 0.0,
+    "sourceSha256": "a85b6b5d88aa4886609fe92fff718c0a2a3a72c979b6a2cb1656bac67f9e9895"
+  },
+  {
+    "figure": "03-cong-thuc.png",
+    "pdfPage": 4,
+    "pdfSize": [
+      3600,
+      1170
+    ],
+    "meanPixelDifference": 0.0,
+    "sourceSha256": "b426b229b9493ac9549e6ba3a6cfdd3d4b4cee698dfc779476adff78b46067f7"
+  },
+  {
+    "figure": "02-luong-xu-ly.png",
+    "pdfPage": 6,
+    "pdfSize": [
+      3600,
+      1665
+    ],
+    "meanPixelDifference": 0.0,
+    "sourceSha256": "1cca0d843848c899a0d78a15500fa590ce0cb2750d6c8ed1a2705790e31d0925"
+  }
+]
