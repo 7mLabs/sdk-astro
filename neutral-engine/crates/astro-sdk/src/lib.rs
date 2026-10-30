@@ -171,11 +171,14 @@ struct RenderRequest {
     options: astro_render_svg::Options,
 }
 pub fn render_chart_svg_json(text: &str) -> String {
-    let value = match input(text, MAX_RENDER_BYTES) {
-        Ok(v) => v,
+    match input(text, MAX_RENDER_BYTES) {
+        Ok(_) => {}
         Err(e) => return e,
     };
-    let request: RenderRequest = match serde_json::from_value(value) {
+    // Deserialize the original text: a Value would silently discard duplicate
+    // fields before RenderRequest/Options can reject them. This also prevents
+    // raw JSON binding arguments from injecting replacement wrapper fields.
+    let request: RenderRequest = match serde_json::from_str(text) {
         Ok(v) => v,
         Err(e) => return astro_core::error_json("INVALID_RENDER_OPTIONS", &e.to_string()),
     };
@@ -245,6 +248,26 @@ mod tests {
         );
         assert!(render_chart_svg_json("{\"payload\":null}").contains("INVALID_PAYLOAD"));
         assert!(capabilities_json("{}").contains("tzdbVersion"));
+    }
+    #[test]
+    fn render_rejects_duplicate_fields_and_raw_argument_injection() {
+        let payload = astro_core::calculate_json(
+            r#"{"operation":"natal","utc":{"year":2000,"month":1,"day":1,"hour":12,"minute":0},"location":{"latitude":0,"longitude":0}}"#,
+        );
+        let valid = format!(r#"{{"payload":{payload},"options":{{}}}}"#);
+        let output: Value = serde_json::from_str(&render_chart_svg_json(&valid)).unwrap();
+        assert_eq!(output["errors"], json!([]));
+        for request in [
+            format!(r#"{{"payload":{payload},"options":null,"options":{{}}}}"#),
+            format!(r#"{{"payload":null,"payload":{payload},"options":{{}}}}"#),
+            format!(
+                r#"{{"payload":{payload},"options":{{"detail":"basic","detail":"advanced"}}}}"#
+            ),
+        ] {
+            let output: Value = serde_json::from_str(&render_chart_svg_json(&request)).unwrap();
+            assert_eq!(output["errors"][0]["code"], "INVALID_RENDER_OPTIONS");
+            assert!(output["data"].is_null());
+        }
     }
     #[test]
     fn integer_literals_are_not_rounded_before_validation() {

@@ -10,7 +10,7 @@ checksum = "d3fb67a6e08acf24fdeccbac2cb6ac4305825bd1f117462e0e6f2f193345ad56"
 
 [[package]]
 name = "astro-core"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "astro-provider-swiss",
  "serde",
@@ -19,7 +19,7 @@ dependencies = [
 
 [[package]]
 name = "astro-ffi"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "astro-core",
  "astro-sdk",
@@ -27,7 +27,7 @@ dependencies = [
 
 [[package]]
 name = "astro-node"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "astro-core",
  "astro-sdk",
@@ -35,14 +35,14 @@ dependencies = [
 
 [[package]]
 name = "astro-provider-swiss"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "cc",
 ]
 
 [[package]]
 name = "astro-render-svg"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "serde",
  "serde_json",
@@ -51,7 +51,7 @@ dependencies = [
 
 [[package]]
 name = "astro-sdk"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "astro-core",
  "astro-render-svg",
@@ -62,7 +62,7 @@ dependencies = [
 
 [[package]]
 name = "astro-time"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "jiff",
  "jiff-tzdb",

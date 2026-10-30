@@ -1,6 +1,6 @@
 {
   "name": "@7mlabs/astrology",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Offline natal, synastry, composite, forecasts and astronomical event data using a shared native engine",
   "license": "AGPL-3.0-only",
   "main": "index.cjs",

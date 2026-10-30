@@ -1,6 +1,6 @@
 {
   "name": "sevenmlabs-astrology-frontend-host-example",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Embeddable Astro UI and local native worker host; no browser WASM",
   "main": "bridge.cjs",
@@ -19,6 +19,6 @@
     "node": ">=18"
   },
   "peerDependencies": {
-    "@7mlabs/astrology": "1.0.0"
+    "@7mlabs/astrology": "1.0.1"
   }
 }
