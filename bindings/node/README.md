@@ -8,7 +8,7 @@ Offline natal, synastry, composite, forecasts and astronomical event data using 
 npm install @7mlabs/astrology
 ```
 
-This release uses version `1.0.0` and the stable `latest` channel. Update explicitly with the same command. Pin `@7mlabs/astrology@1.0.0` and commit your application's lockfile to reproduce a specific release; `npm ci` restores that lockfile. New applications should use Node.js 22 or 24. Minimum supported Node.js is 18.
+This release uses version `1.0.2` and the stable `latest` channel. Update explicitly with the same command. Pin `@7mlabs/astrology@1.0.2` and commit your application's lockfile to reproduce a specific release; `npm ci` restores that lockfile. New applications should use Node.js 22 or 24. Minimum supported Node.js is 18.
 
 The public tarball includes both `darwin-arm64` (Apple Silicon) and `linux-x64` (glibc **2.38+**, with `libgcc_s.so.1`) addons. macOS 15 and Ubuntu 24.04 are the verified build/test environments. The macOS addon targets macOS 11+, but your Node.js version can require a newer OS. Windows, macOS Intel, Linux ARM64 and Alpine/musl are not included. See [platform and release details](https://github.com/7mlabs/sdk-astro/blob/main/docs/node-release.md).
 
@@ -64,7 +64,7 @@ Methods: geometry.normalize/separation/midpoint, aspects.between/inspect, houses
 
 Version 0.10 adds a separate shared-core compressor with compact/focused/budgeted modes, explicit omission/coverage metadata, and a reversible compact representation. Calculation APIs remain synchronous and unchanged. See `docs/payload-compression.md` in the repository for the cross-language API, budget semantics, and complete examples. Native binaries from earlier versions do not export this feature.
 
-## 1.0.0: civil time and SVG
+## 1.0.2: civil time and SVG
 
 Existing UTC calculation stays unchanged. Optional local-time helpers and standalone native SVG rendering require the matching binary. `local`, `timeZone`/`zone` and `location` below are caller inputs; import the SDK as `sdk` (Node/Python).
 

@@ -2,9 +2,9 @@
 
 # 7mlabs Astrology
 
-## SDK 1.0.0: đổi giờ và biểu đồ SVG linh hoạt
+## SDK 1.0.2: đổi giờ và biểu đồ SVG linh hoạt
 
-**1.0.0 đã phát hành npm, PyPI và NuGet.** Cả ba gói public đã được tải về, xác minh và cài thử mới. Bản này có helper IANA offline, điểm mở rộng natal và renderer SVG tách riêng thành các phần linh hoạt. `calculate` nhận UTC như cũ. Xem [API time/SVG](docs/time-and-svg.md) và [bằng chứng phát hành](docs/release-1.0.md).
+**1.0.2 siết kiểm tra JSON cho SVG và sửa tham chiếu cài đặt/source trong các gói.** Các trường request/tùy chọn bị trùng được từ chối, giữ tương thích với đầu vào hợp lệ. Xem [ghi chú bản vá](CHANGELOG.md). Helper IANA offline, điểm natal mở rộng và dịch vụ SVG linh hoạt vẫn có đầy đủ; xem [API time/SVG](docs/time-and-svg.md).
 
 Engine chiêm tinh chạy offline, dùng chung lõi Rust qua các SDK native. Nhận dữ liệu sinh để tính lá số, quan hệ và dự báo ngay trong ứng dụng của bạn.
 
@@ -25,13 +25,13 @@ Chọn gói đã phát hành theo runtime. Phạm vi native target khác nhau gi
 
 ```sh
 # JavaScript / TypeScript
-npm install --save-exact @7mlabs/astrology@1.0.0
+npm install --save-exact @7mlabs/astrology@1.0.2
 
 # Python (wheel macOS ARM64, Python 3.10+)
-python -m pip install sevenmlabs-astrology==1.0.0
+python -m pip install sevenmlabs-astrology==1.0.2
 
 # .NET 10
-dotnet add package SevenMLabs.Astrology --version 1.0.0
+dotnet add package SevenMLabs.Astrology --version 1.0.2
 ```
 
 [Hướng dẫn Node.js](https://7mlabs.com/astro/sdk/docs/1.0.0/node/) · [Python](https://7mlabs.com/astro/sdk/docs/1.0.0/python/) · [.NET](https://7mlabs.com/astro/sdk/docs/1.0.0/dotnet/)
@@ -119,9 +119,9 @@ const restored = expandContext(context);
 
 | Ngôn ngữ | Phân phối | Trạng thái |
 | --- | --- | --- |
-| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm ổn định: `1.0.0` (`latest`) |
-| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.0.0/) | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
-| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.0.0) | Public NuGet `1.0.0`; .NET 10, Mac ARM64/Linux x64 |
+| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm ổn định: `1.0.2` (`latest`) |
+| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.0.2/) | Public PyPI `1.0.2`; macOS ARM64, Python 3.10+ |
+| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.0.2) | Public NuGet `1.0.2`; .NET 10, Mac ARM64/Linux x64 |
 | Rust / C | Core crates và C ABI | Có source mẫu tích hợp |
 
 Bản npm có binary cho **macOS ARM64** và **Linux x64**. Linux cần **glibc 2.38+** và `libgcc_s.so.1`. Đã kiểm thử Node.js 18/24 trên cả hai target; khuyến nghị Node.js 22 hoặc 24 cho ứng dụng mới. Chưa có binary Windows, macOS Intel, Linux ARM64 hoặc Alpine/musl. [Yêu cầu nền tảng đầy đủ →](docs/node-release.md)
@@ -129,7 +129,7 @@ Bản npm có binary cho **macOS ARM64** và **Linux x64**. Linux cần **glibc 
 Cập nhật tường minh bằng `npm install @7mlabs/astrology@latest`. Để giữ đúng bản hiện tại:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.0.0
+npm install --save-exact @7mlabs/astrology@1.0.2
 ```
 
 Commit lockfile của ứng dụng và dùng `npm ci` để cài lại đúng dependencies. [Hướng dẫn cài các ngôn ngữ khác →](docs/packages.md)
