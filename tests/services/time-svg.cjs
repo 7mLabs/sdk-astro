@@ -47,6 +47,16 @@ assert.throws(() => sdk.renderChartSvg(local, { zodiacSymbols: { aries: { viewBo
 assert.throws(() => sdk.renderChartSvg(local, { instanceId: 'bad"id' }), { code: 'INVALID_RENDER_OPTIONS' });
 assert.throws(() => sdk.renderChartSvg(local, { title: 'unsupported 😀' }), { code: 'UNSUPPORTED_LABEL' });
 assert(JSON.parse(sdk.renderChartSvgRequestJson('{')).errors.length);
+// Raw arguments must not inject replacement fields into the render wrapper.
+for (const output of [
+  sdk.renderChartSvgJson(JSON.stringify(local), 'null,"options":{}'),
+  sdk.renderChartSvgJson(`null,"payload":${JSON.stringify(local)}`),
+  sdk.renderChartSvgJson(JSON.stringify(local), '{"detail":"basic","detail":"advanced"}'),
+]) {
+  const result = JSON.parse(output);
+  assert.equal(result.errors[0].code, 'INVALID_RENDER_OPTIONS');
+  assert.equal(result.data, null);
+}
 let charts = 0;
 for (const [fixture, chart] of [['natal-domains', 'natal'], ['couple', 'synastry'], ['couple', 'A'], ['couple', 'B'], ['composite', 'C'], ['forecast-day', 'transits']]) {
   const payload = JSON.parse(fs.readFileSync(path.join(root, 'examples', `${fixture}-result.json`)));

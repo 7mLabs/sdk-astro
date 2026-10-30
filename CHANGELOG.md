@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1 — 2026-10-30
+
+- Reject duplicate SVG render request fields and duplicate render option fields before they can overwrite earlier values.
+- Reject raw JSON binding arguments that attempt to inject replacement payload/options fields. Node.js, Python, .NET and C use the same corrected native service.
+- Add regression checks for wrapper-field injection and duplicate options; valid chart rendering remains compatible.
+
 ## 1.0.0 — 2026-10-18
 
 - Add optional offline `resolveBirthTime` and composed `calculateFromLocal`; preserve UTC-only calculation semantics. Pin IANA TZif data, reject gaps, require explicit fold choices, retain second offsets and time-resolution provenance.
