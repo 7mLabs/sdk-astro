@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "engineVersion": "1.0.0",
+  "engineVersion": "1.0.2",
   "lockfile": "neutral-engine/Cargo.lock",
   "description": "Exact upstream license texts for all locked registry dependencies; optional/build entries do not imply runtime linkage.",
   "dependencies": [

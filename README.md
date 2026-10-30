@@ -4,7 +4,7 @@
 
 ## SDK 1.0.2: time conversion and modular SVG
 
-**1.0.2 strengthens SVG JSON validation and corrects the packaged installation/source references.** Duplicate render request and option fields are rejected while valid requests remain compatible. See [patch notes](CHANGELOG.md). Optional offline IANA helpers, extended natal points and modular SVG services remain available; see [time/SVG API](docs/time-and-svg.md).
+**1.0.2 strengthens SVG JSON validation and corrects the packaged installation/source references.** Duplicate render request and option fields are rejected while valid requests remain compatible. See [patch notes](CHANGELOG.md) and [1.0.2 release verification](docs/release-1.0.2.md). Optional offline IANA helpers, extended natal points and modular SVG services remain available; see [time/SVG API](docs/time-and-svg.md).
 
 An offline astrology engine with a shared Rust core and native SDKs. Turn birth data into structured chart, relationship and forecast payloads directly inside your application.
 

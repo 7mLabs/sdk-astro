@@ -1,11 +1,11 @@
-# Civil time và SVG chart — 1.0.0
+# Civil time và SVG chart — 1.0.2
 
-Các API dưới đây có trong **1.0.0** đã phát hành và xác minh trên npm/PyPI/NuGet. [Trạng thái và bằng chứng release](release-1.0.md). Các lời gọi UTC cũ giữ nguyên hành vi; đổi giờ và điểm mở rộng là tùy chọn rõ ràng.
+Các API dưới đây có trong **1.0.2** đã phát hành và xác minh trên npm/PyPI/NuGet. [Trạng thái và bằng chứng release](release-1.0.md). Các lời gọi UTC cũ giữ nguyên hành vi; đổi giờ và điểm mở rộng là tùy chọn rõ ràng.
 
 ## Hai luồng tích hợp
 
 ```js
-// Node: npm install @7mlabs/astrology@1.0.0
+// Node: npm install @7mlabs/astrology@1.0.2
 const {
   calculate, resolveBirthTime, calculateFromLocal,
   renderChartSvg, renderChartSvgResult, getCapabilities

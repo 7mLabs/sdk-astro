@@ -4,7 +4,7 @@
 
 ## SDK 1.0.2: đổi giờ và biểu đồ SVG linh hoạt
 
-**1.0.2 siết kiểm tra JSON cho SVG và sửa tham chiếu cài đặt/source trong các gói.** Các trường request/tùy chọn bị trùng được từ chối, giữ tương thích với đầu vào hợp lệ. Xem [ghi chú bản vá](CHANGELOG.md). Helper IANA offline, điểm natal mở rộng và dịch vụ SVG linh hoạt vẫn có đầy đủ; xem [API time/SVG](docs/time-and-svg.md).
+**1.0.2 siết kiểm tra JSON cho SVG và sửa tham chiếu cài đặt/source trong các gói.** Các trường request/tùy chọn bị trùng được từ chối, giữ tương thích với đầu vào hợp lệ. Xem [ghi chú bản vá](CHANGELOG.md) và [bằng chứng phát hành 1.0.2](docs/release-1.0.2.md). Helper IANA offline, điểm natal mở rộng và dịch vụ SVG linh hoạt vẫn có đầy đủ; xem [API time/SVG](docs/time-and-svg.md).
 
 Engine chiêm tinh chạy offline, dùng chung lõi Rust qua các SDK native. Nhận dữ liệu sinh để tính lá số, quan hệ và dự báo ngay trong ứng dụng của bạn.
 
