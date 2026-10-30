@@ -1,6 +1,6 @@
 # Astro UI và native runtime local
 
-Candidate `1.0.0` có playground riêng ở **`/ui/svg.html`**: nhập giờ sinh địa phương/IANA, tính natal, đổi theme/detail và tải SVG vector. Dùng gói candidate đã build/cài local; các API mới chưa có trong npm stable 0.10.1. [Hướng dẫn time helpers và SVG](../../docs/time-and-svg.md) mô tả đầy đủ contract và giới hạn.
+SDK `1.0.2` có playground riêng ở **`/ui/svg.html`**: nhập giờ sinh địa phương/IANA, tính natal, đổi theme/detail và tải SVG vector. Dùng gói `1.0.2` đã phát hành hoặc artifact cùng phiên bản đã build/cài local. [Hướng dẫn time helpers và SVG](../../docs/time-and-svg.md) mô tả đầy đủ contract và giới hạn.
 
 Frontend này có thể dùng độc lập hoặc nhúng vào website. Browser gửi JSON cho **Node worker local**, worker gọi SDK native đã cài và trả nguyên engine envelope. Cả 10 operation hoạt động với dữ liệu người dùng: `chart`, `harmonic`, `synastry`, `natal`, `natalDomains`, `couple`, `composite`, `events`, `forecast`, `query`.
 
@@ -32,7 +32,7 @@ Chạy lệnh trong `sdk-astro/examples/frontend`; không chạy `host.cjs` từ
 Với Node/npm đã cài, từ thư mục frontend:
 
 ```sh
-npm install --offline --ignore-scripts --no-audit --no-fund ../../artifacts/packages/7mlabs-astrology-1.0.0.tgz
+npm install --offline --ignore-scripts --no-audit --no-fund ../../artifacts/packages/7mlabs-astrology-1.0.2.tgz
 npm start
 ```
 

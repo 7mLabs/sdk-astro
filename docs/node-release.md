@@ -1,10 +1,10 @@
 # Phát hành package Node.js
 
-## Bản hiện tại: 1.0.0
+## Bản hiện tại: 1.0.2
 
-npm `latest` là **1.0.0**, phát hành bằng OIDC và xác minh registry trong
-[run 39097183132](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132).
-Tarball SHA256 `02d191f639316fda0008f92bdfb93c557896b4769e52e3bd79fb3a1f70756109`.
+npm `latest` là **1.0.2**, phát hành bằng OIDC và xác minh registry trong
+[run 41000539170](https://github.com/7mLabs/sdk-astro/actions/runs/41000539170).
+Tarball SHA256 `01e59a881d2ecc151c8406b020e7ba692f862b6ef81a2ad7d4a8b4dd4210df3f`.
 Đủ bốn final consumers Mac ARM64/Linux x64 × Node 18/24 đã qua.
 Các nền tảng và giới hạn vẫn như [release contract 1.0](release-1.0.md).
 Trusted publisher dùng đúng tên phân biệt chữ hoa/thường `7mLabs/sdk-astro`,
@@ -30,7 +30,7 @@ npm install @7mlabs/astrology@latest
 Để tái tạo đúng một phiên bản, chỉ định version và commit lockfile của ứng dụng:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@0.10.0
+npm install --save-exact @7mlabs/astrology@1.0.2
 ```
 
 Package chứa sẵn native addon; người dùng không cần Rust, compiler, server hay bước tải binary sau cài đặt. `npm ci` dùng lockfile để cài lại đúng dependency của dự án. Kênh `alpha` tiếp tục trỏ tới các bản thử nghiệm riêng; chọn `latest` không mở rộng phạm vi platform của binary.
@@ -85,10 +85,10 @@ Scope npm `7mlabs` đã được xác minh; bản alpha đầu phát hành bằn
 
 Checklist cho maintainer khi tăng version:
 
-1. Đồng bộ version trong `neutral-engine/Cargo.toml`, `bindings/node/package.json`, `bindings/python/pyproject.toml`, Python `__version__` ở `bindings/python/sevenmlabs_astrology/__init__.py`, `bindings/dotnet/SevenMLabs.Astrology.csproj` và package reference của `examples/dotnet/Example.csproj`; cập nhật `neutral-engine/Cargo.lock` và `examples/rust/Cargo.lock`. Đồng bộ version/`peerDependencies` của `examples/mcp/package.json` và `examples/frontend/package.json`, cùng `engineVersion` trong ba bản `rust-manifest.json` ở `bindings/node/third-party/`, `bindings/python/sevenmlabs_astrology/third-party/` và `bindings/dotnet/third-party/`. Stable dùng `0.10.0`; prerelease Python dùng PEP 440 tương ứng, ví dụ `0.10.1a1` cho `0.10.1-alpha.1`. UI renderer có vòng version riêng.
+1. Đồng bộ version trong `neutral-engine/Cargo.toml`, `bindings/node/package.json`, `bindings/python/pyproject.toml`, Python `__version__` ở `bindings/python/sevenmlabs_astrology/__init__.py`, `bindings/dotnet/SevenMLabs.Astrology.csproj` và package reference của `examples/dotnet/Example.csproj`; cập nhật `neutral-engine/Cargo.lock` và `examples/rust/Cargo.lock`. Đồng bộ version/`peerDependencies` của `examples/mcp/package.json` và `examples/frontend/package.json`, cùng `engineVersion` trong ba bản `rust-manifest.json` ở `bindings/node/third-party/`, `bindings/python/sevenmlabs_astrology/third-party/` và `bindings/dotnet/third-party/`. Stable dùng SemVer như `1.0.2`; prerelease Python dùng PEP 440 tương ứng, ví dụ `1.0.3a1` cho `1.0.3-alpha.1`. UI renderer có vòng version riêng.
 2. Chạy repository checks để xác nhận metadata đồng bộ và source npm vẫn có `private: true`. Builder/test runner đọc version từ metadata đã xác thực để tạo filename tgz/wheel/nupkg và evidence; không duy trì version/filename riêng bằng cách sửa tay trong scripts.
 3. Commit/push source mới và đợi toàn bộ candidate CI qua. Có thể chạy workflow `npm release` trên nhánh với input `publish: false` để kiểm tra pipeline trước khi phát hành.
-4. Tạo/push tag chính xác `v<version>`, ví dụ `v0.10.1` cho stable tiếp theo hoặc `v0.10.1-alpha.1` cho alpha. Workflow kiểm tra tag, provenance, checksum và bốn consumer reports trước publish. Mỗi version public là bất biến; không publish lại bytes khác với cùng version.
+4. Tạo/push tag chính xác `v<version>`, ví dụ `v1.0.2` cho stable hoặc `v1.0.3-alpha.1` cho alpha. Workflow kiểm tra tag, provenance, checksum và bốn consumer reports trước publish. Mỗi version public là bất biến; không publish lại bytes khác với cùng version.
 5. Sau publish, kiểm tra registry version, integrity và dist-tag khớp tarball đã qua gate; cài mới trong project độc lập rồi chạy native checksum/natal/query/compression smoke. Cập nhật docs và website bằng artifact/version đã xác minh.
 
 ## Bằng chứng bản ổn định 0.10.0

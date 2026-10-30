@@ -1,6 +1,6 @@
 # GitHub công khai và phân phối package
 
-Repo công khai là [7mlabs/sdk-astro](https://github.com/7mlabs/sdk-astro), đã upload source engine/SDK riêng. Owner đã chọn nhánh license miễn phí AGPL ngày 2026-10-03. [@7mlabs/astrology `0.10.0`](https://www.npmjs.com/package/@7mlabs/astrology) đã phát hành public trên kênh ổn định `latest`; npm alpha `0.10.0-alpha.1` trước đó đã phát hành public; Python/.NET/Rust/UI renderer chưa phát hành registry. Xem [thiết lập GitHub và phát hành](github-setup.md).
+Repo công khai là [7mLabs/sdk-astro](https://github.com/7mLabs/sdk-astro). npm `@7mlabs/astrology`, PyPI `sevenmlabs-astrology` và NuGet `SevenMLabs.Astrology` đều đã phát hành **1.0.2**, có checksum và kiểm tra cài mới từ registry. Rust/C tích hợp từ source; UI renderer có vòng version riêng. Xem [bằng chứng 1.0.2](release-1.0.2.md) và [thiết lập GitHub](github-setup.md).
 
 ## Điều kiện trước khi public
 
@@ -16,7 +16,7 @@ Checkout mới chỉ chứa `neutral-engine/`, `bindings/`, `schemas/`, `tests/`
 
 ## Package naming và version
 
-Tên npm `@7mlabs/astrology` và scope `7mlabs` đã xác minh quyền sở hữu và phát hành. `sevenmlabs-astrology`, `SevenMLabs.Astrology` và tên crate public còn cần xác minh registry tương ứng. Core và SDK Node/Python/.NET dùng version stable `0.10.0`; Python/.NET tiếp tục là artifacts local. Khi dùng prerelease, `0.10.1-alpha.1` trong npm/NuGet/Rust tương ứng `0.10.1a1` Python; metadata engine ghi version core. UI renderer có version riêng `0.9.0-alpha.1`, dùng payload schema `1.0`. Version artifact không được tái sử dụng cho bytes khác khi public. ABI/schema có version riêng; neutral engine không có scoring.
+Ba tên package npm/PyPI/NuGet đã xác minh và phát hành cùng version **1.0.2**. Core và các SDK native dùng cùng package version; ABI/schema giữ vòng version riêng. Rust crates giữ `publish = false`. UI renderer giữ version độc lập. Version artifact public không được tái sử dụng cho bytes khác.
 
 ## Cài và cập nhật thuận tiện
 
@@ -26,7 +26,7 @@ Mỗi runtime có một package; engine native được đóng gói hoặc chọ
 npm install @7mlabs/astrology
 ```
 
-Cập nhật tường minh bằng `npm install @7mlabs/astrology@latest`. Pin bằng `npm install --save-exact @7mlabs/astrology@0.10.0` và commit lockfile. Kênh ổn định dùng `latest`; nền tảng và libc requirements nằm trong [hướng dẫn Node.js](node-release.md).
+Cập nhật tường minh bằng `npm install @7mlabs/astrology@latest`. Pin bằng `npm install --save-exact @7mlabs/astrology@1.0.2` và commit lockfile. Kênh ổn định dùng `latest`; nền tảng và libc requirements nằm trong [hướng dẫn Node.js](node-release.md).
 
 Candidate build một platform mỗi lần, tạo tgz/nupkg cùng tên giữa hai job. npm assembler đã ghép hai candidate vào một tarball duy nhất trước release; không publish riêng hai candidate cùng package/version. NuGet vẫn cần assembly nhiều runtime trước public. Linux wheel hiện có tag Linux thường, cần manylinux build/repair và kiểm thử môi trường sạch trước public PyPI. Windows chưa được builder hỗ trợ.
 

@@ -1,5 +1,9 @@
 # Kết quả cài đặt và kiểm thử trực tiếp
 
+## SDK 1.0.2 — 2026-10-30
+
+Bản hiện tại trên npm/PyPI/NuGet là **1.0.2**. Toàn bộ ma trận CI, checksum registry và cài mới từ ba kho đã qua; xem [bằng chứng phát hành 1.0.2](release-1.0.2.md). Các mục bên dưới được giữ làm lịch sử.
+
 ## SDK 1.0.0 — 2026-10-18
 
 [Release run 39097183132](https://github.com/7mLabs/sdk-astro/actions/runs/39097183132)
@@ -12,7 +16,7 @@ archive hashes và commit được đối chiếu. Payload public npm/PyPI/NuGet
 Xem [manifest scope và registry proof](release-1.0.md).
 
 Các phần bên dưới là bằng chứng lịch sử; trạng thái candidate cũ không mô tả
-bản 1.0.0 hiện tại.
+bản 1.0.0 đã phát hành.
 
 ## Time helpers và SVG: candidate 0.11.0-alpha.1, ngày 2026-10-17
 

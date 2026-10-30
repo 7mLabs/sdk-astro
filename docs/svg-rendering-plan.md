@@ -5,6 +5,8 @@ mean/true Nodes, mean/osculating Lilith cho natal/natalDomains; professional SVG
 ma trận, danh sách, bộ lọc và màu theo nhóm/loại. Các phần bên dưới là roadmap gốc;
 [API hiện hành](time-and-svg.md) mô tả contract và giới hạn mới.
 
+Cập nhật trạng thái 2026-10-30: SDK **1.0.2** đã phát hành trên npm/PyPI/NuGet; xem [bằng chứng hiện hành](release-1.0.2.md). Phần dưới là kế hoạch lịch sử, không phải trạng thái phát hành hiện tại.
+
 Ngày lập: **17/10/2026**. Baseline source: **0.10.1**, commit `cbfadc1`. Kế hoạch gốc được giữ làm roadmap. **Đã có implementation candidate 1.0.0**, gồm local-time helpers, basic/advanced SVG và bindings; xem [API hiện hành và phạm vi alpha](time-and-svg.md). Chưa phát hành registry. Đánh giá baseline đi kèm: [SDK health review](health-review-2026-10-17.md).
 
 ## 1. Mục tiêu và ranh giới
