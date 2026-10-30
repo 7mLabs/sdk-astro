@@ -2,9 +2,9 @@
 
 # 7mlabs Astrology
 
-## SDK 1.0.0: time conversion and modular SVG
+## SDK 1.0.2: time conversion and modular SVG
 
-**1.0.0 is published on npm, PyPI and NuGet.** All three public packages have been downloaded, verified and freshly installed. This release adds optional offline IANA civil-time helpers, extended natal points and a separate modular SVG chart renderer. UTC `calculate` remains compatible. See [time/SVG API](docs/time-and-svg.md) and [release verification](docs/release-1.0.md).
+**1.0.2 strengthens SVG JSON validation and corrects the packaged installation/source references.** Duplicate render request and option fields are rejected while valid requests remain compatible. See [patch notes](CHANGELOG.md). Optional offline IANA helpers, extended natal points and modular SVG services remain available; see [time/SVG API](docs/time-and-svg.md).
 
 An offline astrology engine with a shared Rust core and native SDKs. Turn birth data into structured chart, relationship and forecast payloads directly inside your application.
 
@@ -25,13 +25,13 @@ Choose the published package for your runtime. Native target support differs by 
 
 ```sh
 # JavaScript / TypeScript
-npm install --save-exact @7mlabs/astrology@1.0.0
+npm install --save-exact @7mlabs/astrology@1.0.2
 
 # Python (macOS ARM64 wheel, Python 3.10+)
-python -m pip install sevenmlabs-astrology==1.0.0
+python -m pip install sevenmlabs-astrology==1.0.2
 
 # .NET 10
-dotnet add package SevenMLabs.Astrology --version 1.0.0
+dotnet add package SevenMLabs.Astrology --version 1.0.2
 ```
 
 [Node.js guide](https://7mlabs.com/en/astro/sdk/docs/1.0.0/node/) · [Python guide](https://7mlabs.com/en/astro/sdk/docs/1.0.0/python/) · [.NET guide](https://7mlabs.com/en/astro/sdk/docs/1.0.0/dotnet/)
@@ -119,9 +119,9 @@ const restored = expandContext(context);
 
 | Language | Distribution | Status |
 | --- | --- | --- |
-| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `1.0.0` (`latest`) |
-| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.0.0/) | Public PyPI `1.0.0`; macOS ARM64, Python 3.10+ |
-| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.0.0) | Public NuGet `1.0.0`; .NET 10, Mac ARM64/Linux x64 |
+| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `1.0.2` (`latest`) |
+| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.0.2/) | Public PyPI `1.0.2`; macOS ARM64, Python 3.10+ |
+| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.0.2) | Public NuGet `1.0.2`; .NET 10, Mac ARM64/Linux x64 |
 | Rust / C | Core crates and C ABI | Source integration examples |
 
 The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requires **glibc 2.38+** and `libgcc_s.so.1`. Node.js 18/24 were tested on both targets; Node.js 22 or 24 is recommended for new applications. Windows, macOS Intel, Linux ARM64 and Alpine/musl binaries are not included. [Full platform requirements →](docs/node-release.md)
@@ -129,7 +129,7 @@ The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requi
 Update explicitly with `npm install @7mlabs/astrology@latest`. To pin this release:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.0.0
+npm install --save-exact @7mlabs/astrology@1.0.2
 ```
 
 Commit your application's lockfile and use `npm ci` for reproducible installs. [Other language installation guides →](docs/packages.md)

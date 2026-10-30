@@ -80,6 +80,16 @@ def check_source():
     python_binding = (ROOT / "bindings/python/sevenmlabs_astrology/__init__.py").read_text()
     require(re.search(r'^__version__ = "' + re.escape(python_version) + r'"$', python_binding, re.MULTILINE),
             "Python binding version differs from package metadata")
+    binding_docs = {name: (ROOT / "bindings" / name / "README.md").read_text(encoding="utf-8")
+                    for name in ("node", "python", "dotnet")}
+    for binding, markers in {
+        "node": (f"This release uses version `{version}`", f"@7mlabs/astrology@{version}"),
+        "python": (f"sevenmlabs-astrology=={python_version}", f"astro-sdk-{version}.tar.gz"),
+        "dotnet": (f"--version {version}", f"`v{version}`"),
+    }.items():
+        for marker in markers:
+            require(marker in binding_docs[binding],
+                    f"Stale install/source documentation in bindings/{binding}/README.md: expected {marker}")
     for filename in ("examples/mcp/package.json", "examples/frontend/package.json"):
         example = load_json(filename)
         require(example["version"] == version and example["peerDependencies"][node["name"]] == version,

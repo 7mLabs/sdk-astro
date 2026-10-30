@@ -6,7 +6,7 @@ conversion and modular SVG charts, using the shared 7mlabs Astro engine.
 ## Install and supported runtimes
 
 ```sh
-dotnet add package SevenMLabs.Astrology --version 1.0.0
+dotnet add package SevenMLabs.Astrology --version 1.0.2
 ```
 
 The managed assembly targets **.NET 10 (`net10.0`)**. The public package includes
@@ -83,4 +83,4 @@ available services. Native output is freed by the wrapper.
 
 The SDK and renderer use **AGPL-3.0-only**, using the AGPL option of Swiss Ephemeris.
 Full license text, NOTICE and upstream dependency/font notices are included.
-Corresponding source and build scripts are in the matching `v1.0.0` source release.
+Corresponding source and build scripts are in the matching `v1.0.2` source release.

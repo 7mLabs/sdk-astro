@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2 — 2026-10-30
+
+- Include the SVG JSON validation fix from 1.0.1 and correct pinned installation versions and corresponding-source references in all packaged READMEs.
+- Add a source gate requiring binding documentation to match the current package version, so stale install/source instructions fail before packaging.
+- 1.0.1 reached npm only; the coordinated release for npm, PyPI and NuGet is 1.0.2.
+
 ## 1.0.1 — 2026-10-30
 
 - Reject duplicate SVG render request fields and duplicate render option fields before they can overwrite earlier values.

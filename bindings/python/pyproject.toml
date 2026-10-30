@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sevenmlabs-astrology"
-version = "1.0.1"
+version = "1.0.2"
 description = "7mlabs Astro SDK: offline astrology calculations, IANA birth-time conversion and modular SVG charts"
 requires-python = ">=3.10"
 readme = "README.md"
