@@ -32,7 +32,7 @@ if a.reports:
   assert report['manifestSha256']==hashlib.sha256(a.manifest.read_bytes()).hexdigest()
   assert report['managedAssemblySha256']==m['managedAssembly']['sha256']
   assert report['nativeSha256']==m['nativeSha256'][report['rid']]
-  assert report['checks']=={'conformance':339,'time':9,'extended':2,'svg':12,'model':2}
+  assert report['checks']=={'conformance':339,'time':9,'extended':2,'svg':12,'model':2,'davison':4}
   key=(report['rid'],'.'.join(report['pythonVersion'].split('.')[:2]))
   assert key not in seen;seen.add(key)
   assert report['pythonInstalled']==(report['rid']=='osx-arm64')
