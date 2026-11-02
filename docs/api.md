@@ -81,3 +81,7 @@ Các mã core: `INVALID_INPUT`, `INPUT_TOO_LARGE`, `CALCULATION_FAILED`, `INTERN
 ## Những API chưa có
 
 Timezone IANA conversion, sidereal/topocentric, solar-return chart, local eclipse visibility, orb-entry/exit windows, Davison, fixed stars và progression chưa được triển khai trong core. [MCP adapter local và frontend host](integrations.md) là các phần tích hợp tùy chọn; [UI renderer](../examples/frontend/ui/README.md) tiêu thụ payload gốc. Các API legacy .NET không biến thành API mới chỉ vì cùng tên astrology.
+
+## Davison (1.1.0)
+
+`operation: "davison"` supports `variant: "uncorrected" | "corrected"`. Both return a recalculated sky with explicit derived UTC/place and relationship-scoped reports. This addition is available from 1.1.0; prior operations retain their request shapes. See [Davison contract](davison.md).

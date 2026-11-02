@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 — 2026-11-02
+
+- Add `operation: "davison"` with uncorrected/corrected variants, explicit UT1/arithmetic-geography provenance, relationship reports, local-time facade and existing natal SVG adapter. Includes derived UTC/place, provenance and relationship-scoped reports.
+
+- Preserve the 1.0.x TypeScript Request union and overloads; add CalculationRequest for callers selecting Davison dynamically. Existing invocation shapes remain supported.
+- Keep signed angular differences in the documented half-open range when floating-point rounding reaches +180 degrees.
+
 ## 1.0.2 — 2026-10-30
 
 - Include the SVG JSON validation fix from 1.0.1 and correct pinned installation versions and corresponding-source references in all packaged READMEs.

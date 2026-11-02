@@ -4,6 +4,7 @@ mod composite;
 mod compression;
 mod couple;
 mod couple_profiles;
+mod davison;
 mod domains;
 mod events;
 mod forecast;
@@ -113,7 +114,13 @@ pub fn normalize(value: f64) -> f64 {
 }
 
 pub fn signed_difference(a: f64, b: f64) -> f64 {
-    (normalize(a) - normalize(b) + 180.).rem_euclid(360.) - 180.
+    let delta = (normalize(a) - normalize(b) + 180.).rem_euclid(360.) - 180.;
+    // Floating remainder can round to 360 for a tiny negative dividend.
+    if delta >= 180. {
+        -180.
+    } else {
+        delta
+    }
 }
 
 fn validate_positions(positions: &[Position]) -> Result<(), String> {
@@ -362,6 +369,9 @@ pub fn calculate_json(input: &str) -> String {
     }
     if operation == "forecast" {
         return forecast::calculate_json(input);
+    }
+    if operation == "davison" {
+        return davison::calculate_json(input);
     }
     if operation == "composite" {
         return composite::calculate_json(input);

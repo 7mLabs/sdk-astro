@@ -199,6 +199,6 @@ Samples thực: [request composite](../examples/composite-request.json), [kết 
 
 ## Giới hạn và hướng giao diện
 
-Đây là midpoint composite; Davison, reference-place composite, progressed composite và forecast trên C chưa được triển khai. Transit cá nhân và lịch sự kiện có trong operations [forecast/events](forecast.md) từ 0.8. Không tạo compatibility score hoặc narrative. Packages vẫn là local alpha, chưa publish registry; có [mẫu MCP local/frontend worker](integrations.md), còn browser WASM/frontend UI là phase riêng.
+Đây là midpoint composite; Davison có từ SDK 1.1.0 qua operation riêng; xem [Davison](davison.md). Reference-place composite, progressed composite và forecast trên C chưa được triển khai. Transit cá nhân và lịch sự kiện có trong operations [forecast/events](forecast.md) từ 0.8. Không tạo compatibility score hoặc narrative. Packages dùng đồng bộ phiên bản 1.1.0 trên npm/PyPI/NuGet; có [mẫu MCP local/frontend worker](integrations.md), còn browser WASM/frontend UI là phase riêng.
 
 Frontend nên có chế độ natal A, natal B, synastry và C; 10 tab C cùng 30 sections; bảng provenance và source endpoints; house method/policy có nhãn rõ; Rx/applying/speed của C hiển thị không áp dụng. Inspector và export ghi đầy đủ options/scope, giữ index spaces riêng của natal/synastry/C. Native package hiện không chạy trực tiếp trong browser; xem [frontend plan](frontend.md).

@@ -2,9 +2,9 @@
 
 # 7mlabs Astrology
 
-## SDK 1.0.2: time conversion and modular SVG
+## SDK 1.1.0: time conversion and modular SVG
 
-**1.0.2 strengthens SVG JSON validation and corrects the packaged installation/source references.** Duplicate render request and option fields are rejected while valid requests remain compatible. See [patch notes](CHANGELOG.md) and [1.0.2 release verification](docs/release-1.0.2.md). Optional offline IANA helpers, extended natal points and modular SVG services remain available; see [time/SVG API](docs/time-and-svg.md).
+**1.1.0 strengthens SVG JSON validation and corrects the packaged installation/source references.** Duplicate render request and option fields are rejected while valid requests remain compatible. See [patch notes](CHANGELOG.md) and [1.1.0 release verification](docs/release-1.1.0.md). Optional offline IANA helpers, extended natal points and modular SVG services remain available; see [time/SVG API](docs/time-and-svg.md).
 
 An offline astrology engine with a shared Rust core and native SDKs. Turn birth data into structured chart, relationship and forecast payloads directly inside your application.
 
@@ -25,13 +25,13 @@ Choose the published package for your runtime. Native target support differs by 
 
 ```sh
 # JavaScript / TypeScript
-npm install --save-exact @7mlabs/astrology@1.0.2
+npm install --save-exact @7mlabs/astrology@1.1.0
 
 # Python (macOS ARM64 wheel, Python 3.10+)
-python -m pip install sevenmlabs-astrology==1.0.2
+python -m pip install sevenmlabs-astrology==1.1.0
 
 # .NET 10
-dotnet add package SevenMLabs.Astrology --version 1.0.2
+dotnet add package SevenMLabs.Astrology --version 1.1.0
 ```
 
 [Node.js guide](https://7mlabs.com/en/astro/sdk/docs/1.0.0/node/) · [Python guide](https://7mlabs.com/en/astro/sdk/docs/1.0.0/python/) · [.NET guide](https://7mlabs.com/en/astro/sdk/docs/1.0.0/dotnet/)
@@ -119,9 +119,9 @@ const restored = expandContext(context);
 
 | Language | Distribution | Status |
 | --- | --- | --- |
-| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `1.0.2` (`latest`) |
-| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.0.2/) | Public PyPI `1.0.2`; macOS ARM64, Python 3.10+ |
-| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.0.2) | Public NuGet `1.0.2`; .NET 10, Mac ARM64/Linux x64 |
+| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `1.1.0` (`latest`) |
+| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.1.0/) | Public PyPI `1.1.0`; macOS ARM64, Python 3.10+ |
+| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.1.0) | Public NuGet `1.1.0`; .NET 10, Mac ARM64/Linux x64 |
 | Rust / C | Core crates and C ABI | Source integration examples |
 
 The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requires **glibc 2.38+** and `libgcc_s.so.1`. Node.js 18/24 were tested on both targets; Node.js 22 or 24 is recommended for new applications. Windows, macOS Intel, Linux ARM64 and Alpine/musl binaries are not included. [Full platform requirements →](docs/node-release.md)
@@ -129,7 +129,7 @@ The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requi
 Update explicitly with `npm install @7mlabs/astrology@latest`. To pin this release:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.0.2
+npm install --save-exact @7mlabs/astrology@1.1.0
 ```
 
 Commit your application's lockfile and use `npm ci` for reproducible installs. [Other language installation guides →](docs/packages.md)
@@ -160,3 +160,5 @@ For source development, start with the [build instructions](docs/github-setup.md
 
 Engine and SDKs are licensed under **[AGPL-3.0-only](LICENSE)**, using the free AGPL option of Swiss Ephemeris. License text and third-party notices are included in the packages. The independent UI renderer has a [separate MIT license](examples/frontend/ui/LICENSE). See [NOTICE](NOTICE) and the [license guide](docs/license.md) for details.
 
+
+Davison corrected/uncorrected is available through `operation: "davison"` in 1.1.0. See [method and contract](docs/davison.md). Existing 1.0.x API calls remain supported.

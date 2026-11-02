@@ -345,3 +345,7 @@ Evidence: `artifacts/test-results.json`, `artifacts/time-svg-tests.json`,
 `/tmp/astro-modular-mobile-zoom.png`.
 No registry or production deployment is included. Non-macOS builds remain outside
 this run's verification.
+
+## Development Davison comparison
+
+[2026-11-02 report](reviews/2026-11-02-davison/README.md): 64 charts and 3,648 checks passed separate Swiss assembly and Skyfield/JPL reference comparisons. See the protocol for thresholds, retained aborted harness runs and limits. This does not validate the full input domain or authorize publication.

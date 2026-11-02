@@ -242,6 +242,15 @@ function main() {
   assert.equal(sdk.geometry.separation({ longitude1: 350, longitude2: 10 }).data.separation, 20);
   assert.equal(sdk.houses.locate({ longitude: 350, houseCusps: Array.from({ length: 12 }, (_, index) => index * 30) }).data.house.number, 12);
   const schemaEnv = { AJV_2020_MODULE: args['ajv-module'], ASTRO_ENGINE_MODULE: installed };
+
+  console.log(run(process.execPath, [path.join(root, 'tests/services/davison.cjs')], consumer, schemaEnv).trim());
+  console.log(run(process.execPath, [path.join(root, 'scripts/check-upgrade-compatibility.cjs')], root, {ASTRO_ENGINE_MODULE: installed}).trim());
+  for (const relative of ['examples/node/davison-types.ts', 'tests/compatibility/legacy-types.ts']) {
+    const filename = path.join(consumer, path.basename(relative));
+    fs.writeFileSync(filename, fs.readFileSync(path.join(root, relative), 'utf8').replace("from '../../bindings/node'", "from '@7mlabs/astrology'"));
+    run(process.execPath, [args.typescript, '--strict', '--noEmit', '--target', 'ES2020', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', filename], consumer);
+  }
+
   const querySchema = run(process.execPath, [path.join(root, 'scripts/check-query-schema.cjs'), ...queryFiles], consumer, schemaEnv);
   console.log(querySchema.trim());
   const payloadFiles = requests.map((request, index) => {

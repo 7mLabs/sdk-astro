@@ -69,8 +69,9 @@ jobs:
         run: python scripts/check-additional-points.py
       - name: Compatibility with the previous public npm package
         run: |
-          npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@0.10.1
+          npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.0.2
           node scripts/check-public-compatibility.cjs
+          node scripts/check-upgrade-compatibility.cjs
       - name: Fresh consumer installation and parity
         run: python scripts/test-packages.py
       - name: Installed time helpers and SVG service parity
@@ -82,6 +83,8 @@ jobs:
           node tests/services/schemas.cjs
           node scripts/check-svg-point-schema.cjs
           node tests/services/time-svg.cjs
+          node tests/services/davison.cjs
+          node artifacts/ci-tools/node_modules/typescript/lib/tsc.js --strict --noEmit --target ES2020 --module NodeNext --moduleResolution NodeNext examples/node/davison-types.ts tests/compatibility/legacy-types.ts
       - name: Compression parity and real payload roundtrips
         run: python scripts/test-compression.py
       - name: Installed compression helpers and TypeScript contracts
@@ -123,6 +126,7 @@ jobs:
             artifacts/time-svg-tests.json
             artifacts/additional-points-tests.json
             artifacts/public-compatibility.json
+            artifacts/upgrade-compatibility.json
             artifacts/compression-test-results.json
             artifacts/compression-binding-tests.json
             artifacts/candidate-provenance.json
@@ -207,6 +211,8 @@ jobs:
         with:
           name: npm-release
           path: artifacts/npm-release
+      - name: Install published 1.0.2 compatibility baseline
+        run: npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.0.2
       - name: Fresh install, repeated-call parity, schema and TypeScript checks
         run: >-
           node scripts/test-npm-release.cjs
