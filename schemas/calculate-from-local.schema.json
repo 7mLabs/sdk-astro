@@ -2245,6 +2245,336 @@
         }
       },
       "$comment": "Core additionally checks finite arithmetic, unique/nonblank position IDs and 128 UTF-8 byte length, valid Gregorian dates, exact raw JSON integer normalization, and ordered house cusps traversing the zodiac once. Optional selectors and options reject null. Inspection selectors default all; aspectPreset defaults major."
+    },
+    {
+      "$id": "urn:7mlabs:astrology:local-davison-request:1.0",
+      "title": "Davison relationship chart",
+      "description": "Arithmetic latitude/longitude means and UT1 time midpoint. corrected adjusts time to the nearest shortest-arc midpoint MC. Runtime enforces valid dates, unique non-antipodal target and convergence.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "personA",
+        "personB"
+      ],
+      "properties": {
+        "operation": {
+          "const": "davison"
+        },
+        "personA": {
+          "$ref": "#/$defs/birthInput"
+        },
+        "personB": {
+          "$ref": "#/$defs/birthInput"
+        },
+        "domains": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/domains"
+        },
+        "customProfiles": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/customProfiles"
+        },
+        "rulership": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/rulership"
+        },
+        "aspectPreset": {
+          "enum": [
+            "major",
+            "extended"
+          ],
+          "default": "extended"
+        },
+        "aspectRules": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/aspectRules"
+        },
+        "variant": {
+          "enum": [
+            "uncorrected",
+            "corrected"
+          ],
+          "default": "uncorrected"
+        },
+        "houseSystem": {
+          "enum": [
+            "placidus",
+            "wholeSign"
+          ],
+          "default": "placidus"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "aspectRules",
+              "aspectPreset"
+            ],
+            "type": "object",
+            "properties": {
+              "aspectPreset": {},
+              "aspectRules": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "required": [
+              "domains"
+            ],
+            "properties": {
+              "domains": {
+                "type": "array",
+                "maxItems": 0
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "required": [
+              "customProfiles"
+            ],
+            "properties": {
+              "customProfiles": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "properties": {
+                "personA": {
+                  "required": [
+                    "local"
+                  ],
+                  "properties": {
+                    "local": {}
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "personB": {
+                  "required": [
+                    "local"
+                  ],
+                  "properties": {
+                    "local": {}
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "$defs": {
+        "birthInput": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "utc",
+                "location"
+              ],
+              "properties": {
+                "utc": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/utc"
+                },
+                "location": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/location"
+                },
+                "houseSystem": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/houseSystem"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "local",
+                "location"
+              ],
+              "properties": {
+                "location": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/location"
+                },
+                "houseSystem": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/houseSystem"
+                },
+                "local": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "year",
+                    "month",
+                    "day",
+                    "hour",
+                    "minute"
+                  ],
+                  "properties": {
+                    "year": {
+                      "type": "integer",
+                      "minimum": 1800,
+                      "maximum": 2399
+                    },
+                    "month": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 12
+                    },
+                    "day": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 31
+                    },
+                    "hour": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 23
+                    },
+                    "minute": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 59
+                    },
+                    "second": {
+                      "type": "number",
+                      "minimum": 0,
+                      "exclusiveMaximum": 60,
+                      "default": 0
+                    }
+                  }
+                },
+                "timeZone": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "IANA ID in the pinned bundled tzdb; no host timezone inference."
+                },
+                "utcOffsetSeconds": {
+                  "type": "integer",
+                  "minimum": -86399,
+                  "maximum": 86399
+                },
+                "disambiguation": {
+                  "enum": [
+                    "reject",
+                    "earlier",
+                    "later"
+                  ],
+                  "default": "reject"
+                }
+              },
+              "allOf": [
+                {
+                  "oneOf": [
+                    {
+                      "required": [
+                        "timeZone"
+                      ],
+                      "not": {
+                        "required": [
+                          "utcOffsetSeconds"
+                        ],
+                        "properties": {
+                          "utcOffsetSeconds": {}
+                        },
+                        "type": "object"
+                      },
+                      "properties": {
+                        "timeZone": {}
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "required": [
+                        "utcOffsetSeconds"
+                      ],
+                      "not": {
+                        "required": [
+                          "timeZone"
+                        ],
+                        "properties": {
+                          "timeZone": {}
+                        },
+                        "type": "object"
+                      },
+                      "properties": {
+                        "disambiguation": {
+                          "const": "reject"
+                        },
+                        "utcOffsetSeconds": {}
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "houseMethod": {
+              "enum": [
+                "midpoint",
+                "wholeSignFromMidpointAscendant"
+              ],
+              "default": "midpoint"
+            },
+            "antipodalPolicy": {
+              "enum": [
+                "error",
+                "lowerLongitude"
+              ],
+              "default": "error"
+            },
+            "domains": {
+              "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/domains"
+            },
+            "customProfiles": {
+              "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/customProfiles"
+            }
+          },
+          "required": [],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "type": "object",
+                "required": [
+                  "domains"
+                ],
+                "properties": {
+                  "domains": {
+                    "type": "array",
+                    "maxItems": 0
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "required": [
+                  "customProfiles"
+                ],
+                "properties": {
+                  "customProfiles": {
+                    "type": "array",
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "$comment": "UTC operations remain in their existing schemas. This facade requires at least one local birth and resolves it before invoking the unchanged calculation core. Runtime checks calendar, zone rules and UTC bounds."

@@ -8,7 +8,7 @@ as its three development paths.
 ## Installation and platform support
 
 ```sh
-python -m pip install 'sevenmlabs-astrology==1.0.2'
+python -m pip install 'sevenmlabs-astrology==1.1.0'
 ```
 
 This wheel supports **Python 3.10+ on macOS 11+ Apple Silicon (ARM64)**.
@@ -124,9 +124,9 @@ envelope. `get_capabilities()` describes the installed engine.
 
 ## Source, documentation and license
 
-This release is **1.0.2**. The matching project source snapshot
+This release is **1.1.0**. The matching project source snapshot
 and build instructions are bundled at
-`sevenmlabs_astrology/source/astro-sdk-1.0.2.tar.gz` inside the wheel.
+`sevenmlabs_astrology/source/astro-sdk-1.1.0.tar.gz` inside the wheel.
 The archive includes the Rust/C engine, Python wrapper, locked dependency
 declarations, embedded data, renderer assets, schemas, tests and dependency
 notices; it excludes credentials and local build outputs.
@@ -141,3 +141,5 @@ advance independently; use the bundled snapshot to reproduce this wheel.
 The SDK and native renderer use **AGPL-3.0-only**, using the AGPL option of Swiss
 Ephemeris. License texts and third-party notices are included; upstream font and
 dependency terms are retained. See the included `LICENSE` and `NOTICE`.
+
+SDK 1.1.0 adds Davison (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.0/docs/davison.md).

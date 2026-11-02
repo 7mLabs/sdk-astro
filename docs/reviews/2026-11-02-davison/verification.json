@@ -1,0 +1,7 @@
+{
+  "result": "passed",
+  "charts": 64,
+  "checks": 3648,
+  "failedChecks": 0,
+  "savedEvidence": "hashes and summary statistics verified; does not rerun reference calculations"
+}

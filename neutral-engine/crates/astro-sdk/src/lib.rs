@@ -77,8 +77,8 @@ pub fn calculate_from_local_json(text: &str) -> String {
         .or_insert_with(|| RawValue::from_string("\"natal\"".into()).unwrap());
     let operation = serde_json::from_str::<String>(root["operation"].get()).unwrap_or_default();
     let paths:Vec<&str>=match operation.as_str() {
-        "natal"|"natalDomains"=>vec![""],"couple"|"composite"=>vec!["personA","personB"],
-        "forecast"|"query"=>vec!["birth"],_=>return astro_core::error_json("UNSUPPORTED_LOCAL_OPERATION","Local-time calculation supports natal, natalDomains, couple, composite, forecast and birth-based query"),
+        "natal"|"natalDomains"=>vec![""],"couple"|"composite"|"davison"=>vec!["personA","personB"],
+        "forecast"|"query"=>vec!["birth"],_=>return astro_core::error_json("UNSUPPORTED_LOCAL_OPERATION","Local-time calculation supports natal, natalDomains, couple, composite, davison, forecast and birth-based query"),
     };
     let mut resolutions = serde_json::Map::new();
     let mut warnings = vec![];

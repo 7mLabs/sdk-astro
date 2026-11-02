@@ -159,3 +159,7 @@ MCP tools đề xuất: calculate chart, synastry, transits, event search, capab
 ## Thứ tự thực hiện
 
 Phase 0–1 tạo nền móng; phase 2 có natal cơ bản, 10 payload lĩnh vực cá nhân, dữ liệu chuyên sâu và custom profiles; full ephemeris coverage còn cần mở rộng kiểm chứng. Phase 2 đã có synastry và midpoint composite C; các kỹ thuật theo thời gian và các phương pháp chart đôi khác nằm ở phase 3. Phase 4 chỉ public những module đã đạt gate. CLI cơ bản có thể làm sớm nhưng MCP và frontend cần runtime/provider tương ứng. Lịch các phase tương lai phụ thuộc dữ liệu đo về port, coverage và build matrix.
+
+### Davison development status
+
+The working source implements standalone corrected/uncorrected Davison through one operation, sharing the natal/domain/render pipelines. The 1.1.0 release adds this operation. Separate Swiss assembly and Skyfield/JPL comparison results are recorded in the linked contract; final package checks are release gates. See [method and contract](davison.md).

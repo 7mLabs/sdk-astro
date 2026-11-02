@@ -94,7 +94,7 @@ def invoke(mode,request):
         assert value==reference,f'{mode} differs in {name}'
     return reference
 
-counts={'conformance':0,'time':0,'extended':0,'svg':0,'model':0}
+counts={'conformance':0,'time':0,'extended':0,'svg':0,'model':0,'davison':0}
 try:
     caps=invoke('capabilities',{})['data'];assert caps['abiVersion']==1 and caps['svg']['rendererVersion']=='1.2.0'
     for case in json.loads((ROOT/'tests/conformance/cases.json').read_text()):
@@ -125,6 +125,22 @@ try:
             assert not rendered['errors'];ET.fromstring(rendered['data']['svg']);counts['svg']+=1
         model=invoke('render',{'payload':payload,'options':{'sections':['wheel','houseFocus'],'focus':{'house':7,'mode':'isolate'},'output':'model'}})
         assert not model['errors'] and 'svg' not in model['data'];assert model['data']['model']['focus']['house']['number']==7;counts['model']+=1
+    # Exercise Davison through the actual final wheel/NuGet/npm installations.
+    for variant in ['uncorrected','corrected']:
+        request=json.loads((ROOT/f'examples/davison-{variant}-request.json').read_text())
+        for system in ['placidus','wholeSign']:
+            request={**request,'houseSystem':system}
+            derived=invoke('calculate',request);assert not derived['errors']
+            assert derived['calculation']['variant']==variant
+            converted={**request,'personA':{**request['personA'],'local':request['personA']['utc'],'utcOffsetSeconds':0}}
+            converted['personA'].pop('utc')
+            local_derived=invoke('local',converted);assert not local_derived['errors']
+            assert local_derived['data']==derived['data']
+            drawing=invoke('render',{'payload':derived,'options':{'sections':['wheel','houseFocus'],'focus':{'house':7,'mode':'highlight'}}})
+            assert not drawing['errors'];ET.fromstring(drawing['data']['svg'])
+            model=invoke('render',{'payload':derived,'options':{'output':'model'}})
+            assert not model['errors'] and len(model['data']['model']['points'])==10
+            counts['davison']+=1
 finally:
     for process in processes.values():
         process.stdin.close();process.wait(timeout=15)

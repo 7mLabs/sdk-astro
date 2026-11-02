@@ -1,0 +1,2626 @@
+[
+  {
+    "id": "identity-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 10.8,
+          "longitude": 106.6
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 10.8,
+          "longitude": 106.6
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "identity-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 10.8,
+          "longitude": 106.6
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 10.8,
+          "longitude": 106.6
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "identity-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 10.8,
+          "longitude": 106.6
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 10.8,
+          "longitude": 106.6
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "identity-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 10.8,
+          "longitude": 106.6
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 10.8,
+          "longitude": 106.6
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "dateline-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1980,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 35,
+          "longitude": 179
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1999,
+          "month": 6,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -20,
+          "longitude": -179
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "dateline-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1980,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 35,
+          "longitude": 179
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1999,
+          "month": 6,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -20,
+          "longitude": -179
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "dateline-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1980,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 35,
+          "longitude": 179
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1999,
+          "month": 6,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -20,
+          "longitude": -179
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "dateline-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1980,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 35,
+          "longitude": 179
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1999,
+          "month": 6,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -20,
+          "longitude": -179
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "leap-and-century-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1900,
+          "month": 3,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 51.5,
+          "longitude": -0.12
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2000,
+          "month": 2,
+          "day": 29,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -33.86,
+          "longitude": 151.21
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "leap-and-century-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1900,
+          "month": 3,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 51.5,
+          "longitude": -0.12
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2000,
+          "month": 2,
+          "day": 29,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -33.86,
+          "longitude": 151.21
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "leap-and-century-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1900,
+          "month": 3,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 51.5,
+          "longitude": -0.12
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2000,
+          "month": 2,
+          "day": 29,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -33.86,
+          "longitude": 151.21
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "leap-and-century-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1900,
+          "month": 3,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 51.5,
+          "longitude": -0.12
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2000,
+          "month": 2,
+          "day": 29,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -33.86,
+          "longitude": 151.21
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "utc-midnight-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 2016,
+          "month": 12,
+          "day": 31,
+          "hour": 23,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 0,
+          "longitude": 0
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2017,
+          "month": 1,
+          "day": 1,
+          "hour": 0,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 0,
+          "longitude": 20
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "utc-midnight-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 2016,
+          "month": 12,
+          "day": 31,
+          "hour": 23,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 0,
+          "longitude": 0
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2017,
+          "month": 1,
+          "day": 1,
+          "hour": 0,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 0,
+          "longitude": 20
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "utc-midnight-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 2016,
+          "month": 12,
+          "day": 31,
+          "hour": 23,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 0,
+          "longitude": 0
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2017,
+          "month": 1,
+          "day": 1,
+          "hour": 0,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 0,
+          "longitude": 20
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "utc-midnight-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 2016,
+          "month": 12,
+          "day": 31,
+          "hour": 23,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 0,
+          "longitude": 0
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2017,
+          "month": 1,
+          "day": 1,
+          "hour": 0,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 0,
+          "longitude": 20
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "future-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 2030,
+          "month": 4,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 60,
+          "longitude": -100
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2050,
+          "month": 12,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -50,
+          "longitude": 140
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "future-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 2030,
+          "month": 4,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 60,
+          "longitude": -100
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2050,
+          "month": 12,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -50,
+          "longitude": 140
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "future-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 2030,
+          "month": 4,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 60,
+          "longitude": -100
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2050,
+          "month": 12,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -50,
+          "longitude": 140
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "future-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 2030,
+          "month": 4,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 60,
+          "longitude": -100
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2050,
+          "month": 12,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -50,
+          "longitude": 140
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "wide-time-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1900,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -40,
+          "longitude": -150
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2050,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 45,
+          "longitude": 130
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "wide-time-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1900,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -40,
+          "longitude": -150
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2050,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 45,
+          "longitude": 130
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "wide-time-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1900,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -40,
+          "longitude": -150
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2050,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 45,
+          "longitude": 130
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "wide-time-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1900,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": -40,
+          "longitude": -150
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2050,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0,
+          "second": 0.0
+        },
+        "location": {
+          "latitude": 45,
+          "longitude": 130
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-00-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1977,
+          "month": 2,
+          "day": 8,
+          "hour": 7,
+          "minute": 20,
+          "second": 3.125
+        },
+        "location": {
+          "latitude": 15.622863150486324,
+          "longitude": -122.61198398630816
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1956,
+          "month": 6,
+          "day": 8,
+          "hour": 6,
+          "minute": 16,
+          "second": 23.75
+        },
+        "location": {
+          "latitude": -35.64527502363237,
+          "longitude": 157.13007081966884
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-00-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1977,
+          "month": 2,
+          "day": 8,
+          "hour": 7,
+          "minute": 20,
+          "second": 3.125
+        },
+        "location": {
+          "latitude": 15.622863150486324,
+          "longitude": -122.61198398630816
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1956,
+          "month": 6,
+          "day": 8,
+          "hour": 6,
+          "minute": 16,
+          "second": 23.75
+        },
+        "location": {
+          "latitude": -35.64527502363237,
+          "longitude": 157.13007081966884
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-00-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1977,
+          "month": 2,
+          "day": 8,
+          "hour": 7,
+          "minute": 20,
+          "second": 3.125
+        },
+        "location": {
+          "latitude": 15.622863150486324,
+          "longitude": -122.61198398630816
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1956,
+          "month": 6,
+          "day": 8,
+          "hour": 6,
+          "minute": 16,
+          "second": 23.75
+        },
+        "location": {
+          "latitude": -35.64527502363237,
+          "longitude": 157.13007081966884
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-00-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1977,
+          "month": 2,
+          "day": 8,
+          "hour": 7,
+          "minute": 20,
+          "second": 3.125
+        },
+        "location": {
+          "latitude": 15.622863150486324,
+          "longitude": -122.61198398630816
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1956,
+          "month": 6,
+          "day": 8,
+          "hour": 6,
+          "minute": 16,
+          "second": 23.75
+        },
+        "location": {
+          "latitude": -35.64527502363237,
+          "longitude": 157.13007081966884
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-01-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1983,
+          "month": 12,
+          "day": 19,
+          "hour": 2,
+          "minute": 8,
+          "second": 44.0
+        },
+        "location": {
+          "latitude": 35.48425282823041,
+          "longitude": 143.66549041980812
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1981,
+          "month": 6,
+          "day": 14,
+          "hour": 1,
+          "minute": 32,
+          "second": 8.75
+        },
+        "location": {
+          "latitude": 7.109569079400572,
+          "longitude": 23.408321496777546
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-01-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1983,
+          "month": 12,
+          "day": 19,
+          "hour": 2,
+          "minute": 8,
+          "second": 44.0
+        },
+        "location": {
+          "latitude": 35.48425282823041,
+          "longitude": 143.66549041980812
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1981,
+          "month": 6,
+          "day": 14,
+          "hour": 1,
+          "minute": 32,
+          "second": 8.75
+        },
+        "location": {
+          "latitude": 7.109569079400572,
+          "longitude": 23.408321496777546
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-01-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1983,
+          "month": 12,
+          "day": 19,
+          "hour": 2,
+          "minute": 8,
+          "second": 44.0
+        },
+        "location": {
+          "latitude": 35.48425282823041,
+          "longitude": 143.66549041980812
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1981,
+          "month": 6,
+          "day": 14,
+          "hour": 1,
+          "minute": 32,
+          "second": 8.75
+        },
+        "location": {
+          "latitude": 7.109569079400572,
+          "longitude": 23.408321496777546
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-01-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1983,
+          "month": 12,
+          "day": 19,
+          "hour": 2,
+          "minute": 8,
+          "second": 44.0
+        },
+        "location": {
+          "latitude": 35.48425282823041,
+          "longitude": 143.66549041980812
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1981,
+          "month": 6,
+          "day": 14,
+          "hour": 1,
+          "minute": 32,
+          "second": 8.75
+        },
+        "location": {
+          "latitude": 7.109569079400572,
+          "longitude": 23.408321496777546
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-02-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1968,
+          "month": 3,
+          "day": 14,
+          "hour": 4,
+          "minute": 34,
+          "second": 24.75
+        },
+        "location": {
+          "latitude": -49.64168867180686,
+          "longitude": 135.13302587359556
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2046,
+          "month": 2,
+          "day": 18,
+          "hour": 9,
+          "minute": 2,
+          "second": 38.75
+        },
+        "location": {
+          "latitude": 5.102451125355898,
+          "longitude": 176.69198335235575
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-02-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1968,
+          "month": 3,
+          "day": 14,
+          "hour": 4,
+          "minute": 34,
+          "second": 24.75
+        },
+        "location": {
+          "latitude": -49.64168867180686,
+          "longitude": 135.13302587359556
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2046,
+          "month": 2,
+          "day": 18,
+          "hour": 9,
+          "minute": 2,
+          "second": 38.75
+        },
+        "location": {
+          "latitude": 5.102451125355898,
+          "longitude": 176.69198335235575
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-02-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1968,
+          "month": 3,
+          "day": 14,
+          "hour": 4,
+          "minute": 34,
+          "second": 24.75
+        },
+        "location": {
+          "latitude": -49.64168867180686,
+          "longitude": 135.13302587359556
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2046,
+          "month": 2,
+          "day": 18,
+          "hour": 9,
+          "minute": 2,
+          "second": 38.75
+        },
+        "location": {
+          "latitude": 5.102451125355898,
+          "longitude": 176.69198335235575
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-02-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1968,
+          "month": 3,
+          "day": 14,
+          "hour": 4,
+          "minute": 34,
+          "second": 24.75
+        },
+        "location": {
+          "latitude": -49.64168867180686,
+          "longitude": 135.13302587359556
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2046,
+          "month": 2,
+          "day": 18,
+          "hour": 9,
+          "minute": 2,
+          "second": 38.75
+        },
+        "location": {
+          "latitude": 5.102451125355898,
+          "longitude": 176.69198335235575
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-03-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1902,
+          "month": 9,
+          "day": 21,
+          "hour": 15,
+          "minute": 13,
+          "second": 27.125
+        },
+        "location": {
+          "latitude": 52.08530774765856,
+          "longitude": 16.18598360659857
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2032,
+          "month": 7,
+          "day": 24,
+          "hour": 2,
+          "minute": 1,
+          "second": 27.75
+        },
+        "location": {
+          "latitude": -33.192083825450865,
+          "longitude": 0.8450270458344278
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-03-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1902,
+          "month": 9,
+          "day": 21,
+          "hour": 15,
+          "minute": 13,
+          "second": 27.125
+        },
+        "location": {
+          "latitude": 52.08530774765856,
+          "longitude": 16.18598360659857
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2032,
+          "month": 7,
+          "day": 24,
+          "hour": 2,
+          "minute": 1,
+          "second": 27.75
+        },
+        "location": {
+          "latitude": -33.192083825450865,
+          "longitude": 0.8450270458344278
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-03-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1902,
+          "month": 9,
+          "day": 21,
+          "hour": 15,
+          "minute": 13,
+          "second": 27.125
+        },
+        "location": {
+          "latitude": 52.08530774765856,
+          "longitude": 16.18598360659857
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2032,
+          "month": 7,
+          "day": 24,
+          "hour": 2,
+          "minute": 1,
+          "second": 27.75
+        },
+        "location": {
+          "latitude": -33.192083825450865,
+          "longitude": 0.8450270458344278
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-03-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1902,
+          "month": 9,
+          "day": 21,
+          "hour": 15,
+          "minute": 13,
+          "second": 27.125
+        },
+        "location": {
+          "latitude": 52.08530774765856,
+          "longitude": 16.18598360659857
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2032,
+          "month": 7,
+          "day": 24,
+          "hour": 2,
+          "minute": 1,
+          "second": 27.75
+        },
+        "location": {
+          "latitude": -33.192083825450865,
+          "longitude": 0.8450270458344278
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-04-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1913,
+          "month": 6,
+          "day": 26,
+          "hour": 11,
+          "minute": 9,
+          "second": 59.75
+        },
+        "location": {
+          "latitude": 2.6044772857731644,
+          "longitude": -22.92381641016948
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1916,
+          "month": 12,
+          "day": 3,
+          "hour": 23,
+          "minute": 47,
+          "second": 4.75
+        },
+        "location": {
+          "latitude": 16.27701989031118,
+          "longitude": 145.60087097405477
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-04-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1913,
+          "month": 6,
+          "day": 26,
+          "hour": 11,
+          "minute": 9,
+          "second": 59.75
+        },
+        "location": {
+          "latitude": 2.6044772857731644,
+          "longitude": -22.92381641016948
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1916,
+          "month": 12,
+          "day": 3,
+          "hour": 23,
+          "minute": 47,
+          "second": 4.75
+        },
+        "location": {
+          "latitude": 16.27701989031118,
+          "longitude": 145.60087097405477
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-04-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1913,
+          "month": 6,
+          "day": 26,
+          "hour": 11,
+          "minute": 9,
+          "second": 59.75
+        },
+        "location": {
+          "latitude": 2.6044772857731644,
+          "longitude": -22.92381641016948
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1916,
+          "month": 12,
+          "day": 3,
+          "hour": 23,
+          "minute": 47,
+          "second": 4.75
+        },
+        "location": {
+          "latitude": 16.27701989031118,
+          "longitude": 145.60087097405477
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-04-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1913,
+          "month": 6,
+          "day": 26,
+          "hour": 11,
+          "minute": 9,
+          "second": 59.75
+        },
+        "location": {
+          "latitude": 2.6044772857731644,
+          "longitude": -22.92381641016948
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1916,
+          "month": 12,
+          "day": 3,
+          "hour": 23,
+          "minute": 47,
+          "second": 4.75
+        },
+        "location": {
+          "latitude": 16.27701989031118,
+          "longitude": 145.60087097405477
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-05-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1936,
+          "month": 12,
+          "day": 9,
+          "hour": 13,
+          "minute": 58,
+          "second": 7.0
+        },
+        "location": {
+          "latitude": -2.5492861503693263,
+          "longitude": 139.25122356641032
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2027,
+          "month": 4,
+          "day": 21,
+          "hour": 15,
+          "minute": 29,
+          "second": 20.0
+        },
+        "location": {
+          "latitude": 56.34106428005599,
+          "longitude": 77.51249406734894
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-05-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1936,
+          "month": 12,
+          "day": 9,
+          "hour": 13,
+          "minute": 58,
+          "second": 7.0
+        },
+        "location": {
+          "latitude": -2.5492861503693263,
+          "longitude": 139.25122356641032
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2027,
+          "month": 4,
+          "day": 21,
+          "hour": 15,
+          "minute": 29,
+          "second": 20.0
+        },
+        "location": {
+          "latitude": 56.34106428005599,
+          "longitude": 77.51249406734894
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-05-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1936,
+          "month": 12,
+          "day": 9,
+          "hour": 13,
+          "minute": 58,
+          "second": 7.0
+        },
+        "location": {
+          "latitude": -2.5492861503693263,
+          "longitude": 139.25122356641032
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2027,
+          "month": 4,
+          "day": 21,
+          "hour": 15,
+          "minute": 29,
+          "second": 20.0
+        },
+        "location": {
+          "latitude": 56.34106428005599,
+          "longitude": 77.51249406734894
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-05-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1936,
+          "month": 12,
+          "day": 9,
+          "hour": 13,
+          "minute": 58,
+          "second": 7.0
+        },
+        "location": {
+          "latitude": -2.5492861503693263,
+          "longitude": 139.25122356641032
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2027,
+          "month": 4,
+          "day": 21,
+          "hour": 15,
+          "minute": 29,
+          "second": 20.0
+        },
+        "location": {
+          "latitude": 56.34106428005599,
+          "longitude": 77.51249406734894
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-06-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1959,
+          "month": 3,
+          "day": 13,
+          "hour": 2,
+          "minute": 17,
+          "second": 10.125
+        },
+        "location": {
+          "latitude": -49.51632210948031,
+          "longitude": -20.92200703310968
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2022,
+          "month": 12,
+          "day": 29,
+          "hour": 19,
+          "minute": 25,
+          "second": 13.125
+        },
+        "location": {
+          "latitude": -59.57388347278349,
+          "longitude": -71.76530485107642
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-06-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1959,
+          "month": 3,
+          "day": 13,
+          "hour": 2,
+          "minute": 17,
+          "second": 10.125
+        },
+        "location": {
+          "latitude": -49.51632210948031,
+          "longitude": -20.92200703310968
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2022,
+          "month": 12,
+          "day": 29,
+          "hour": 19,
+          "minute": 25,
+          "second": 13.125
+        },
+        "location": {
+          "latitude": -59.57388347278349,
+          "longitude": -71.76530485107642
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-06-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1959,
+          "month": 3,
+          "day": 13,
+          "hour": 2,
+          "minute": 17,
+          "second": 10.125
+        },
+        "location": {
+          "latitude": -49.51632210948031,
+          "longitude": -20.92200703310968
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2022,
+          "month": 12,
+          "day": 29,
+          "hour": 19,
+          "minute": 25,
+          "second": 13.125
+        },
+        "location": {
+          "latitude": -59.57388347278349,
+          "longitude": -71.76530485107642
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-06-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1959,
+          "month": 3,
+          "day": 13,
+          "hour": 2,
+          "minute": 17,
+          "second": 10.125
+        },
+        "location": {
+          "latitude": -49.51632210948031,
+          "longitude": -20.92200703310968
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 2022,
+          "month": 12,
+          "day": 29,
+          "hour": 19,
+          "minute": 25,
+          "second": 13.125
+        },
+        "location": {
+          "latitude": -59.57388347278349,
+          "longitude": -71.76530485107642
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-07-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1922,
+          "month": 3,
+          "day": 12,
+          "hour": 13,
+          "minute": 53,
+          "second": 1.75
+        },
+        "location": {
+          "latitude": 38.13475204797811,
+          "longitude": 96.05174196117144
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1934,
+          "month": 12,
+          "day": 3,
+          "hour": 16,
+          "minute": 57,
+          "second": 9.125
+        },
+        "location": {
+          "latitude": 0.2986021821664693,
+          "longitude": -0.9526024557493997
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-07-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1922,
+          "month": 3,
+          "day": 12,
+          "hour": 13,
+          "minute": 53,
+          "second": 1.75
+        },
+        "location": {
+          "latitude": 38.13475204797811,
+          "longitude": 96.05174196117144
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1934,
+          "month": 12,
+          "day": 3,
+          "hour": 16,
+          "minute": 57,
+          "second": 9.125
+        },
+        "location": {
+          "latitude": 0.2986021821664693,
+          "longitude": -0.9526024557493997
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-07-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1922,
+          "month": 3,
+          "day": 12,
+          "hour": 13,
+          "minute": 53,
+          "second": 1.75
+        },
+        "location": {
+          "latitude": 38.13475204797811,
+          "longitude": 96.05174196117144
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1934,
+          "month": 12,
+          "day": 3,
+          "hour": 16,
+          "minute": 57,
+          "second": 9.125
+        },
+        "location": {
+          "latitude": 0.2986021821664693,
+          "longitude": -0.9526024557493997
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-07-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1922,
+          "month": 3,
+          "day": 12,
+          "hour": 13,
+          "minute": 53,
+          "second": 1.75
+        },
+        "location": {
+          "latitude": 38.13475204797811,
+          "longitude": 96.05174196117144
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1934,
+          "month": 12,
+          "day": 3,
+          "hour": 16,
+          "minute": 57,
+          "second": 9.125
+        },
+        "location": {
+          "latitude": 0.2986021821664693,
+          "longitude": -0.9526024557493997
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-08-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1912,
+          "month": 7,
+          "day": 6,
+          "hour": 14,
+          "minute": 2,
+          "second": 20.75
+        },
+        "location": {
+          "latitude": -43.314812926144356,
+          "longitude": -99.4862539649854
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1924,
+          "month": 1,
+          "day": 9,
+          "hour": 23,
+          "minute": 31,
+          "second": 41.75
+        },
+        "location": {
+          "latitude": -37.7155493256101,
+          "longitude": 79.6668285055955
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-08-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1912,
+          "month": 7,
+          "day": 6,
+          "hour": 14,
+          "minute": 2,
+          "second": 20.75
+        },
+        "location": {
+          "latitude": -43.314812926144356,
+          "longitude": -99.4862539649854
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1924,
+          "month": 1,
+          "day": 9,
+          "hour": 23,
+          "minute": 31,
+          "second": 41.75
+        },
+        "location": {
+          "latitude": -37.7155493256101,
+          "longitude": 79.6668285055955
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-08-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1912,
+          "month": 7,
+          "day": 6,
+          "hour": 14,
+          "minute": 2,
+          "second": 20.75
+        },
+        "location": {
+          "latitude": -43.314812926144356,
+          "longitude": -99.4862539649854
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1924,
+          "month": 1,
+          "day": 9,
+          "hour": 23,
+          "minute": 31,
+          "second": 41.75
+        },
+        "location": {
+          "latitude": -37.7155493256101,
+          "longitude": 79.6668285055955
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-08-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1912,
+          "month": 7,
+          "day": 6,
+          "hour": 14,
+          "minute": 2,
+          "second": 20.75
+        },
+        "location": {
+          "latitude": -43.314812926144356,
+          "longitude": -99.4862539649854
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1924,
+          "month": 1,
+          "day": 9,
+          "hour": 23,
+          "minute": 31,
+          "second": 41.75
+        },
+        "location": {
+          "latitude": -37.7155493256101,
+          "longitude": 79.6668285055955
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-09-uncorrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1951,
+          "month": 12,
+          "day": 13,
+          "hour": 12,
+          "minute": 27,
+          "second": 12.125
+        },
+        "location": {
+          "latitude": -20.153661953890555,
+          "longitude": -133.04664294370514
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1938,
+          "month": 10,
+          "day": 26,
+          "hour": 12,
+          "minute": 17,
+          "second": 10.75
+        },
+        "location": {
+          "latitude": 18.825948923920052,
+          "longitude": -54.27306523893809
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-09-uncorrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "uncorrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1951,
+          "month": 12,
+          "day": 13,
+          "hour": 12,
+          "minute": 27,
+          "second": 12.125
+        },
+        "location": {
+          "latitude": -20.153661953890555,
+          "longitude": -133.04664294370514
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1938,
+          "month": 10,
+          "day": 26,
+          "hour": 12,
+          "minute": 17,
+          "second": 10.75
+        },
+        "location": {
+          "latitude": 18.825948923920052,
+          "longitude": -54.27306523893809
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-09-corrected-placidus",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "placidus",
+      "personA": {
+        "utc": {
+          "year": 1951,
+          "month": 12,
+          "day": 13,
+          "hour": 12,
+          "minute": 27,
+          "second": 12.125
+        },
+        "location": {
+          "latitude": -20.153661953890555,
+          "longitude": -133.04664294370514
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1938,
+          "month": 10,
+          "day": 26,
+          "hour": 12,
+          "minute": 17,
+          "second": 10.75
+        },
+        "location": {
+          "latitude": 18.825948923920052,
+          "longitude": -54.27306523893809
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  },
+  {
+    "id": "random-09-corrected-wholeSign",
+    "request": {
+      "operation": "davison",
+      "variant": "corrected",
+      "houseSystem": "wholeSign",
+      "personA": {
+        "utc": {
+          "year": 1951,
+          "month": 12,
+          "day": 13,
+          "hour": 12,
+          "minute": 27,
+          "second": 12.125
+        },
+        "location": {
+          "latitude": -20.153661953890555,
+          "longitude": -133.04664294370514
+        },
+        "houseSystem": "wholeSign"
+      },
+      "personB": {
+        "utc": {
+          "year": 1938,
+          "month": 10,
+          "day": 26,
+          "hour": 12,
+          "minute": 17,
+          "second": 10.75
+        },
+        "location": {
+          "latitude": 18.825948923920052,
+          "longitude": -54.27306523893809
+        },
+        "houseSystem": "wholeSign"
+      },
+      "domains": [
+        "love"
+      ]
+    }
+  }
+]

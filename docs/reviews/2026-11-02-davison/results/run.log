@@ -1,0 +1,98 @@
+Compared 1/64 charts
+Compared 17/64 charts
+Compared 33/64 charts
+Compared 49/64 charts
+{
+  "result": "passed",
+  "charts": 64,
+  "checks": 3648,
+  "failures": [],
+  "metrics": {
+    "derivedTimeSeconds": {
+      "count": 64,
+      "maxError": 0.00024139881134033203,
+      "limit": 0.005
+    },
+    "swissLongitudeDegrees": {
+      "count": 640,
+      "maxError": 3.967281259065203e-08,
+      "limit": 1e-05
+    },
+    "swissSpeedDegreesPerDay": {
+      "count": 640,
+      "maxError": 6.810825752268101e-07,
+      "limit": 1e-06
+    },
+    "swissHouseDegrees": {
+      "count": 768,
+      "maxError": 1.1354918001416081e-06,
+      "limit": 1e-05
+    },
+    "jplLongitudeDegrees": {
+      "count": 640,
+      "maxError": 0.00039295618006462973,
+      "limit": 0.01
+    },
+    "jplLatitudeDegrees": {
+      "count": 640,
+      "maxError": 0.00038991526194198656,
+      "limit": 0.01
+    },
+    "independentAngleDegrees": {
+      "count": 128,
+      "maxError": 3.6262281355448067e-07,
+      "limit": 0.001
+    },
+    "geographicDegrees": {
+      "count": 128,
+      "maxError": 1.4210854715202004e-14,
+      "limit": 1e-12
+    }
+  },
+  "librarySha256": "d94ed30ffbcf74a53ea2301ca6c8dade32305137446151a0c1e1558770ed2acf",
+  "sourceSha256": {
+    "neutral-engine/crates/astro-core/src/advanced.rs": "333e431c46de33c66a73f346898286485cf648f2c45d08a561e10d0122bf8238",
+    "neutral-engine/crates/astro-core/src/composite.rs": "ee438b575fb0815891d31c07a8ae6c7f169e8e82368923a19f27b4bac2dd9a70",
+    "neutral-engine/crates/astro-core/src/compression.rs": "5a0c1432fd7c838aa8fd700ebbca056c30571fe31ba3ca68f8a66377b39dbf35",
+    "neutral-engine/crates/astro-core/src/couple.rs": "9b35b8e51310c1707bf5d2527b872f1aa61bf6cee3cf7e6eb67bfc2389a9fd7d",
+    "neutral-engine/crates/astro-core/src/couple_profiles.rs": "4b6e3ce116d3173e578396131306a023f3c5033edef55ab0cc1d1f65f716c698",
+    "neutral-engine/crates/astro-core/src/davison.rs": "c59e9bc5e968ded78dba0514bf3c3d65606eb7a122535f6899b26712b9113b7c",
+    "neutral-engine/crates/astro-core/src/domains.rs": "0d075000f5dd45d7d1bf4e5db8ae3b4b9eefd9bf3c93816a0cb494d8ca47ecd7",
+    "neutral-engine/crates/astro-core/src/events.rs": "64a135c9bc3a6f42875b9ee95effb5b311662871c41a315d57ae4dfe4848d666",
+    "neutral-engine/crates/astro-core/src/forecast.rs": "3915b8ce5c0b144dd3b4b49a6a2bb237c6a93550af1db7d2c98b9fccc8628d12",
+    "neutral-engine/crates/astro-core/src/lib.rs": "59c038ac439c8324aafce596ec99e73857d7c516799120de485fdde33c496f56",
+    "neutral-engine/crates/astro-core/src/natal.rs": "fdf1acee6f792e08c015561834111b5e7f95f03c7a3481fe4d4bfee14ca6d709",
+    "neutral-engine/crates/astro-core/src/numbers.rs": "7a1a5ea63701821357cb545694636c94e89d0296efe60ccfafe40c22dfd3fd7f",
+    "neutral-engine/crates/astro-core/src/profile_integration_tests.rs": "5a643f6dac8423a5e318c0ed51b995062b6fcbde8a5f485c2e253e45406c6a64",
+    "neutral-engine/crates/astro-core/src/profiles.rs": "f810e0dc5f5fa22e7c2e966fc4862a307d449542fae4f94d0c7b37145163fd5f",
+    "neutral-engine/crates/astro-core/src/query.rs": "604fb577c5ff623c6a43214dc159fe1ca87316cd13f0d48d85cc6f49ea77b5ec",
+    "neutral-engine/crates/astro-core/src/reports.rs": "d5535dd5e9b3b2fe30a2f4b9df46844f24938b0d47433b54cbcc0e6ef9aefb4f",
+    "neutral-engine/crates/astro-ffi/src/lib.rs": "ae0b2a8f26b181666cf28df3132e2837a0967b8665bc2a1b5ec2ca077e942659",
+    "neutral-engine/crates/astro-node/src/lib.rs": "0519ccc363d19ac291488f75731fcb93f08b8d10e36a2d633fa302facc338fc9",
+    "neutral-engine/crates/astro-provider-swiss/src/lib.rs": "8629d0e91ea9650acd6d9585eb7cd3d54478750043bcd2e0b53067c1c7035735",
+    "neutral-engine/crates/astro-render-svg/src/lib.rs": "5a1961e0a636ca7da9181bdcf9a0bbd1e03ad72628a0393c30b428983976bd8d",
+    "neutral-engine/crates/astro-render-svg/src/model.rs": "209d6904dd4c6d71ed9f6f07106c0a38c4b33653d6498e16fd3c2b13c8e1b566",
+    "neutral-engine/crates/astro-render-svg/src/panels.rs": "273f1b46c0195166912ceb64d6ee0eb0320436588e550b6e853b25809ca5ba3b",
+    "neutral-engine/crates/astro-render-svg/src/scene.rs": "39fae5535876295c69514673572afa2549aa7150aeeed54b391849036c1fe41b",
+    "neutral-engine/crates/astro-render-svg/src/styles.rs": "95b339d3336fb5eb29697b022b9f1191dbbb85e2905c9cc3d845f0e530e5f7f0",
+    "neutral-engine/crates/astro-render-svg/src/symbols.rs": "17a308013f2c68b574bb2e36ade1f80a4d61f7b576f18b7d4267a4479c3134d3",
+    "neutral-engine/crates/astro-sdk/src/lib.rs": "84f88b58dcab776edaad654142527e6cf51a069a1af09d29029ce0a9f782a4e4",
+    "neutral-engine/crates/astro-time/src/lib.rs": "62cad3f4d3adf9e2914dc5e71032d22d7ec93eb18cf03223316c23b241fccb5c"
+  },
+  "kernelSha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2",
+  "protocolSha256": "5d5ac6d8326bcd16c7abf4fee0556a50d6d842d1a357968b25e0823fc42befc4",
+  "scriptSha256": "a501695179be7648ba6938836cdfbcb39c3a2e25b8aa1b87a116f19ecb5e5e5e",
+  "dependencies": {
+    "skyfield": "1.49",
+    "pyswisseph": "2.10.3.2",
+    "numpy": "2.5.4",
+    "jplephem": "2.24"
+  },
+  "limits": [
+    "Same assistant wrote implementation and verification, not an independent human audit",
+    "Not a direct numerical comparison to Astro.com charts",
+    "Shared Swiss core for assembly, houses and speeds",
+    "Shared SDK TT for JPL position comparison does not independently validate UTC conversion",
+    "No whole-domain guarantee for 1800..2399 or platform/binding packaging"
+  ]
+}

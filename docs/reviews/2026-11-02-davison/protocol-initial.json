@@ -1,0 +1,25 @@
+{
+  "purpose": "Development Davison comparison before publication",
+  "registration": "Written before computing these comparison results; internal, not externally preregistered",
+  "methodSource": "https://www.astro.com/cgi/h.cgi?f=gch&h=gch65&lang=e",
+  "scope": "16 synthetic pairs, each corrected/uncorrected and Placidus/wholeSign: 64 charts; fixed boundary cases and seed 20261102",
+  "referenceAssembly": "Separately installed pyswisseph 2.10.3.2, arithmetic coordinate/UT1 means and Newton correction of MC; SDK uses bisection. Same Swiss algorithms, so this checks independent assembly and integration, not independent astronomical models.",
+  "referencePositions": "Skyfield 1.49 with NASA/JPL DE440s, apparent geocentric ecliptic-of-date positions at SDK-reported TT; no Swiss calculations for these positions",
+  "referenceAngles": "Skyfield apparent sidereal time and true obliquity, analytic MC and ascendant at SDK-reported UT1; independent from Swiss angle code, shared UT1 input",
+  "thresholds": {
+    "derivedTimeSeconds": 0.005,
+    "swissLongitudeDegrees": 0.00001,
+    "swissSpeedDegreesPerDay": 0.000001,
+    "swissHouseDegrees": 0.00001,
+    "jplLongitudeDegrees": 0.01,
+    "jplLatitudeDegrees": 0.01,
+    "independentAngleDegrees": 0.001
+  },
+  "kernel": {
+    "url": "https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440s.bsp",
+    "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
+  },
+  "timeConvention": "UT1 mean as documented by this SDK, not a claim that all commercial Davison software uses this time scale",
+  "failurePolicy": "Keep every case and mismatch; no tolerance changes or sample exclusion after results; exit nonzero on any mismatch",
+  "limits": ["Same assistant wrote implementation and verification, not an independent human audit", "Not a direct numerical comparison to Astro.com charts", "Shared Swiss core for assembly, houses and speeds", "Shared SDK TT for JPL position comparison does not independently validate UTC conversion", "No whole-domain guarantee for 1800..2399 or platform/binding packaging"]
+}

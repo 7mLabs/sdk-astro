@@ -113,6 +113,30 @@ export type CompositeRequest = CompositeRequestBase & (
   | { aspectPreset?: 'major' | 'extended'; aspectRules?: never; }
   | { aspectRules: AspectRule[]; aspectPreset?: never; }
 );
+export type DavisonVariant = 'uncorrected' | 'corrected';
+/** Arithmetic geographical means; time midpoint in UT1. corrected targets midpoint MC. */
+export type DavisonRequest = Omit<CompositeRequestBase, 'operation' | 'houseMethod' | 'antipodalPolicy'> & {
+  operation: 'davison'; variant?: DavisonVariant; houseSystem?: BirthInput['houseSystem'];
+} & ForecastAspectSettings;
+export interface DavisonProvenance {
+  variant: DavisonVariant; geographicMethod: 'arithmeticCoordinateMean'; timeMidpointScale: 'UT1';
+  meanJulianDayUt1: number; derivedJulianDayUt1: number; timeCorrectionSeconds: number;
+  targetMidheaven: number | null; midheavenResidualDegrees: number | null;
+  mcToleranceDegrees: number; iterations: number;
+  sourceCalculations: { A: BasicNatalCalculation; B: BasicNatalCalculation };
+  sourceBirths: { A: Pick<BirthInput, 'utc' | 'location'>; B: Pick<BirthInput, 'utc' | 'location'> };
+}
+export interface DavisonResult extends Omit<NatalDomainsResult, 'calculation' | 'data'> {
+  calculation: Omit<NatalDomainsResult['calculation'], 'scope' | 'chartKind'> & {
+    scope: 'davison-relationship-data'; chartKind: 'davisonRelationship';
+    construction: 'timePlaceMidpoint'; variant: DavisonVariant;
+  };
+  data: Omit<NatalDomainsData, 'chartKind' | 'subjectCount' | 'domains' | 'customDomains'> & {
+    chartKind: 'davisonRelationship'; subjectCount: 2; provenance: DavisonProvenance;
+    domains: Partial<Record<DomainName, DomainView<'davisonRelationship'>>>;
+    customDomains: Record<string, DomainView<'davisonRelationship'>>;
+  };
+}
 /** Fixed civil UTC offset; no IANA timezone conversion or DST inference. */
 export type ForecastPeriod =
   | { kind: 'day'; year: number; month: number; day: number; utcOffsetMinutes?: number; }
@@ -156,6 +180,8 @@ export type QueryRequest = GeometryNormalizeRequest | GeometrySeparationRequest 
   | AspectsBetweenRequest | HousesLocateRequest | AspectsInspectRequest | PointsInspectRequest | HousesInspectRequest;
 export type Request = GeometryRequest | NatalRequest | NatalDomainsRequest | CoupleRequest | CompositeRequest
   | EventsRequest | ForecastRequest | QueryRequest;
+/** All operations including Davison. Request retains the 1.0.x union for source compatibility. */
+export type CalculationRequest = Request | DavisonRequest;
 export interface House { number: number; longitude: number; sign: string; degreeInSign: number; }
 export interface Placement {
   latitude?: number; distanceAu?: number;
@@ -269,8 +295,8 @@ export interface IndividualReportSection {
   aspectIndexes: number[]; bodyFactIds: NatalBodyId[]; dispositorChainIds: string[];
   receptionIds: string[]; aspectPatternIds: string[];
 }
-export interface IndividualDomainReport {
-  version: string; chartKind: 'individualNatal'; selectionPolicy: 'primaryProfileWithTraceableSupport';
+export interface IndividualDomainReport<K extends string = 'individualNatal'> {
+  version: string; chartKind: K; selectionPolicy: 'primaryProfileWithTraceableSupport';
   focusHouseIds: string[]; houseIds: string[]; pointIds: string[];
   houses: ReportHouse[]; points: ContextPoint[]; aspects: ReportAspect[];
   bodyFacts: NatalBodyState[]; dispositorChains: DispositorChain[];
@@ -284,7 +310,7 @@ export interface IndividualDomainReport {
     sectionSelection: 'independentSelectorsSharedNatal';
   };
 }
-export interface DomainView {
+export interface DomainView<K extends string = 'individualNatal'> {
   profileId: string; profileVersion: string;
   origin: 'builtin' | 'custom'; definition: ProfileDefinition;
   selectionRules: DomainSelectionRules;
@@ -292,7 +318,7 @@ export interface DomainView {
   bodies: Array<{ placement: Placement; selectionReasons: Array<{ rule: 'profileBody' | 'houseOccupant' | 'houseRuler'; houseId?: string; }>; }>;
   angles: Placement[]; pointIds: string[]; relationIds: string[];
   aspects: Array<ContextAspect & { selectedEndpoints: string[]; }>;
-  report: IndividualDomainReport;
+  report: IndividualDomainReport<K>;
 }
 export interface NatalContext {
   rulership: 'traditional' | 'modern'; rulershipRulesVersion: string; houseAssignment: 'eclipticLongitude';
@@ -758,9 +784,11 @@ export function calculate(input: ForecastRequest): ForecastResult;
 export function calculate(input: CoupleRequest & { composite: CompositeOptions; }): CoupleWithCompositeResult;
 export function calculate(input: CoupleRequest): CoupleResult;
 export function calculate(input: CompositeRequest): CompositeResult;
+export function calculate(input: DavisonRequest): DavisonResult;
 export function calculate(input: NatalDomainsRequest): NatalDomainsResult;
 /** Synchronous local calculation; validation errors throw with .code and .result. */
 export function calculate(input: GeometryRequest | NatalRequest | NatalDomainsRequest): Result;
+export function calculate<R extends CalculationRequest>(input: R): CalculationResultFor<R>;
 export function calculate(input: Request): Result | CoupleResult | CompositeResult | EventsResult | ForecastResult | QueryResult;
 /** Low-level JSON envelope, including errors; malformed requests do not throw. */
 export function calculateJson(input: string): string;
@@ -822,7 +850,7 @@ export function compressPayloadJson(payloadJson: string, optionsJson?: string): 
 export function expandContext(context: ContextResult): RetainedPayloadResult;
 export function expandContextJson(contextJson: string): string;
 /** Synchronous calculation followed by context preparation. Keeps the original result for UI/audit. */
-export type CalculationResultFor<R extends Request> =
+export type CalculationResultFor<R extends CalculationRequest> =
   R extends GeometryNormalizeRequest ? GeometryNormalizeResult :
   R extends GeometrySeparationRequest ? GeometrySeparationResult :
   R extends GeometryMidpointRequest ? GeometryMidpointResult :
@@ -836,7 +864,12 @@ export type CalculationResultFor<R extends Request> =
   R extends CoupleRequest & { composite: CompositeOptions; } ? CoupleWithCompositeResult :
   R extends CoupleRequest ? CoupleResult :
   R extends CompositeRequest ? CompositeResult :
+  R extends DavisonRequest ? DavisonResult :
   R extends NatalDomainsRequest ? NatalDomainsResult : Result;
+export function calculateWithContext<R extends CalculationRequest>(input: R, options?: CompressionOptions): {
+  result: CalculationResultFor<R>;
+  context: ContextResult;
+};
 export function calculateWithContext<R extends Request>(input: R, options?: CompressionOptions): {
   result: CalculationResultFor<R>;
   context: ContextResult;
@@ -859,6 +892,8 @@ type LocalRequestFor<R> = R extends { utc: CivilTime } ? Omit<R, 'utc'> & BirthT
     { personA: LocalBirthInput; personB: BirthInput | LocalBirthInput } | { personA: BirthInput; personB: LocalBirthInput }) :
   R extends { birth: BirthInput } ? Omit<R, 'birth'> & { birth: LocalBirthInput } : never;
 export type LocalCalculationRequest = LocalRequestFor<Request>;
+export type LocalDavisonRequest = LocalRequestFor<DavisonRequest>;
+export type AllLocalCalculationRequest = LocalCalculationRequest | LocalDavisonRequest;
 export type WithTimeResolution<T extends { calculation: object }> = T & {
   calculation: T['calculation'] & { timeResolution: Record<string, ResolvedBirthTime> };
 };
@@ -866,6 +901,8 @@ export function resolveBirthTime(input: BirthTimeInput): ResolvedBirthTime;
 /** Raw JSON services return standard result envelopes, including errors. */
 export function resolveBirthTimeJson(inputJson: string): string;
 export function calculateFromLocal(input: Omit<NatalRequest, 'utc' | 'operation'> & BirthTimeInput & { operation?: 'natal' }): WithTimeResolution<Result>;
+export function calculateFromLocal(input: LocalDavisonRequest): WithTimeResolution<DavisonResult>;
+export function calculateFromLocal<R extends AllLocalCalculationRequest>(input: R): WithTimeResolution<CalculationResultFor<Extract<CalculationRequest, { operation: R['operation'] }> & R>>;
 export function calculateFromLocal<R extends LocalCalculationRequest>(input: R): WithTimeResolution<CalculationResultFor<Extract<Request, { operation: R['operation'] }> & R>>;
 export function calculateFromLocalJson(inputJson: string): string;
 export type VectorNodeName = 'path' | 'circle' | 'ellipse' | 'line' | 'rect' | 'polygon' | 'polyline';
