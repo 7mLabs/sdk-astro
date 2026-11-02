@@ -126,12 +126,14 @@ jobs:
           --manifest artifacts/managed-release/manifest.json
           --reports artifacts/managed-reports
           --commit "$RELEASE_COMMIT"
+      - name: Check out the immutable artifact source for npm verification
+        run: git worktree add --detach artifacts/release-source "$RELEASE_COMMIT"
       - name: Require all final tarball evidence before publication
         run: |
           if [ "$GITHUB_REF_TYPE" = tag ]; then
-            python scripts/check-npm-release.py --manifest artifacts/npm-release/manifest.json --commit "$RELEASE_COMMIT" --reports artifacts/npm-reports --tag "$GITHUB_REF_NAME"
+            python artifacts/release-source/scripts/check-npm-release.py --manifest artifacts/npm-release/manifest.json --commit "$RELEASE_COMMIT" --reports artifacts/npm-reports --run-id "$ARTIFACT_RUN_ID" --tag "$GITHUB_REF_NAME"
           else
-            python scripts/check-npm-release.py --manifest artifacts/npm-release/manifest.json --commit "$RELEASE_COMMIT" --reports artifacts/npm-reports
+            python artifacts/release-source/scripts/check-npm-release.py --manifest artifacts/npm-release/manifest.json --commit "$RELEASE_COMMIT" --reports artifacts/npm-reports --run-id "$ARTIFACT_RUN_ID"
           fi
       - name: Require GitHub OIDC request permissions
         run: |
