@@ -4,7 +4,7 @@ Repo công khai là [7mLabs/sdk-astro](https://github.com/7mLabs/sdk-astro). npm
 
 ## Điều kiện trước khi public
 
-Repo mới không import ứng dụng/history legacy. Source mới và engine packages dùng `AGPL-3.0-only`, có toàn văn LICENSE/NOTICE và provenance của third-party. Renderer độc lập giữ MIT. Source npm giữ `private: true`; assembler chỉ bỏ guard trong tarball public đã qua release gate. Cargo giữ `publish = false`. Python/NuGet vẫn có thể upload về mặt công cụ, nhưng workflow hiện không có bước publish chúng.
+Repo mới không import ứng dụng/history legacy. Source mới và engine packages dùng `AGPL-3.0-only`, có toàn văn LICENSE/NOTICE và provenance của third-party. Renderer SVG native trong SDK dùng cùng license AGPL-3.0-only của workspace; mã UI/renderer legacy có phạm vi và license riêng. Source npm giữ `private: true`; assembler chỉ bỏ guard trong tarball public đã qua release gate. Cargo giữ `publish = false`. Python/NuGet vẫn có thể upload về mặt công cụ, nhưng workflow hiện không có bước publish chúng.
 
 Swiss Ephemeris có license kép AGPL hoặc Professional theo [tài liệu upstream](https://www.astro.com/swisseph-download/doc/swephprg.pdf); dự án chọn AGPL miễn phí. Provider được vendor theo commit đã pin, có bản vá chặn file ngoài ngày 2026-10-02 và notices đi kèm. Phần mềm tích hợp engine cần tuân thủ các nghĩa vụ AGPL tương ứng; xem [license.md](license.md).
 
@@ -28,7 +28,7 @@ npm install @7mlabs/astrology
 
 Cập nhật tường minh bằng `npm install @7mlabs/astrology@latest`. Pin bằng `npm install --save-exact @7mlabs/astrology@1.1.0` và commit lockfile. Kênh ổn định dùng `latest`; nền tảng và libc requirements nằm trong [hướng dẫn Node.js](node-release.md).
 
-Candidate build một platform mỗi lần, tạo tgz/nupkg cùng tên giữa hai job. npm assembler đã ghép hai candidate vào một tarball duy nhất trước release; không publish riêng hai candidate cùng package/version. NuGet vẫn cần assembly nhiều runtime trước public. Linux wheel hiện có tag Linux thường, cần manylinux build/repair và kiểm thử môi trường sạch trước public PyPI. Windows chưa được builder hỗ trợ.
+Candidate build một platform mỗi lần, tạo tgz/nupkg cùng tên giữa hai job. npm assembler đã ghép hai candidate vào một tarball duy nhất trước release; không publish riêng hai candidate cùng package/version. NuGet 1.1.0 đã ghép và kiểm thử hai RID osx-arm64/linux-x64 trước khi phát hành. Linux wheel hiện có tag Linux thường, cần manylinux build/repair và kiểm thử môi trường sạch trước public PyPI. Windows chưa được builder hỗ trợ.
 
 ## CI và phát hành
 

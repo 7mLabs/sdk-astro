@@ -1,5 +1,13 @@
 # Plan chuyển đổi theo phase
 
+## Trạng thái hiện hành: 1.1.0
+
+SDK 1.1.0 đã phát hành đồng bộ trên npm/PyPI/NuGet, có cả Davison corrected/uncorrected, IANA time và SVG/model. Xem [bảng tính năng đã có/chưa có](status-1.1.0.md) và [bằng chứng phát hành](release-1.1.0.md).
+
+Các mục phase bên dưới là kế hoạch và trạng thái theo các phiên bản lịch sử. Những câu “alpha”, “chưa có” hoặc “chưa phát hành” trong các mục đó không phải trạng thái phát hành hiện tại.
+
+## Lịch sử các phase
+
 Plan chuyển source Python và .NET hiện tại sang engine trung lập chạy cục bộ. Mỗi phase có tiêu chí hoàn thành; chỉ phát hành phạm vi đã đạt tiêu chí. Việc một package cài được chưa chứng minh độ chính xác của ephemeris.
 
 ## Phase 0 Chốt phạm vi và contract
