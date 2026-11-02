@@ -1,11 +1,13 @@
 # Kế hoạch phát triển SVG chart cho Astro SDK
 
+**Trạng thái hiện hành 02/11/2026:** SDK **1.1.0** đã phát hành trên npm/PyPI/NuGet. SVG/model, IANA time và các điểm opt-in nêu dưới đây đã có; xem [phạm vi hiện tại](status-1.1.0.md) và [bằng chứng phát hành](release-1.1.0.md). Phần kế hoạch và cập nhật theo ngày phía dưới là lịch sử, giữ nguyên phiên bản tại thời điểm lập.
+
 Cập nhật phạm vi 18/10/2026 theo yêu cầu: đã triển khai opt-in Chiron,
 mean/true Nodes, mean/osculating Lilith cho natal/natalDomains; professional SVG,
 ma trận, danh sách, bộ lọc và màu theo nhóm/loại. Các phần bên dưới là roadmap gốc;
 [API hiện hành](time-and-svg.md) mô tả contract và giới hạn mới.
 
-Cập nhật trạng thái 2026-10-30: SDK **1.0.2** đã phát hành trên npm/PyPI/NuGet; xem [bằng chứng hiện hành](release-1.0.2.md). Phần dưới là kế hoạch lịch sử, không phải trạng thái phát hành hiện tại.
+Cập nhật trạng thái 2026-10-30: SDK **1.0.2** đã phát hành trên npm/PyPI/NuGet; xem [bằng chứng của mốc 1.0.2](release-1.0.2.md). Phần dưới là kế hoạch lịch sử, không phải trạng thái phát hành hiện tại.
 
 Ngày lập: **17/10/2026**. Baseline source: **0.10.1**, commit `cbfadc1`. Kế hoạch gốc được giữ làm roadmap. **Đã có implementation candidate 1.0.0**, gồm local-time helpers, basic/advanced SVG và bindings; xem [API hiện hành và phạm vi alpha](time-and-svg.md). Chưa phát hành registry. Đánh giá baseline đi kèm: [SDK health review](health-review-2026-10-17.md).
 

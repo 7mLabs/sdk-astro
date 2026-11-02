@@ -1,6 +1,8 @@
 # Kiến trúc engine chạy cục bộ
 
-Engine hướng đến GitHub công khai và package cài vào dự án, không yêu cầu server tính toán. Quyết định kiến trúc là một lõi Rust, giao diện C ABI, Node binding qua Node-API, Python qua ctypes và .NET qua P/Invoke. Alpha đã có provider Swiss native với Moshier tích hợp: Rust gọi source C được pin, không nhúng Python. Natal, couple, composite, events/forecast và geometry cùng được phân phối trong package mỗi ngôn ngữ.
+Phạm vi phát hành hiện hành và phần chưa triển khai được tổng hợp tại [trạng thái 1.1.0](status-1.1.0.md). Các thuật toán có trong vendor Swiss không tự trở thành tính năng của public API.
+
+Engine hướng đến GitHub công khai và package cài vào dự án, không yêu cầu server tính toán. Quyết định kiến trúc là một lõi Rust, giao diện C ABI, Node binding qua Node-API, Python qua ctypes và .NET qua P/Invoke. SDK 1.1.0 có provider Swiss native với Moshier tích hợp: Rust gọi source C được pin, không nhúng Python. Natal, couple, composite, Davison, events/forecast và geometry cùng được phân phối trong package mỗi ngôn ngữ.
 
 ## Vì sao chọn phương án này
 
