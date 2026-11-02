@@ -77,6 +77,7 @@ Package có TypeScript declarations. `calculate()` chạy đồng bộ và throw
 | Báo cáo cá nhân | `natalDomains` | Mười lĩnh vực, advanced facts, custom profiles và bằng chứng hỗ trợ |
 | So sánh quan hệ | `couple` | Hai natal, synastry contacts, house overlays và sáu lĩnh vực |
 | Lá số thứ ba | `composite` | Chart C dựng bằng trung điểm, có mười lĩnh vực |
+| Davison | `davison` | Lá số từ trung điểm thời gian/địa điểm, chọn uncorrected hoặc corrected |
 | Sự kiện thiên văn | `events` | Quét ngày/tháng/năm: ingress, stations, pha Mặt Trăng, aspects và nhật/nguyệt thực toàn cầu |
 | Dự báo cá nhân | `forecast` | Natal transits, ảnh hưởng sự kiện, tổng quan lịch và context theo lĩnh vực |
 | Hình học | `chart`, `harmonic`, `synastry` | Tính từ các vị trí do caller cung cấp |
