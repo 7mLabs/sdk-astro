@@ -77,6 +77,7 @@ TypeScript declarations are included. `calculate()` is synchronous and throws an
 | Individual reports | `natalDomains` | Ten domain views, advanced facts, custom profiles and supporting evidence |
 | Relationship comparison | `couple` | Two natal charts, synastry contacts, house overlays and six domain views |
 | Composite charts | `composite` | A symbolic midpoint chart C with ten domain views |
+| Davison charts | `davison` | A recalculated time/place midpoint chart, uncorrected or MC-corrected |
 | Astronomical events | `events` | Day/month/year searches for ingress, stations, Moon phases, aspects and global eclipses |
 | Personal forecasts | `forecast` | Natal transits, event impacts, calendar overviews and domain-specific context |
 | Geometry | `chart`, `harmonic`, `synastry` | Calculations from supplied positions |

@@ -1,0 +1,99 @@
+{
+  "version": "1.1.0",
+  "result": "passed",
+  "sourceCommit": "687cb7db0375b426f7392a812d3c1f061d16904a",
+  "sourceTag": "v1.1.0",
+  "candidateRunId": 41375190775,
+  "publishRunId": 41377062414,
+  "publicationControllerCommit": "5cab1e07dfc423a7a71cf34fcdaeb7e97d6df308",
+  "registryVerification": {
+    "version": "1.1.0",
+    "commitSha": "687cb7db0375b426f7392a812d3c1f061d16904a",
+    "registries": {
+      "npm": {
+        "sha256": "c78900822ffc26320608ffb4a5af03af81f898d14534564219bae9bd6f8acc7e",
+        "version": "1.1.0"
+      },
+      "pypi": {
+        "sha256": "f244cba04818bb43ae6b49048dcac26e5f82fd7029e28efa513aac11eda7d279",
+        "version": "1.1.0"
+      },
+      "nuget": {
+        "registryArchiveSha256": "0619e14ddcf0f8fa08c6e0c4143e86174bf491b2466a6d7cf6be479fb2eff7d7",
+        "uploadedArchiveSha256": "5d30e6ba48853e441fcf6076f8263141c8e9bec460a4d17729ae0834c6933ee8",
+        "payloadEntriesVerified": true,
+        "version": "1.1.0"
+      }
+    },
+    "result": "passed"
+  },
+  "publicInstallation": {
+    "result": "passed",
+    "version": "1.1.0",
+    "registryInstalls": [
+      "npm",
+      "pypi",
+      "nuget"
+    ],
+    "platform": "darwin-arm64",
+    "checks": [
+      "civil time",
+      "all 7 extended points",
+      "modular SVG",
+      "JSON model",
+      "house focus",
+      "exact calculation/model and SVG drawing; semantic JSON metadata",
+      "native checksum",
+      "4 Davison variant/house-system combinations across all 3 public bindings"
+    ]
+  },
+  "finalArtifactReference": {
+    "result": "passed",
+    "charts": 64,
+    "checks": 3648,
+    "librarySha256": "6e9a7d9911f3aa1648a592698dd105e0b878f7def6fb3cac486d82fe33a42217",
+    "metrics": {
+      "derivedTimeSeconds": {
+        "count": 64,
+        "maxError": 0.00024139881134033203,
+        "limit": 0.005
+      },
+      "swissLongitudeDegrees": {
+        "count": 640,
+        "maxError": 3.967281259065203e-08,
+        "limit": 1e-05
+      },
+      "swissSpeedDegreesPerDay": {
+        "count": 640,
+        "maxError": 6.810825752268101e-07,
+        "limit": 1e-06
+      },
+      "swissHouseDegrees": {
+        "count": 768,
+        "maxError": 1.1354918001416081e-06,
+        "limit": 1e-05
+      },
+      "jplLongitudeDegrees": {
+        "count": 640,
+        "maxError": 0.00039295618006462973,
+        "limit": 0.01
+      },
+      "jplLatitudeDegrees": {
+        "count": 640,
+        "maxError": 0.00038991526194198656,
+        "limit": 0.01
+      },
+      "independentAngleDegrees": {
+        "count": 128,
+        "maxError": 3.6262281355448067e-07,
+        "limit": 0.001
+      },
+      "geographicDegrees": {
+        "count": 128,
+        "maxError": 1.4210854715202004e-14,
+        "limit": 1e-12
+      }
+    }
+  },
+  "note": "The candidate run passed all 11 build/test jobs. Publication stopped at a stale report-shape gate; updated controller required old counts plus davison:4, then verified original immutable source/run and published the same tested bytes. No tag or runtime/artifact changed."
+}
