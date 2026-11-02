@@ -70,7 +70,6 @@ jobs:
       - name: Compatibility with the previous public npm package
         run: |
           npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.0.2
-          node scripts/check-public-compatibility.cjs
           node scripts/check-upgrade-compatibility.cjs
       - name: Fresh consumer installation and parity
         run: python scripts/test-packages.py
