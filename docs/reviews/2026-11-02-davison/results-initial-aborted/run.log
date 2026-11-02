@@ -1,0 +1,10 @@
+Compared 1/64 charts
+Compared 17/64 charts
+Traceback (most recent call last):
+  File "/Users/huuthien/Desktop/project/7mlabs-package /sdk-astro/docs/reviews/2026-11-02-davison/run.py", line 97, in <module>
+    if __name__=='__main__':sys.exit(main())
+                                     ~~~~^^
+  File "/Users/huuthien/Desktop/project/7mlabs-package /sdk-astro/docs/reviews/2026-11-02-davison/run.py", line 73, in main
+    assert d['location']==o['location']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
