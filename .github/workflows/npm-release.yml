@@ -7,6 +7,10 @@ on:
         description: Publish the verified release using the configured npm trusted publisher
         type: boolean
         default: false
+      verified_run_id:
+        description: Resume publication using immutable artifacts and all passing candidate jobs from this same release tag
+        type: string
+        default: ''
   push:
     tags: ['v[0-9]*.[0-9]*.[0-9]*']
 
@@ -18,13 +22,15 @@ concurrency:
 
 jobs:
   candidates:
+    if: inputs.verified_run_id == ''
     uses: ./.github/workflows/neutral-engine.yml
     permissions:
       contents: read
 
   publish:
     if: >-
-      github.repository == '7mLabs/sdk-astro' &&
+      always() && github.repository == '7mLabs/sdk-astro' &&
+      (needs.candidates.result == 'success' || inputs.verified_run_id != '') &&
       (startsWith(github.ref, 'refs/tags/v') || inputs.publish == true)
     needs: candidates
     runs-on: ubuntu-24.04
@@ -33,10 +39,52 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      actions: read
     steps:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+          fetch-depth: 0
+      - name: Resolve and verify immutable release artifact provenance
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERIFIED_RUN_ID: ${{ inputs.verified_run_id }}
+        run: |
+          python - <<'PYCODE'
+          import json, os, subprocess, tomllib, urllib.request
+          from pathlib import Path
+          run_id = os.environ.get('VERIFIED_RUN_ID') or os.environ['GITHUB_RUN_ID']
+          assert run_id.isdigit()
+          source = os.environ['GITHUB_SHA']
+          if os.environ.get('VERIFIED_RUN_ID'):
+              repo = os.environ['GITHUB_REPOSITORY']
+              base = 'https://api.github.com/repos/' + repo
+              def get(path):
+                  request = urllib.request.Request(base + path, headers={
+                      'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                      'Accept': 'application/vnd.github+json',
+                      'X-GitHub-Api-Version': '2022-11-28'})
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      return json.load(response)
+              run = get('/actions/runs/' + run_id)
+              assert run['repository']['full_name'].lower() == repo.lower()
+              assert run['path'] == '.github/workflows/npm-release.yml'
+              assert run['status'] == 'completed' and run['conclusion'] == 'failure'
+              source = run['head_sha']
+              version = tomllib.loads(Path('neutral-engine/Cargo.toml').read_text())['workspace']['package']['version']
+              tag_source = subprocess.check_output(['git','rev-parse','v'+version+'^{commit}'], text=True).strip()
+              assert source == tag_source, 'Saved artifacts must belong to this immutable release tag'
+              jobs = get('/actions/runs/' + run_id + '/jobs?per_page=100')['jobs']
+              candidates = [job for job in jobs if job['name'] != 'publish']
+              assert len(candidates) == 11 and all(job['conclusion'] == 'success' for job in candidates)
+              publish = [job for job in jobs if job['name'] == 'publish']
+              assert len(publish) == 1
+              assert next(step for step in publish[0]['steps'] if step['name'] == 'Publish the verified release with npm OIDC')['conclusion'] == 'skipped'
+              subprocess.run(['git','diff','--exit-code',source,'HEAD','--','neutral-engine','bindings','schemas','examples','tests/conformance'],check=True)
+          with open(os.environ['GITHUB_ENV'],'a') as handle:
+              handle.write('RELEASE_COMMIT='+source+'\nARTIFACT_RUN_ID='+run_id+'\n')
+          print(json.dumps({'artifactRunId':run_id,'sourceCommit':source}))
+          PYCODE
       - uses: actions/setup-node@v7
         with:
           node-version: '24'
@@ -49,19 +97,27 @@ jobs:
       - uses: actions/download-artifact@v7
         with:
           name: npm-release
+          github-token: ${{ github.token }}
+          run-id: ${{ env.ARTIFACT_RUN_ID }}
           path: artifacts/npm-release
       - uses: actions/download-artifact@v7
         with:
           pattern: npm-verification-*
+          github-token: ${{ github.token }}
+          run-id: ${{ env.ARTIFACT_RUN_ID }}
           merge-multiple: true
           path: artifacts/npm-reports
       - uses: actions/download-artifact@v7
         with:
           name: managed-release
+          github-token: ${{ github.token }}
+          run-id: ${{ env.ARTIFACT_RUN_ID }}
           path: artifacts/managed-release
       - uses: actions/download-artifact@v7
         with:
           pattern: managed-verification-*
+          github-token: ${{ github.token }}
+          run-id: ${{ env.ARTIFACT_RUN_ID }}
           merge-multiple: false
           path: artifacts/managed-reports
       - name: Require final PyPI and NuGet checks before the coordinated release
@@ -69,13 +125,13 @@ jobs:
           python scripts/check-managed-release.py
           --manifest artifacts/managed-release/manifest.json
           --reports artifacts/managed-reports
-          --commit "$GITHUB_SHA"
+          --commit "$RELEASE_COMMIT"
       - name: Require all final tarball evidence before publication
         run: |
           if [ "$GITHUB_REF_TYPE" = tag ]; then
-            python scripts/check-npm-release.py --manifest artifacts/npm-release/manifest.json --commit "$GITHUB_SHA" --reports artifacts/npm-reports --tag "$GITHUB_REF_NAME"
+            python scripts/check-npm-release.py --manifest artifacts/npm-release/manifest.json --commit "$RELEASE_COMMIT" --reports artifacts/npm-reports --tag "$GITHUB_REF_NAME"
           else
-            python scripts/check-npm-release.py --manifest artifacts/npm-release/manifest.json --commit "$GITHUB_SHA" --reports artifacts/npm-reports
+            python scripts/check-npm-release.py --manifest artifacts/npm-release/manifest.json --commit "$RELEASE_COMMIT" --reports artifacts/npm-reports
           fi
       - name: Require GitHub OIDC request permissions
         run: |
