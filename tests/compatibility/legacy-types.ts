@@ -8,3 +8,11 @@ export function local(request:LocalCalculationRequest) {
   default: { const unreachable:never=request; return unreachable; }
  }
 }
+
+// Existing utility-type based consumers retain their old argument/result unions.
+type OldReturn = Result | CoupleResult | CompositeResult | EventsResult | ForecastResult | QueryResult;
+const oldReturn:OldReturn = {} as ReturnType<typeof calculate>;
+const oldParameter:Request = {} as Parameters<typeof calculate>[0];
+const oldLocalParameter:LocalCalculationRequest = {} as Parameters<typeof calculateFromLocal>[0];
+const oldContextParameter:Request = {} as Parameters<typeof calculateWithContext>[0];
+void [oldReturn,oldParameter,oldLocalParameter,oldContextParameter];

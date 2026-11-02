@@ -788,8 +788,8 @@ export function calculate(input: DavisonRequest): DavisonResult;
 export function calculate(input: NatalDomainsRequest): NatalDomainsResult;
 /** Synchronous local calculation; validation errors throw with .code and .result. */
 export function calculate(input: GeometryRequest | NatalRequest | NatalDomainsRequest): Result;
+export function calculate<R extends CalculationRequest>(input: R): CalculationResultFor<R>;
 export function calculate(input: Request): Result | CoupleResult | CompositeResult | EventsResult | ForecastResult | QueryResult;
-export function calculate(input: CalculationRequest): Result | CoupleResult | CompositeResult | DavisonResult | EventsResult | ForecastResult | QueryResult;
 /** Low-level JSON envelope, including errors; malformed requests do not throw. */
 export function calculateJson(input: string): string;
 
@@ -870,6 +870,10 @@ export function calculateWithContext<R extends CalculationRequest>(input: R, opt
   result: CalculationResultFor<R>;
   context: ContextResult;
 };
+export function calculateWithContext<R extends Request>(input: R, options?: CompressionOptions): {
+  result: CalculationResultFor<R>;
+  context: ContextResult;
+};
 
 /** Optional offline civil-time services; calculation core still accepts UTC unchanged. */
 export type CivilTime = NatalRequest['utc'];
@@ -898,8 +902,8 @@ export function resolveBirthTime(input: BirthTimeInput): ResolvedBirthTime;
 export function resolveBirthTimeJson(inputJson: string): string;
 export function calculateFromLocal(input: Omit<NatalRequest, 'utc' | 'operation'> & BirthTimeInput & { operation?: 'natal' }): WithTimeResolution<Result>;
 export function calculateFromLocal(input: LocalDavisonRequest): WithTimeResolution<DavisonResult>;
-export function calculateFromLocal<R extends LocalCalculationRequest>(input: R): WithTimeResolution<CalculationResultFor<Extract<Request, { operation: R['operation'] }> & R>>;
 export function calculateFromLocal<R extends AllLocalCalculationRequest>(input: R): WithTimeResolution<CalculationResultFor<Extract<CalculationRequest, { operation: R['operation'] }> & R>>;
+export function calculateFromLocal<R extends LocalCalculationRequest>(input: R): WithTimeResolution<CalculationResultFor<Extract<Request, { operation: R['operation'] }> & R>>;
 export function calculateFromLocalJson(inputJson: string): string;
 export type VectorNodeName = 'path' | 'circle' | 'ellipse' | 'line' | 'rect' | 'polygon' | 'polyline';
 export interface VectorSymbol {
