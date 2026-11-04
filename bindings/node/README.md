@@ -64,7 +64,7 @@ Methods: geometry.normalize/separation/midpoint, aspects.between/inspect, houses
 
 Version 0.10 adds a separate shared-core compressor with compact/focused/budgeted modes, explicit omission/coverage metadata, and a reversible compact representation. Calculation APIs remain synchronous and unchanged. See `docs/payload-compression.md` in the repository for the cross-language API, budget semantics, and complete examples. Native binaries from earlier versions do not export this feature.
 
-## 1.1.1: civil time and SVG
+## Civil time and SVG
 
 Existing UTC calculation stays unchanged. Optional local-time helpers and standalone native SVG rendering require the matching binary. `local`, `timeZone`/`zone` and `location` below are caller inputs; import the SDK as `sdk` (Node/Python).
 
@@ -108,4 +108,4 @@ const model = sdk.buildChartModel(payload, { sections: ['wheel'] });
 
 See [the 1.0 release contract](https://github.com/7mlabs/sdk-astro/blob/main/docs/release-1.0.md).
 
-SDK 1.1.1 adds Davison (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.1/docs/davison.md).
+Davison was introduced in SDK 1.1.0 and remains available in 1.1.1 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.1/docs/davison.md).

@@ -2,7 +2,7 @@
 
 ## Bản vá metadata SDK 1.1.1
 
-Bổ sung nguồn dữ liệu và cấu hình/quy tắc trong payload, giữ API cũ và các giá trị đã tính. Bật includeMetadata:true để lấy metadata mới ở các phép tính thiên văn/query; lời gọi cũ giữ nguyên hợp đồng đầu ra. Xem [hợp đồng metadata](docs/payload-metadata.md). Bằng chứng public 1.1.0 bên dưới ghi lại lần phát hành trước; trạng thái phát hành 1.1.1 được kiểm tra riêng.
+Bổ sung nguồn dữ liệu và cấu hình/quy tắc trong payload, giữ API cũ và các giá trị đã tính. Bật includeMetadata:true để lấy metadata mới ở các phép tính thiên văn/query; lời gọi cũ giữ nguyên hợp đồng đầu ra. Xem [hợp đồng metadata](docs/payload-metadata.md). Đã phát hành trên npm, PyPI và NuGet. Xem [bằng chứng phát hành 1.1.1](docs/release-1.1.1.md); ghi chú 1.1.0 bên dưới là lịch sử bản trước.
 
 # 7mlabs Astrology
 
@@ -16,7 +16,7 @@ Engine chiêm tinh chạy offline, dùng chung lõi Rust qua các SDK native. Nh
 [![CI](https://github.com/7mlabs/sdk-astro/actions/workflows/neutral-engine.yml/badge.svg)](https://github.com/7mlabs/sdk-astro/actions/workflows/neutral-engine.yml)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0-afe8cc)](LICENSE)
 
-**[Giới thiệu SDK](https://7mlabs.com/astro/sdk/) · [Tài liệu tiếng Việt](https://7mlabs.com/astro/sdk/docs/1.0.0/overview/) · [English documentation](https://7mlabs.com/en/astro/sdk/docs/1.0.0/overview/) · [English README](README.md)**
+**[Giới thiệu SDK](https://7mlabs.com/astro/sdk/) · [Tài liệu tiếng Việt](https://7mlabs.com/astro/sdk/docs/1.1.1/overview/) · [English documentation](https://7mlabs.com/en/astro/sdk/docs/1.1.1/overview/) · [English README](README.md)**
 
 - **Tính cục bộ:** package npm có sẵn binary native; không cần server tính toán, compiler hoặc tải dữ liệu khi chạy.
 - **Kết quả có cấu trúc:** hành tinh, nhà, góc chiếu, facts và tham chiếu bằng chứng trong JSON envelope có version.
@@ -25,20 +25,20 @@ Engine chiêm tinh chạy offline, dùng chung lõi Rust qua các SDK native. Nh
 
 ## Cài đặt
 
-Chọn gói đã phát hành theo runtime. Phạm vi native target khác nhau giữa các gói; xem [nền tảng hỗ trợ](https://7mlabs.com/astro/sdk/docs/1.0.0/platforms/) trước khi cài.
+Chọn gói đã phát hành theo runtime. Phạm vi native target khác nhau giữa các gói; xem [nền tảng hỗ trợ](https://7mlabs.com/astro/sdk/docs/1.1.1/platforms/) trước khi cài.
 
 ```sh
 # JavaScript / TypeScript
-npm install --save-exact @7mlabs/astrology@1.1.0
+npm install --save-exact @7mlabs/astrology@1.1.1
 
 # Python (wheel macOS ARM64, Python 3.10+)
-python -m pip install sevenmlabs-astrology==1.1.0
+python -m pip install sevenmlabs-astrology==1.1.1
 
 # .NET 10
-dotnet add package SevenMLabs.Astrology --version 1.1.0
+dotnet add package SevenMLabs.Astrology --version 1.1.1
 ```
 
-[Hướng dẫn Node.js](https://7mlabs.com/astro/sdk/docs/1.0.0/node/) · [Python](https://7mlabs.com/astro/sdk/docs/1.0.0/python/) · [.NET](https://7mlabs.com/astro/sdk/docs/1.0.0/dotnet/)
+[Hướng dẫn Node.js](https://7mlabs.com/astro/sdk/docs/1.1.1/node/) · [Python](https://7mlabs.com/astro/sdk/docs/1.1.1/python/) · [.NET](https://7mlabs.com/astro/sdk/docs/1.1.1/dotnet/)
 
 ## Bắt đầu nhanh
 
@@ -124,9 +124,9 @@ const restored = expandContext(context);
 
 | Ngôn ngữ | Phân phối | Trạng thái |
 | --- | --- | --- |
-| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm ổn định: `1.1.0` (`latest`) |
-| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.1.0/) | Public PyPI `1.1.0`; macOS ARM64, Python 3.10+ |
-| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.1.0) | Public NuGet `1.1.0`; .NET 10, Mac ARM64/Linux x64 |
+| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm ổn định: `1.1.1` (`latest`) |
+| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.1.1/) | Public PyPI `1.1.1`; macOS ARM64, Python 3.10+ |
+| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.1.1) | Public NuGet `1.1.1`; .NET 10, Mac ARM64/Linux x64 |
 | Rust / C | Core crates và C ABI | Có source mẫu tích hợp |
 
 Bản npm có binary cho **macOS ARM64** và **Linux x64**. Linux cần **glibc 2.38+** và `libgcc_s.so.1`. Đã kiểm thử Node.js 18/24 trên cả hai target; khuyến nghị Node.js 22 hoặc 24 cho ứng dụng mới. Chưa có binary Windows, macOS Intel, Linux ARM64 hoặc Alpine/musl. [Yêu cầu nền tảng đầy đủ →](docs/node-release.md)
@@ -134,7 +134,7 @@ Bản npm có binary cho **macOS ARM64** và **Linux x64**. Linux cần **glibc 
 Cập nhật tường minh bằng `npm install @7mlabs/astrology@latest`. Để giữ đúng bản hiện tại:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.1.0
+npm install --save-exact @7mlabs/astrology@1.1.1
 ```
 
 Commit lockfile của ứng dụng và dùng `npm ci` để cài lại đúng dependencies. [Hướng dẫn cài các ngôn ngữ khác →](docs/packages.md)

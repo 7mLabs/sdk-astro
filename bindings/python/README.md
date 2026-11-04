@@ -142,4 +142,4 @@ The SDK and native renderer use **AGPL-3.0-only**, using the AGPL option of Swis
 Ephemeris. License texts and third-party notices are included; upstream font and
 dependency terms are retained. See the included `LICENSE` and `NOTICE`.
 
-SDK 1.1.1 adds Davison (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.1/docs/davison.md).
+Davison was introduced in SDK 1.1.0 and remains available in 1.1.1 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.1/docs/davison.md).
