@@ -1,7 +1,16 @@
 export interface Position { id: string; longitude: number; speed?: number | null; }
 export interface AspectRule { angle: number; maxOrb: number; }
+/** Caller declarations only; the geometry engine does not verify or infer these settings. */
+export interface GeometrySourceContext {
+  zodiac?: 'tropical' | 'sidereal'; ayanamsa?: string; referenceFrame?: string;
+  coordinates?: 'geocentric' | 'topocentric' | 'heliocentric'; houseSystem?: string;
+  sourceId?: string; sourceVersion?: string;
+}
 export interface GeometryRequest {
   operation: 'chart' | 'harmonic' | 'synastry';
+  sourceContext?: GeometrySourceContext;
+  /** Only valid for synastry; declares otherPositions separately. */
+  otherSourceContext?: GeometrySourceContext;
   positions: Position[];
   otherPositions?: Position[];
   houses?: number[];
@@ -335,7 +344,8 @@ export interface NatalDomainsData {
 }
 export interface Result {
   schemaVersion: string; engineVersion: string;
-  calculation: { scope: string; provider: string; angleUnit: string; speedUnit: string; aspectRules: AspectRule[];
+  calculation: { operation?: string; chartKind?: string;
+    inputProvenance?: Record<string, { status: 'callerDeclared' | 'unspecified'; verified: false; context: GeometrySourceContext | null; }>; scope: string; provider: string; angleUnit: string; speedUnit: string; aspectRules: AspectRule[];
     providerVersion?: string; ephemeris?: string; zodiac?: string; houseSystem?: string;
     julianDayTt?: number; julianDayUt1?: number; [key: string]: unknown; };
   data: { natal?: NatalData; context?: NatalContext; domains?: Partial<Record<DomainName, DomainView>>;
@@ -356,6 +366,7 @@ export interface NatalDomainsResult extends Result {
   data: NatalDomainsData;
 }
 export interface BasicNatalCalculation {
+  operation?: string;
   scope: 'basic-natal'; provider: 'swiss-ephemeris'; providerVersion: string; ephemeris: 'moshier';
   zodiac: 'tropical'; coordinates: 'geocentric'; positionType: 'apparent'; referenceFrame: 'ecliptic-of-date';
   calendar: 'gregorian'; inputTimeScale: 'UTC'; houseTimeScale: 'UT1'; planetTimeScale: 'TT';
@@ -523,6 +534,7 @@ export interface CompositeData {
   provenance: CompositeProvenance;
 }
 export interface CompositeCalculation {
+  operation?: 'composite';
   scope: 'midpoint-composite-data'; chartKind: 'midpointComposite'; construction: 'symbolic';
   method: 'shortestArcMidpoint'; houseMethod: CompositeHouseMethod;
   antipodalPolicy: CompositeAntipodalPolicy; toleranceDegrees: number;
@@ -620,6 +632,7 @@ export interface EventsData {
   events: GlobalAstronomicalEvent[]; coverage: { eventCount: number; byType: EventTypeCounts; };
 }
 export interface EventCalculationBase {
+  operation?: string;
   provider: 'swiss-ephemeris'; providerVersion: string; ephemeris: 'moshier'; zodiac: 'tropical';
   coordinates: 'geocentric'; positionType: 'apparent'; referenceFrame: 'ecliptic-of-date';
   calendar: 'gregorian'; inputTimeScale: 'UTC'; planetTimeScale: 'TT'; searchTimeScale: 'UT1';
@@ -732,12 +745,15 @@ export interface QueryInspectionData<G extends QueryInspectionGroup = QueryInspe
   coverage: { primaryPoints: number; supportingPoints: number; selectedHouses: number; pointPairs: number; matchedAspects: number; };
 }
 export interface PureQueryCalculation<G extends 'geometry' | 'aspects' | 'houses' = 'geometry' | 'aspects' | 'houses', A extends string = string> {
+  operation?: 'query';
   scope: 'on-demand-query'; computationalScope: 'pureGeometry'; group: G; action: A;
   provider: 'supplied-positions'; angleUnit: 'degrees';
 }
 export interface QueryMidpointCalculation extends PureQueryCalculation<'geometry', 'midpoint'> { antipodalPolicy: CompositeAntipodalPolicy; toleranceDegrees: 1e-10; }
 export interface QueryBetweenCalculation extends PureQueryCalculation<'aspects', 'between'> { speedUnit: 'degrees/day'; motionMode: QueryMotionMode; }
 export interface QueryInspectionCalculation<G extends QueryInspectionGroup = QueryInspectionGroup> extends Omit<BasicNatalCalculation, 'scope'> {
+  operation?: 'query';
+  sourceBirth?: BirthInput; rulershipRulesVersion?: string; houseAssignment?: 'eclipticLongitude';
   scope: 'on-demand-query'; sourceScope: 'basic-natal'; computationalScope: 'fullNatalThenSelection'; group: G; action: 'inspect';
   rulership: 'traditional' | 'modern'; aspectPreset: 'major' | 'extended' | 'custom';
   selectionPolicy: G extends 'aspects' ? 'bothSelectedEndpoints' : 'atLeastOneSelectedEndpoint';

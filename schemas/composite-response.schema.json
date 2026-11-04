@@ -1429,6 +1429,10 @@
                 "type": "string"
               },
               "uniqueItems": true
+            },
+            "operation": {
+              "type": "string",
+              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
             }
           },
           "additionalProperties": false
@@ -3777,6 +3781,10 @@
             "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/aspectRule"
           },
           "maxItems": 16
+        },
+        "operation": {
+          "type": "string",
+          "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
         }
       },
       "additionalProperties": false
@@ -3967,6 +3975,10 @@
             "B"
           ],
           "additionalProperties": false
+        },
+        "operation": {
+          "type": "string",
+          "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
         }
       },
       "required": [

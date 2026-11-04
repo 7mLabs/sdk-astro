@@ -130,7 +130,8 @@ fn finite_longitudes(values: &[f64]) -> Result<(), Failure> {
 fn geometry_metadata(group: &str, action: &str) -> Value {
     json!({"scope":"on-demand-query","computationalScope":"pureGeometry","group":group,"action":action,"provider":"supplied-positions","angleUnit":"degrees"})
 }
-fn response(data: Value, calculation: Value) -> Value {
+fn response(data: Value, mut calculation: Value) -> Value {
+    calculation["operation"] = json!("query");
     json!({"schemaVersion":"1.0","engineVersion":VERSION,"data":data,"calculation":calculation,"warnings":[],"errors":[]})
 }
 
@@ -408,6 +409,10 @@ fn inspect_query(
     calculation["group"] = json!(group);
     calculation["action"] = json!("inspect");
     calculation["rulership"] = json!(rulership);
+    calculation["rulershipRulesVersion"] = context["rulershipRulesVersion"].clone();
+    calculation["houseAssignment"] = context["houseAssignment"].clone();
+    calculation["sourceBirth"] = json!(birth);
+    calculation["chartKind"] = json!("individualNatal");
     calculation["aspectPreset"] = json!(if aspect_rules.provided {
         "custom"
     } else {

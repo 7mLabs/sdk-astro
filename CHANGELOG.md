@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.1 — calculation metadata
+
+- Add a consistent calculation operation and missing chart-kind tags, without changing numeric results or existing request fields.
+- Retain source birth, house-assignment method and ruler-rule version in inspection queries.
+- Accept optional unverified caller declarations for supplied geometry; undeclared coordinates remain explicitly unspecified. Keep the public Rust Request struct unchanged.
+- Regenerate the 17 example responses from the current engine.
+- Add metadata regression tests and exact legacy-field comparisons with public 1.0.2 and 1.1.0, allowing only documented metadata additions and the existing 1.0.2 angular correction.
+
+
 ## 1.1.0 — 2026-11-02
 
 - Add `operation: "davison"` with uncorrected/corrected variants, explicit UT1/arithmetic-geography provenance, relationship reports, local-time facade and existing natal SVG adapter. Includes derived UTC/place, provenance and relationship-scoped reports.

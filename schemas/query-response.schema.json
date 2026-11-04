@@ -1731,6 +1731,10 @@
             },
             "angleUnit": {
               "const": "degrees"
+            },
+            "operation": {
+              "type": "string",
+              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
             }
           }
         },
@@ -1763,6 +1767,10 @@
             },
             "angleUnit": {
               "const": "degrees"
+            },
+            "operation": {
+              "type": "string",
+              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
             }
           }
         },
@@ -1806,6 +1814,10 @@
             },
             "toleranceDegrees": {
               "const": 1e-10
+            },
+            "operation": {
+              "type": "string",
+              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
             }
           }
         },
@@ -1850,6 +1862,10 @@
                 "relative",
                 "fixedSecond"
               ]
+            },
+            "operation": {
+              "type": "string",
+              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
             }
           }
         },
@@ -1882,6 +1898,10 @@
             },
             "angleUnit": {
               "const": "degrees"
+            },
+            "operation": {
+              "type": "string",
+              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
             }
           }
         },
@@ -2012,6 +2032,10 @@
             },
             "selectionPolicy": {
               "const": "bothSelectedEndpoints"
+            },
+            "operation": {
+              "type": "string",
+              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
             }
           },
           "additionalProperties": false
@@ -2143,6 +2167,10 @@
             },
             "selectionPolicy": {
               "const": "atLeastOneSelectedEndpoint"
+            },
+            "operation": {
+              "type": "string",
+              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
             }
           },
           "additionalProperties": false
@@ -2274,6 +2302,10 @@
             },
             "selectionPolicy": {
               "const": "atLeastOneSelectedEndpoint"
+            },
+            "operation": {
+              "type": "string",
+              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
             }
           },
           "additionalProperties": false

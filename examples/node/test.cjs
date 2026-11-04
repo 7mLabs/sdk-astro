@@ -257,3 +257,14 @@ for (const options of [null, [], 1, 'bad', {operation:'natal'}, {group:'houses'}
 assert.throws(() => houses.inspect({birth: forecastRequest.birth, houseNumbers:[13]}), { code:'INVALID_INPUT' });
 for (let i=0; i<20; i++) { const [group, action, options] = queryCalls[i%queryCalls.length]; assert.deepEqual(queryGroups[group][action](options), queryExpected[i%queryCalls.length]); }
 console.log('Node installed package: all eight grouped query methods, invalid routing/options and 20 repeated calls OK');
+
+const declared=calculate({...request,sourceContext:{zodiac:'tropical',sourceId:'example'}});
+assert.deepEqual(declared.data,result.data);
+assert.equal(declared.calculation.inputProvenance.positions.status,'callerDeclared');
+assert.equal(declared.calculation.inputProvenance.positions.verified,false);
+assert.equal(result.calculation.inputProvenance.positions.status,'unspecified');
+const inspected=houses.inspect({birth:{utc:natalRequest.utc,location:natalRequest.location},houseNumbers:[7]});
+assert.equal(inspected.calculation.rulershipRulesVersion,'1.0');
+assert.equal(inspected.calculation.houseAssignment,'eclipticLongitude');
+assert.equal(inspected.calculation.sourceBirth.location.latitude,natalRequest.location.latitude);
+console.log('Installed metadata: unverified declarations, unchanged facts, query source/rules OK');

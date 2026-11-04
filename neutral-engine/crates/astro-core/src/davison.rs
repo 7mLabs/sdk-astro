@@ -176,6 +176,7 @@ fn calculate(r: Request) -> Result<Value, (&'static str, String)> {
     let (chart, mut calculation) = sky;
     let jd = calculation["julianDayUt1"].as_f64().unwrap();
     let provenance = json!({"variant":r.variant,"geographicMethod":"arithmeticCoordinateMean","timeMidpointScale":"UT1","meanJulianDayUt1":mean,"derivedJulianDayUt1":jd,"timeCorrectionSeconds":(jd-mean)*86400.,"targetMidheaven":target,"midheavenResidualDegrees":target.map(|t|signed_difference(t,mc(&chart))),"mcToleranceDegrees":MC_TOLERANCE,"iterations":iterations,"sourceCalculations":{"A":ca,"B":cb},"sourceBirths":{"A":{"utc":a["utc"],"location":a["location"]},"B":{"utc":b["utc"],"location":b["location"]}}});
+    calculation["operation"] = json!("davison");
     calculation["scope"] = json!("davison-relationship-data");
     calculation["chartKind"] = json!("davisonRelationship");
     calculation["construction"] = json!("timePlaceMidpoint");

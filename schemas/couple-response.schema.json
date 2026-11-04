@@ -3064,6 +3064,10 @@
             "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/aspectRule"
           },
           "maxItems": 16
+        },
+        "operation": {
+          "type": "string",
+          "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
         }
       },
       "additionalProperties": false
@@ -3263,6 +3267,10 @@
         },
         "composite": {
           "$ref": "urn:7mlabs:astrology:composite-response:1.0#/$defs/calculation"
+        },
+        "operation": {
+          "type": "string",
+          "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
         }
       },
       "additionalProperties": false
