@@ -9,6 +9,8 @@ const MC_TOLERANCE: f64 = 1e-6;
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct Request {
+    #[serde(default)]
+    include_metadata: bool,
     operation: String,
     person_a: Box<RawValue>,
     person_b: Box<RawValue>,
@@ -176,6 +178,9 @@ fn calculate(r: Request) -> Result<Value, (&'static str, String)> {
     let (chart, mut calculation) = sky;
     let jd = calculation["julianDayUt1"].as_f64().unwrap();
     let provenance = json!({"variant":r.variant,"geographicMethod":"arithmeticCoordinateMean","timeMidpointScale":"UT1","meanJulianDayUt1":mean,"derivedJulianDayUt1":jd,"timeCorrectionSeconds":(jd-mean)*86400.,"targetMidheaven":target,"midheavenResidualDegrees":target.map(|t|signed_difference(t,mc(&chart))),"mcToleranceDegrees":MC_TOLERANCE,"iterations":iterations,"sourceCalculations":{"A":ca,"B":cb},"sourceBirths":{"A":{"utc":a["utc"],"location":a["location"]},"B":{"utc":b["utc"],"location":b["location"]}}});
+    if r.include_metadata {
+        calculation["operation"] = json!("davison");
+    }
     calculation["scope"] = json!("davison-relationship-data");
     calculation["chartKind"] = json!("davisonRelationship");
     calculation["construction"] = json!("timePlaceMidpoint");

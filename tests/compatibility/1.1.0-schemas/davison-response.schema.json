@@ -1,0 +1,812 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:7mlabs:astrology:davison-response:1.0",
+  "title": "Davison relationship chart response",
+  "description": "A recalculated astronomical chart with relationship-scoped reports, derived UTC/place and explicit midpoint/correction provenance.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "engineVersion",
+    "data",
+    "warnings",
+    "errors"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "engineVersion": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/error"
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "data",
+        "calculation",
+        "errors"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/data"
+        },
+        "calculation": {
+          "$ref": "#/$defs/calculation"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/error"
+          },
+          "maxItems": 0
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "data",
+        "errors"
+      ],
+      "properties": {
+        "data": {
+          "const": null
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/error"
+          },
+          "minItems": 1
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "builtinDomain": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/domain"
+        },
+        {
+          "type": "object",
+          "required": [
+            "origin",
+            "definition"
+          ],
+          "properties": {
+            "origin": {
+              "const": "builtin"
+            },
+            "definition": {
+              "type": "object",
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "enum": [
+                    "career",
+                    "love",
+                    "relationships",
+                    "family",
+                    "finance",
+                    "identity",
+                    "learning",
+                    "creativity",
+                    "innerLife",
+                    "dailyLife"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "calculation": {
+      "type": "object",
+      "required": [
+        "scope",
+        "provider",
+        "providerVersion",
+        "ephemeris",
+        "zodiac",
+        "coordinates",
+        "positionType",
+        "referenceFrame",
+        "calendar",
+        "inputTimeScale",
+        "houseTimeScale",
+        "planetTimeScale",
+        "timeModel",
+        "julianDayTt",
+        "julianDayUt1",
+        "houseSystem",
+        "angleUnit",
+        "speedUnit",
+        "distanceUnit",
+        "aspectRules",
+        "aspectPreset",
+        "rulership",
+        "domainProfile",
+        "chartKind",
+        "reportProfile",
+        "customProfileCount",
+        "variant",
+        "construction"
+      ],
+      "properties": {
+        "scope": {
+          "const": "davison-relationship-data"
+        },
+        "provider": {
+          "const": "swiss-ephemeris"
+        },
+        "providerVersion": {
+          "type": "string"
+        },
+        "ephemeris": {
+          "const": "moshier"
+        },
+        "zodiac": {
+          "const": "tropical"
+        },
+        "coordinates": {
+          "const": "geocentric"
+        },
+        "positionType": {
+          "const": "apparent"
+        },
+        "referenceFrame": {
+          "const": "ecliptic-of-date"
+        },
+        "calendar": {
+          "const": "gregorian"
+        },
+        "inputTimeScale": {
+          "const": "UTC"
+        },
+        "houseTimeScale": {
+          "const": "UT1"
+        },
+        "planetTimeScale": {
+          "const": "TT"
+        },
+        "timeModel": {
+          "type": "string"
+        },
+        "julianDayTt": {
+          "type": "number"
+        },
+        "julianDayUt1": {
+          "type": "number"
+        },
+        "houseSystem": {
+          "enum": [
+            "placidus",
+            "wholeSign"
+          ]
+        },
+        "angleUnit": {
+          "const": "degrees"
+        },
+        "speedUnit": {
+          "const": "degrees/day"
+        },
+        "distanceUnit": {
+          "const": "AU"
+        },
+        "aspectRules": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/aspectRule"
+          },
+          "maxItems": 16
+        },
+        "aspectPreset": {
+          "enum": [
+            "major",
+            "extended",
+            "custom"
+          ]
+        },
+        "rulership": {
+          "enum": [
+            "traditional",
+            "modern"
+          ]
+        },
+        "domainProfile": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/profile"
+        },
+        "chartKind": {
+          "const": "davisonRelationship"
+        },
+        "reportProfile": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/profile"
+        },
+        "customProfileCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "variant": {
+          "enum": [
+            "uncorrected",
+            "corrected"
+          ],
+          "default": "uncorrected"
+        },
+        "construction": {
+          "const": "timePlaceMidpoint"
+        }
+      }
+    },
+    "customDomain": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/domain"
+        },
+        {
+          "type": "object",
+          "required": [
+            "origin",
+            "definition"
+          ],
+          "properties": {
+            "origin": {
+              "const": "custom"
+            },
+            "definition": {
+              "type": "object",
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "not": {
+                    "enum": [
+                      "career",
+                      "love",
+                      "relationships",
+                      "family",
+                      "finance",
+                      "identity",
+                      "learning",
+                      "creativity",
+                      "innerLife",
+                      "dailyLife"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "chartKind",
+        "subjectCount",
+        "natal",
+        "context",
+        "domains",
+        "customDomains",
+        "profileCatalog",
+        "provenance"
+      ],
+      "properties": {
+        "chartKind": {
+          "const": "davisonRelationship"
+        },
+        "subjectCount": {
+          "const": 2
+        },
+        "natal": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/natal"
+        },
+        "context": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/context"
+        },
+        "domains": {
+          "type": "object",
+          "maxProperties": 10,
+          "properties": {
+            "career": {
+              "$ref": "#/$defs/builtinDomain"
+            },
+            "love": {
+              "$ref": "#/$defs/builtinDomain"
+            },
+            "relationships": {
+              "$ref": "#/$defs/builtinDomain"
+            },
+            "family": {
+              "$ref": "#/$defs/builtinDomain"
+            },
+            "finance": {
+              "$ref": "#/$defs/builtinDomain"
+            },
+            "identity": {
+              "$ref": "#/$defs/builtinDomain"
+            },
+            "learning": {
+              "$ref": "#/$defs/builtinDomain"
+            },
+            "creativity": {
+              "$ref": "#/$defs/builtinDomain"
+            },
+            "innerLife": {
+              "$ref": "#/$defs/builtinDomain"
+            },
+            "dailyLife": {
+              "$ref": "#/$defs/builtinDomain"
+            }
+          },
+          "additionalProperties": false
+        },
+        "customDomains": {
+          "type": "object",
+          "maxProperties": 8,
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-zA-Z0-9_-]{0,63}$",
+            "not": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "career",
+                    "love",
+                    "relationships",
+                    "family",
+                    "finance",
+                    "identity",
+                    "learning",
+                    "creativity",
+                    "innerLife",
+                    "dailyLife",
+                    "constructor",
+                    "prototype",
+                    "__proto__"
+                  ]
+                },
+                {
+                  "pattern": "[^a-zA-Z0-9_-]"
+                }
+              ]
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/customDomain"
+          }
+        },
+        "profileCatalog": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "allOf": [
+              {
+                "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/profileDefinition"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "enum": [
+                      "career",
+                      "love",
+                      "relationships",
+                      "family",
+                      "finance",
+                      "identity",
+                      "learning",
+                      "creativity",
+                      "innerLife",
+                      "dailyLife"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "required": [
+            "variant",
+            "geographicMethod",
+            "timeMidpointScale",
+            "meanJulianDayUt1",
+            "derivedJulianDayUt1",
+            "timeCorrectionSeconds",
+            "targetMidheaven",
+            "midheavenResidualDegrees",
+            "iterations",
+            "mcToleranceDegrees",
+            "sourceCalculations",
+            "sourceBirths"
+          ],
+          "properties": {
+            "variant": {
+              "enum": [
+                "uncorrected",
+                "corrected"
+              ],
+              "default": "uncorrected"
+            },
+            "geographicMethod": {
+              "const": "arithmeticCoordinateMean"
+            },
+            "timeMidpointScale": {
+              "const": "UT1"
+            },
+            "iterations": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 48
+            },
+            "mcToleranceDegrees": {
+              "const": 1e-06
+            },
+            "sourceCalculations": {
+              "type": "object",
+              "required": [
+                "A",
+                "B"
+              ],
+              "properties": {
+                "A": {
+                  "type": "object"
+                },
+                "B": {
+                  "type": "object"
+                }
+              }
+            },
+            "sourceBirths": {
+              "type": "object",
+              "required": [
+                "A",
+                "B"
+              ],
+              "properties": {
+                "A": {
+                  "type": "object"
+                },
+                "B": {
+                  "type": "object"
+                }
+              }
+            },
+            "meanJulianDayUt1": {
+              "type": "number"
+            },
+            "derivedJulianDayUt1": {
+              "type": "number"
+            },
+            "timeCorrectionSeconds": {
+              "type": "number"
+            },
+            "targetMidheaven": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "midheavenResidualDegrees": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "domains"
+          ],
+          "properties": {
+            "domains": {
+              "type": "object",
+              "minProperties": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "customDomains"
+          ],
+          "properties": {
+            "customDomains": {
+              "type": "object",
+              "minProperties": 1
+            }
+          }
+        }
+      ]
+    },
+    "domain": {
+      "type": "object",
+      "required": [
+        "profileId",
+        "profileVersion",
+        "selectionRules",
+        "houses",
+        "bodies",
+        "angles",
+        "pointIds",
+        "relationIds",
+        "aspects",
+        "report",
+        "origin",
+        "definition"
+      ],
+      "properties": {
+        "profileId": {
+          "type": "string"
+        },
+        "profileVersion": {
+          "type": "string"
+        },
+        "selectionRules": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/profileSelectionRules"
+        },
+        "houses": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/domainHouse"
+          },
+          "maxItems": 12
+        },
+        "bodies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "placement",
+              "selectionReasons"
+            ],
+            "properties": {
+              "placement": {
+                "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/bodyPlacement"
+              },
+              "selectionReasons": {
+                "type": "array",
+                "items": {
+                  "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/selectionReason"
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              }
+            }
+          }
+        },
+        "angles": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/anglePlacement"
+          }
+        },
+        "pointIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 33,
+          "uniqueItems": true
+        },
+        "relationIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "aspects": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/domainAspect"
+          }
+        },
+        "report": {
+          "$ref": "#/$defs/report"
+        },
+        "origin": {
+          "enum": [
+            "builtin",
+            "custom"
+          ]
+        },
+        "definition": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/profileDefinition"
+        }
+      }
+    },
+    "report": {
+      "type": "object",
+      "required": [
+        "version",
+        "chartKind",
+        "selectionPolicy",
+        "focusHouseIds",
+        "houseIds",
+        "pointIds",
+        "houses",
+        "points",
+        "aspects",
+        "bodyFacts",
+        "dispositorChains",
+        "receptions",
+        "aspectPatterns",
+        "coverage",
+        "sections"
+      ],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "chartKind": {
+          "const": "davisonRelationship"
+        },
+        "selectionPolicy": {
+          "const": "primaryProfileWithTraceableSupport"
+        },
+        "focusHouseIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^H(?:[1-9]|1[0-2])$"
+          },
+          "uniqueItems": true
+        },
+        "houseIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^H(?:[1-9]|1[0-2])$"
+          },
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true
+        },
+        "pointIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 33,
+          "uniqueItems": true
+        },
+        "houses": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/reportHouse"
+          },
+          "minItems": 1,
+          "maxItems": 12
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/contextPoint"
+          },
+          "minItems": 1,
+          "maxItems": 33
+        },
+        "aspects": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/reportAspect"
+          }
+        },
+        "bodyFacts": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/bodyState"
+          }
+        },
+        "dispositorChains": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/dispositorChain"
+          }
+        },
+        "receptions": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/reception"
+          }
+        },
+        "aspectPatterns": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/aspectPattern"
+          }
+        },
+        "coverage": {
+          "type": "object",
+          "required": [
+            "primaryAspectCount",
+            "reportAspectCount",
+            "relatedHouseCount",
+            "supportSelection",
+            "houseContacts",
+            "patternSelection",
+            "recursiveHouseExpansion",
+            "sectionCount",
+            "sectionSelection"
+          ],
+          "properties": {
+            "primaryAspectCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reportAspectCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "relatedHouseCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "supportSelection": {
+              "const": "primaryBodiesDispositorChainsAndPrimaryAspectEndpoints"
+            },
+            "houseContacts": {
+              "const": "cuspOccupantsAndRuler"
+            },
+            "patternSelection": {
+              "const": "atLeastOnePrimaryBody"
+            },
+            "recursiveHouseExpansion": {
+              "const": false
+            },
+            "sectionCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "sectionSelection": {
+              "const": "independentSelectorsSharedNatal"
+            }
+          }
+        },
+        "sections": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/reportSection"
+          }
+        }
+      }
+    }
+  }
+}

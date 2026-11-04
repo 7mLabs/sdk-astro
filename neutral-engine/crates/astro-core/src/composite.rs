@@ -48,6 +48,8 @@ impl Options {
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct CompositeRequest {
+    #[serde(default)]
+    include_metadata: bool,
     operation: String,
     person_a: Box<RawValue>,
     person_b: Box<RawValue>,
@@ -322,7 +324,7 @@ pub(super) fn calculate_json(raw: &str) -> String {
         Ok(v) => v,
         Err(e) => return error_json("CALCULATION_FAILED", &e),
     };
-    let calculation = metadata(
+    let mut calculation = metadata(
         &options,
         &rules,
         rulership,
@@ -334,6 +336,9 @@ pub(super) fn calculate_json(raw: &str) -> String {
         &calculation_a,
         &calculation_b,
     );
+    if r.include_metadata {
+        calculation["operation"] = json!("composite");
+    }
     json!({"schemaVersion":"1.0","engineVersion":VERSION,"calculation":calculation,"data":{"chartKind":"compositeRelationship","subjectCount":2,"chartCount":3,"subjects":{"A":{"id":"A","natal":natal_a,"calculation":calculation_a},"B":{"id":"B","natal":natal_b,"calculation":calculation_b}},"composite":composite},"warnings":["Moshier analytical ephemeris; no JPL/Swiss data files. Future UTC uses the provider's built-in time model, not live Earth-orientation data.",WARNING],"errors":[]}).to_string()
 }
 

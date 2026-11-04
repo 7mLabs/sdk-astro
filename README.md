@@ -1,5 +1,9 @@
 ![7mlabs Astrology — local computation, structured JSON](assets/readme-banner.svg)
 
+## SDK 1.1.1 metadata patch
+
+The next patch adds source/rule metadata while retaining existing APIs and calculated values. Astronomical/query callers opt in with includeMetadata:true; unchanged calls retain their earlier response contracts. See the [payload metadata contract](docs/payload-metadata.md). Public 1.1.0 verification below records the previous release; 1.1.1 publication is verified separately.
+
 # 7mlabs Astrology
 
 ## SDK 1.1.0: time conversion and modular SVG

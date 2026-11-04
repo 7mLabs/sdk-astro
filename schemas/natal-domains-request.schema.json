@@ -178,6 +178,11 @@
           }
         }
       ]
+    },
+    "includeMetadata": {
+      "type": "boolean",
+      "default": false,
+      "description": "Opt into additional calculation metadata; default responses retain the legacy contract."
     }
   },
   "$comment": "Gregorian valid day/month/leap-year and unique aspect angles are enforced by core. Integer-valued decimal/exponent JSON numbers are normalized exactly by core; no rounding or string coercion. Profile and section ID uniqueness is enforced by core. Explicit null is not accepted for any option; selector arrays default empty but each profile and section needs at least one selector.",

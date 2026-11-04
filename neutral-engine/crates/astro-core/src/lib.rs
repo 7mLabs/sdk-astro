@@ -13,6 +13,7 @@ mod numbers;
 #[cfg(test)]
 mod profile_integration_tests;
 mod profiles;
+mod provenance;
 mod query;
 mod reports;
 use serde::{Deserialize, Serialize};
@@ -336,7 +337,9 @@ pub fn calculate(request: Request) -> Result<Value, String> {
         _ => unreachable!(),
     };
     Ok(json!({ "schemaVersion": "1.0", "engineVersion": VERSION,
-        "calculation": { "scope": "geometry-from-positions", "provider": "supplied-positions",
+        "calculation": { "scope": "geometry-from-positions", "operation": request.operation,
+            "chartKind": if request.operation == "chart" { "suppliedChartGeometry" } else if request.operation == "harmonic" { "harmonicGeometry" } else { "suppliedSynastryGeometry" },
+            "inputProvenance": provenance::unspecified(request.operation == "synastry"), "provider": "supplied-positions",
             "angleUnit": "degrees", "speedUnit": "degrees/day", "aspectRules": request.aspect_rules.iter()
                 .map(|r| json!({"angle":r.angle,"maxOrb":r.max_orb})).collect::<Vec<_>>() },
         "data": data, "warnings": warnings, "errors": [] }))
@@ -382,11 +385,11 @@ pub fn calculate_json(input: &str) -> String {
     if operation == "natal" || operation == "natalDomains" {
         return natal::calculate_json(input);
     }
-    let request = match serde_json::from_str::<Request>(input) {
+    let request = match serde_json::from_str::<provenance::GeometryInput>(input) {
         Ok(request) => request,
         Err(error) => return error_json("INVALID_INPUT", &error.to_string()),
     };
-    match calculate(request) {
+    match request.calculate() {
         Ok(result) => result.to_string(),
         Err(message) => error_json("INVALID_INPUT", &message),
     }

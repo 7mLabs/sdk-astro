@@ -71,6 +71,10 @@ jobs:
         run: |
           npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.0.2
           node scripts/check-upgrade-compatibility.cjs
+          cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-102.json
+          npm install --prefix artifacts/public-baseline-110 --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.0
+          BASELINE_ASTRO_MODULE=artifacts/public-baseline-110/node_modules/@7mlabs/astrology node scripts/check-upgrade-compatibility.cjs
+          cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-110.json
       - name: Fresh consumer installation and parity
         run: python scripts/test-packages.py
       - name: Installed time helpers and SVG service parity
@@ -83,6 +87,7 @@ jobs:
           node scripts/check-svg-point-schema.cjs
           node tests/services/time-svg.cjs
           node tests/services/davison.cjs
+          node tests/services/payload-metadata.cjs
           node artifacts/ci-tools/node_modules/typescript/lib/tsc.js --strict --noEmit --target ES2020 --module NodeNext --moduleResolution NodeNext examples/node/davison-types.ts tests/compatibility/legacy-types.ts
       - name: Compression parity and real payload roundtrips
         run: python scripts/test-compression.py
@@ -125,7 +130,7 @@ jobs:
             artifacts/time-svg-tests.json
             artifacts/additional-points-tests.json
             artifacts/public-compatibility.json
-            artifacts/upgrade-compatibility.json
+            artifacts/upgrade-compatibility*.json
             artifacts/compression-test-results.json
             artifacts/compression-binding-tests.json
             artifacts/candidate-provenance.json

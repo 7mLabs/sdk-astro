@@ -4,39 +4,388 @@
   "title": "Geometry request from supplied positions",
   "type": "object",
   "additionalProperties": false,
-  "required": ["operation", "positions"],
+  "required": [
+    "operation",
+    "positions"
+  ],
   "properties": {
-    "operation": { "enum": ["chart", "harmonic", "synastry"] },
-    "positions": { "$ref": "#/$defs/positions" },
-    "otherPositions": { "anyOf": [{ "$ref": "#/$defs/positions" }, { "type": "null" }] },
-    "houses": { "anyOf": [{ "$ref": "#/$defs/houses" }, { "type": "null" }] },
-    "otherHouses": { "anyOf": [{ "$ref": "#/$defs/houses" }, { "type": "null" }] },
-    "harmonic": { "type": ["integer", "null"], "minimum": 1, "maximum": 360 },
+    "operation": {
+      "enum": [
+        "chart",
+        "harmonic",
+        "synastry"
+      ]
+    },
+    "positions": {
+      "$ref": "#/$defs/positions"
+    },
+    "otherPositions": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/positions"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "houses": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/houses"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "otherHouses": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/houses"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "harmonic": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 360
+    },
     "aspectRules": {
-      "type": "array", "maxItems": 16,
+      "type": "array",
+      "maxItems": 16,
       "items": {
-        "type": "object", "additionalProperties": false, "required": ["angle", "maxOrb"],
-        "properties": { "angle": { "type": "number", "minimum": 0, "maximum": 180 }, "maxOrb": { "type": "number", "minimum": 0, "maximum": 15 } }
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "angle",
+          "maxOrb"
+        ],
+        "properties": {
+          "angle": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 180
+          },
+          "maxOrb": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 15
+          }
+        }
       }
+    },
+    "sourceContext": {
+      "$ref": "#/$defs/sourceContext"
+    },
+    "otherSourceContext": {
+      "$ref": "#/$defs/sourceContext"
+    },
+    "includeMetadata": {
+      "type": "boolean",
+      "default": false,
+      "description": "Opt into additional calculation metadata; default responses retain the legacy contract."
     }
   },
   "allOf": [
-    { "if": { "properties": { "operation": { "const": "harmonic" } } },
-      "then": { "required": ["harmonic"], "properties": { "harmonic": { "type": "integer" }, "houses": { "type": "null" }, "otherHouses": { "type": "null" }, "otherPositions": { "type": "null" } } } },
-    { "if": { "properties": { "operation": { "const": "synastry" } } },
-      "then": { "required": ["otherPositions"], "properties": { "otherPositions": { "$ref": "#/$defs/positions" }, "harmonic": { "type": "null" } } } },
-    { "if": { "properties": { "operation": { "const": "chart" } } },
-      "then": { "properties": { "otherPositions": { "type": "null" }, "otherHouses": { "type": "null" }, "harmonic": { "type": "null" } } } }
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "harmonic"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "harmonic"
+        ],
+        "properties": {
+          "harmonic": {
+            "type": "integer"
+          },
+          "houses": {
+            "type": "null"
+          },
+          "otherHouses": {
+            "type": "null"
+          },
+          "otherPositions": {
+            "type": "null"
+          }
+        },
+        "not": {
+          "required": [
+            "otherSourceContext"
+          ],
+          "properties": {
+            "otherSourceContext": {}
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "synastry"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "otherPositions"
+        ],
+        "properties": {
+          "otherPositions": {
+            "$ref": "#/$defs/positions"
+          },
+          "harmonic": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "chart"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "otherPositions": {
+            "type": "null"
+          },
+          "otherHouses": {
+            "type": "null"
+          },
+          "harmonic": {
+            "type": "null"
+          }
+        },
+        "not": {
+          "required": [
+            "otherSourceContext"
+          ],
+          "properties": {
+            "otherSourceContext": {}
+          }
+        }
+      }
+    }
   ],
   "$defs": {
     "positions": {
-      "type": "array", "minItems": 1, "maxItems": 64,
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
       "items": {
-        "type": "object", "additionalProperties": false, "required": ["id", "longitude"],
-        "properties": { "id": { "type": "string", "minLength": 1, "maxLength": 128 }, "longitude": { "type": "number" }, "speed": { "type": ["number", "null"] } }
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "longitude"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "longitude": {
+            "type": "number"
+          },
+          "speed": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        }
       }
     },
-    "houses": { "type": "array", "minItems": 12, "maxItems": 12, "items": { "type": "number" } }
+    "houses": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "number"
+      }
+    },
+    "sourceContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ayanamsa": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "referenceFrame": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "houseSystem": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "sourceId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "sourceVersion": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "zodiac": {
+          "enum": [
+            "tropical",
+            "sidereal",
+            null
+          ]
+        },
+        "coordinates": {
+          "enum": [
+            "geocentric",
+            "topocentric",
+            "heliocentric",
+            null
+          ]
+        }
+      },
+      "description": "Unverified caller declarations; at least one nonnull nonblank value is required. Each nonnull value is limited to 128 UTF-8 bytes. Ayanamsa requires sidereal zodiac.",
+      "anyOf": [
+        {
+          "required": [
+            "ayanamsa"
+          ],
+          "properties": {
+            "ayanamsa": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          }
+        },
+        {
+          "required": [
+            "referenceFrame"
+          ],
+          "properties": {
+            "referenceFrame": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          }
+        },
+        {
+          "required": [
+            "houseSystem"
+          ],
+          "properties": {
+            "houseSystem": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          }
+        },
+        {
+          "required": [
+            "sourceId"
+          ],
+          "properties": {
+            "sourceId": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          }
+        },
+        {
+          "required": [
+            "sourceVersion"
+          ],
+          "properties": {
+            "sourceVersion": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          }
+        },
+        {
+          "required": [
+            "zodiac"
+          ],
+          "properties": {
+            "zodiac": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          }
+        },
+        {
+          "required": [
+            "coordinates"
+          ],
+          "properties": {
+            "coordinates": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "ayanamsa"
+            ],
+            "properties": {
+              "ayanamsa": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "zodiac"
+            ],
+            "properties": {
+              "zodiac": {
+                "const": "sidereal"
+              }
+            }
+          }
+        }
+      ]
+    }
   },
   "$comment": "Core additionally checks unique/nonblank IDs, 128 UTF-8 byte ID length, one zodiac traversal of house cusps, unique rule angles and finite arithmetic. JSON Schema length counts characters, not UTF-8 bytes."
 }

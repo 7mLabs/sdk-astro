@@ -85,3 +85,5 @@ Timezone IANA conversion, sidereal/topocentric, solar-return chart, local eclips
 ## Davison (1.1.0)
 
 `operation: "davison"` supports `variant: "uncorrected" | "corrected"`. Both return a recalculated sky with explicit derived UTC/place and relationship-scoped reports. This addition is available from 1.1.0; prior operations retain their request shapes. See [Davison contract](davison.md).
+
+Calculation output provenance and additive 1.1.1 fields: [payload metadata](payload-metadata.md).

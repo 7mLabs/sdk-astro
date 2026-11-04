@@ -949,6 +949,8 @@ pub(super) fn scan(
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct EventRequest {
+    #[serde(default)]
+    include_metadata: bool,
     operation: String,
     period: Period,
     #[serde(default, deserialize_with = "natal::present")]
@@ -1012,7 +1014,11 @@ pub(super) fn calculate_json(raw: &str) -> String {
         Ok(r) => r,
         Err(e) => return error_json("CALCULATION_FAILED", &e),
     };
-    let calculation = json!({"scope":"astronomical-event-data","provider":"swiss-ephemeris","providerVersion":"2.10.03","ephemeris":"moshier","zodiac":"tropical","coordinates":"geocentric","positionType":"apparent","referenceFrame":"ecliptic-of-date","calendar":"gregorian","inputTimeScale":"UTC","planetTimeScale":"TT","searchTimeScale":"UT1","timeModel":"Swiss built-in leap seconds and Delta T; pre-1972 civil input treated as UT1","angleUnit":"degrees","speedUnit":"degrees/day","distanceUnit":"AU","bodyIds":options.indices().iter().map(|i|BODY_IDS[*i]).collect::<Vec<_>>(),"eventTypes":options.event_types,"aspectPreset":if r.aspect_rules.provided{"custom"}else{preset},"aspectRules":options.rules.iter().map(|r|json!({"angle":r.angle,"maxOrb":r.max_orb})).collect::<Vec<_>>(),"search":result.metadata});
+    let mut calculation = json!({"scope":"astronomical-event-data","provider":"swiss-ephemeris","providerVersion":"2.10.03","ephemeris":"moshier","zodiac":"tropical","coordinates":"geocentric","positionType":"apparent","referenceFrame":"ecliptic-of-date","calendar":"gregorian","inputTimeScale":"UTC","planetTimeScale":"TT","searchTimeScale":"UT1","timeModel":"Swiss built-in leap seconds and Delta T; pre-1972 civil input treated as UT1","angleUnit":"degrees","speedUnit":"degrees/day","distanceUnit":"AU","bodyIds":options.indices().iter().map(|i|BODY_IDS[*i]).collect::<Vec<_>>(),"eventTypes":options.event_types,"aspectPreset":if r.aspect_rules.provided{"custom"}else{preset},"aspectRules":options.rules.iter().map(|r|json!({"angle":r.angle,"maxOrb":r.max_orb})).collect::<Vec<_>>(),"search":result.metadata});
+    if r.include_metadata {
+        calculation["operation"] = json!("events");
+        calculation["chartKind"] = json!("astronomicalEvents");
+    }
     json!({"schemaVersion":"1.0","engineVersion":VERSION,"calculation":calculation,"data":{"chartKind":"astronomicalEvents","period":result.period,"snapshot":result.snapshot,"coverage":coverage(&result.events),"events":result.events},"warnings":["Moshier analytical ephemeris; no JPL/Swiss data files. Future UTC uses the provider's built-in time model, not live Earth-orientation data.","Periods use a fixed UTC offset, without timezone or daylight-saving inference. Lunar phases and global eclipses use Sun and Moon independently of the selected bodies. Eclipse maxima determine period membership; associated contacts may be outside the period. No local visibility is inferred. Exact events are geometric roots, not predictions of life outcomes."],"errors":[]}).to_string()
 }
 

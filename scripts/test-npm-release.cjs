@@ -244,6 +244,7 @@ function main() {
   const schemaEnv = { AJV_2020_MODULE: args['ajv-module'], ASTRO_ENGINE_MODULE: installed };
 
   console.log(run(process.execPath, [path.join(root, 'tests/services/davison.cjs')], consumer, schemaEnv).trim());
+  console.log(run(process.execPath, [path.join(root, 'tests/services/payload-metadata.cjs')], consumer, schemaEnv).trim());
   console.log(run(process.execPath, [path.join(root, 'scripts/check-upgrade-compatibility.cjs')], root, {ASTRO_ENGINE_MODULE: installed}).trim());
   for (const relative of ['examples/node/davison-types.ts', 'tests/compatibility/legacy-types.ts']) {
     const filename = path.join(consumer, path.basename(relative));

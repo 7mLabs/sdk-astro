@@ -197,6 +197,8 @@ fn extend_natal(
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct NatalRequest {
+    #[serde(default)]
+    include_metadata: bool,
     #[serde(default, deserialize_with = "present")]
     additional_points: Option<AdditionalPoints>,
     operation: String,
@@ -421,6 +423,10 @@ pub(super) fn calculate_json(raw: &str) -> String {
     } else {
         natal
     };
+    if r.include_metadata {
+        calculation["operation"] = json!(if is_domains { "natalDomains" } else { "natal" });
+        calculation["chartKind"] = json!("individualNatal");
+    }
     let mut result = json!({"schemaVersion":"1.0", "engineVersion":VERSION,
         "calculation":calculation,
         "data":data,

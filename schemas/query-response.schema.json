@@ -1731,6 +1731,9 @@
             },
             "angleUnit": {
               "const": "degrees"
+            },
+            "operation": {
+              "const": "query"
             }
           }
         },
@@ -1763,6 +1766,9 @@
             },
             "angleUnit": {
               "const": "degrees"
+            },
+            "operation": {
+              "const": "query"
             }
           }
         },
@@ -1806,6 +1812,9 @@
             },
             "toleranceDegrees": {
               "const": 1e-10
+            },
+            "operation": {
+              "const": "query"
             }
           }
         },
@@ -1850,6 +1859,9 @@
                 "relative",
                 "fixedSecond"
               ]
+            },
+            "operation": {
+              "const": "query"
             }
           }
         },
@@ -1882,6 +1894,9 @@
             },
             "angleUnit": {
               "const": "degrees"
+            },
+            "operation": {
+              "const": "query"
             }
           }
         },
@@ -2012,6 +2027,28 @@
             },
             "selectionPolicy": {
               "const": "bothSelectedEndpoints"
+            },
+            "operation": {
+              "const": "query"
+            },
+            "chartKind": {
+              "const": "individualNatal"
+            },
+            "rulershipRulesVersion": {
+              "const": "1.0"
+            },
+            "houseAssignment": {
+              "const": "eclipticLongitude"
+            },
+            "sourceBirth": {
+              "$ref": "#/$defs/sourceBirth"
+            },
+            "timeResolution": {
+              "type": "object",
+              "description": "Civil-time conversion provenance from calculateFromLocal.",
+              "additionalProperties": {
+                "type": "object"
+              }
             }
           },
           "additionalProperties": false
@@ -2143,6 +2180,28 @@
             },
             "selectionPolicy": {
               "const": "atLeastOneSelectedEndpoint"
+            },
+            "operation": {
+              "const": "query"
+            },
+            "chartKind": {
+              "const": "individualNatal"
+            },
+            "rulershipRulesVersion": {
+              "const": "1.0"
+            },
+            "houseAssignment": {
+              "const": "eclipticLongitude"
+            },
+            "sourceBirth": {
+              "$ref": "#/$defs/sourceBirth"
+            },
+            "timeResolution": {
+              "type": "object",
+              "description": "Civil-time conversion provenance from calculateFromLocal.",
+              "additionalProperties": {
+                "type": "object"
+              }
             }
           },
           "additionalProperties": false
@@ -2274,6 +2333,28 @@
             },
             "selectionPolicy": {
               "const": "atLeastOneSelectedEndpoint"
+            },
+            "operation": {
+              "const": "query"
+            },
+            "chartKind": {
+              "const": "individualNatal"
+            },
+            "rulershipRulesVersion": {
+              "const": "1.0"
+            },
+            "houseAssignment": {
+              "const": "eclipticLongitude"
+            },
+            "sourceBirth": {
+              "$ref": "#/$defs/sourceBirth"
+            },
+            "timeResolution": {
+              "type": "object",
+              "description": "Civil-time conversion provenance from calculateFromLocal.",
+              "additionalProperties": {
+                "type": "object"
+              }
             }
           },
           "additionalProperties": false
@@ -2293,6 +2374,87 @@
         },
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "sourceBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "utc",
+        "location"
+      ],
+      "properties": {
+        "utc": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "year",
+            "month",
+            "day",
+            "hour",
+            "minute"
+          ],
+          "properties": {
+            "year": {
+              "type": "integer",
+              "minimum": 1800,
+              "maximum": 2399
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31
+            },
+            "hour": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 23
+            },
+            "minute": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 59
+            },
+            "second": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMaximum": 60,
+              "default": 0
+            }
+          }
+        },
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "latitude",
+            "longitude"
+          ],
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "exclusiveMinimum": -90,
+              "exclusiveMaximum": 90
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        },
+        "houseSystem": {
+          "enum": [
+            "placidus",
+            "wholeSign"
+          ],
+          "default": "placidus"
         }
       }
     }

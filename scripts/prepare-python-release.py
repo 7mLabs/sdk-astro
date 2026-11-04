@@ -57,7 +57,7 @@ for folder in ('neutral-engine','bindings/python','schemas','third-party/rust'):
             continue
         files.add(path)
 for name in ('LICENSE','NOTICE','README.md','CHANGELOG.md','docs/license.md','docs/time-and-svg.md',
-             'docs/domains.md','docs/query.md','docs/profiles.md','docs/couple.md','docs/composite.md',
+             'docs/payload-metadata.md','docs/domains.md','docs/query.md','docs/profiles.md','docs/couple.md','docs/composite.md',
              'docs/forecast.md','docs/payload-compression.md','scripts/prepare-python-release.py'):
     files.add(ROOT / name)
 files.update((ROOT / 'examples').glob('*.json'))

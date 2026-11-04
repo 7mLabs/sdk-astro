@@ -141,6 +141,11 @@
         "extended"
       ],
       "description": "Mutually exclusive with aspectRules; default major for natal, extended for natalDomains."
+    },
+    "includeMetadata": {
+      "type": "boolean",
+      "default": false,
+      "description": "Opt into additional calculation metadata; default responses retain the legacy contract."
     }
   },
   "$comment": "Gregorian valid day/month/leap-year and unique aspect angles are enforced by core. Integer-valued decimal/exponent JSON numbers are normalized exactly by core; no rounding or string coercion.",

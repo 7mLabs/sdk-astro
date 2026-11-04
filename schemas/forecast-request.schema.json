@@ -78,6 +78,11 @@
     },
     "customProfiles": {
       "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/customProfiles"
+    },
+    "includeMetadata": {
+      "type": "boolean",
+      "default": false,
+      "description": "Opt into additional calculation metadata; default responses retain the legacy contract."
     }
   },
   "allOf": [

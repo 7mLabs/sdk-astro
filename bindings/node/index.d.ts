@@ -1,7 +1,16 @@
 export interface Position { id: string; longitude: number; speed?: number | null; }
 export interface AspectRule { angle: number; maxOrb: number; }
+/** Caller declarations only; the geometry engine does not verify or infer these settings. */
+export interface GeometrySourceContext {
+  zodiac?: 'tropical' | 'sidereal'; ayanamsa?: string; referenceFrame?: string;
+  coordinates?: 'geocentric' | 'topocentric' | 'heliocentric'; houseSystem?: string;
+  sourceId?: string; sourceVersion?: string;
+}
 export interface GeometryRequest {
   operation: 'chart' | 'harmonic' | 'synastry';
+  sourceContext?: GeometrySourceContext;
+  /** Only valid for synastry; declares otherPositions separately. */
+  otherSourceContext?: GeometrySourceContext;
   positions: Position[];
   otherPositions?: Position[];
   houses?: number[];
@@ -10,6 +19,7 @@ export interface GeometryRequest {
   aspectRules?: AspectRule[];
 }
 export interface NatalRequest {
+  includeMetadata?: boolean;
   operation: 'natal';
   /** Gregorian UTC; date/hour/minute must have integer values. Caller converts local time to UTC. */
   utc: { year: number; month: number; day: number; hour: number; minute: number; second?: number; };
@@ -58,6 +68,7 @@ export interface ProfileDefinition {
   angles: NatalAngleId[]; sections: ProfileSectionDefinition[];
 }
 export interface NatalDomainsRequest extends Omit<NatalRequest, 'operation'> {
+  includeMetadata?: boolean;
   operation: 'natalDomains';
   /** Absent selects all ten builtins. Empty is valid only with nonempty customProfiles. */
   domains?: DomainName[];
@@ -82,6 +93,7 @@ export interface BirthInput {
   houseSystem?: 'placidus' | 'wholeSign';
 }
 export interface CoupleRequestBase {
+  includeMetadata?: boolean;
   operation: 'couple'; personA: BirthInput; personB: BirthInput;
   /** Absent selects all six pair builtins. Empty requires nonempty customProfiles. */
   domains?: CoupleDomainName[]; customProfiles?: CustomProfileInput[];
@@ -106,6 +118,7 @@ export interface CompositeOptions {
   customProfiles?: CustomProfileInput[];
 }
 export interface CompositeRequestBase extends CompositeOptions {
+  includeMetadata?: boolean;
   operation: 'composite'; personA: BirthInput; personB: BirthInput;
   rulership?: 'traditional' | 'modern';
 }
@@ -154,22 +167,23 @@ export type ForecastAspectSettings =
   | { aspectPreset?: 'major' | 'extended'; aspectRules?: never; }
   | { aspectRules: AspectRule[]; aspectPreset?: never; };
 /** Major aspects by default; bounded root search fails rather than truncating. */
-export type EventsRequest = EventSearchOptions & ForecastAspectSettings & { operation: 'events'; };
+export type EventsRequest = EventSearchOptions & ForecastAspectSettings & { operation: 'events'; includeMetadata?: boolean; };
 export type ForecastRequest = EventSearchOptions & ForecastAspectSettings & {
-  operation: 'forecast'; birth: BirthInput; includeNatalTransits?: boolean;
+  operation: 'forecast'; includeMetadata?: boolean; birth: BirthInput; includeNatalTransits?: boolean;
   domains?: DomainName[]; customProfiles?: CustomProfileInput[]; rulership?: 'traditional' | 'modern';
 };
 export type QueryMotionMode = 'none' | 'relative' | 'fixedSecond';
-export interface GeometryNormalizeRequest { operation: 'query'; group: 'geometry'; action: 'normalize'; longitude: number; }
-export interface GeometrySeparationRequest { operation: 'query'; group: 'geometry'; action: 'separation'; longitude1: number; longitude2: number; }
-export interface GeometryMidpointRequest { operation: 'query'; group: 'geometry'; action: 'midpoint'; longitude1: number; longitude2: number; antipodalPolicy?: CompositeAntipodalPolicy; }
-export interface AspectsBetweenRequest {
+export interface QueryMetadataOptions { includeMetadata?: boolean; }
+export interface GeometryNormalizeRequest extends QueryMetadataOptions { operation: 'query'; group: 'geometry'; action: 'normalize'; longitude: number; }
+export interface GeometrySeparationRequest extends QueryMetadataOptions { operation: 'query'; group: 'geometry'; action: 'separation'; longitude1: number; longitude2: number; }
+export interface GeometryMidpointRequest extends QueryMetadataOptions { operation: 'query'; group: 'geometry'; action: 'midpoint'; longitude1: number; longitude2: number; antipodalPolicy?: CompositeAntipodalPolicy; }
+export interface AspectsBetweenRequest extends QueryMetadataOptions {
   operation: 'query'; group: 'aspects'; action: 'between'; positions: [Position, Position]; rule: AspectRule;
   /** Default none. fixedSecond uses zero speed for the second point without changing its supplied metadata. */
   motionMode?: QueryMotionMode;
 }
-export interface HousesLocateRequest { operation: 'query'; group: 'houses'; action: 'locate'; longitude: number; houseCusps: number[]; }
-export type QueryInspectionOptions = { birth: BirthInput; rulership?: 'traditional' | 'modern'; } & ForecastAspectSettings;
+export interface HousesLocateRequest extends QueryMetadataOptions { operation: 'query'; group: 'houses'; action: 'locate'; longitude: number; houseCusps: number[]; }
+export type QueryInspectionOptions = QueryMetadataOptions & { birth: BirthInput; rulership?: 'traditional' | 'modern'; } & ForecastAspectSettings;
 /** Default all 26; at least two distinct IDs. Both aspect endpoints must be selected. */
 export type AspectsInspectRequest = QueryInspectionOptions & { operation: 'query'; group: 'aspects'; action: 'inspect'; pointIds?: NatalPointId[]; };
 /** Default all 26. Relations/aspects require at least one selected endpoint. */
@@ -335,7 +349,8 @@ export interface NatalDomainsData {
 }
 export interface Result {
   schemaVersion: string; engineVersion: string;
-  calculation: { scope: string; provider: string; angleUnit: string; speedUnit: string; aspectRules: AspectRule[];
+  calculation: { operation?: string; chartKind?: string;
+    inputProvenance?: Record<string, { status: 'callerDeclared' | 'unspecified'; verified: false; context: GeometrySourceContext | null; }>; scope: string; provider: string; angleUnit: string; speedUnit: string; aspectRules: AspectRule[];
     providerVersion?: string; ephemeris?: string; zodiac?: string; houseSystem?: string;
     julianDayTt?: number; julianDayUt1?: number; [key: string]: unknown; };
   data: { natal?: NatalData; context?: NatalContext; domains?: Partial<Record<DomainName, DomainView>>;
@@ -356,6 +371,7 @@ export interface NatalDomainsResult extends Result {
   data: NatalDomainsData;
 }
 export interface BasicNatalCalculation {
+  operation?: string;
   scope: 'basic-natal'; provider: 'swiss-ephemeris'; providerVersion: string; ephemeris: 'moshier';
   zodiac: 'tropical'; coordinates: 'geocentric'; positionType: 'apparent'; referenceFrame: 'ecliptic-of-date';
   calendar: 'gregorian'; inputTimeScale: 'UTC'; houseTimeScale: 'UT1'; planetTimeScale: 'TT';
@@ -523,6 +539,7 @@ export interface CompositeData {
   provenance: CompositeProvenance;
 }
 export interface CompositeCalculation {
+  operation?: 'composite';
   scope: 'midpoint-composite-data'; chartKind: 'midpointComposite'; construction: 'symbolic';
   method: 'shortestArcMidpoint'; houseMethod: CompositeHouseMethod;
   antipodalPolicy: CompositeAntipodalPolicy; toleranceDegrees: number;
@@ -620,6 +637,7 @@ export interface EventsData {
   events: GlobalAstronomicalEvent[]; coverage: { eventCount: number; byType: EventTypeCounts; };
 }
 export interface EventCalculationBase {
+  operation?: string;
   provider: 'swiss-ephemeris'; providerVersion: string; ephemeris: 'moshier'; zodiac: 'tropical';
   coordinates: 'geocentric'; positionType: 'apparent'; referenceFrame: 'ecliptic-of-date';
   calendar: 'gregorian'; inputTimeScale: 'UTC'; planetTimeScale: 'TT'; searchTimeScale: 'UT1';
@@ -732,12 +750,15 @@ export interface QueryInspectionData<G extends QueryInspectionGroup = QueryInspe
   coverage: { primaryPoints: number; supportingPoints: number; selectedHouses: number; pointPairs: number; matchedAspects: number; };
 }
 export interface PureQueryCalculation<G extends 'geometry' | 'aspects' | 'houses' = 'geometry' | 'aspects' | 'houses', A extends string = string> {
+  operation?: 'query';
   scope: 'on-demand-query'; computationalScope: 'pureGeometry'; group: G; action: A;
   provider: 'supplied-positions'; angleUnit: 'degrees';
 }
 export interface QueryMidpointCalculation extends PureQueryCalculation<'geometry', 'midpoint'> { antipodalPolicy: CompositeAntipodalPolicy; toleranceDegrees: 1e-10; }
 export interface QueryBetweenCalculation extends PureQueryCalculation<'aspects', 'between'> { speedUnit: 'degrees/day'; motionMode: QueryMotionMode; }
 export interface QueryInspectionCalculation<G extends QueryInspectionGroup = QueryInspectionGroup> extends Omit<BasicNatalCalculation, 'scope'> {
+  operation?: 'query';
+  sourceBirth?: BirthInput; rulershipRulesVersion?: string; houseAssignment?: 'eclipticLongitude';
   scope: 'on-demand-query'; sourceScope: 'basic-natal'; computationalScope: 'fullNatalThenSelection'; group: G; action: 'inspect';
   rulership: 'traditional' | 'modern'; aspectPreset: 'major' | 'extended' | 'custom';
   selectionPolicy: G extends 'aspects' ? 'bothSelectedEndpoints' : 'atLeastOneSelectedEndpoint';

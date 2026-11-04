@@ -24,6 +24,11 @@
         },
         "longitude": {
           "type": "number"
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt into additive calculation metadata; unchanged calls retain the closed legacy response."
         }
       }
     },
@@ -52,6 +57,11 @@
         },
         "longitude2": {
           "type": "number"
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt into additive calculation metadata; unchanged calls retain the closed legacy response."
         }
       }
     },
@@ -86,6 +96,11 @@
             "error",
             "lowerLongitude"
           ]
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt into additive calculation metadata; unchanged calls retain the closed legacy response."
         }
       }
     },
@@ -126,6 +141,11 @@
             "relative",
             "fixedSecond"
           ]
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt into additive calculation metadata; unchanged calls retain the closed legacy response."
         }
       }
     },
@@ -159,6 +179,11 @@
             "type": "number"
           },
           "maxItems": 12
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt into additive calculation metadata; unchanged calls retain the closed legacy response."
         }
       }
     },
@@ -239,6 +264,11 @@
           },
           "maxItems": 26,
           "uniqueItems": true
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt into additive calculation metadata; unchanged calls retain the closed legacy response."
         }
       },
       "not": {
@@ -330,6 +360,11 @@
           },
           "maxItems": 26,
           "uniqueItems": true
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt into additive calculation metadata; unchanged calls retain the closed legacy response."
         }
       },
       "not": {
@@ -396,6 +431,11 @@
           },
           "maxItems": 12,
           "uniqueItems": true
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt into additive calculation metadata; unchanged calls retain the closed legacy response."
         }
       },
       "not": {

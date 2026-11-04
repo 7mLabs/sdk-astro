@@ -37,6 +37,8 @@ struct Header {
     operation: String,
     group: String,
     action: String,
+    #[serde(default, rename = "includeMetadata")]
+    include_metadata: bool,
 }
 
 // Deserialize each final request directly from JSON: tagged/flattened enum buffers
@@ -52,6 +54,8 @@ macro_rules! request {
             _group: String,
             #[serde(rename = "action")]
             _action: String,
+            #[serde(default, rename = "includeMetadata")]
+            _include_metadata: bool,
             $($fields)*
         }
     };
@@ -130,7 +134,8 @@ fn finite_longitudes(values: &[f64]) -> Result<(), Failure> {
 fn geometry_metadata(group: &str, action: &str) -> Value {
     json!({"scope":"on-demand-query","computationalScope":"pureGeometry","group":group,"action":action,"provider":"supplied-positions","angleUnit":"degrees"})
 }
-fn response(data: Value, calculation: Value) -> Value {
+fn response(data: Value, mut calculation: Value) -> Value {
+    calculation["operation"] = json!("query");
     json!({"schemaVersion":"1.0","engineVersion":VERSION,"data":data,"calculation":calculation,"warnings":[],"errors":[]})
 }
 
@@ -408,6 +413,10 @@ fn inspect_query(
     calculation["group"] = json!(group);
     calculation["action"] = json!("inspect");
     calculation["rulership"] = json!(rulership);
+    calculation["rulershipRulesVersion"] = context["rulershipRulesVersion"].clone();
+    calculation["houseAssignment"] = context["houseAssignment"].clone();
+    calculation["sourceBirth"] = json!(birth);
+    calculation["chartKind"] = json!("individualNatal");
     calculation["aspectPreset"] = json!(if aspect_rules.provided {
         "custom"
     } else {
@@ -425,7 +434,7 @@ fn dispatch(raw: &str, header: Header) -> Result<Value, Failure> {
     if header.operation != "query" {
         return Err(Failure::input("Expected query operation"));
     }
-    match (header.group.as_str(), header.action.as_str()) {
+    let mut result = match (header.group.as_str(), header.action.as_str()) {
         ("geometry", "normalize") => normalize_query(parse(raw)?),
         ("geometry", "separation") => separation_query(parse(raw)?),
         ("geometry", "midpoint") => midpoint_query(parse(raw)?),
@@ -440,7 +449,21 @@ fn dispatch(raw: &str, header: Header) -> Result<Value, Failure> {
             inspect_query(&header.group,r.birth,Selection::Points(r.point_ids.unwrap_or_else(|| POINT_IDS.into_iter().map(String::from).collect())),r.rulership,r.aspect_preset,r.aspect_rules)
         }
         _ => Err(Failure::input("Query supports geometry.normalize/separation/midpoint, aspects.between/inspect, houses.locate/inspect and points.inspect")),
+    }?;
+    // Preserve the closed 1.0 query response contract for unchanged calls.
+    // New applications explicitly opt into the additional calculation metadata.
+    if !header.include_metadata {
+        for key in [
+            "operation",
+            "chartKind",
+            "sourceBirth",
+            "houseAssignment",
+            "rulershipRulesVersion",
+        ] {
+            result["calculation"].as_object_mut().unwrap().remove(key);
+        }
     }
+    Ok(result)
 }
 pub(super) fn calculate_json(raw: &str) -> String {
     let result = parse(raw).and_then(|header| dispatch(raw, header));
