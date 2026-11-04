@@ -1653,6 +1653,13 @@
         },
         "chartKind": {
           "const": "astronomicalEvents"
+        },
+        "timeResolution": {
+          "type": "object",
+          "description": "Civil-time conversion provenance from calculateFromLocal.",
+          "additionalProperties": {
+            "type": "object"
+          }
         }
       },
       "required": [
@@ -1838,6 +1845,13 @@
         "operation": {
           "type": "string",
           "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
+        },
+        "timeResolution": {
+          "type": "object",
+          "description": "Civil-time conversion provenance from calculateFromLocal.",
+          "additionalProperties": {
+            "type": "object"
+          }
         }
       },
       "additionalProperties": false

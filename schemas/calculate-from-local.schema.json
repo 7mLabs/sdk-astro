@@ -161,6 +161,10 @@
             "major",
             "extended"
           ]
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false
         }
       },
       "$comment": "Gregorian valid day/month/leap-year and unique aspect angles are enforced by core. Integer-valued decimal/exponent JSON numbers are normalized exactly by core; no rounding or string coercion.",
@@ -419,6 +423,10 @@
               }
             }
           ]
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false
         }
       },
       "$comment": "Gregorian valid day/month/leap-year and unique aspect angles are enforced by core. Integer-valued decimal/exponent JSON numbers are normalized exactly by core; no rounding or string coercion. Profile and section ID uniqueness is enforced by core. Explicit null is not accepted for any option; selector arrays default empty but each profile and section needs at least one selector.",
@@ -827,6 +835,10 @@
         },
         "composite": {
           "$ref": "#/$defs/compositeOptions"
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false
         }
       },
       "allOf": [
@@ -1182,6 +1194,10 @@
         },
         "aspectRules": {
           "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/aspectRules"
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false
         }
       },
       "allOf": [
@@ -1538,6 +1554,10 @@
         },
         "customProfiles": {
           "$ref": "urn:7mlabs:astrology:natal-domains-request:1.0#/properties/customProfiles"
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false
         }
       },
       "allOf": [
@@ -1882,6 +1902,10 @@
               },
               "maxItems": 26,
               "uniqueItems": true
+            },
+            "includeMetadata": {
+              "type": "boolean",
+              "default": false
             }
           },
           "not": {
@@ -1973,6 +1997,10 @@
               },
               "maxItems": 26,
               "uniqueItems": true
+            },
+            "includeMetadata": {
+              "type": "boolean",
+              "default": false
             }
           },
           "not": {
@@ -2039,6 +2067,10 @@
               },
               "maxItems": 12,
               "uniqueItems": true
+            },
+            "includeMetadata": {
+              "type": "boolean",
+              "default": false
             }
           },
           "not": {
@@ -2299,6 +2331,10 @@
             "wholeSign"
           ],
           "default": "placidus"
+        },
+        "includeMetadata": {
+          "type": "boolean",
+          "default": false
         }
       },
       "allOf": [

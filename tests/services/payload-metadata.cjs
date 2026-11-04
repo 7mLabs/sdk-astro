@@ -6,7 +6,7 @@ const Ajv=require(process.env.AJV_2020_MODULE||'ajv/dist/2020');
 const load=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
 const oldAjv=new Ajv({strict:true,allErrors:true}),newAjv=new Ajv({strict:true,allErrors:true});
 for(const name of fs.readdirSync(path.join(root,'tests/compatibility/1.1.0-schemas')))oldAjv.addSchema(load('tests/compatibility/1.1.0-schemas/'+name));
-for(const name of fs.readdirSync(path.join(root,'schemas')).filter(n=>n.endsWith('-response.schema.json')))newAjv.addSchema(load('schemas/'+name));
+for(const name of fs.readdirSync(path.join(root,'schemas')).filter(n=>n.endsWith('.json')))newAjv.addSchema(load('schemas/'+name));
 const legacy=oldAjv.getSchema('urn:7mlabs:astrology:query-response:1.0');
 const current=new Ajv({strict:true,allErrors:true}).compile(load('schemas/query-response.schema.json'));
 const birth={utc:{year:2000,month:1,day:1,hour:12,minute:0},location:{latitude:10.8231,longitude:106.6297}};
@@ -55,5 +55,15 @@ for(const [name,schema] of [['natal-domains','natal-domains'],['couple','couple'
  assert(newAjv.getSchema(id)(enriched),name+': enriched response rejected '+JSON.stringify(newAjv.getSchema(id).errors));
  assert.deepEqual(enriched.data,result.data);
  assert.equal(enriched.calculation.operation,request.operation);
+ if(request.operation!=='events'){
+  const local=JSON.parse(JSON.stringify({...request,includeMetadata:true}));
+  function convert(b){b.local=b.utc;delete b.utc;b.timeZone='Etc/UTC';}
+  if(local.utc)convert(local);else if(local.birth)convert(local.birth);else{convert(local.personA);convert(local.personB);}
+  const validateLocal=newAjv.getSchema('urn:7mlabs:astrology:calculate-from-local:1.0');
+  assert(validateLocal(local),name+': local request schema '+JSON.stringify(validateLocal.errors));
+  const result=sdk.calculateFromLocal(local);
+  assert(newAjv.getSchema(id)(result),name+': local response schema '+JSON.stringify(newAjv.getSchema(id).errors));
+  assert(result.calculation.timeResolution);
+ }
 }
 console.log('Metadata: six astronomical response families retain frozen 1.1.0 schemas; enriched results validate against current schemas.');

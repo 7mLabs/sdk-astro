@@ -2042,6 +2042,13 @@
             },
             "sourceBirth": {
               "$ref": "#/$defs/sourceBirth"
+            },
+            "timeResolution": {
+              "type": "object",
+              "description": "Civil-time conversion provenance from calculateFromLocal.",
+              "additionalProperties": {
+                "type": "object"
+              }
             }
           },
           "additionalProperties": false
@@ -2188,6 +2195,13 @@
             },
             "sourceBirth": {
               "$ref": "#/$defs/sourceBirth"
+            },
+            "timeResolution": {
+              "type": "object",
+              "description": "Civil-time conversion provenance from calculateFromLocal.",
+              "additionalProperties": {
+                "type": "object"
+              }
             }
           },
           "additionalProperties": false
@@ -2334,6 +2348,13 @@
             },
             "sourceBirth": {
               "$ref": "#/$defs/sourceBirth"
+            },
+            "timeResolution": {
+              "type": "object",
+              "description": "Civil-time conversion provenance from calculateFromLocal.",
+              "additionalProperties": {
+                "type": "object"
+              }
             }
           },
           "additionalProperties": false
