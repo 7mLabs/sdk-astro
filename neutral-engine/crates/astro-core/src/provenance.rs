@@ -69,6 +69,8 @@ impl SourceContext {
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub(super) struct GeometryInput {
+    #[serde(default, rename = "includeMetadata")]
+    _include_metadata: bool,
     operation: String,
     positions: Vec<Position>,
     #[serde(default)]

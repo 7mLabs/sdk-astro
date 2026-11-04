@@ -19,6 +19,7 @@ export interface GeometryRequest {
   aspectRules?: AspectRule[];
 }
 export interface NatalRequest {
+  includeMetadata?: boolean;
   operation: 'natal';
   /** Gregorian UTC; date/hour/minute must have integer values. Caller converts local time to UTC. */
   utc: { year: number; month: number; day: number; hour: number; minute: number; second?: number; };
@@ -67,6 +68,7 @@ export interface ProfileDefinition {
   angles: NatalAngleId[]; sections: ProfileSectionDefinition[];
 }
 export interface NatalDomainsRequest extends Omit<NatalRequest, 'operation'> {
+  includeMetadata?: boolean;
   operation: 'natalDomains';
   /** Absent selects all ten builtins. Empty is valid only with nonempty customProfiles. */
   domains?: DomainName[];
@@ -91,6 +93,7 @@ export interface BirthInput {
   houseSystem?: 'placidus' | 'wholeSign';
 }
 export interface CoupleRequestBase {
+  includeMetadata?: boolean;
   operation: 'couple'; personA: BirthInput; personB: BirthInput;
   /** Absent selects all six pair builtins. Empty requires nonempty customProfiles. */
   domains?: CoupleDomainName[]; customProfiles?: CustomProfileInput[];
@@ -115,6 +118,7 @@ export interface CompositeOptions {
   customProfiles?: CustomProfileInput[];
 }
 export interface CompositeRequestBase extends CompositeOptions {
+  includeMetadata?: boolean;
   operation: 'composite'; personA: BirthInput; personB: BirthInput;
   rulership?: 'traditional' | 'modern';
 }
@@ -163,22 +167,23 @@ export type ForecastAspectSettings =
   | { aspectPreset?: 'major' | 'extended'; aspectRules?: never; }
   | { aspectRules: AspectRule[]; aspectPreset?: never; };
 /** Major aspects by default; bounded root search fails rather than truncating. */
-export type EventsRequest = EventSearchOptions & ForecastAspectSettings & { operation: 'events'; };
+export type EventsRequest = EventSearchOptions & ForecastAspectSettings & { operation: 'events'; includeMetadata?: boolean; };
 export type ForecastRequest = EventSearchOptions & ForecastAspectSettings & {
-  operation: 'forecast'; birth: BirthInput; includeNatalTransits?: boolean;
+  operation: 'forecast'; includeMetadata?: boolean; birth: BirthInput; includeNatalTransits?: boolean;
   domains?: DomainName[]; customProfiles?: CustomProfileInput[]; rulership?: 'traditional' | 'modern';
 };
 export type QueryMotionMode = 'none' | 'relative' | 'fixedSecond';
-export interface GeometryNormalizeRequest { operation: 'query'; group: 'geometry'; action: 'normalize'; longitude: number; }
-export interface GeometrySeparationRequest { operation: 'query'; group: 'geometry'; action: 'separation'; longitude1: number; longitude2: number; }
-export interface GeometryMidpointRequest { operation: 'query'; group: 'geometry'; action: 'midpoint'; longitude1: number; longitude2: number; antipodalPolicy?: CompositeAntipodalPolicy; }
-export interface AspectsBetweenRequest {
+export interface QueryMetadataOptions { includeMetadata?: boolean; }
+export interface GeometryNormalizeRequest extends QueryMetadataOptions { operation: 'query'; group: 'geometry'; action: 'normalize'; longitude: number; }
+export interface GeometrySeparationRequest extends QueryMetadataOptions { operation: 'query'; group: 'geometry'; action: 'separation'; longitude1: number; longitude2: number; }
+export interface GeometryMidpointRequest extends QueryMetadataOptions { operation: 'query'; group: 'geometry'; action: 'midpoint'; longitude1: number; longitude2: number; antipodalPolicy?: CompositeAntipodalPolicy; }
+export interface AspectsBetweenRequest extends QueryMetadataOptions {
   operation: 'query'; group: 'aspects'; action: 'between'; positions: [Position, Position]; rule: AspectRule;
   /** Default none. fixedSecond uses zero speed for the second point without changing its supplied metadata. */
   motionMode?: QueryMotionMode;
 }
-export interface HousesLocateRequest { operation: 'query'; group: 'houses'; action: 'locate'; longitude: number; houseCusps: number[]; }
-export type QueryInspectionOptions = { birth: BirthInput; rulership?: 'traditional' | 'modern'; } & ForecastAspectSettings;
+export interface HousesLocateRequest extends QueryMetadataOptions { operation: 'query'; group: 'houses'; action: 'locate'; longitude: number; houseCusps: number[]; }
+export type QueryInspectionOptions = QueryMetadataOptions & { birth: BirthInput; rulership?: 'traditional' | 'modern'; } & ForecastAspectSettings;
 /** Default all 26; at least two distinct IDs. Both aspect endpoints must be selected. */
 export type AspectsInspectRequest = QueryInspectionOptions & { operation: 'query'; group: 'aspects'; action: 'inspect'; pointIds?: NatalPointId[]; };
 /** Default all 26. Relations/aspects require at least one selected endpoint. */

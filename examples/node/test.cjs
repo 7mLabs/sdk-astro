@@ -263,7 +263,7 @@ assert.deepEqual(declared.data,result.data);
 assert.equal(declared.calculation.inputProvenance.positions.status,'callerDeclared');
 assert.equal(declared.calculation.inputProvenance.positions.verified,false);
 assert.equal(result.calculation.inputProvenance.positions.status,'unspecified');
-const inspected=houses.inspect({birth:{utc:natalRequest.utc,location:natalRequest.location},houseNumbers:[7]});
+const inspected=houses.inspect({birth:{utc:natalRequest.utc,location:natalRequest.location},houseNumbers:[7],includeMetadata:true});
 assert.equal(inspected.calculation.rulershipRulesVersion,'1.0');
 assert.equal(inspected.calculation.houseAssignment,'eclipticLongitude');
 assert.equal(inspected.calculation.sourceBirth.location.latitude,natalRequest.location.latitude);

@@ -2,7 +2,7 @@
 
 ## Bản vá metadata SDK 1.1.1
 
-Bổ sung nguồn dữ liệu và cấu hình/quy tắc trong payload, giữ API cũ và các giá trị đã tính. Xem [hợp đồng metadata](docs/payload-metadata.md). Bằng chứng public 1.1.0 bên dưới ghi lại lần phát hành trước; trạng thái phát hành 1.1.1 được kiểm tra riêng.
+Bổ sung nguồn dữ liệu và cấu hình/quy tắc trong payload, giữ API cũ và các giá trị đã tính. Bật includeMetadata:true để lấy metadata mới ở các phép tính thiên văn/query; lời gọi cũ giữ nguyên hợp đồng đầu ra. Xem [hợp đồng metadata](docs/payload-metadata.md). Bằng chứng public 1.1.0 bên dưới ghi lại lần phát hành trước; trạng thái phát hành 1.1.1 được kiểm tra riêng.
 
 # 7mlabs Astrology
 

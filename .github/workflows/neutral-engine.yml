@@ -87,6 +87,7 @@ jobs:
           node scripts/check-svg-point-schema.cjs
           node tests/services/time-svg.cjs
           node tests/services/davison.cjs
+          node tests/services/payload-metadata.cjs
           node artifacts/ci-tools/node_modules/typescript/lib/tsc.js --strict --noEmit --target ES2020 --module NodeNext --moduleResolution NodeNext examples/node/davison-types.ts tests/compatibility/legacy-types.ts
       - name: Compression parity and real payload roundtrips
         run: python scripts/test-compression.py

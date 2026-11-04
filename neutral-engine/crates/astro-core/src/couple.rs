@@ -6,6 +6,8 @@ use serde_json::value::RawValue;
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct CoupleRequest {
+    #[serde(default)]
+    include_metadata: bool,
     operation: String,
     person_a: Box<RawValue>,
     person_b: Box<RawValue>,
@@ -670,7 +672,9 @@ pub(super) fn calculate_json(raw: &str) -> String {
     for key in ["julianDayTt", "julianDayUt1", "houseSystem"] {
         calculation.as_object_mut().unwrap().remove(key);
     }
-    calculation["operation"] = json!("couple");
+    if r.include_metadata {
+        calculation["operation"] = json!("couple");
+    }
     calculation["scope"] = json!("couple-synastry-data");
     calculation["chartKind"] = json!("coupleSynastry");
     calculation["aspectPreset"] = json!(if r.aspect_rules.provided {

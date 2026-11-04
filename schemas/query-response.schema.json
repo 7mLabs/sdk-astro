@@ -1733,8 +1733,7 @@
               "const": "degrees"
             },
             "operation": {
-              "type": "string",
-              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
+              "const": "query"
             }
           }
         },
@@ -1769,8 +1768,7 @@
               "const": "degrees"
             },
             "operation": {
-              "type": "string",
-              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
+              "const": "query"
             }
           }
         },
@@ -1816,8 +1814,7 @@
               "const": 1e-10
             },
             "operation": {
-              "type": "string",
-              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
+              "const": "query"
             }
           }
         },
@@ -1864,8 +1861,7 @@
               ]
             },
             "operation": {
-              "type": "string",
-              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
+              "const": "query"
             }
           }
         },
@@ -1900,8 +1896,7 @@
               "const": "degrees"
             },
             "operation": {
-              "type": "string",
-              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
+              "const": "query"
             }
           }
         },
@@ -2034,8 +2029,19 @@
               "const": "bothSelectedEndpoints"
             },
             "operation": {
-              "type": "string",
-              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
+              "const": "query"
+            },
+            "chartKind": {
+              "const": "individualNatal"
+            },
+            "rulershipRulesVersion": {
+              "const": "1.0"
+            },
+            "houseAssignment": {
+              "const": "eclipticLongitude"
+            },
+            "sourceBirth": {
+              "$ref": "#/$defs/sourceBirth"
             }
           },
           "additionalProperties": false
@@ -2169,8 +2175,19 @@
               "const": "atLeastOneSelectedEndpoint"
             },
             "operation": {
-              "type": "string",
-              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
+              "const": "query"
+            },
+            "chartKind": {
+              "const": "individualNatal"
+            },
+            "rulershipRulesVersion": {
+              "const": "1.0"
+            },
+            "houseAssignment": {
+              "const": "eclipticLongitude"
+            },
+            "sourceBirth": {
+              "$ref": "#/$defs/sourceBirth"
             }
           },
           "additionalProperties": false
@@ -2304,8 +2321,19 @@
               "const": "atLeastOneSelectedEndpoint"
             },
             "operation": {
-              "type": "string",
-              "description": "Calculation operation, added in SDK 1.1.1; optional for earlier payloads."
+              "const": "query"
+            },
+            "chartKind": {
+              "const": "individualNatal"
+            },
+            "rulershipRulesVersion": {
+              "const": "1.0"
+            },
+            "houseAssignment": {
+              "const": "eclipticLongitude"
+            },
+            "sourceBirth": {
+              "$ref": "#/$defs/sourceBirth"
             }
           },
           "additionalProperties": false
@@ -2325,6 +2353,87 @@
         },
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "sourceBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "utc",
+        "location"
+      ],
+      "properties": {
+        "utc": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "year",
+            "month",
+            "day",
+            "hour",
+            "minute"
+          ],
+          "properties": {
+            "year": {
+              "type": "integer",
+              "minimum": 1800,
+              "maximum": 2399
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31
+            },
+            "hour": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 23
+            },
+            "minute": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 59
+            },
+            "second": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMaximum": 60,
+              "default": 0
+            }
+          }
+        },
+        "location": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "latitude",
+            "longitude"
+          ],
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "exclusiveMinimum": -90,
+              "exclusiveMaximum": 90
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        },
+        "houseSystem": {
+          "enum": [
+            "placidus",
+            "wholeSign"
+          ],
+          "default": "placidus"
         }
       }
     }

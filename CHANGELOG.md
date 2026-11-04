@@ -2,8 +2,8 @@
 
 ## 1.1.1 — calculation metadata
 
-- Add a consistent calculation operation and missing chart-kind tags, without changing numeric results or existing request fields.
-- Retain source birth, house-assignment method and ruler-rule version in inspection queries.
+- Add opt-in calculation operation and missing chart-kind tags with includeMetadata:true; preserve the frozen 1.1.0 response contracts for unchanged astronomical/query calls. Numeric results and existing request fields are unchanged.
+- Retain source birth, house-assignment method and ruler-rule version in inspection queries with `includeMetadata: true`; default query responses preserve the closed legacy schema.
 - Accept optional unverified caller declarations for supplied geometry; undeclared coordinates remain explicitly unspecified. Keep the public Rust Request struct unchanged.
 - Regenerate the 17 example responses from the current engine.
 - Add metadata regression tests and exact legacy-field comparisons with public 1.0.2 and 1.1.0, allowing only documented metadata additions and the existing 1.0.2 angular correction.

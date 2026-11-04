@@ -48,6 +48,8 @@ impl Options {
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct CompositeRequest {
+    #[serde(default)]
+    include_metadata: bool,
     operation: String,
     person_a: Box<RawValue>,
     person_b: Box<RawValue>,
@@ -131,7 +133,7 @@ pub(super) fn metadata(
     a: &Value,
     b: &Value,
 ) -> Value {
-    json!({"operation":"composite","scope":"midpoint-composite-data","chartKind":"midpointComposite","construction":"symbolic","method":"shortestArcMidpoint","houseMethod":options.house_method,"antipodalPolicy":options.antipodal_policy,"toleranceDegrees":TOLERANCE,"sourceProvider":a["provider"],"sourceProviderVersion":a["providerVersion"],"sourceEphemeris":a["ephemeris"],"zodiac":"tropical","angleUnit":"degrees","speedUnit":null,"motion":"notApplicable","aspectPreset":preset,"aspectRules":rules.iter().map(|v|json!({"angle":v.angle,"maxOrb":v.max_orb})).collect::<Vec<_>>(),"rulership":rulership,"domainProfile":{"id":"sevenmlabs-domain-selection","version":"2.0"},"reportProfile":{"id":"sevenmlabs-individual-report","version":"1.1"},"customProfileCount":options.custom().len(),"sourceCalculations":source_calculations(a,b)})
+    json!({"scope":"midpoint-composite-data","chartKind":"midpointComposite","construction":"symbolic","method":"shortestArcMidpoint","houseMethod":options.house_method,"antipodalPolicy":options.antipodal_policy,"toleranceDegrees":TOLERANCE,"sourceProvider":a["provider"],"sourceProviderVersion":a["providerVersion"],"sourceEphemeris":a["ephemeris"],"zodiac":"tropical","angleUnit":"degrees","speedUnit":null,"motion":"notApplicable","aspectPreset":preset,"aspectRules":rules.iter().map(|v|json!({"angle":v.angle,"maxOrb":v.max_orb})).collect::<Vec<_>>(),"rulership":rulership,"domainProfile":{"id":"sevenmlabs-domain-selection","version":"2.0"},"reportProfile":{"id":"sevenmlabs-individual-report","version":"1.1"},"customProfileCount":options.custom().len(),"sourceCalculations":source_calculations(a,b)})
 }
 pub(super) const WARNING:&str="Composite C is a symbolic shortest-arc midpoint construction, not an astronomical sky at a birth instant. Velocity, retrograde and applying are not applicable; dignity and solar conditions are geometric sign/longitude facts.";
 /// Both birth skies are already computed; this function never calls a provider.
@@ -322,7 +324,7 @@ pub(super) fn calculate_json(raw: &str) -> String {
         Ok(v) => v,
         Err(e) => return error_json("CALCULATION_FAILED", &e),
     };
-    let calculation = metadata(
+    let mut calculation = metadata(
         &options,
         &rules,
         rulership,
@@ -334,6 +336,9 @@ pub(super) fn calculate_json(raw: &str) -> String {
         &calculation_a,
         &calculation_b,
     );
+    if r.include_metadata {
+        calculation["operation"] = json!("composite");
+    }
     json!({"schemaVersion":"1.0","engineVersion":VERSION,"calculation":calculation,"data":{"chartKind":"compositeRelationship","subjectCount":2,"chartCount":3,"subjects":{"A":{"id":"A","natal":natal_a,"calculation":calculation_a},"B":{"id":"B","natal":natal_b,"calculation":calculation_b}},"composite":composite},"warnings":["Moshier analytical ephemeris; no JPL/Swiss data files. Future UTC uses the provider's built-in time model, not live Earth-orientation data.",WARNING],"errors":[]}).to_string()
 }
 

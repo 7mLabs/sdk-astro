@@ -9,7 +9,7 @@ const baselineVersion=require(path.join(previousPath,'package.json')).version;
 assert(['1.0.2','1.1.0'].includes(baselineVersion));
 const additions=[];
 const extraFields=new Set(['operation','chartKind','inputProvenance','rulershipRulesVersion','houseAssignment','sourceBirth']);
-const normalizeMessage=s=>s.replaceAll('`sourceContext`, ','').replaceAll(', `sourceContext`','').replaceAll('`otherSourceContext`, ','').replaceAll(', `otherSourceContext`','').replaceAll('GeometryInput','Request');
+const normalizeMessage=s=>s.replaceAll('`includeMetadata`, ','').replaceAll(', `includeMetadata`','').replaceAll('`sourceContext`, ','').replaceAll(', `sourceContext`','').replaceAll('`otherSourceContext`, ','').replaceAll(', `otherSourceContext`','').replaceAll('GeometryInput','Request');
 const angularCorrections=[];
 function compare(a,b,where='') {
  if(a===b)return;

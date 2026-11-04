@@ -58,6 +58,11 @@
     },
     "composite": {
       "$ref": "#/$defs/compositeOptions"
+    },
+    "includeMetadata": {
+      "type": "boolean",
+      "default": false,
+      "description": "Opt into additional calculation metadata; default responses retain the legacy contract."
     }
   },
   "allOf": [

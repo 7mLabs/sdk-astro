@@ -77,7 +77,7 @@ fn query_retains_source_and_rules_without_inventing_a_school() {
     let b = birth();
     let v = run(
         json!({"operation":"query","group":"houses","action":"inspect",
-        "birth":b,"houseNumbers":[7],"rulership":"modern"}),
+        "birth":b,"houseNumbers":[7],"rulership":"modern","includeMetadata":true}),
     );
     assert_eq!(v["errors"], json!([]));
     assert_eq!(
@@ -96,4 +96,24 @@ fn query_retains_source_and_rules_without_inventing_a_school() {
         "traditional"
     );
     assert_eq!(n["calculation"]["rulership"], "modern");
+}
+
+#[test]
+fn default_queries_keep_closed_legacy_metadata_contract() {
+    for request in [
+        json!({"operation":"query","group":"geometry","action":"normalize","longitude":10}),
+        json!({"operation":"query","group":"houses","action":"inspect","birth":birth(),"houseNumbers":[7]}),
+    ] {
+        let legacy = run(request.clone());
+        let mut enriched = request.clone();
+        enriched["includeMetadata"] = json!(true);
+        let enriched = run(enriched);
+        assert_eq!(legacy["data"], enriched["data"]);
+        assert!(legacy["calculation"].get("operation").is_none());
+        assert!(legacy["calculation"].get("sourceBirth").is_none());
+        assert_eq!(enriched["calculation"]["operation"], "query");
+        let mut invalid = request;
+        invalid["includeMetadata"] = Value::Null;
+        assert_eq!(run(invalid)["errors"][0]["code"], "INVALID_INPUT");
+    }
 }

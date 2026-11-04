@@ -5,18 +5,21 @@ interpretation school for the consuming application. Read the individual rules;
 `rulership: modern` selects the ruler table, while traditional sign-only dignity
 remains explicitly labelled in `context.advanced.rules.dignity`.
 
-Successful calculation responses now consistently include
-`calculation.operation`. Chart-producing operations also expose
-`calculation.chartKind`; query responses retain group/action/computationalScope.
-The existing scope, chart-kind values, function names and required input fields
-are unchanged. `schemaVersion: 1.0` is the envelope contract version, not the SDK
-release number. Consumers must allow additive fields as the response schemas do.
-Applications that compare serialized output byte-for-byte must account for added
-metadata and `engineVersion` when upgrading.
+Astronomical and query callers opt into a consistent `calculation.operation`
+with `includeMetadata: true`. The option defaults to false so unchanged calls
+continue to satisfy the frozen 1.1.0 response schemas, including closed query,
+couple, composite, event and forecast contracts. Original chart-kind values
+and their existing locations are retained. Basic natal and events additionally
+expose calculation.chartKind when metadata is requested. Supplied geometry
+reports its operation and unverified input provenance without assuming a sky.
+
+`schemaVersion: 1.0` identifies the envelope contract, not the SDK release.
+Current response schemas accept legacy and enriched shapes. Applications that
+compare output byte-for-byte must account for engineVersion on every upgrade.
 
 ## Birth-based queries
 
-`query` points/houses/aspects `inspect` retains the resolved source in
+With `includeMetadata: true`, `query` points/houses/aspects `inspect` retains the resolved source in
 `calculation.sourceBirth` (UTC, latitude/longitude, effective house system), plus
 `rulershipRulesVersion` and `houseAssignment`. When using the local-time helper,
 `calculation.timeResolution.birth` separately retains the civil conversion.
