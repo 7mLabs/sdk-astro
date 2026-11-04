@@ -9,6 +9,7 @@ for(const filename of fs.readdirSync(path.join(root,'examples')).filter(n=>n.end
   const raw=sdk.calculateJson(fs.readFileSync(input,'utf8')),result=JSON.parse(raw);
   if(result.errors.length)throw Error(filename+': '+JSON.stringify(result.errors));
   if(result.engineVersion!==require(path.join(root,'bindings/node/package.json')).version)throw Error('Stale binary');
-  fs.writeFileSync(path.join(root,'examples',filename),raw+'\n');count++;
+  // Match the Node object API / web JSON export used by cross-binding fixtures.
+  fs.writeFileSync(path.join(root,'examples',filename),JSON.stringify(result)+'\n');count++;
 }
 console.log('Regenerated '+count+' example results from the current native package.');
