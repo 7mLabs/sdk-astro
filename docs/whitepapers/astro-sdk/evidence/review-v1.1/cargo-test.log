@@ -1,0 +1,223 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.08s
+     Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_core-10e70f1959eeef2c)
+
+running 84 tests
+test composite::tests::circular_midpoint_wrap_identity_and_swap ... ok
+test composite::tests::antipodal_ambiguity_and_explicit_lower_candidate ... ok
+test advanced::tests::solar_boundaries_motion_and_distributions ... ok
+test advanced::tests::unique_dispositor_paths_self_cycles_and_receptions ... ok
+test compression::tests::compact_roundtrip_preserves_precision_nulls_and_reserved_keys ... ok
+test compression::tests::dictionary_cost_and_determinism ... ok
+test advanced::tests::modern_dispositor_rules_do_not_change_traditional_dignity ... ok
+test compression::tests::expansion_rejects_cycles_unknown_refs_and_malformed_tables ... ok
+test compression::tests::budgets_follow_exact_decimal_integer_normalization ... ok
+test compression::tests::errors_unknown_selectors_and_budget_overflow_are_explicit ... ok
+test compression::tests::focused_scope_preserves_context_and_marks_all_omissions ... ok
+test compression::tests::selection_keeps_couple_and_composite_namespaces_and_escapes_pointer_ids ... ok
+test domains::tests::invalid_settings_are_errors ... ok
+test advanced::tests::traditional_dignity_flags_and_outer_exclusion ... ok
+test compression::tests::section_selection_without_definitions_keeps_supporting_sections ... ok
+test events::edge_search_tests::adjacent_float_rate_jitter_requires_an_actual_residual_and_sign_bracket ... ok
+test compression::tests::expansion_requires_complete_metadata_contract ... ok
+test advanced::tests::patterns_deduplicate_edges_ignore_aliases_and_obey_configured_rules ... ok
+test events::tests::calendar_period_offset_and_exact_integer_validation ... ok
+test events::eclipse_tests::all_four_true_global_eclipses_match_nasa_types_dates_and_minutes ... ok
+test compression::tests::reserved_key_nesting_never_produces_unexpandable_success ... ok
+test advanced::tests::exact_pattern_topologies_and_negative_edges ... ok
+test domains::tests::selected_aspect_keeps_an_external_endpoint ... ok
+test events::tests::all_2026_stations_retain_their_velocity_bracket_proof ... ok
+test events::tests::empty_families_and_rules_have_no_exact_events_and_input_errors_are_structured ... ok
+test events::tests::exact_planetary_aspects_and_half_open_boundaries ... ok
+test events::edge_search_tests::two_close_contacts_on_one_station_interval_do_not_gain_a_false_tangent ... ok
+test events::tests::full_year_lunar_phases_match_all_fifty_usno_reference_rows ... ok
+test events::tests::mercury_stations_are_real_velocity_sign_changes_and_targets_repeat ... ok
+test composite::tests::invalid_cusp_midpoints_fail_and_whole_sign_is_explicit ... ok
+test composite::tests::opposite_axes_are_preserved_when_antipodal_policy_selects_other_branch ... ok
+test domains::tests::complete_context_and_references ... ok
+test composite::tests::symbolic_facts_recompute_without_velocity_or_fabricated_coordinates ... ok
+test compression::tests::real_natal_couple_composite_forecast_fixtures_roundtrip_and_focus ... ok
+test numbers::tests::integer_notation_preserves_exact_value ... ok
+test profile_integration_tests::basic_natal_rejects_custom_profiles_even_when_empty_or_null ... ok
+test events::tests::solar_zero_wrap_ingress_matches_nasa_equinox_minute_reference ... ok
+test events::time_output_tests::display_rounding_stays_in_civil_window_and_leap_seconds_remain_explicit ... ok
+test events::edge_search_tests::full_year_all_bodies_twenty_six_targets_and_extended_rules_fit_declared_budget ... ok
+test profile_integration_tests::runtime_rejects_invalid_custom_profile_settings ... ok
+test natal::additional_tests::natal_aspect_preset_is_not_domain_metadata ... ok
+test natal::tests::natal_has_real_sky_and_houses ... ok
+test natal::tests::validates_calendar_and_options ... ok
+test profiles::tests::defaults_are_normalized_and_sections_can_extend_parent_selectors ... ok
+test profiles::tests::catalog_has_ten_unique_individual_profiles_and_valid_sections ... ok
+test profiles::tests::house_numbers_use_exact_decimal_normalization ... ok
+test profiles::tests::null_unknown_fields_and_excessive_sections_are_rejected ... ok
+test profiles::tests::selection_checks_unique_known_profiles_and_limits ... ok
+test profiles::tests::profile_validation_rejects_invalid_ids_versions_and_selectors ... ok
+test query::tests::geometry_helpers_handle_zero_wrap_and_short_arc_direction ... ok
+test query::tests::arbitrary_aspect_angle_preserves_explicit_motion_models ... ok
+test natal::tests::integer_utc_notations_return_the_same_chart ... ok
+test query::tests::invalid_queries_reject_null_unknown_fields_and_validate_before_provider ... ok
+test query::tests::house_location_uses_cusp_inclusive_intervals_through_zero ... ok
+test query::tests::midpoint_ambiguity_is_explicit_and_swap_symmetric ... ok
+test natal::tests::zero_coordinates_time_sensitivity_and_polar_error ... ok
+test reports::tests::disabled_aspects_keep_structural_support_without_aspect_evidence ... ok
+test profile_integration_tests::section_selectors_extend_report_without_changing_parent_primary_selection ... ok
+test query::tests::house_inspection_focuses_cusps_occupants_and_rulers_without_reports ... ok
+test reports::tests::natal_domains_rejects_second_subject_fields ... ok
+test tests::antipodal_midpoint_is_ambiguous ... ok
+test tests::applying_and_unknown_speed ... ok
+test tests::harmonic_recomputes_sign_and_aspects ... ok
+test tests::house_boundary_and_zero_wrap ... ok
+test tests::huge_harmonic_speed_is_an_error_not_unknown ... ok
+test tests::rejects_invalid_houses_and_rules ... ok
+test tests::rejects_duplicate_ids_and_unknown_operation ... ok
+test tests::synastry_preserves_direction ... ok
+test tests::wrap_and_sign ... ok
+test tests::rejects_malformed_and_oversized_json ... ok
+test natal::additional_tests::extended_points_are_opt_in_finite_and_preserve_original_bodies ... ok
+test profile_integration_tests::section_contacts_keep_parent_primary_contact_flags ... ok
+test query::tests::selectors_and_birth_integers_use_exact_decimal_normalization ... ok
+test domains::tests::custom_rules_and_requested_domains ... ok
+test events::tests::period_partition_and_determinism_preserve_events ... ok
+test natal::tests::concurrent_options_are_isolated ... ok
+test profile_integration_tests::custom_only_request_normalizes_raw_house_literals_and_defaults ... ok
+test query::tests::point_and_aspect_inspection_preserve_facts_with_local_reference_closure ... ok
+test profile_integration_tests::custom_selectors_matching_career_preserve_primary_geometry_and_natal ... ok
+test events::tests::annual_slow_body_forecast_preserves_pluto_station_after_cache_reuse ... ok
+test natal::additional_tests::definitions_validation_and_domain_population ... ok
+test domains::tests::whole_sign_rulers_and_real_mc ... ok
+test profile_integration_tests::default_ten_profiles_and_thirty_sections_resolve_shared_facts ... ok
+test reports::tests::individual_reports_have_traceable_related_houses_and_contacts ... ok
+
+test result: ok. 84 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.39s
+
+     Running tests/composite_contract.rs (neutral-engine/target/debug/deps/composite_contract-b8209e8766702107)
+
+running 9 tests
+test custom_c_sections_keep_parent_primary_contacts_and_reference_closure ... ok
+test invalid_midpoint_houses_fail_without_fallback_and_whole_sign_is_explicit ... ok
+test same_birth_is_an_identity_for_geometry_but_never_for_physical_motion ... ok
+test source_charts_preserve_their_independent_natal_calculations ... ok
+test correspondence_midpoints_and_provenance_resolve_back_to_both_sources ... ok
+test third_chart_is_symbolic_and_has_ten_scoped_reports ... ok
+test source_swap_preserves_composite_longitudes_and_house_assignments ... ok
+test composite_options_and_both_births_validate_before_calculation ... ok
+test optional_couple_chart_matches_standalone_and_keeps_the_original_pair_context ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.07s
+
+     Running tests/couple_contract.rs (neutral-engine/target/debug/deps/couple_contract-c734d157ddff568c)
+
+running 9 tests
+test both_subjects_validate_before_provider_calculation_and_no_partial_success ... ok
+test custom_sections_extend_support_without_changing_parent_primary_contacts ... ok
+test identical_births_keep_distinct_charts_and_disabled_aspects_keep_geometry ... ok
+test all_cross_pairs_are_qualified_and_join_to_matched_aspects ... ok
+test directional_overlays_and_cross_house_rulers_resolve_to_the_right_chart ... ok
+test body_cross_contacts_match_existing_position_synastry ... ok
+test two_birth_charts_equal_individual_calculations_with_separate_epochs ... ok
+test swapping_subjects_preserves_separations_and_reverses_delta ... ok
+test raw_integer_notations_normalize_before_two_chart_computation ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.94s
+
+     Running tests/forecast_contract.rs (neutral-engine/target/debug/deps/forecast_contract-909031049e0ae78b)
+
+running 6 tests
+test empty_aspects_and_disabled_personal_scan_keep_raw_pairs_and_custom_section_support ... ok
+test annual_eclipses_have_independent_maxima_and_twelve_overview_months ... ok
+test validation_is_exact_and_precedes_provider_without_partial_payloads ... ok
+test month_events_retain_all_exact_hits_with_residual_and_natal_house_ruler_evidence ... ok
+test daily_forecast_has_one_natal_ten_views_thirty_sections_and_all_fixed_target_pairs ... ok
+test natal_is_the_same_calculation_as_individual_natal_and_snapshot_applying_uses_no_birth_speeds ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_engine-7fcf1d07854ca94c)
+
+running 1 test
+test tests::null_request_returns_owned_error ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_provider_swiss-8b6505e6cdb60624)
+
+running 1 test
+test tests::scanning_positions_equal_natal_positions_without_house_calculation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/initialization.rs (neutral-engine/target/debug/deps/initialization-6f4423f1ba943ade)
+
+running 1 test
+test cold_historical_natal_matches_repeated_and_session_interleaved_calls ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_render_svg-573e2cb822e2a598)
+
+running 12 tests
+test tests::dms_and_label_layout_across_zero ... ok
+test tests::invalid_payload_options_and_injection_are_errors ... ok
+test tests::advanced_light_filter_and_custom_symbols ... ok
+test tests::standalone_font_free_deterministic_and_original_coordinates ... ok
+test tests::additional_points_keep_geometry_and_support_custom_symbols ... ok
+test tests::random_dense_and_sparse_layouts_keep_a_minimum_circular_gap ... ok
+test tests::composition_and_focus_invalid_states_are_explicit ... ok
+test tests::independent_parts_compose_in_order_and_model_only_has_no_svg ... ok
+test tests::professional_palette_precedence_filters_matrix_and_table ... ok
+test tests::house_focus_uses_source_ruler_and_includes_cusp_contacts ... ok
+test tests::focus_preserves_layer_namespaces_and_source_rulership ... ok
+test tests::supported_chart_adapters ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_sdk-61e5d5acea538066)
+
+running 4 tests
+test tests::services_reject_bad_json_and_oversized_input ... ok
+test tests::invalid_times_and_missing_helpers_do_not_calculate ... ok
+test tests::integer_literals_are_not_rounded_before_validation ... ok
+test tests::local_and_manual_utc_produce_same_calculation ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_time-3f196b81c9e04185)
+
+running 5 tests
+test tests::vietnam_rollover_and_fractional_seconds ... ok
+test tests::explicit_seconds_offset_and_invalid_inputs ... ok
+test tests::non_hour_dst_and_skipped_calendar_day ... ok
+test tests::fold_requires_choice_and_gap_is_never_shifted ... ok
+test tests::recurring_dst_after_2099_is_not_frozen_to_last_offset ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests astro_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests astro_provider_swiss
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests astro_render_svg
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests astro_sdk
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests astro_time
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
