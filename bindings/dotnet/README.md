@@ -6,7 +6,7 @@ conversion and modular SVG charts, using the shared 7mlabs Astro engine.
 ## Install and supported runtimes
 
 ```sh
-dotnet add package SevenMLabs.Astrology --version 1.1.1
+dotnet add package SevenMLabs.Astrology --version 1.1.2
 ```
 
 The managed assembly targets **.NET 10 (`net10.0`)**. The public package includes
@@ -83,6 +83,6 @@ available services. Native output is freed by the wrapper.
 
 The SDK and renderer use **AGPL-3.0-only**, using the AGPL option of Swiss Ephemeris.
 Full license text, NOTICE and upstream dependency/font notices are included.
-Corresponding source and build scripts are in the matching `v1.1.1` source release.
+Corresponding source and build scripts are in the matching `v1.1.2` source release.
 
-Davison was introduced in SDK 1.1.0 and remains available in 1.1.1 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.1/docs/davison.md).
+Davison was introduced in SDK 1.1.0 and remains available in 1.1.2 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.2/docs/davison.md).

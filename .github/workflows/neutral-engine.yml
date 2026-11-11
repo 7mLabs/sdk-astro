@@ -60,10 +60,14 @@ jobs:
       - name: Packaging dependencies
         run: |
           python -m pip install setuptools wheel
+          if [ "${{ matrix.platform }}" = linux ]; then
+            python -m pip install auditwheel==6.8.2 patchelf==0.17.2.4
+          fi
           npm install --prefix artifacts/ci-tools --ignore-scripts --no-audit --no-fund typescript@5.9.3 ajv@8.20.0
       - name: Build packages
         run: |
           python tests/packaging/test_wheel_tag.py
+          python tests/packaging/test_python_release.py
           python scripts/build-packages.py
       - name: Extended points against pinned Swiss file adapter
         run: python scripts/check-additional-points.py
@@ -75,6 +79,9 @@ jobs:
           npm install --prefix artifacts/public-baseline-110 --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.0
           BASELINE_ASTRO_MODULE=artifacts/public-baseline-110/node_modules/@7mlabs/astrology node scripts/check-upgrade-compatibility.cjs
           cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-110.json
+          npm install --prefix artifacts/public-baseline-111 --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.1
+          BASELINE_ASTRO_MODULE=artifacts/public-baseline-111/node_modules/@7mlabs/astrology node scripts/check-upgrade-compatibility.cjs
+          cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-111.json
       - name: Fresh consumer installation and parity
         run: python scripts/test-packages.py
       - name: Installed time helpers and SVG service parity
@@ -293,6 +300,9 @@ jobs:
           - os: macos-15
             rid: osx-arm64
             python: '3.13'
+          - os: ubuntu-24.04
+            rid: linux-x64
+            python: '3.10'
           - os: ubuntu-24.04
             rid: linux-x64
             python: '3.13'

@@ -8,7 +8,7 @@ Offline natal, synastry, composite, forecasts and astronomical event data using 
 npm install @7mlabs/astrology
 ```
 
-This release uses version `1.1.1` and the stable `latest` channel. Update explicitly with the same command. Pin `@7mlabs/astrology@1.1.1` and commit your application's lockfile to reproduce a specific release; `npm ci` restores that lockfile. New applications should use Node.js 22 or 24. Minimum supported Node.js is 18.
+This release uses version `1.1.2` and the stable `latest` channel. Update explicitly with the same command. Pin `@7mlabs/astrology@1.1.2` and commit your application's lockfile to reproduce a specific release; `npm ci` restores that lockfile. New applications should use Node.js 22 or 24. Minimum supported Node.js is 18.
 
 The public tarball includes both `darwin-arm64` (Apple Silicon) and `linux-x64` (glibc **2.38+**, with `libgcc_s.so.1`) addons. macOS 15 and Ubuntu 24.04 are the verified build/test environments. The macOS addon targets macOS 11+, but your Node.js version can require a newer OS. Windows, macOS Intel, Linux ARM64 and Alpine/musl are not included. See [platform and release details](https://github.com/7mlabs/sdk-astro/blob/main/docs/node-release.md).
 
@@ -108,4 +108,4 @@ const model = sdk.buildChartModel(payload, { sections: ['wheel'] });
 
 See [the 1.0 release contract](https://github.com/7mlabs/sdk-astro/blob/main/docs/release-1.0.md).
 
-Davison was introduced in SDK 1.1.0 and remains available in 1.1.1 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.1/docs/davison.md).
+Davison was introduced in SDK 1.1.0 and remains available in 1.1.2 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.2/docs/davison.md).

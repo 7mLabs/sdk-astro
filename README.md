@@ -1,8 +1,12 @@
 ![7mlabs Astrology — local computation, structured JSON](assets/readme-banner.svg)
 
-## SDK 1.1.1 metadata patch
+## SDK 1.1.2 Python Linux packaging
 
-Version 1.1.1 adds source/rule metadata while retaining existing APIs and calculated values. Astronomical/query callers opt in with includeMetadata:true; unchanged calls retain their earlier response contracts. See the [payload metadata contract](docs/payload-metadata.md). Published on npm, PyPI and NuGet. See [1.1.1 release verification](docs/release-1.1.1.md); the 1.1.0 notes below describe the previous release.
+Add a Python Linux x64 wheel alongside macOS ARM64, keeping existing APIs,
+calculation rules and schemas unchanged. Linux requires glibc 2.38+ and
+libgcc_s.so.1. See [platform/build details](docs/python-linux.md) and
+[release checks](docs/release-1.1.2.md) for validation/publication status.
+Metadata introduced in 1.1.1 remains optional; see the [contract](docs/payload-metadata.md).
 
 # 7mlabs Astrology
 
@@ -16,7 +20,7 @@ An offline astrology engine with a shared Rust core and native SDKs. Turn birth 
 [![CI](https://github.com/7mlabs/sdk-astro/actions/workflows/neutral-engine.yml/badge.svg)](https://github.com/7mlabs/sdk-astro/actions/workflows/neutral-engine.yml)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0-afe8cc)](LICENSE)
 
-**[SDK overview](https://7mlabs.com/en/astro/sdk/) · [English documentation](https://7mlabs.com/en/astro/sdk/docs/1.1.1/overview/) · [Tài liệu tiếng Việt](https://7mlabs.com/astro/sdk/docs/1.1.1/overview/) · [Tiếng Việt README](README.vi.md)**
+**[SDK overview](https://7mlabs.com/en/astro/sdk/) · [English documentation](https://7mlabs.com/en/astro/sdk/docs/1.1.2/overview/) · [Tài liệu tiếng Việt](https://7mlabs.com/astro/sdk/docs/1.1.2/overview/) · [Tiếng Việt README](README.vi.md)**
 
 - **Local calculation:** native binaries are included in the npm package. No engine server, compiler or runtime data download is required.
 - **Structured results:** planets, houses, aspects, derived facts and evidence references in versioned JSON envelopes.
@@ -25,20 +29,20 @@ An offline astrology engine with a shared Rust core and native SDKs. Turn birth 
 
 ## Install
 
-Choose the published package for your runtime. Native target support differs by package; check [platforms](https://7mlabs.com/en/astro/sdk/docs/1.1.1/platforms/) before installing.
+Choose the published package for your runtime. Native target support differs by package; check [platforms](https://7mlabs.com/en/astro/sdk/docs/1.1.2/platforms/) before installing.
 
 ```sh
 # JavaScript / TypeScript
-npm install --save-exact @7mlabs/astrology@1.1.1
+npm install --save-exact @7mlabs/astrology@1.1.2
 
-# Python (macOS ARM64 wheel, Python 3.10+)
-python -m pip install sevenmlabs-astrology==1.1.1
+# Python (macOS ARM64 / Linux x64 glibc 2.38+, Python 3.10+)
+python -m pip install sevenmlabs-astrology==1.1.2
 
 # .NET 10
-dotnet add package SevenMLabs.Astrology --version 1.1.1
+dotnet add package SevenMLabs.Astrology --version 1.1.2
 ```
 
-[Node.js guide](https://7mlabs.com/en/astro/sdk/docs/1.1.1/node/) · [Python guide](https://7mlabs.com/en/astro/sdk/docs/1.1.1/python/) · [.NET guide](https://7mlabs.com/en/astro/sdk/docs/1.1.1/dotnet/)
+[Node.js guide](https://7mlabs.com/en/astro/sdk/docs/1.1.2/node/) · [Python guide](https://7mlabs.com/en/astro/sdk/docs/1.1.2/python/) · [.NET guide](https://7mlabs.com/en/astro/sdk/docs/1.1.2/dotnet/)
 
 ## Quick start
 
@@ -124,9 +128,9 @@ const restored = expandContext(context);
 
 | Language | Distribution | Status |
 | --- | --- | --- |
-| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Public npm stable: `1.1.1` (`latest`) |
-| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.1.1/) | Public PyPI `1.1.1`; macOS ARM64, Python 3.10+ |
-| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.1.1) | Public NuGet `1.1.1`; .NET 10, Mac ARM64/Linux x64 |
+| Node.js / TypeScript | [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology) | Release: `1.1.2` (`latest`) |
+| Python | [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.1.2/) | PyPI `1.1.2`; macOS ARM64 / Linux x64 glibc 2.38+, Python 3.10+ |
+| .NET | [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.1.2) | NuGet `1.1.2`; .NET 10, Mac ARM64/Linux x64 |
 | Rust / C | Core crates and C ABI | Source integration examples |
 
 The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requires **glibc 2.38+** and `libgcc_s.so.1`. Node.js 18/24 were tested on both targets; Node.js 22 or 24 is recommended for new applications. Windows, macOS Intel, Linux ARM64 and Alpine/musl binaries are not included. [Full platform requirements →](docs/node-release.md)
@@ -134,14 +138,14 @@ The npm release includes **macOS ARM64** and **Linux x64** binaries. Linux requi
 Update explicitly with `npm install @7mlabs/astrology@latest`. To pin this release:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.1.1
+npm install --save-exact @7mlabs/astrology@1.1.2
 ```
 
 Commit your application's lockfile and use `npm ci` for reproducible installs. [Other language installation guides →](docs/packages.md)
 
 ## Documentation and examples
 
-The website provides [English](https://7mlabs.com/en/astro/sdk/docs/1.1.1/overview/) and [Vietnamese](https://7mlabs.com/astro/sdk/docs/1.1.1/overview/) guides for SDK 1.0.0. Repository guides below include additional implementation details, mostly in Vietnamese; API identifiers and JSON contracts are shared across languages.
+The website provides [English](https://7mlabs.com/en/astro/sdk/docs/1.1.2/overview/) and [Vietnamese](https://7mlabs.com/astro/sdk/docs/1.1.2/overview/) guides for the active SDK release. Repository guides below include additional implementation details, mostly in Vietnamese; API identifiers and JSON contracts are shared across languages.
 
 | Topic | Guides |
 | --- | --- |

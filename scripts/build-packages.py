@@ -69,6 +69,20 @@ manifest = {"platform": system, "arch": arch, "rid": rid, "engineVersion": versi
 wheels = sorted(packages.glob(f"sevenmlabs_astrology-{python_version}-*.whl"))
 if len(wheels) != 1:
     raise SystemExit("Expected exactly one wheel for the current version/target")
+if system == "linux":
+    # Audit the actual ELF dependencies; never advertise manylinux by renaming.
+    if arch != "x64":
+        raise SystemExit("Only Linux x64 has a validated wheel policy")
+    repaired = packages / "audited-wheel"
+    repaired.mkdir(exist_ok=True)
+    run([sys.executable, "-m", "auditwheel", "repair", "--plat", "manylinux_2_38_x86_64",
+         "--only-plat", "--wheel-dir", repaired, wheels[0]])
+    audited = list(repaired.glob(f"sevenmlabs_astrology-{python_version}-*.whl"))
+    if len(audited) != 1 or not audited[0].name.endswith("-manylinux_2_38_x86_64.whl"):
+        raise SystemExit("Unexpected audited Linux wheel target")
+    wheels[0].unlink()
+    wheels = [Path(shutil.move(str(audited[0]), packages))]
+
 for item in (packages / f"7mlabs-astrology-{version}.tgz", packages / f"SevenMLabs.Astrology.{version}.nupkg", wheels[0]):
     manifest["files"][item.name] = hashlib.sha256(item.read_bytes()).hexdigest()
 (packages / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
