@@ -76,7 +76,7 @@ jobs:
               assert source == tag_source, 'Saved artifacts must belong to this immutable release tag'
               jobs = get('/actions/runs/' + run_id + '/jobs?per_page=100')['jobs']
               candidates = [job for job in jobs if job['name'] != 'publish']
-              assert len(candidates) == 11 and all(job['conclusion'] == 'success' for job in candidates)
+              assert len(candidates) == 12 and all(job['conclusion'] == 'success' for job in candidates)
               publish = [job for job in jobs if job['name'] == 'publish']
               assert len(publish) == 1
               assert next(step for step in publish[0]['steps'] if step['name'] == 'Publish the verified release with npm OIDC')['conclusion'] == 'skipped'

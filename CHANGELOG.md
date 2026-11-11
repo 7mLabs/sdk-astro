@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.2 — Python Linux x64 packaging
+
+- Add an audited Python 3.10+ Linux x64 wheel for glibc 2.38+ alongside macOS ARM64. Keep calculation algorithms, existing APIs and default JSON contracts unchanged.
+- Include corresponding source in both wheels and verify native identity against final coordinated artifacts.
+- Require fresh final-wheel installs on Linux and macOS with Python 3.10 and 3.13; retain cross-binding parity and add public 1.1.1 upgrade comparisons.
+- Update Python platform metadata and installation documentation.
+
 ## 1.1.1 — calculation metadata
 
 - Add opt-in calculation operation and missing chart-kind tags with includeMetadata:true; preserve the frozen 1.1.0 response contracts for unchanged astronomical/query calls. Numeric results and existing request fields are unchanged.

@@ -8,12 +8,15 @@ as its three development paths.
 ## Installation and platform support
 
 ```sh
-python -m pip install 'sevenmlabs-astrology==1.1.1'
+python -m pip install 'sevenmlabs-astrology==1.1.2'
 ```
 
-This wheel supports **Python 3.10+ on macOS 11+ Apple Silicon (ARM64)**.
-Linux, Windows and Intel Mac wheels are not included in this initial Python
-release. This native package runs in backend, desktop and command-line Python
+This release has wheels for **Python 3.10+ on macOS 11+ Apple Silicon
+(ARM64)** and **Linux x64 with glibc 2.38+**. The Linux wheel is audited as
+`manylinux_2_38_x86_64` and requires `libgcc_s.so.1`; it is tested on Ubuntu
+24.04 with Python 3.10 and 3.13. Windows, Intel Mac, Linux ARM64 and
+Alpine/musl wheels are not included. Ubuntu 22.04 and Debian 12 have older
+glibc versions and are outside this wheel's compatibility range. This native package runs in backend, desktop and command-line Python
 applications; it does not execute directly in a standard web browser.
 
 The wheel includes the native engine, timezone data, required ephemeris data,
@@ -124,9 +127,9 @@ envelope. `get_capabilities()` describes the installed engine.
 
 ## Source, documentation and license
 
-This release is **1.1.1**. The matching project source snapshot
+This release is **1.1.2**. The matching project source snapshot
 and build instructions are bundled at
-`sevenmlabs_astrology/source/astro-sdk-1.1.1.tar.gz` inside the wheel.
+`sevenmlabs_astrology/source/astro-sdk-1.1.2.tar.gz` inside the wheel.
 The archive includes the Rust/C engine, Python wrapper, locked dependency
 declarations, embedded data, renderer assets, schemas, tests and dependency
 notices; it excludes credentials and local build outputs.
@@ -142,4 +145,4 @@ The SDK and native renderer use **AGPL-3.0-only**, using the AGPL option of Swis
 Ephemeris. License texts and third-party notices are included; upstream font and
 dependency terms are retained. See the included `LICENSE` and `NOTICE`.
 
-Davison was introduced in SDK 1.1.0 and remains available in 1.1.1 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.1/docs/davison.md).
+Davison was introduced in SDK 1.1.0 and remains available in 1.1.2 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.2/docs/davison.md).

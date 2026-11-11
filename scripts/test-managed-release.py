@@ -50,10 +50,14 @@ Console.WriteLine(result);}
 run(['dotnet','restore',project/'Probe.csproj','--source',folder,'--packages',work/'nuget-cache','-p:NuGetAudit=false'])
 run(['dotnet','build',project/'Probe.csproj','--no-restore','-c','Release','--nologo'])
 commands={'node':[node,node_probe],'dotnet':['dotnet',project/'bin/Release/net10.0/Probe.dll']}
-python_enabled=system=='darwin' and arch=='arm64'
+python_enabled=f'{system}-{arch}' in manifest['pythonTargets']
 if python_enabled:
     venv=work/'venv';run([sys.executable,'-m','venv',venv]);python=venv/'bin/python'
-    run([python,'-m','pip','install','--no-index','--no-deps',folder/f'sevenmlabs_astrology-{version}-py3-none-macosx_11_0_arm64.whl'])
+    tag='macosx_11_0_arm64' if system=='darwin' else 'manylinux_2_38_x86_64'
+    python_wheel=folder/f'sevenmlabs_astrology-{version}-py3-none-{tag}.whl'
+    run([python,'-m','pip','install','--no-index','--no-deps',python_wheel])
+    installed_python_native=next((venv/'lib').glob(f'python*/site-packages/sevenmlabs_astrology/native/{system}-{arch}/*'))
+    assert hashlib.sha256(installed_python_native.read_bytes()).hexdigest()==manifest['nativeSha256'][rid]
     probe=work/'python-probe.py'
     probe.write_text('''import json,sys
 import sevenmlabs_astrology as s

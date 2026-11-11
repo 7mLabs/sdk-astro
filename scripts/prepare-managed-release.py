@@ -34,10 +34,15 @@ for directory,platform,arch in [(args.darwin,'darwin','arm64'),(args.linux,'linu
     info['timeSvgEvidenceSha256']=hashlib.sha256(time_report.read_bytes()).hexdigest()
     candidates.append((folder,info))
 
-python_wheel=candidates[0][0]/f'sevenmlabs_astrology-{version}-py3-none-macosx_11_0_arm64.whl'
-subprocess.run([sys.executable,str(ROOT/'scripts/prepare-python-release.py'),'--baseline-wheel',str(python_wheel),'--output',str(OUT/'python')],check=True)
-python_manifest=json.loads((OUT/'python/manifest.json').read_text())
-wheel=OUT/python_wheel.name;shutil.copyfile(OUT/'python'/wheel.name,wheel)
+python_wheels=[];python_manifests={}
+for (folder,info),platform,tag in zip(candidates,['darwin-arm64','linux-x64'],['macosx_11_0_arm64','manylinux_2_38_x86_64']):
+    baseline=folder/f'sevenmlabs_astrology-{version}-py3-none-{tag}.whl'
+    destination=OUT/'python'/platform
+    subprocess.run([sys.executable,str(ROOT/'scripts/prepare-python-release.py'),'--platform',platform,
+                    '--baseline-wheel',str(baseline),'--output',str(destination)],check=True)
+    python_manifests[platform]=json.loads((destination/'manifest.json').read_text())
+    wheel=OUT/baseline.name;shutil.copyfile(destination/baseline.name,wheel);python_wheels.append(wheel)
+base.require(len({m['files'][f'astro-sdk-{version}.tar.gz'] for m in python_manifests.values()})==1,'Matching source archives differ between wheels')
 
 def entries(path):
     with zipfile.ZipFile(path) as archive:
@@ -92,9 +97,9 @@ with zipfile.ZipFile(nuget,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9)
         info=zipfile.ZipInfo(member,date_time=(2020,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;archive.writestr(info,data)
 npm=ROOT/'artifacts/npm-release'/f'7mlabs-astrology-{version}.tgz'
 shutil.copyfile(npm,OUT/npm.name)
-files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (wheel,nuget,OUT/npm.name)}
-manifest={'schemaVersion':'1.0','version':version,'commitSha':args.commit,'pythonTargets':['darwin-arm64'],
-          'nugetTargets':['osx-arm64','linux-x64'],'files':files,'pythonSourceSha256':python_manifest['files'][f'astro-sdk-{version}.tar.gz'],
+files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (*python_wheels,nuget,OUT/npm.name)}
+manifest={'schemaVersion':'1.0','version':version,'commitSha':args.commit,'pythonTargets':['darwin-arm64','linux-x64'],
+          'nugetTargets':['osx-arm64','linux-x64'],'files':files,'pythonSourceSha256':python_manifests['darwin-arm64']['files'][f'astro-sdk-{version}.tar.gz'],
           'nativeSha256':{'osx-arm64':hashlib.sha256(mac[mac_path]).hexdigest(),'linux-x64':hashlib.sha256(mac[linux_path]).hexdigest()},
           'managedAssembly':assembly_proof,'candidates':[c[1] for c in candidates]}
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
