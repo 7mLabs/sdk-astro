@@ -67,6 +67,7 @@ jobs:
       - name: Build packages
         run: |
           python tests/packaging/test_wheel_tag.py
+          python tests/packaging/test_python_release.py
           python scripts/build-packages.py
       - name: Extended points against pinned Swiss file adapter
         run: python scripts/check-additional-points.py
