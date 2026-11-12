@@ -9,7 +9,7 @@ description = "7mlabs Astro SDK: offline astrology calculations, IANA birth-time
 requires-python = ">=3.10"
 readme = "README.md"
 license = "AGPL-3.0-only"
-license-files = ["LICENSE", "NOTICE", "sevenmlabs_astrology/third-party/*"]
+license-files = ["LICENSE", "LICENSE-7MLABS-MIT", "LICENSE-SCOPE.json", "LICENSE-SCOPE.md", "NOTICE", "sevenmlabs_astrology/third-party/*"]
 keywords = ["astrology", "ephemeris", "natal", "svg", "7mlabs"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",

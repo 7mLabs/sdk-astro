@@ -66,6 +66,7 @@ jobs:
           npm install --prefix artifacts/ci-tools --ignore-scripts --no-audit --no-fund typescript@5.9.3 ajv@8.20.0
       - name: Build packages
         run: |
+          python tests/packaging/test_license_scope.py
           python tests/packaging/test_wheel_tag.py
           python tests/packaging/test_python_release.py
           python scripts/build-packages.py

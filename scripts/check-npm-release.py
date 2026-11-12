@@ -243,6 +243,9 @@ def main():
             "Required npm wrapper/types/license/docs missing")
     require(any(name.startswith("third-party/") for name in portable), "Third-party license notices missing")
     require(entries["package/LICENSE"] == (ROOT / "LICENSE").read_bytes(), "Full AGPL license text differs")
+    for name in ("LICENSE-7MLABS-MIT", "LICENSE-SCOPE.json", "LICENSE-SCOPE.md"):
+        require(entries.get("package/" + name) == (ROOT / name).read_bytes(),
+                f"Scoped license companion missing or different: {name}")
     reports = verify_reports(args.reports, manifest, sha(manifest_bytes)) if args.reports else []
     print(json.dumps({"result": "passed", "name": manifest["name"], "version": version,
                       "packageSha256": manifest["sha256"], "sourceCommit": args.commit,

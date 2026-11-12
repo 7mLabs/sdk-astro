@@ -1,0 +1,986 @@
+{
+  "schemaVersion": 1,
+  "copyrightHolder": "7mlabs",
+  "permission": "MIT",
+  "permissionDate": "2026-11-12",
+  "sourceBaseCommit": "726e7d6b54a15a7dc5b146d5932b29242683c225",
+  "scopePolicy": "Only original copyrightable contributions owned by 7mlabs; not an MIT license for the combined native distribution. See LICENSE-SCOPE.md.",
+  "mitTextSha256": "2d09db0537773bdff508996e665357e61b72be8d85e59b8e0abf7106ad07a70e",
+  "originalFiles": [
+    {
+      "path": "bindings/dotnet/Engine.cs",
+      "sha256": "4ede89800a946472c4ea8892584dfcf3f3e79e949cbf1d4367c9a04aecb9876e"
+    },
+    {
+      "path": "bindings/node/index.cjs",
+      "sha256": "ce927f94331f8362fed0be90f307b9035080e40aa4e64439e57c409922eb685e"
+    },
+    {
+      "path": "bindings/node/index.d.ts",
+      "sha256": "6b2d0576c90d3d39cc85d9388d04e1c6a88c3ec5616024966a6ca669ab1e93ab"
+    },
+    {
+      "path": "bindings/python/setup.py",
+      "sha256": "d632af90b412f54c890ad3cc940324c9b7f2ded594d64d49952df2e204ae97fe"
+    },
+    {
+      "path": "bindings/python/sevenmlabs_astrology/__init__.py",
+      "sha256": "955669a60e15c8a9d5d59d7748efca642fdcf98bdd98b6fa903bf201551454bf"
+    },
+    {
+      "path": "examples/c/main.c",
+      "sha256": "ef726e994e8504cd17589f0ff7f5cd1bc29ea48d0b9bf25f134b8bdbc1b8d9dd"
+    },
+    {
+      "path": "examples/dotnet/Example.csproj",
+      "sha256": "d172fdc1f15ee4bc315560982a4ce02b14b1f81bd691ad69a2b1a565e1542ba9"
+    },
+    {
+      "path": "examples/dotnet/Program.cs",
+      "sha256": "389f16e79a4be93bcec0ddf6ec652c205a0af958b1c897084fb695989e7067ec"
+    },
+    {
+      "path": "examples/frontend/bridge.cjs",
+      "sha256": "e8b9fedf82a93e273897911b9c1a14f3a84bcdd839573d5dd45d6c9b2f084f46"
+    },
+    {
+      "path": "examples/frontend/host.cjs",
+      "sha256": "f4a70f816ec7f37c93d5ddd71b224572cc15997d98d3272a21049c1227b5f298"
+    },
+    {
+      "path": "examples/frontend/http-smoke.cjs",
+      "sha256": "985f628d680f1614321ec0914cb7ff694656b6d78a98a8d6e71127aeca421a5b"
+    },
+    {
+      "path": "examples/frontend/local-http.cjs",
+      "sha256": "8c7977aae31b7f84187a3917227af0a399bbb6cdaa11cda2873e79c1535193ff"
+    },
+    {
+      "path": "examples/frontend/smoke.cjs",
+      "sha256": "c3cf79ffdf7c5d52013109471ddc448ac5e0c209c7f23d3df56ac6ae5f1c1d19"
+    },
+    {
+      "path": "examples/frontend/ui-smoke.mjs",
+      "sha256": "5a702cb62e2ab129680100671b00ddef194737fcccd24ecebf243fef3fddce64"
+    },
+    {
+      "path": "examples/frontend/worker.cjs",
+      "sha256": "e012d282a594350b0d73167b864ca39108712f1c48825ba16e7349d5a55dae30"
+    },
+    {
+      "path": "examples/mcp/server.cjs",
+      "sha256": "8cbd21e71e3052ddf8bc4a866e0122f91e65733fdd93109551c20c31b394c096"
+    },
+    {
+      "path": "examples/mcp/smoke-compression.cjs",
+      "sha256": "6b970a4afb428e8e8c01fc43217f3553606fcaf30710d04df39638483351cd95"
+    },
+    {
+      "path": "examples/mcp/smoke.cjs",
+      "sha256": "13f4edd727c0a991518bf347a0d97234bd6ae972e3cfd38bc8bae13d149bce5a"
+    },
+    {
+      "path": "examples/node/composite-types.ts",
+      "sha256": "757dad2157f1e3e6c8711faa83ab62828c1bde6f3e1fe26dd2ff8812354c5b63"
+    },
+    {
+      "path": "examples/node/composite.cjs",
+      "sha256": "4ce2c243fb4b0a0471f475bc2b58ae0f4dc8d44f27aff71cf84bf847ea53df38"
+    },
+    {
+      "path": "examples/node/compression.cjs",
+      "sha256": "d42971a9f6b2d58969b786c444d8acbeed04ef21b353fff4778bbe3d8437097b"
+    },
+    {
+      "path": "examples/node/couple-composite.cjs",
+      "sha256": "d0abdc65219d58cca27193241b52b484b6e52016f1138dde1591048589a1b3ee"
+    },
+    {
+      "path": "examples/node/couple-types.ts",
+      "sha256": "091e427f5cd4319fa88fb138c6911f017c2ef6f0d1bf3b06b5e53946a60b8de4"
+    },
+    {
+      "path": "examples/node/couple.cjs",
+      "sha256": "e376c5458f7e59e30e0b81a39a50d0f719822f3b58695be5935c9588dc502bbd"
+    },
+    {
+      "path": "examples/node/custom-profiles.cjs",
+      "sha256": "42735f993a0095a042035600149e3c82d9b6a400f33006c626b249089481342a"
+    },
+    {
+      "path": "examples/node/davison-types.ts",
+      "sha256": "4302a70f8a844c237aff2894d5046a78408aa30a926493469cc4a66bcad732b6"
+    },
+    {
+      "path": "examples/node/domains.cjs",
+      "sha256": "ba39ad1430b5aa22cda7fe06468e7bd77d011412d3b78e84dae5286142a21d91"
+    },
+    {
+      "path": "examples/node/forecast-types.ts",
+      "sha256": "972f85de173e0096f613dadb98a433f3eb2a0e526b35d1d497ef0e1ec6ccd046"
+    },
+    {
+      "path": "examples/node/forecast.cjs",
+      "sha256": "95d74e19f6e088200a2902f1655049371c1e8fb8af988d1f07097da49f88fc5b"
+    },
+    {
+      "path": "examples/node/query-types.ts",
+      "sha256": "e95ada3f6cd9ab99eb53288346f074e4b7f4c30a679e74eceaf467f02b03a7e9"
+    },
+    {
+      "path": "examples/node/query.cjs",
+      "sha256": "84ae129f87d03678857b240fe7d5371bc80fa57309b54ea48c59e4a14a95fbda"
+    },
+    {
+      "path": "examples/node/report-types.ts",
+      "sha256": "c9a17cf431f7c3b2d3399881d163940cc7391532144caa4a2dc66a268c3f5a6d"
+    },
+    {
+      "path": "examples/node/sample.cjs",
+      "sha256": "a93c6c64d1a3f63e0b1b61d24426311058c9ab72651ac5be6cb174b3ff7d5c3d"
+    },
+    {
+      "path": "examples/node/test.cjs",
+      "sha256": "1e237edfc6e231912d8fcf9437a198d1f29a73cc12f358ba4f0119c60f8a18c7"
+    },
+    {
+      "path": "examples/node/time-svg.cjs",
+      "sha256": "4ec97ab5afbad4dd3593ccd9c2f81c8cf2280359e0be652b37250db31591a9e1"
+    },
+    {
+      "path": "examples/python/composite.py",
+      "sha256": "8f58777f36de5694b6223223bb76eb0fe9062b83c1606df2b49b64c0979d8cf6"
+    },
+    {
+      "path": "examples/python/compression.py",
+      "sha256": "6624777145c172dde72f445af5dd4a1e8fba35a060ecbab99df82b70e3b5ffa0"
+    },
+    {
+      "path": "examples/python/couple.py",
+      "sha256": "04f94d053437d4dff3f46fb634182aab5ebfff0d359d97c4e0ed6b0e26c8fcec"
+    },
+    {
+      "path": "examples/python/couple_composite.py",
+      "sha256": "18cdc4dd363ffbfbdcd35d191985899192d9102fa800af641e5290d1a36845b5"
+    },
+    {
+      "path": "examples/python/custom_profiles.py",
+      "sha256": "fd1799cc3aa9ea4e1c60dd1468ee775324b9db4b61dc3e22efd2cd5c4b2c0e7e"
+    },
+    {
+      "path": "examples/python/domains.py",
+      "sha256": "cdc2c5f50594eeac852ff9755a27b30c58f4991f470fda55da9d9c235a7bd739"
+    },
+    {
+      "path": "examples/python/forecast.py",
+      "sha256": "f878a25f171db17b6c55e067bf8d676ce1cc68feb3b7995114e927a2d6ce11ba"
+    },
+    {
+      "path": "examples/python/query.py",
+      "sha256": "a45ed5c663a336f5295db72fce09186a87e3a1262790ffd8400fcda182c63680"
+    },
+    {
+      "path": "examples/python/sample.py",
+      "sha256": "1c4357060327ebcd953fa5178eb3032dafed7b364025ea3986d4f3672d4972db"
+    },
+    {
+      "path": "examples/python/test_sample.py",
+      "sha256": "7a9670180a1eda48930a0cd3cbae1cbe0553f7f9c0d88caecad8e72f1d5c9c9e"
+    },
+    {
+      "path": "examples/rust/Cargo.toml",
+      "sha256": "ec0113ad69865e972383c018a55c41bf654ae646e4df9e2bb8776e870133f404"
+    },
+    {
+      "path": "examples/rust/src/main.rs",
+      "sha256": "82c5ec020f6fdd70fc3956800ffccb4df03048eb9e296d09cb846a53201cf3d6"
+    },
+    {
+      "path": "neutral-engine/Cargo.toml",
+      "sha256": "7896108e628d439d9b2db868958a4b8beedf8deed420df181b86adc351b7c806"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/Cargo.toml",
+      "sha256": "3997f518925ca7ecb5b7c59a51c9da2351a7daed7c3950602b15e8626fa2738d"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/advanced.rs",
+      "sha256": "333e431c46de33c66a73f346898286485cf648f2c45d08a561e10d0122bf8238"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/composite.rs",
+      "sha256": "36e1a149a611e02092ae9599a56798084bdf0021b002152ef800b7522abee8be"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/compression.rs",
+      "sha256": "5a0c1432fd7c838aa8fd700ebbca056c30571fe31ba3ca68f8a66377b39dbf35"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/couple.rs",
+      "sha256": "d15ca45d53352676b9e23f1b6f07a685a94dc0344dd7d0ac0e0a09d3f52af1c5"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/couple_profiles.rs",
+      "sha256": "4b6e3ce116d3173e578396131306a023f3c5033edef55ab0cc1d1f65f716c698"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/davison.rs",
+      "sha256": "67a27b6a03c97c8c3f1051b8c5962740b66110606da9ec0a55db938f328e89e4"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/domains.rs",
+      "sha256": "0d075000f5dd45d7d1bf4e5db8ae3b4b9eefd9bf3c93816a0cb494d8ca47ecd7"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/events.rs",
+      "sha256": "766eff59c2937805dcb374417bd3823541aa072f00e7255de7e312e19d4e1c8a"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/forecast.rs",
+      "sha256": "ba358e7606b444f636c4c4db7149773f62ad59f49c4fb07d89a821caa4acd02e"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/lib.rs",
+      "sha256": "5a3ee455c028d2076ef2424754a6189fbcc7822907283a1f539dbaa7d51341bf"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/natal.rs",
+      "sha256": "cfaf12ed522c40a0c57eef94a1e50fdd140a64275db8bf45b0dfea25673fafaa"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/numbers.rs",
+      "sha256": "7a1a5ea63701821357cb545694636c94e89d0296efe60ccfafe40c22dfd3fd7f"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/profile_integration_tests.rs",
+      "sha256": "5a643f6dac8423a5e318c0ed51b995062b6fcbde8a5f485c2e253e45406c6a64"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/profiles.rs",
+      "sha256": "f810e0dc5f5fa22e7c2e966fc4862a307d449542fae4f94d0c7b37145163fd5f"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/provenance.rs",
+      "sha256": "66704a5806b1e40989cbc421a8fd8b15d34c6ee286409404e74aac069ebbc67d"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/query.rs",
+      "sha256": "091c827391fe4262a559daa87bf967c77169eb4302632c30d194b3526dd53528"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/reports.rs",
+      "sha256": "d5535dd5e9b3b2fe30a2f4b9df46844f24938b0d47433b54cbcc0e6ef9aefb4f"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/tests/composite_contract.rs",
+      "sha256": "34dfc40a0829d8ff04d81e7ab29ad060e91e6bd648e37299d60c8d80ab106c5e"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/tests/couple_contract.rs",
+      "sha256": "e65cd84c9f851206bc2d72f0ac834b26f12d25e7c2ca0330d68830a7f7449486"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/tests/davison_contract.rs",
+      "sha256": "f912a0b8f95fc5ad544f8cd70c210a1361939c9cfbee912391d8c0a796f3eeab"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/tests/forecast_contract.rs",
+      "sha256": "3df4a8fa6c7ed71f14cbc9f90c1f56c9a15fafc93522a181362bad9db022d58c"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/tests/payload_metadata.rs",
+      "sha256": "968c688bc8c7ed1c26cf49d516f453b5a7a46fd9f6bf3bea72e8fde2c3cc479b"
+    },
+    {
+      "path": "neutral-engine/crates/astro-ffi/Cargo.toml",
+      "sha256": "99f77daffd2f127201fb3d99b1ac539107cc9295998960cc4193b192739bf1b7"
+    },
+    {
+      "path": "neutral-engine/crates/astro-ffi/src/lib.rs",
+      "sha256": "ae0b2a8f26b181666cf28df3132e2837a0967b8665bc2a1b5ec2ca077e942659"
+    },
+    {
+      "path": "neutral-engine/crates/astro-node/Cargo.toml",
+      "sha256": "c06a8549d8c23c05934f3fc3288b56da117f3bb7f72324c8b0027ec5fd4093ab"
+    },
+    {
+      "path": "neutral-engine/crates/astro-node/build.rs",
+      "sha256": "619d6658e2e4e542a13fb43d8ccbc9403567002142b21f2bcc84c8d7a41eca50"
+    },
+    {
+      "path": "neutral-engine/crates/astro-node/src/lib.rs",
+      "sha256": "0519ccc363d19ac291488f75731fcb93f08b8d10e36a2d633fa302facc338fc9"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/Cargo.toml",
+      "sha256": "f79a9d3de70ba60a9827abe88f66e1d776b301c83a260bd5dffaeb908e5ebb72"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/build.rs",
+      "sha256": "8c3b7a89671695b8714099ae7f2ff40d8dfb6ece17a192c70763eb9756ebce55"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/embedded_ephemeris.c",
+      "sha256": "e38c1a2abbb409a0934c1c29ec18fa9013fde214e1b941d59c78e8f2263bf1b6"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/src/lib.rs",
+      "sha256": "8629d0e91ea9650acd6d9585eb7cd3d54478750043bcd2e0b53067c1c7035735"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/tests/initialization.rs",
+      "sha256": "3d55da7841dd53e63749c1209d488677c05604839a28729e8df8a49fe565034f"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/Cargo.toml",
+      "sha256": "67a33aac9222acf39a1f454175be91b7f366205e88e9818fbbc831a74df6b448"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/assets/zodiac.json",
+      "sha256": "ca6c58c9b05c76f782d54c3573e801e2aae985d8dd911597ea323864e3fff944"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/src/lib.rs",
+      "sha256": "5a1961e0a636ca7da9181bdcf9a0bbd1e03ad72628a0393c30b428983976bd8d"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/src/model.rs",
+      "sha256": "209d6904dd4c6d71ed9f6f07106c0a38c4b33653d6498e16fd3c2b13c8e1b566"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/src/panels.rs",
+      "sha256": "273f1b46c0195166912ceb64d6ee0eb0320436588e550b6e853b25809ca5ba3b"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/src/scene.rs",
+      "sha256": "39fae5535876295c69514673572afa2549aa7150aeeed54b391849036c1fe41b"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/src/styles.rs",
+      "sha256": "95b339d3336fb5eb29697b022b9f1191dbbb85e2905c9cc3d845f0e530e5f7f0"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/src/symbols.rs",
+      "sha256": "17a308013f2c68b574bb2e36ade1f80a4d61f7b576f18b7d4267a4479c3134d3"
+    },
+    {
+      "path": "neutral-engine/crates/astro-sdk/Cargo.toml",
+      "sha256": "a8a4f7ba7e6350de4ff31ed59f869ac946ed68c1c428ca4947001aaf60a49c7c"
+    },
+    {
+      "path": "neutral-engine/crates/astro-sdk/src/lib.rs",
+      "sha256": "84f88b58dcab776edaad654142527e6cf51a069a1af09d29029ce0a9f782a4e4"
+    },
+    {
+      "path": "neutral-engine/crates/astro-sdk/tests/davison_services.rs",
+      "sha256": "4a8dc42359fef5a2b143e780554383f5e2778051faccc43d6bff3d2f938e3733"
+    },
+    {
+      "path": "neutral-engine/crates/astro-time/Cargo.toml",
+      "sha256": "d606daf0850ea589e687d747d54b2e18713386fb26badb642a7307e051990271"
+    },
+    {
+      "path": "neutral-engine/crates/astro-time/src/lib.rs",
+      "sha256": "62cad3f4d3adf9e2914dc5e71032d22d7ec93eb18cf03223316c23b241fccb5c"
+    },
+    {
+      "path": "neutral-engine/include/astro_engine.h",
+      "sha256": "8f45a12b90e448c8346a46485ccf8757c6d2312b0b3a00af8c1dd037f290589e"
+    },
+    {
+      "path": "schemas/calculate-from-local.schema.json",
+      "sha256": "50b9e7a9e31db222b38e2794387edea22c7fa4f7f52bf0515b781ebbf1fcaa8f"
+    },
+    {
+      "path": "schemas/composite-request.schema.json",
+      "sha256": "ba59a0ebdcdec5de2c3a89df618c820a42c1fd6aef510b246740a1cc2069e019"
+    },
+    {
+      "path": "schemas/composite-response.schema.json",
+      "sha256": "86491b12f329d3cac85d0ebee4b2ca0fb6a2a0a9478ea9aee475e6bbc045e18f"
+    },
+    {
+      "path": "schemas/compression-request.schema.json",
+      "sha256": "35a8dd380b81c1c146763501321092563d61ea2c6ca54a6401260197d0eaf69f"
+    },
+    {
+      "path": "schemas/compression-response.schema.json",
+      "sha256": "76a0205c2c515c4ce8c63e9cb2bd0a7558387d41e8497b49a17759f5ac4984f4"
+    },
+    {
+      "path": "schemas/couple-request.schema.json",
+      "sha256": "985ef5488d84597a29c18a763af27b327dadabbeca9e6bc3136b3d1e41a9477f"
+    },
+    {
+      "path": "schemas/couple-response.schema.json",
+      "sha256": "19905fd1ccc14b4a6253a17b22b97f7f80260141c4835998bb1c9c143c71f91f"
+    },
+    {
+      "path": "schemas/davison-request.schema.json",
+      "sha256": "e8a628b37acc24fbaf5fa53acd6dd8fd1712df846cbd7804341cfadcb6bb08d9"
+    },
+    {
+      "path": "schemas/davison-response.schema.json",
+      "sha256": "59d305ae11de114fc78a3973df63d662013c87d72bbb337ccf655c8ad1a07bea"
+    },
+    {
+      "path": "schemas/events-request.schema.json",
+      "sha256": "243c8a187538de6713fa31e0fb3f57b53a67bed3518b0f15f468ddd47091a6de"
+    },
+    {
+      "path": "schemas/events-response.schema.json",
+      "sha256": "fdea49d8f72c49f1b5d2aefa25f79b6b1ea3290ac72926d8c074fc65484f66b4"
+    },
+    {
+      "path": "schemas/forecast-request.schema.json",
+      "sha256": "7a68dff059b8cffe70f1fe5996ddc7266900aa04fc54a0f53edfed132d01b7d5"
+    },
+    {
+      "path": "schemas/forecast-response.schema.json",
+      "sha256": "90d4c837ae42c2f56e7cb3af9c60e80101404d89ff5d7c633b3394fe7c724e22"
+    },
+    {
+      "path": "schemas/geometry-request.schema.json",
+      "sha256": "2006bc68e050d52e2206377e1a61950debddf4f94724feec19cfa1e937a763ce"
+    },
+    {
+      "path": "schemas/natal-domains-request.schema.json",
+      "sha256": "d1bf869a19f6a46ecfe51cb51c50f2bffd6a9b311f991a2b866251da287b2e10"
+    },
+    {
+      "path": "schemas/natal-domains-response.schema.json",
+      "sha256": "14758d08bb62fc51d056a1b4152a19a5da36a1f0646b39e775589f08aedf3190"
+    },
+    {
+      "path": "schemas/natal-request.schema.json",
+      "sha256": "f8329fc39b690fc892735c4d0170974dd6e22bd9d41d1a0aa5e8f65474687b1c"
+    },
+    {
+      "path": "schemas/query-request.schema.json",
+      "sha256": "25e0a47bdf7df193edf444ce57cfad8086448849ec279dbadadc5bd679c9fb39"
+    },
+    {
+      "path": "schemas/query-response.schema.json",
+      "sha256": "8ac2476cf5861d881ee763fff367e3e083ef271a45b59f69ebb078e0fd084710"
+    },
+    {
+      "path": "schemas/render-chart-svg.schema.json",
+      "sha256": "d0e0ac0a81a61300514221e807e533e0578b900473101f4456b0ac5fbd0935b1"
+    },
+    {
+      "path": "schemas/resolve-birth-time.schema.json",
+      "sha256": "cbb98b7f8e16dcffded3243e293088d54944d7fca119b75b836429496445634d"
+    },
+    {
+      "path": "tests/compatibility/legacy-types.ts",
+      "sha256": "f98afee4b08cf142f71ea18932ede41b6cef00b08393bc811e0b416131d25a27"
+    },
+    {
+      "path": "tests/packaging/managed-identity/Inspect.csproj",
+      "sha256": "a1b3e3f0e3c871a8a91bb1cdd2dd51e110989470b48156e31f8c3cb0855a104a"
+    },
+    {
+      "path": "tests/packaging/managed-identity/Program.cs",
+      "sha256": "d4e49cd134e54af0f6964839d0254a30226394b4598bc58cca9e08cec8143911"
+    },
+    {
+      "path": "tests/packaging/test_python_release.py",
+      "sha256": "68c0092cc694f9fdddf6c5eade062c897d7b03286c206364de4304b423ce12c1"
+    },
+    {
+      "path": "tests/packaging/test_wheel_tag.py",
+      "sha256": "ed4005dedd56623e453494047aa9f7a29f7ea9b53ea64e18710099c34f68eefe"
+    },
+    {
+      "path": "tests/services/davison.cjs",
+      "sha256": "f4d7bcead2533553653dcad4e78858149f8c9cedc9acf22dd920c6de32b2c0bd"
+    },
+    {
+      "path": "tests/services/payload-metadata.cjs",
+      "sha256": "4adec74fd92ee5f80d367eae2d6f7872fde57908e7484841fdd1f623c4b8a44c"
+    },
+    {
+      "path": "tests/services/schemas.cjs",
+      "sha256": "ec0cb63f48ebe90c6ecb2fe5c66cc9f46c26b79b208120c8437f7ec7e9c6c87e"
+    },
+    {
+      "path": "tests/services/time-svg.cjs",
+      "sha256": "4d210180e21ec5a866167c7f0f0690a4b8cd368954f6531e762f950667fd8b50"
+    }
+  ],
+  "swissChanges": [
+    {
+      "upstreamRepository": "https://github.com/aloistr/swisseph",
+      "upstreamCommit": "aacf962d19d79f8bc921dbcdaacf306d85be1917",
+      "upstreamFile": "sweph.c",
+      "upstreamUrl": "https://raw.githubusercontent.com/aloistr/swisseph/aacf962d19d79f8bc921dbcdaacf306d85be1917/sweph.c",
+      "upstreamSha256": "b172aad375f3a3327bf7d0090ffafc8b777363211e8d7b0ed18e4821939444f2",
+      "modifiedFile": "neutral-engine/crates/astro-provider-swiss/vendor/sweph.c",
+      "modifiedSha256": "9097b5eea2e95324e6294d500eb4b212db3e272915082dc8c714b8cd1ac25614",
+      "diffSha256": "a5bf642e0c6d04ec895d2c8f2a718839f154e455b641b4e09d9c39dbf5c616dd",
+      "scope": "Only copyrightable original 7mlabs additions/modifications, not upstream material or unchanged diff context. Swiss licensing applies to the mixed file and embedded data.",
+      "unifiedDiff": "--- upstream/sweph.c\n+++ 7mlabs/sweph.c\n@@ -2362,6 +2362,17 @@\n  */\n FILE *swi_fopen(int ifno, char *fname, char *ephepath, char *serr)\n {\n+#ifdef ASTRO_MOSHIER_ONLY\n+  /* 7mlabs 2026-10-18: only the explicitly enabled, embedded asteroid file. */\n+  extern FILE *astro_builtin_ephemeris_open(const char *name);\n+  FILE *builtin = astro_builtin_ephemeris_open(fname);\n+  if (builtin != NULL) {\n+    if (ifno >= 0) strcpy(swed.fidat[ifno].fnam, fname);\n+    return builtin;\n+  }\n+  if (serr != NULL) strcpy(serr, \"External ephemeris files disabled by this build\");\n+  return NULL;\n+#endif\n   int np, i, j;\n   FILE *fp = NULL;\n   char *fnamp, fn[AS_MAXCH];\n"
+    }
+  ],
+  "thirdPartyFiles": [
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/data/seas_18.se1",
+      "sha256": "a2cd8fc33807c78ca9a700c91c2e042258b12fc4796519e00781440b5ad8b2e2"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/LICENSE",
+      "sha256": "b6345743292c516d07799dfad46f1a641e5270da2160cc4d6bd54594d6faa991"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/LICENSE.TXT",
+      "sha256": "b6345743292c516d07799dfad46f1a641e5270da2160cc4d6bd54594d6faa991"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swecl.c",
+      "sha256": "87c0df8da0292634709d0158d151f18b5c9c683a8941cc521e0de97a4a658565"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swedate.c",
+      "sha256": "6790e989a003cb6422080d9aecf3c6567a25030f5b5647fd749e5b16422cfac7"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swedate.h",
+      "sha256": "886b001815561f2c5f5e40418ce00d62377cb8962180c38062ac83bfdab77b38"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swedll.h",
+      "sha256": "cc33c8a26c28d7cba817012040f4ff68260b378d2149d66bf2c341cbb80549d1"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/sweephe4.h",
+      "sha256": "2cab6af5381da9bb7cb08644577b71c7dd9e3a0e69a7080a659d30817448f7b1"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swehel.c",
+      "sha256": "e4c0c6513f468462227aacaf0a52b46a7dd95569e1b86ea7356c5c27cb0fb871"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swehouse.c",
+      "sha256": "bb17029e5fc2318885bcb8bfba72af3b7cd2d6437b4013195e953e35dd06c254"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swehouse.h",
+      "sha256": "7a91a007a4de0900ed6d234d74da421b2372d245b09a2ba8b74d6e2e054a200c"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swejpl.c",
+      "sha256": "fcbf71ceb85cdff5e59438d4f72acb19d67363a6d8ab0ba59ceafe95d1c1fef3"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swejpl.h",
+      "sha256": "f61ae6173b150f456540afba68500989c642506822e0397cf99c2cb7f50aac0d"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swemmoon.c",
+      "sha256": "d268760a942971471a8164d0753769caead9f39743589204966f7307675ef278"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swemplan.c",
+      "sha256": "d13502ca7b92e3e32317b67ba7f012d92fabd1d358c3394c094d5515a3567caa"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swemptab.h",
+      "sha256": "dc7595b81bd49e86a6204ed1e0a041c410a9de5c068fd1d90d350a82d604fb85"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swenut2000a.h",
+      "sha256": "83b0a2f569174b56c8e26971b00f85f5ae52265b34c1c53436c7122e0f1faad7"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/sweodef.h",
+      "sha256": "aa763c98cfa62d9a643432b6908c820ea0759fcbdee378cf4203b0de9c6c34e0"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/sweph.c",
+      "sha256": "9097b5eea2e95324e6294d500eb4b212db3e272915082dc8c714b8cd1ac25614"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/sweph.h",
+      "sha256": "eab1d1727f85e88b2bcb8bc0df6c64c9f50430eb2a85a48e85ae1eb1250f769d"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swephexp.h",
+      "sha256": "53647b650504bbdec65166af1fbdb8580fa26a2ec821d5f50f032f5b0745b3cc"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swephlib.c",
+      "sha256": "19a30e5310498249edb9c1915ddc8f8a5bc9b59f74f90f34f281b174ea9e04eb"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swephlib.h",
+      "sha256": "29a151bb0c6adcb73fa73eff805b498c26bdffbb81e82d55e1b50f79218ea82a"
+    },
+    {
+      "path": "neutral-engine/crates/astro-provider-swiss/vendor/swevents.h",
+      "sha256": "82ce992f909854f7816386aaaf52f52826c315d5c926172195b57edbe32364e0"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/assets/PlusJakartaSans-Medium.ttf",
+      "sha256": "29c18dfd9b93d15bcc38776eba509c04e04e18e5e9d128225f285988f05dfe9f"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/assets/PlusJakartaSans-OFL.txt",
+      "sha256": "995c7199cab65954f545996326755daee7b63cc6b42b06c13da1f9502ab08a99"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/assets/font-outlines.json",
+      "sha256": "48e840211194334cce206b6c8ace6169de4e4adac80412cbcaaa40e27d02b28f"
+    },
+    {
+      "path": "neutral-engine/crates/astro-render-svg/assets/provenance.json",
+      "sha256": "2b85e999584e55e4664507160972b3b8413210c06eb127fa8c07dea1435399f2"
+    },
+    {
+      "path": "third-party/rust/NOTICE",
+      "sha256": "84e7cc1b9d91a93c12c1eb0cc2ba3f467df81d20d696406186f7571813b0dd04"
+    },
+    {
+      "path": "third-party/rust/arrayvec-0.7.8-LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "third-party/rust/arrayvec-0.7.8-LICENSE-MIT",
+      "sha256": "4da95ec4ecb65b738d470b7d762894ad9c97da93e6cbfb18b570fc2c96f4b871"
+    },
+    {
+      "path": "third-party/rust/autocfg-1.5.1-LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "third-party/rust/autocfg-1.5.1-LICENSE-MIT",
+      "sha256": "27995d58ad5c1145c1a8cd86244ce844886958a35eb2b78c6b772748669999ac"
+    },
+    {
+      "path": "third-party/rust/bitflags-1.3.2-LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "third-party/rust/bitflags-1.3.2-LICENSE-MIT",
+      "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+    },
+    {
+      "path": "third-party/rust/cc-1.0.79-LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "third-party/rust/cc-1.0.79-LICENSE-MIT",
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    {
+      "path": "third-party/rust/defmt-1.2.0-LICENSE-APACHE",
+      "sha256": "8173d5c29b4f956d532781d2b86e4e30f83e6b7878dce18c919451d6ba707c90"
+    },
+    {
+      "path": "third-party/rust/defmt-1.2.0-LICENSE-MIT",
+      "sha256": "2710a622a896bba67356913d4d0492cab5465f61b2ecce6d880aeb483834fb50"
+    },
+    {
+      "path": "third-party/rust/defmt-macros-1.2.0-LICENSE-APACHE",
+      "sha256": "8173d5c29b4f956d532781d2b86e4e30f83e6b7878dce18c919451d6ba707c90"
+    },
+    {
+      "path": "third-party/rust/defmt-macros-1.2.0-LICENSE-MIT",
+      "sha256": "2710a622a896bba67356913d4d0492cab5465f61b2ecce6d880aeb483834fb50"
+    },
+    {
+      "path": "third-party/rust/defmt-parser-1.1.0-LICENSE-APACHE",
+      "sha256": "8173d5c29b4f956d532781d2b86e4e30f83e6b7878dce18c919451d6ba707c90"
+    },
+    {
+      "path": "third-party/rust/defmt-parser-1.1.0-LICENSE-MIT",
+      "sha256": "2710a622a896bba67356913d4d0492cab5465f61b2ecce6d880aeb483834fb50"
+    },
+    {
+      "path": "third-party/rust/euclid-0.22.14-LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "third-party/rust/euclid-0.22.14-LICENSE-MIT",
+      "sha256": "62065228e42caebca7e7d7db1204cbb867033de5982ca4009928915e4095f3a3"
+    },
+    {
+      "path": "third-party/rust/itoa-1.0.8-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/itoa-1.0.8-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/jiff-0.2.38-COPYING",
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f"
+    },
+    {
+      "path": "third-party/rust/jiff-0.2.38-LICENSE-MIT",
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+    },
+    {
+      "path": "third-party/rust/jiff-0.2.38-UNLICENSE",
+      "sha256": "7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c"
+    },
+    {
+      "path": "third-party/rust/jiff-core-0.1.1-COPYING",
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f"
+    },
+    {
+      "path": "third-party/rust/jiff-core-0.1.1-LICENSE-MIT",
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+    },
+    {
+      "path": "third-party/rust/jiff-core-0.1.1-UNLICENSE",
+      "sha256": "7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c"
+    },
+    {
+      "path": "third-party/rust/jiff-static-0.2.38-COPYING",
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f"
+    },
+    {
+      "path": "third-party/rust/jiff-static-0.2.38-LICENSE-MIT",
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+    },
+    {
+      "path": "third-party/rust/jiff-static-0.2.38-UNLICENSE",
+      "sha256": "7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c"
+    },
+    {
+      "path": "third-party/rust/jiff-tzdb-0.1.9-COPYING",
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f"
+    },
+    {
+      "path": "third-party/rust/jiff-tzdb-0.1.9-LICENSE-MIT",
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+    },
+    {
+      "path": "third-party/rust/jiff-tzdb-0.1.9-UNLICENSE",
+      "sha256": "7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c"
+    },
+    {
+      "path": "third-party/rust/kurbo-0.11.3-LICENSE-APACHE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "third-party/rust/kurbo-0.11.3-LICENSE-MIT",
+      "sha256": "23c23145f6eac25c28cdcc03d38506a5712a9a8cffb5bd5301457f6173ea696e"
+    },
+    {
+      "path": "third-party/rust/log-0.4.34-LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "third-party/rust/log-0.4.34-LICENSE-MIT",
+      "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+    },
+    {
+      "path": "third-party/rust/manifest.json",
+      "sha256": "ee789b0b9d560614089dbd6556366d6b15f4f38efe6493d398cdafb2210961a8"
+    },
+    {
+      "path": "third-party/rust/num-traits-0.2.19-LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "third-party/rust/num-traits-0.2.19-LICENSE-MIT",
+      "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+    },
+    {
+      "path": "third-party/rust/portable-atomic-1.15.0-LICENSE-APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "third-party/rust/portable-atomic-1.15.0-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/portable-atomic-util-0.2.8-LICENSE-APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "third-party/rust/portable-atomic-util-0.2.8-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/proc-macro2-1.0.107-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/proc-macro2-1.0.107-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/proc-macro2-1.0.76-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/proc-macro2-1.0.76-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/quote-1.0.35-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/quote-1.0.35-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/quote-1.0.47-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/quote-1.0.47-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/ryu-1.0.14-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/ryu-1.0.14-LICENSE-BOOST",
+      "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566"
+    },
+    {
+      "path": "third-party/rust/serde-1.0.195-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/serde-1.0.195-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/serde-1.0.228-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/serde-1.0.228-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/serde_core-1.0.228-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/serde_core-1.0.228-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/serde_derive-1.0.195-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/serde_derive-1.0.195-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/serde_derive-1.0.228-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/serde_derive-1.0.228-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/serde_json-1.0.109-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/serde_json-1.0.109-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/siphasher-1.0.4-COPYING",
+      "sha256": "c962ee4d1d05ddc138b202b2540219ebc57893fcf97b364852094a9a94ce1365"
+    },
+    {
+      "path": "third-party/rust/siphasher-1.0.4-LICENSE-APACHE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "third-party/rust/siphasher-1.0.4-LICENSE-MIT",
+      "sha256": "f9c4c77baa3828004ee54b8a4f2db2e88ed44a6237a493965bf551fac0fcb62d"
+    },
+    {
+      "path": "third-party/rust/smallvec-1.16.3-LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "third-party/rust/smallvec-1.16.3-LICENSE-MIT",
+      "sha256": "0b28172679e0009b655da42797c03fd163a3379d5cfa67ba1f1655e974a2a1a9"
+    },
+    {
+      "path": "third-party/rust/svgtypes-0.15.3-LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "third-party/rust/svgtypes-0.15.3-LICENSE-MIT",
+      "sha256": "f3c9fe731c701ed77fd5fbaac573872af04dc5869385eb9bd5e3c73c42713814"
+    },
+    {
+      "path": "third-party/rust/syn-2.0.119-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/syn-2.0.119-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/syn-2.0.48-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/syn-2.0.48-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/syn-3.0.9-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/syn-3.0.9-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/thiserror-2.0.21-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/thiserror-2.0.21-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/thiserror-impl-2.0.21-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/thiserror-impl-2.0.21-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/unicode-ident-1.0.10-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "third-party/rust/unicode-ident-1.0.10-LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "third-party/rust/unicode-ident-1.0.10-LICENSE-UNICODE",
+      "sha256": "68f5b9f5ea36881a0942ba02f558e9e1faf76cc09cb165ad801744c61b738844"
+    }
+  ],
+  "excludedCategories": [
+    "Unlisted material and future revisions",
+    "Swiss code and data, except identified 7mlabs contribution-level permission",
+    "Third-party dependencies and notices",
+    "Font and derived font outlines",
+    "Supplied brand/logo assets and trademark rights",
+    "Previously published registry artifacts; no byte or notice replacement"
+  ],
+  "separatelyLicensed": [
+    "examples/frontend/ui/LICENSE"
+  ]
+}

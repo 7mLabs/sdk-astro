@@ -4,13 +4,20 @@ C source and headers from https://github.com/aloistr/swisseph,
 commit `aacf962d19d79f8bc921dbcdaacf306d85be1917`, provider version 2.10.03.
 Source fetched 2026-10-02. `vendor/LICENSE` and `vendor/LICENSE.TXT` retain
 upstream licensing terms (AGPL or commercial Professional License).
-Local modification by 7mlabs on 2026-10-02: `sweph.c:swi_fopen` returns NULL when the build flag
-`ASTRO_MOSHIER_ONLY` is set. This disables external ephemeris and time-table
-files, so the selected Moshier model and compiled leap-second/Delta T tables
-are reproducible regardless of working directory or SE_EPHE_PATH.
+Local modification by 7mlabs, initially 2026-10-02 and updated 2026-10-18:
+when `ASTRO_MOSHIER_ONLY` is set, `sweph.c:swi_fopen` allows only the explicitly
+enabled embedded asteroid file and returns NULL for other file requests.
+This disables ambient external ephemeris and time-table files, so the selected
+Moshier model and compiled leap-second/Delta T tables are reproducible regardless
+of working directory or SE_EPHE_PATH.
 No ephemeris data files are required by the selected Moshier mode.
 Local integration does not settle licensing of the entire derived distribution.
 Public release requires the license decision described in docs/distribution.md.
+
+The repository's LICENSE-SCOPE.json records pinned upstream/modified source hashes
+and the exact contribution diff. Its alternative MIT permission covers only the
+identified original 7mlabs contributions, not this mixed Swiss file as a whole,
+upstream Swiss material, embedded data or rights under a Professional agreement.
 
 ## Optional additional natal points (2026-10-18)
 

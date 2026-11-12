@@ -141,8 +141,19 @@ The bundled source contains `docs/time-and-svg.md` for complete rendering/time
 contracts and `docs/license.md` for license details. The public repository may
 advance independently; use the bundled snapshot to reproduce this wheel.
 
-The SDK and native renderer use **AGPL-3.0-only**, using the AGPL option of Swiss
-Ephemeris. License texts and third-party notices are included; upstream font and
-dependency terms are retained. See the included `LICENSE` and `NOTICE`.
+The public combined SDK/native-renderer distribution uses **AGPL-3.0-only**,
+choosing Swiss Ephemeris's AGPL route. In source revisions carrying the grant,
+identified original 7mlabs-owned contributions additionally have a separate MIT
+permission, including only the original 7mlabs changes identified by the Swiss
+provenance diff. This does not license the entire modified Swiss file, Swiss
+data or combined native binary under MIT. See the [permission scope](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-SCOPE.md),
+[MIT text](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-7MLABS-MIT) and
+[English licensing guide](https://github.com/7mLabs/sdk-astro/blob/main/docs/license.en.md).
+Professional holders need Swiss permission covering their actual use; we have not confirmed that existing
+prebuilt binaries can automatically be used under Professional.
+License texts and third-party notices remain applicable; upstream font and
+dependency terms are retained. Already published **1.1.2 wheels and their source
+snapshots are unchanged**; they retain their included `LICENSE` and `NOTICE`.
+The additional source grant does not say those wheels have been repackaged.
 
 Davison was introduced in SDK 1.1.0 and remains available in 1.1.2 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.2/docs/davison.md).

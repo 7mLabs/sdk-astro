@@ -29,7 +29,13 @@ Operations: natal, natalDomains, couple, composite, events, forecast, chart, har
 
 Basic natal supports Gregorian UTC 1800–2399, tropical geocentric apparent Sun–Pluto, Placidus/Whole Sign houses, ASC/MC/DSC/IC and major aspects. Use UTC, not local civil time. Coordinates use degrees, north/east positive. Longitude is normalized and speed is degrees/day. Placidus polar failure returns an error without silently changing house systems. The compiled Moshier and time models require no external data files or downloads.
 
-Source: https://github.com/7mlabs/sdk-astro. The engine/SDK use AGPL-3.0-only, choosing the free AGPL option of Swiss Ephemeris; complete LICENSE, NOTICE and third-party dependency notices are bundled. Distribution and integration must follow AGPL requirements; see repository docs/license.md. Platform evidence and installation instructions are in docs/testing.md, docs/packages.md and docs/node-release.md.
+Source: https://github.com/7mlabs/sdk-astro. The public combined native distribution uses **AGPL-3.0-only**, choosing Swiss Ephemeris's AGPL route.
+
+In source revisions carrying the grant, identified original 7mlabs-owned contributions additionally have a separate MIT permission; this includes only the original 7mlabs changes identified by the Swiss provenance diff, not the entire modified Swiss file. See the [permission scope](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-SCOPE.md), [MIT text](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-7MLABS-MIT) and [English licensing guide](https://github.com/7mLabs/sdk-astro/blob/main/docs/license.en.md). Swiss code/data and dependency/font licenses remain separate. There is no unconditional MIT option for the complete native binary.
+
+Professional holders must have Swiss permission covering their actual use; we have not confirmed that existing prebuilt binaries can automatically be used under Professional.
+
+Already published **1.1.2** archives and their license contents remain unchanged. Platform evidence and installation instructions are in docs/testing.md, docs/packages.md and docs/node-release.md.
 
 `natalDomains` trả một natal cá nhân (`chartKind: individualNatal`, `subjectCount: 1`). Đọc `data.context.advanced` cho trạng thái/chuỗi chủ tinh/configurations và `data.domains.<id>.report` cho các nhà liên quan, góc chiếu, facts và evidence phục vụ báo cáo. `love`/`relationships` đều dùng một người; operation này không nhận người thứ hai.
 
@@ -74,7 +80,7 @@ const payload = sdk.calculate({ operation: 'natal', utc: resolved.utc, location 
 const svg = sdk.renderChartSvg(payload, { detail: 'advanced' });
 ```
 
-Use the composed `calculateFromLocal` / `calculate_from_local` / `Engine.CalculateFromLocal` to resolve and calculate in one call. IANA gaps are rejected; folds require an explicit earlier/later choice. SVG uses source coordinates, inline vector glyphs and outlined text. See [time and SVG contracts](../../docs/time-and-svg.md). This native renderer uses the SDK license; font/dependency notices retain their upstream terms.
+Use the composed `calculateFromLocal` / `calculate_from_local` / `Engine.CalculateFromLocal` to resolve and calculate in one call. IANA gaps are rejected; folds require an explicit earlier/later choice. SVG uses source coordinates, inline vector glyphs and outlined text. See [time and SVG contracts](../../docs/time-and-svg.md). The native renderer is part of the combined AGPL distribution; identified original 7mlabs source contributions also have the separate MIT permission described above. Font/dependency notices retain their upstream terms.
 
 
 ## Modular charts and extended points

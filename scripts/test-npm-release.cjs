@@ -166,6 +166,9 @@ function main() {
   assert.deepEqual(portablePaths, Object.keys(manifest.portableFiles).sort());
   for (const name of portablePaths) assert.equal(sha(entries.get(`package/${name}`)), manifest.portableFiles[name], name);
   assert.deepEqual(entries.get('package/LICENSE'), fs.readFileSync(path.join(root, 'LICENSE')));
+  for (const name of ['LICENSE-7MLABS-MIT', 'LICENSE-SCOPE.json', 'LICENSE-SCOPE.md']) {
+    assert.deepEqual(entries.get(`package/${name}`), fs.readFileSync(path.join(root, name)), name);
+  }
   for (const name of ['index.cjs', 'index.d.ts', 'LICENSE', 'NOTICE']) assert(entries.has(`package/${name}`), name);
   const target = manifest.targets.find(target => target.platform === process.platform && target.arch === process.arch);
   assert(target, `Release verification requires a supported host; got ${process.platform}-${process.arch}`);

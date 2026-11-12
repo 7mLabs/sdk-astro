@@ -1,0 +1,12 @@
+{
+  "upstreamRepository": "https://github.com/aloistr/swisseph",
+  "upstreamCommit": "aacf962d19d79f8bc921dbcdaacf306d85be1917",
+  "upstreamFile": "sweph.c",
+  "upstreamUrl": "https://raw.githubusercontent.com/aloistr/swisseph/aacf962d19d79f8bc921dbcdaacf306d85be1917/sweph.c",
+  "upstreamSha256": "b172aad375f3a3327bf7d0090ffafc8b777363211e8d7b0ed18e4821939444f2",
+  "modifiedFile": "neutral-engine/crates/astro-provider-swiss/vendor/sweph.c",
+  "modifiedSha256": "9097b5eea2e95324e6294d500eb4b212db3e272915082dc8c714b8cd1ac25614",
+  "diff": "licensing/swisseph-sweph.c.patch",
+  "diffSha256": "a5bf642e0c6d04ec895d2c8f2a718839f154e455b641b4e09d9c39dbf5c616dd",
+  "scope": "Only copyrightable original 7mlabs additions/modifications, not upstream material or unchanged diff context. Swiss licensing applies to the mixed file and embedded data."
+}
