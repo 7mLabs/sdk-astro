@@ -1,0 +1,20 @@
+--- upstream/sweph.c
++++ 7mlabs/sweph.c
+@@ -2362,6 +2362,17 @@
+  */
+ FILE *swi_fopen(int ifno, char *fname, char *ephepath, char *serr)
+ {
++#ifdef ASTRO_MOSHIER_ONLY
++  /* 7mlabs 2026-10-18: only the explicitly enabled, embedded asteroid file. */
++  extern FILE *astro_builtin_ephemeris_open(const char *name);
++  FILE *builtin = astro_builtin_ephemeris_open(fname);
++  if (builtin != NULL) {
++    if (ifno >= 0) strcpy(swed.fidat[ifno].fnam, fname);
++    return builtin;
++  }
++  if (serr != NULL) strcpy(serr, "External ephemeris files disabled by this build");
++  return NULL;
++#endif
+   int np, i, j;
+   FILE *fp = NULL;
+   char *fnamp, fn[AS_MAXCH];

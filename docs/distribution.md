@@ -2,11 +2,17 @@
 
 Repo công khai là [7mLabs/sdk-astro](https://github.com/7mLabs/sdk-astro). npm `@7mlabs/astrology`, PyPI `sevenmlabs-astrology` và NuGet `SevenMLabs.Astrology` đều đã phát hành **1.1.0**, có checksum và kiểm tra cài mới từ registry. Rust/C tích hợp từ source; UI renderer có vòng version riêng. Xem [bằng chứng 1.1.0](release-1.1.0.md) và [thiết lập GitHub](github-setup.md).
 
+## Phạm vi quyền bổ sung trong revision source này
+
+Bản phân phối native công khai tiếp tục theo `AGPL-3.0-only`. Phần đóng góp gốc thuộc 7mlabs được xác định trong [kiểm kê](../LICENSE-SCOPE.json) còn có [quyền MIT riêng](../LICENSE-7MLABS-MIT) theo [phạm vi chính xác](../LICENSE-SCOPE.md). Quyền này không cấp MIT cho Swiss, dữ liệu/font/phụ thuộc bên thứ ba hoặc toàn bộ binary kết hợp. Người dùng Professional phải có quyền Swiss phù hợp cho chính cách dùng của họ; chưa xác nhận các binary dựng sẵn hiện tại tự động dùng được theo Professional. Xem [tiếng Việt](license.md) / [English](license.en.md).
+
+Không đổi version và không đóng gói lại các archive 1.1.2 đã phát hành. Các mốc, source snapshot và bằng chứng phát hành cũ trong phần còn lại giữ ngữ cảnh lịch sử của chúng.
+
 ## Điều kiện trước khi public
 
-Repo mới không import ứng dụng/history legacy. Source mới và engine packages dùng `AGPL-3.0-only`, có toàn văn LICENSE/NOTICE và provenance của third-party. Renderer SVG native trong SDK dùng cùng license AGPL-3.0-only của workspace; mã UI/renderer legacy có phạm vi và license riêng. Source npm giữ `private: true`; assembler chỉ bỏ guard trong tarball public đã qua release gate. Cargo giữ `publish = false`. Python/NuGet vẫn có thể upload về mặt công cụ, nhưng workflow hiện không có bước publish chúng.
+Repo mới không import ứng dụng/history legacy. Bản phân phối engine native công khai dùng `AGPL-3.0-only`, giữ toàn văn LICENSE/NOTICE và provenance của third-party. Phần đóng góp thuộc 7mlabs được nhận diện trong revision có tệp cấp quyền còn có quyền MIT bổ sung theo phạm vi nêu trên. Renderer SVG native thuộc bản phân phối kết hợp này; font và mã UI/renderer legacy có phạm vi và license riêng. Source npm giữ `private: true`; assembler chỉ bỏ guard trong tarball public đã qua release gate. Cargo giữ `publish = false`. Python/NuGet vẫn có thể upload về mặt công cụ, nhưng workflow hiện không có bước publish chúng.
 
-Swiss Ephemeris có license kép AGPL hoặc Professional theo [tài liệu upstream](https://www.astro.com/swisseph-download/doc/swephprg.pdf); dự án chọn AGPL miễn phí. Provider được vendor theo commit đã pin, có bản vá chặn file ngoài ngày 2026-10-02 và notices đi kèm. Phần mềm tích hợp engine cần tuân thủ các nghĩa vụ AGPL tương ứng; xem [license.md](license.md).
+Swiss Ephemeris có license kép AGPL hoặc Professional theo [tài liệu upstream](https://www.astro.com/swisseph-download/doc/swephprg.pdf); bản phân phối native công khai chọn nhánh AGPL. Quyền MIT riêng cho phần 7mlabs không cấp thay quyền Professional của Swiss. Provider được vendor theo commit đã pin, có bản vá chặn file ngoài ngày 2026-10-02 và notices đi kèm. Phần mềm tích hợp engine cần tuân thủ các nghĩa vụ AGPL tương ứng; xem [license.md](license.md).
 
 ## Tổ chức public repository
 

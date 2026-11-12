@@ -16,6 +16,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="LICENSE" Pack="true" PackagePath="/" />
+    <None Include="LICENSE-7MLABS-MIT" Pack="true" PackagePath="/" />
+    <None Include="LICENSE-SCOPE.json" Pack="true" PackagePath="/" />
+    <None Include="LICENSE-SCOPE.md" Pack="true" PackagePath="/" />
     <None Include="NOTICE" Pack="true" PackagePath="/" />
     <None Include="third-party/*" Pack="true" PackagePath="third-party/" />
     <None Include="README.md" Pack="true" PackagePath="/" />

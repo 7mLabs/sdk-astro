@@ -198,4 +198,8 @@ Chưa triển khai Sidereal/ayanamsa, topocentric natal, progression/return char
 
 ## Giấy phép và nguồn
 
-Astro dùng **AGPL-3.0-only**, khác Numerology dùng MIT. [LICENSE](LICENSE), [NOTICE](NOTICE), [hướng dẫn giấy phép](docs/license.md) và [nguồn Swiss đã pin](neutral-engine/crates/astro-provider-swiss/PROVENANCE.md) đi cùng source/gói. Tài liệu mới không đổi giấy phép, phiên bản hoặc điều kiện của gói đã phát hành.
+Bản phân phối native công khai dùng **AGPL-3.0-only**. Phần đóng góp gốc thuộc 7mlabs được xác định trong [phạm vi cấp quyền](LICENSE-SCOPE.md) và [kiểm kê](LICENSE-SCOPE.json) còn có [quyền MIT riêng](LICENSE-7MLABS-MIT), bao gồm đúng phần sửa Swiss thuộc 7mlabs được nhận diện bởi diff. Quyền này không chuyển code/dữ liệu Swiss hay toàn bộ binary kết hợp thành MIT. Người có Swiss Professional phải có quyền phù hợp cho cách sử dụng thực tế theo hợp đồng của họ; chưa xác nhận các binary dựng sẵn hiện tại tự động được dùng theo Professional.
+
+[Giải thích tiếng Việt](docs/license.md) · [English licensing guide](docs/license.en.md) · [AGPL đầy đủ](LICENSE) · [NOTICE](NOTICE) · [Nguồn Swiss đã pin](neutral-engine/crates/astro-provider-swiss/PROVENANCE.md).
+
+Các gói **1.1.2 đã phát hành giữ nguyên**, không được đóng gói lại hay đổi version bởi thay đổi source này. Thuật toán, API và cách gọi SDK không đổi.

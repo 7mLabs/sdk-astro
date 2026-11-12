@@ -2,6 +2,7 @@
 import argparse
 import base64
 import csv
+from email.parser import BytesParser
 import gzip
 import hashlib
 import io
@@ -12,6 +13,7 @@ import zipfile
 from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
+LICENSE_COMPANIONS = ('LICENSE-7MLABS-MIT','LICENSE-SCOPE.json','LICENSE-SCOPE.md')
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--baseline-wheel', type=Path)
 parser.add_argument('--platform', choices=['darwin-arm64','linux-x64'], default='darwin-arm64')
@@ -44,6 +46,16 @@ with zipfile.ZipFile(baseline) as previous:
         raise SystemExit('Expected a Linux x86-64 ELF shared library')
     if args.platform=='darwin-arm64' and not (native[:4]==b'\xcf\xfa\xed\xfe' and int.from_bytes(native[4:8],'little')==0x0100000C):
         raise SystemExit('Expected a macOS ARM64 native library')
+    dist_info=f'sevenmlabs_astrology-{version}.dist-info'
+    metadata=BytesParser().parsebytes(entries[f'{dist_info}/METADATA'])
+    if metadata.get('License-Expression')!='AGPL-3.0-only':
+        raise SystemExit('Candidate Python aggregate license differs')
+    if not {'LICENSE','NOTICE',*LICENSE_COMPANIONS}.issubset(metadata.get_all('License-File',[])):
+        raise SystemExit('Candidate Python license companion declarations are missing')
+    for name in LICENSE_COMPANIONS:
+        matches=[path for path in (f'{dist_info}/licenses/{name}',f'{dist_info}/{name}') if path in entries]
+        if len(matches)!=1 or entries[matches[0]]!=(ROOT/name).read_bytes():
+            raise SystemExit(f'Candidate Python scoped license companion missing or different: {name}')
     for relative in ['sevenmlabs_astrology/__init__.py', 'README.md']:
         archived = relative if relative != 'README.md' else f'sevenmlabs_astrology-{version}.dist-info/METADATA'
         source = (ROOT / 'bindings/python' / relative).read_bytes()
@@ -56,7 +68,7 @@ with zipfile.ZipFile(baseline) as previous:
 # Source roots are explicit; build outputs, credentials and native blobs are excluded.
 excluded = {'target','build','dist','native','source','__pycache__','node_modules','.git','.venv'}
 files = set()
-for folder in ('neutral-engine','bindings/python','schemas','third-party/rust'):
+for folder in ('neutral-engine','bindings/python','schemas','third-party/rust','licensing'):
     for path in (ROOT / folder).rglob('*'):
         relative = path.relative_to(ROOT)
         if path.is_symlink():
@@ -66,7 +78,7 @@ for folder in ('neutral-engine','bindings/python','schemas','third-party/rust'):
         if path.name.startswith('.') or path.suffix in {'.pyc','.log','.key','.pem'}:
             continue
         files.add(path)
-for name in ('LICENSE','NOTICE','README.md','CHANGELOG.md','docs/license.md','docs/time-and-svg.md',
+for name in ('LICENSE','NOTICE',*LICENSE_COMPANIONS,'README.md','CHANGELOG.md','docs/license.md','docs/license.en.md','docs/time-and-svg.md',
              'docs/payload-metadata.md','docs/release-1.1.2.md','docs/python-linux.md','docs/domains.md','docs/query.md','docs/profiles.md','docs/couple.md','docs/composite.md',
              'docs/forecast.md','docs/payload-compression.md','scripts/prepare-python-release.py'):
     files.add(ROOT / name)
@@ -78,6 +90,12 @@ notes = f'''# Matching source for sevenmlabs-astrology {version}
 SOURCE-MANIFEST.json records original file checksums. Swiss source/data, renderer
 assets, locked dependency declarations and notices are included. Cargo downloads
 its pinned registry dependencies on the first build.
+
+This is the Python/core rebuild subset of the repository. LICENSE-SCOPE.json
+uses full-repository paths and also identifies files from other bindings/tests
+that are not needed to rebuild this wheel. Consult the full repository for those
+files or to run its complete license-scope validation. Both license guides and
+the scoped permission/provenance files are included here.
 
 Rebuild using Rust stable and Python 3.10+. macOS ARM64 needs Xcode command
 line tools; Linux x64 needs a C compiler and a glibc-compatible build host.

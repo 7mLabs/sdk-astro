@@ -198,4 +198,8 @@ Sidereal/ayanamsa, topocentric natal, progression/return charts, Browser WASM an
 
 ## License and provenance
 
-Astro uses **AGPL-3.0-only**, whereas Numerology uses MIT. [LICENSE](LICENSE), [NOTICE](NOTICE), [license details](docs/license.md) and [pinned Swiss source](neutral-engine/crates/astro-provider-swiss/PROVENANCE.md) accompany the project. This documentation refresh changes neither the license, package version nor existing published artifacts.
+The public combined native distribution uses **AGPL-3.0-only**. Original 7mlabs-owned contributions identified in the [permission scope](LICENSE-SCOPE.md) and [inventory](LICENSE-SCOPE.json) additionally carry a [separate MIT permission](LICENSE-7MLABS-MIT), including the precisely identified original 7mlabs changes to Swiss source. This does not license Swiss code/data or the entire combined binary under MIT. Professional holders need appropriate Swiss permission for their actual use under their own agreement; We have not confirmed that the existing prebuilt binaries can automatically be used under Professional.
+
+[English licensing guide](docs/license.en.md) · [Giải thích tiếng Việt](docs/license.md) · [Full AGPL](LICENSE) · [NOTICE](NOTICE) · [Pinned Swiss provenance](neutral-engine/crates/astro-provider-swiss/PROVENANCE.md).
+
+Already published **1.1.2 archives are unchanged**, with no repackaging or version change from this source update. Algorithms, APIs and calling conventions are unchanged.

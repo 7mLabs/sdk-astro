@@ -59,8 +59,10 @@ mac=entries(candidates[0][0]/name);linux=entries(candidates[1][0]/name)
 mac_path='runtimes/osx-arm64/native/libastro_engine.dylib';linux_path='runtimes/linux-x64/native/libastro_engine.so'
 base.require([p for p in mac if p.startswith('runtimes/')]==[mac_path],'Invalid macOS RID assets')
 base.require([p for p in linux if p.startswith('runtimes/')]==[linux_path],'Invalid Linux RID assets')
-for entry in ['README.md','LICENSE','NOTICE']+[p for p in mac if p.startswith('third-party/')]:
+for entry in ['README.md','LICENSE','NOTICE',*base.LICENSE_COMPANIONS]+[p for p in mac if p.startswith('third-party/')]:
     base.require(mac[entry]==linux.get(entry),f'Portable NuGet content differs between targets: {entry}')
+for entry in base.LICENSE_COMPANIONS:
+    base.require(mac[entry]==(ROOT/entry).read_bytes(),f'NuGet scoped license companion differs from source: {entry}')
 # Universal managed IL can have OS-specific deterministic debug identities.
 # Require every other PE byte to agree; retain the original Mac assembly and
 # exercise that exact assembly on both operating systems in the final gate.

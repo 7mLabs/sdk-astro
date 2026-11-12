@@ -81,8 +81,19 @@ available services. Native output is freed by the wrapper.
 [API contracts](https://github.com/7mlabs/sdk-astro/blob/main/docs/time-and-svg.md) ·
 [1.0 release contract](https://github.com/7mlabs/sdk-astro/blob/main/docs/release-1.0.md)
 
-The SDK and renderer use **AGPL-3.0-only**, using the AGPL option of Swiss Ephemeris.
-Full license text, NOTICE and upstream dependency/font notices are included.
-Corresponding source and build scripts are in the matching `v1.1.2` source release.
+The public combined SDK/native-renderer distribution uses **AGPL-3.0-only**,
+choosing Swiss Ephemeris's AGPL route. In source revisions carrying the grant,
+identified original 7mlabs-owned contributions additionally have a separate MIT
+permission, including only the original 7mlabs changes identified by the Swiss
+provenance diff. It does not license the entire modified Swiss file, Swiss data
+or the combined native binary under MIT. See the [permission scope](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-SCOPE.md),
+[MIT text](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-7MLABS-MIT) and
+[English licensing guide](https://github.com/7mLabs/sdk-astro/blob/main/docs/license.en.md).
+Professional holders need Swiss permission covering their actual use; we have not confirmed that existing
+prebuilt binaries can automatically be used under Professional.
+Full license text, NOTICE and upstream dependency/font notices remain applicable.
+Already published **1.1.2 packages are unchanged**. Their corresponding source
+and build scripts remain in the matching `v1.1.2` source release; the additional
+source grant does not say those packages have been repackaged.
 
 Davison was introduced in SDK 1.1.0 and remains available in 1.1.2 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.2/docs/davison.md).

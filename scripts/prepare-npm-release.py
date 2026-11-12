@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "7mlabs/sdk-astro"
 TARGETS = (("darwin", "arm64"), ("linux", "x64"))
 MAX_ARCHIVE_BYTES = 256 * 1024 * 1024
+LICENSE_COMPANIONS = ("LICENSE-7MLABS-MIT", "LICENSE-SCOPE.json", "LICENSE-SCOPE.md")
 
 
 def require(condition, message):
@@ -152,6 +153,9 @@ def load_candidate(directory, platform, arch, commit, version):
     required = ("package/index.cjs", "package/index.d.ts", "package/README.md", "package/LICENSE", "package/NOTICE")
     require(all(name in entries for name in required), "Candidate wrapper/types/license/notice missing")
     require(entries["package/LICENSE"] == (ROOT / "LICENSE").read_bytes(), "Candidate AGPL text differs")
+    for name in LICENSE_COMPANIONS:
+        require(entries.get("package/" + name) == (ROOT / name).read_bytes(),
+                f"Candidate scoped license companion missing or different: {name}")
     require(any(name.startswith("package/third-party/") for name in entries), "Third-party notices missing")
     portable = {name: value for name, value in entries.items() if name != native_path}
     info = {"platform": platform, "arch": arch, "filename": npm_name, "sha256": files[npm_name],

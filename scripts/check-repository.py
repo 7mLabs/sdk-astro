@@ -10,6 +10,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import subprocess
 import sys
 import tarfile
 import tomllib
@@ -19,6 +20,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 LICENSE_ID = "AGPL-3.0-only"
+LICENSE_COMPANIONS = ("LICENSE-7MLABS-MIT", "LICENSE-SCOPE.json", "LICENSE-SCOPE.md")
 
 
 def load_json(relative):
@@ -43,10 +45,26 @@ def check_license_source(cargo, node, python, dotnet):
             "Workspace must declare the chosen AGPL license")
     require(node.get("license") == LICENSE_ID, "npm license metadata differs from AGPL decision")
     require(python.get("license") == LICENSE_ID, "Python license expression differs from AGPL decision")
-    require({"LICENSE", "NOTICE"}.issubset(python.get("license-files", [])),
-            "Python license-files must include LICENSE and NOTICE")
+    required_notices = {"LICENSE", "NOTICE", *LICENSE_COMPANIONS}
+    require(required_notices.issubset(python.get("license-files", [])),
+            "Python license-files must include AGPL, NOTICE and all scoped license companions")
+    require(required_notices.issubset(node.get("files", [])),
+            "npm files must include AGPL, NOTICE and all scoped license companions")
+    packed_files = {item.get("Include") for item in dotnet.findall(".//None")
+                    if item.get("Pack") == "true" and item.get("PackagePath") == "/"}
+    require(required_notices.issubset(packed_files),
+            "NuGet must pack AGPL, NOTICE and all scoped license companions")
     require(dotnet.findtext(".//PackageLicenseExpression") == LICENSE_ID,
             "NuGet license expression differs from AGPL decision")
+    for directory in (ROOT / "neutral-engine", *(ROOT / "bindings" / name for name in ("node", "python", "dotnet"))):
+        for name in LICENSE_COMPANIONS:
+            require((directory / name).read_bytes() == (ROOT / name).read_bytes(),
+                    f"Scoped license companion copy differs: {(directory / name).relative_to(ROOT)}")
+    scope_check = subprocess.run([sys.executable, str(ROOT / "scripts/check-license-scope.py")],
+                                 text=True, capture_output=True, check=False)
+    require(scope_check.returncode == 0,
+            "Scoped license source check failed: " + (scope_check.stderr or scope_check.stdout).strip())
+    scope_summary = json.loads(scope_check.stdout)
     vendor = ROOT / "neutral-engine/crates/astro-provider-swiss/vendor"
     for binding, third_party in (("node", "third-party"),
                                  ("python", "sevenmlabs_astrology/third-party"),
@@ -61,7 +79,8 @@ def check_license_source(cargo, node, python, dotnet):
             require((directory / third_party / ("swisseph-" + name)).read_bytes()
                     == (vendor / name).read_bytes(),
                     f"Swiss Ephemeris notice differs from upstream vendor: {binding}/{name}")
-    return {"expression": LICENSE_ID, "licenseSha256": hashlib.sha256(license_bytes).hexdigest()}
+    return {"expression": LICENSE_ID, "licenseSha256": hashlib.sha256(license_bytes).hexdigest(),
+            "scopedSourceGrant": scope_summary}
 
 
 def check_source():
@@ -149,6 +168,7 @@ def check_package_licenses(packages, version, wheel):
         directory = ROOT / "bindings" / binding
         files = {prefix + "LICENSE": (ROOT / "LICENSE").read_bytes(),
                  prefix + "NOTICE": (directory / "NOTICE").read_bytes()}
+        files.update({prefix + name: (ROOT / name).read_bytes() for name in LICENSE_COMPANIONS})
         third_party = "sevenmlabs_astrology/third-party" if binding == "python" else "third-party"
         for source in sorted((directory / third_party).iterdir()):
             if source.is_file():
@@ -168,8 +188,8 @@ def check_package_licenses(packages, version, wheel):
         require(len(metadata_names) == 1, "Expected one wheel METADATA file")
         metadata = BytesParser().parsebytes(archive.read(metadata_names[0]))
         require(metadata.get("License-Expression") == LICENSE_ID, "Built wheel license expression differs")
-        require({"LICENSE", "NOTICE"}.issubset(metadata.get_all("License-File", [])),
-                "Built wheel must declare LICENSE and NOTICE")
+        require({"LICENSE", "NOTICE", *LICENSE_COMPANIONS}.issubset(metadata.get_all("License-File", [])),
+                "Built wheel must declare AGPL, NOTICE and all scoped license companions")
         dist_info = metadata_names[0].rsplit("/", 1)[0]
         source_root = ROOT / "bindings/python"
         for name in metadata.get_all("License-File", []):
@@ -181,7 +201,7 @@ def check_package_licenses(packages, version, wheel):
             require(len(matches) == 1 and archive.read(matches[0]) == source.read_bytes(),
                     f"Wheel declared license file missing or different: {name}")
         for name, expected in expected_files("python", "").items():
-            if name in ("LICENSE", "NOTICE"):
+            if name in ("LICENSE", "NOTICE", *LICENSE_COMPANIONS):
                 matches = [path for path in (dist_info + "/licenses/" + name, dist_info + "/" + name)
                            if path in archive.namelist()]
                 require(len(matches) == 1, f"Expected one full wheel license/notice: {name}")
