@@ -1,5 +1,8 @@
 # Calculation metadata (1.1.1)
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 The engine computes facts and declares the methods used. It does not select an
 interpretation school for the consuming application. Read the individual rules;
 `rulership: modern` selects the ruler table, while traditional sign-only dignity

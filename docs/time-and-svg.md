@@ -1,11 +1,14 @@
-# Civil time và SVG chart — 1.1.0
+# Civil time và SVG chart — SDK 1.1.2
 
-Các API dưới đây có trong **1.1.0** đã phát hành và xác minh trên npm/PyPI/NuGet. [Trạng thái và bằng chứng release](release-1.0.md). Các lời gọi UTC cũ giữ nguyên hành vi; đổi giờ và điểm mở rộng là tùy chọn rõ ràng.
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
+Các API dưới đây có trong **1.1.2** đã phát hành và xác minh trên npm/PyPI/NuGet. [Trạng thái và bằng chứng release](release-1.1.2.md). Các lời gọi UTC cũ giữ nguyên hành vi; đổi giờ và điểm mở rộng là tùy chọn rõ ràng.
 
 ## Hai luồng tích hợp
 
 ```js
-// Node: npm install @7mlabs/astrology@1.1.0
+// Node: npm install @7mlabs/astrology@1.1.2
 const {
   calculate, resolveBirthTime, calculateFromLocal,
   renderChartSvg, renderChartSvgResult, getCapabilities
@@ -101,7 +104,7 @@ const rendered = renderChartSvgResult(payload, {
 
 Chấp nhận geometry `path/circle/ellipse/line/rect/polyline/polygon`; font/label bất kỳ ngoài bộ Latin/Vietnamese hiện có báo `UNSUPPORTED_LABEL`. Có thể truyền map từ `createZodiacSymbols` của brand kit; metadata tên/signIndex được kiểm tra nhưng không đổi dữ liệu thiên văn. Không nhận raw SVG, script/event/style/href; kiểm tra path grammar, finite coordinates và budgets. Cùng input/options/version cho cùng SVG bytes. Dùng `instanceId` khác nhau khi nhúng nhiều SVG trực tiếp trong một DOM.
 
-Alpha này chưa vẽ mọi bảng report/facts/pattern annotations, chưa có browser WASM và chưa tuyên bố giải mọi va chạm giữa nhãn với góc trục trong mọi chart nhiều lớp. Các lớp chưa cung cấp dữ liệu không được bù bằng dữ liệu mẫu.
+Renderer hiện chưa vẽ mọi bảng report/facts/pattern annotations, chưa có browser WASM và chưa tuyên bố giải mọi va chạm giữa nhãn với góc trục trong mọi chart nhiều lớp. Các lớp chưa cung cấp dữ liệu không được bù bằng dữ liệu mẫu.
 
 ## Bindings và phân tách dependency
 

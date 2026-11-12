@@ -1,5 +1,8 @@
 # Tính và truy vấn theo nhóm
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 `0.9.0-alpha.1` bổ sung operation `query` và các nhóm SDK `geometry`, `aspects`, `houses`, `points`. Dev chọn một phép tính hoặc một phần natal cần dùng; cùng Rust core thực hiện cho Node/Python/.NET/Rust/C, không cần server.
 
 ## Các nhóm và phương thức

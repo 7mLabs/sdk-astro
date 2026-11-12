@@ -1,5 +1,8 @@
 # Natal cá nhân phục vụ báo cáo chuyên sâu
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 `operation: "natalDomains"` nhận dữ liệu sinh của **một người** và trả một natal cùng dữ liệu theo 10 lĩnh vực cá nhân: `career`, `love`, `relationships`, `family`, `finance`, `identity`, `learning`, `creativity`, `innerLife`, `dailyLife`; hoặc theo `customProfiles` được dev khai báo. Tất cả các lĩnh vực dùng cùng lá số. `love` là dữ liệu natal liên quan tình cảm của cá nhân; `relationships` là dữ liệu natal liên quan cách cá nhân giao tiếp và tham gia quan hệ. Hai nhóm này không phải compatibility, synastry hoặc composite, và không nhận birth input của người thứ hai.
 
 Mục tiêu là để ứng dụng dựng báo cáo chuyên sâu từ facts có thể kiểm tra lại: positions, đủ H1–H12, occupants/rulers, conditions, chuỗi chủ tinh, quan hệ góc và configurations được hỗ trợ. Engine không trả điểm tốt/xấu, kết luận tính cách, lời khuyên hoặc dự đoán. Ứng dụng có thể thêm templates diễn giải riêng và phải giữ nguồn/rules của phần đó tách khỏi facts của engine.

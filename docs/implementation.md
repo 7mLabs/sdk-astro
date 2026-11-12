@@ -1,5 +1,8 @@
 # Plan triển khai và kiểm soát phát hành
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 Plan này mô tả công việc cụ thể sau bản mẫu, từ chuyển source đến phân phối package. Cần duy trì CI và registry releases; không cần vận hành API server cho người dùng.
 
 ## Chuyển source hiện tại
@@ -71,9 +74,9 @@ Builder hiện dùng `scripts/build-packages.py`, tạo binary rồi stage vào 
 
 ## CI và release
 
-CI candidate trong `.github/workflows/neutral-engine.yml` chỉ chạy core/package tests trên macOS/Linux, chưa publish. Nó không thay thế kết quả kiểm thử Windows hoặc Linux ARM64. Release workflow tương lai cần tag chính thức, GitHub environment và registry credential/trusted publishing được cấu hình bởi owner.
+CI candidate trong `.github/workflows/neutral-engine.yml` chỉ chạy core/package tests trên macOS/Linux, chưa publish. Nó không thay thế kết quả kiểm thử Windows hoặc Linux ARM64. Workflow npm `.github/workflows/npm-release.yml` phát hành khi push tag hoặc chạy thủ công có chọn publish, sau các gate artifact/consumer. Push nhánh thông thường không upload gói. PyPI/NuGet đã phát hành; xem [báo cáo 1.1.2](release-1.1.2.md).
 
-Các bước release: checkout sạch → test Rust → build current target → pack → cài artifacts trong consumer sạch → parity → tạo checksums/SBOM/notice → candidate review → publish version đã kiểm tra → registry install verification. License đã chốt AGPL-3.0-only cho source mới; artifacts candidate còn chờ multi-platform assembly và registry ownership trước khi publish registry.
+Các bước release: checkout sạch → test Rust → build current target → pack → cài artifacts trong consumer sạch → parity → tạo checksums/SBOM/notice → candidate review → publish version đã kiểm tra → registry install verification. License đã chốt AGPL-3.0-only cho source mới; gói 1.1.2 đã qua multi-platform assembly và kiểm chứng kho công khai, ghi tại [báo cáo release](release-1.1.2.md).
 
 ## Definition of done
 

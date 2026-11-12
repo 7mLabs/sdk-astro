@@ -1,5 +1,8 @@
 # Payload ngày, tháng, năm và sự kiện theo natal
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 `0.8.0-alpha.1` bổ sung hai operations chạy offline trong cùng Rust core: `events` quét lịch sự kiện thiên văn và `forecast` gắn lịch đó với natal của một cá nhân. Cùng request period dùng cho ngày, tháng hoặc năm. Node/Python/.NET chỉ gọi core cục bộ; không cần server, credential hoặc tải dữ liệu khi tính.
 
 `forecast` trả dữ liệu để dựng thông điệp ngày và báo cáo tổng quan, gồm một natal/context dùng chung, snapshot transit, các mốc sự kiện chính xác, vị trí transit trong nhà natal, góc với natal, chủ tinh và views theo 10 lĩnh vực/30 sections. `messageContext.narrative` là `null`: engine cung cấp facts và references để ứng dụng viết nội dung. Không trả điểm tốt/xấu hoặc kết luận rằng một sự kiện chắc chắn xảy ra trong đời người dùng.

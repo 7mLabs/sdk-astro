@@ -1,5 +1,8 @@
 # Lá số cặp đôi từ dữ liệu sinh
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 `operation: "couple"` trong `0.9.0-alpha.1` nhận dữ liệu sinh của hai người, tính hai natal thực bằng Swiss Ephemeris/Moshier rồi trả dữ liệu synastry để ứng dụng dựng báo cáo. Package chạy cục bộ qua cùng Rust core, không gọi server. Phạm vi là so sánh hai natal: giữ vị trí, nhà, góc chiếu, overlays và evidence; engine không trả điểm tương hợp, lời luận giải hoặc dự đoán.
 
 `natalDomains` vẫn là một người, có 10 lĩnh vực cá nhân; `love` và `relationships` của operation đó không trở thành chart đôi. Geometry `synastry` vẫn nhận positions/cusps do caller cung cấp. `couple` là operation mới nhận hai birth inputs và tự tính hai natal.

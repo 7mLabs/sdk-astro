@@ -1,5 +1,8 @@
 # Composite: lá số thứ ba và 10 khía cạnh
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 `0.7.0-alpha.1` bổ sung midpoint composite C, được dựng từ hai natal A/B. C là chart của mối quan hệ theo quy ước hình học của engine. Nó có 10 profiles, 30 sections, custom profiles, 26 points, 325 cặp quan hệ và 66 liên hệ chủ tinh nhà như cấu trúc báo cáo cá nhân. Các facts được tính lại từ vị trí và nhà của C.
 
 SDK có hai đường gọi, cùng chạy local và dùng một implementation Rust:

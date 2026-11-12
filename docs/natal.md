@@ -1,5 +1,8 @@
 # Raw birth data → natal chart cơ bản
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 Engine tính thiên văn thực bằng Swiss Ephemeris native/Moshier. Node, Python, .NET, Rust và C cùng dùng provider này; không gọi HTTP, process Python hoặc dịch vụ bên ngoài.
 
 Tài liệu này mô tả operation `natal` cơ bản. [Operation natalDomains](domains.md) bổ sung views theo lĩnh vực, chủ tinh/occupants, body–angle–cusp aspects và đủ pair relations bằng cùng birth input/provider. Shape và defaults của `natal` được giữ riêng.
@@ -44,7 +47,7 @@ Ví dụ kết quả Sun: longitude `280.3689238651°`, Capricorn `10.3689238651
 
 ## Provider và time model
 
-Source Swiss 2.10.03 được pin commit và ghi trong `neutral-engine/crates/astro-provider-swiss/PROVENANCE.md`. Mode cố định Moshier analytical, geocentric, tropical, apparent ecliptic-of-date. Không dùng JPL/Swiss binary data files trong runtime. Flag trả về phải xác nhận Moshier; nếu provider không trả đúng mode hoặc số không hữu hạn, engine trả lỗi.
+Source Swiss 2.10.03 được pin commit và ghi trong `neutral-engine/crates/astro-provider-swiss/PROVENANCE.md`. Mode cố định Moshier analytical, geocentric, tropical, apparent ecliptic-of-date. Sun–Pluto không dùng JPL/Swiss binary data files trong runtime. Chiron tùy chọn dùng dữ liệu tiểu hành tinh nhúng sẵn; xem [điểm mở rộng](features-and-formulas.vi.md#natal). Flag trả về phải xác nhận Moshier; nếu provider không trả đúng mode hoặc số không hữu hạn, engine trả lỗi.
 
 Swiss chuyển UTC sang TT/UT1 bằng compiled leap-second và Delta T tables. Trước 1972, hàm upstream coi civil input là UT1. Future UTC dùng mô hình tích hợp và không có live Earth-orientation corrections; warning luôn có trong natal envelope. Metadata trả julianDayTt/julianDayUt1 để caller kiểm tra epoch thực. Không cam kết độ chính xác UTC lịch sử/tương lai ngoài mô hình này.
 
@@ -56,4 +59,4 @@ Bản vá build `ASTRO_MOSHIER_ONLY` chặn đọc ephemeris/leap-second/Delta T
 
 Đã kiểm tra calendar, leap day, tọa độ 0, thời gian thay đổi, hai bán cầu, high latitude, giới hạn năm, concurrent options và parity năm ngôn ngữ. Có bốn reference cases so PySwissEph và vị trí Skyfield/JPL ở cùng TT. Endpoint tests không chứng minh mọi ngày trong 1800–2399; xem `testing.md` cho tolerance và kết quả.
 
-Mở rộng lĩnh vực hiện tổ chức facts của natal theo [profile công khai](domains.md), bổ sung derived facts và report context cá nhân trong [individual-reports.md](individual-reports.md), không bổ sung thiên thể hoặc time model mới. Chart C đã có operation riêng, xem [composite.md](composite.md). Transit/natal event search và calendar ngày/tháng/năm đã có, xem [forecast.md](forecast.md). Progression, return charts, Davison và timezone helper chưa được triển khai. SDK Node.js có [hướng dẫn npm](node-release.md); [MCP adapter và frontend host](integrations.md) là các phần tích hợp tùy chọn.
+Mở rộng lĩnh vực hiện tổ chức facts của natal theo [profile công khai](domains.md), bổ sung derived facts và report context cá nhân trong [individual-reports.md](individual-reports.md), không bổ sung thiên thể hoặc time model mới. Chart C đã có operation riêng, xem [composite.md](composite.md). Transit/natal event search và calendar ngày/tháng/năm đã có, xem [forecast.md](forecast.md). Davison đã có từ 1.1.0; xem [contract](davison.md). Helper IANA/offset có trong SDK; xem [đổi giờ](time-and-svg.md). Progression và return charts chưa triển khai. SDK Node.js có [hướng dẫn npm](node-release.md); [MCP adapter và frontend host](integrations.md) là các phần tích hợp tùy chọn.

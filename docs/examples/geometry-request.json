@@ -1,0 +1,21 @@
+{
+  "operation": "chart",
+  "positions": [
+    {
+      "id": "sun",
+      "longitude": 350,
+      "speed": 1
+    },
+    {
+      "id": "moon",
+      "longitude": 10,
+      "speed": 13
+    },
+    {
+      "id": "mercury",
+      "longitude": 90,
+      "speed": 1.2
+    }
+  ],
+  "includeMetadata": true
+}

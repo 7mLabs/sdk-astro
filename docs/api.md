@@ -1,5 +1,8 @@
 # API natal, cặp đôi, composite, forecast và events
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 SDK có operation `natal` nhận ngày giờ UTC và tọa độ, xem [contract natal](natal.md) và `schemas/natal-request.schema.json`. `natalDomains` dùng cùng birth input để trả các nhóm dữ liệu theo lĩnh vực; xem [contract lĩnh vực](domains.md) và `schemas/natal-domains-request.schema.json`. Payload `natalDomains` là **một người** (`chartKind: individualNatal`, `subjectCount: 1`), có derived facts, 10 lĩnh vực/30 sections và custom profiles; xem [profile contract](profiles.md); xem [contract báo cáo cá nhân](individual-reports.md). `couple` nhận `personA`/`personB` birth inputs để tính hai natal và dữ liệu so sánh theo 6 lĩnh vực; xem [contract cặp đôi](couple.md). `composite` nhận cùng hai birth inputs để dựng chart C và 10 lĩnh vực/30 sections; `couple` có thể bật C bằng `composite: {}`; xem [contract composite](composite.md). `events` quét ngày/tháng/năm theo period; `forecast` thêm birth natal, event impacts và views/messageContext theo 10 lĩnh vực; xem [forecast.md](forecast.md). `query` chọn phép tính theo 4 groups/8 actions; xem [query.md](query.md). Ba operations geometry `chart`, `harmonic`, `synastry` nhận positions theo contract dưới đây; schema nằm ở `schemas/geometry-request.schema.json`.
 
 | Operation | Input chính | Data trả về |
@@ -80,7 +83,7 @@ Các mã core: `INVALID_INPUT`, `INPUT_TOO_LARGE`, `CALCULATION_FAILED`, `INTERN
 
 ## Những API chưa có
 
-Timezone IANA conversion, sidereal/topocentric, solar-return chart, local eclipse visibility, orb-entry/exit windows, Davison, fixed stars và progression chưa được triển khai trong core. [MCP adapter local và frontend host](integrations.md) là các phần tích hợp tùy chọn; [UI renderer](../examples/frontend/ui/README.md) tiêu thụ payload gốc. Các API legacy .NET không biến thành API mới chỉ vì cùng tên astrology.
+Sidereal/topocentric birth, solar-return chart, local eclipse visibility, orb-entry/exit windows, fixed stars và progression chưa được triển khai. [Davison](davison.md) và [IANA/offset conversion](time-and-svg.md) đã có trong SDK. [MCP adapter local và frontend host](integrations.md) là các phần tích hợp tùy chọn; [UI renderer](../examples/frontend/ui/README.md) tiêu thụ payload gốc. Các API legacy .NET không biến thành API mới chỉ vì cùng tên astrology.
 
 ## Davison (1.1.0)
 

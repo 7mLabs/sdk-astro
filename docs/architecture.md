@@ -1,8 +1,11 @@
 # Kiến trúc engine chạy cục bộ
 
-Phạm vi phát hành hiện hành và phần chưa triển khai được tổng hợp tại [trạng thái 1.1.0](status-1.1.0.md). Các thuật toán có trong vendor Swiss không tự trở thành tính năng của public API.
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
 
-Engine hướng đến GitHub công khai và package cài vào dự án, không yêu cầu server tính toán. Quyết định kiến trúc là một lõi Rust, giao diện C ABI, Node binding qua Node-API, Python qua ctypes và .NET qua P/Invoke. SDK 1.1.0 có provider Swiss native với Moshier tích hợp: Rust gọi source C được pin, không nhúng Python. Natal, couple, composite, Davison, events/forecast và geometry cùng được phân phối trong package mỗi ngôn ngữ.
+
+Phạm vi phát hành hiện hành và phần chưa triển khai được tổng hợp tại [báo cáo 1.1.2](release-1.1.2.md) và [quy tắc hiện hành](rules.vi.md). Các thuật toán có trong vendor Swiss không tự trở thành tính năng của public API.
+
+Engine hướng đến GitHub công khai và package cài vào dự án, không yêu cầu server tính toán. Quyết định kiến trúc là một lõi Rust, giao diện C ABI, Node binding qua Node-API, Python qua ctypes và .NET qua P/Invoke. SDK 1.1.2 có provider Swiss native với Moshier tích hợp: Rust gọi source C được pin, không nhúng Python. Natal, couple, composite, Davison, events/forecast và geometry cùng được phân phối trong package mỗi ngôn ngữ.
 
 ## Vì sao chọn phương án này
 

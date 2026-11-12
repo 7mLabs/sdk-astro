@@ -1,5 +1,8 @@
 # Catalog lĩnh vực và profiles tùy chỉnh
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 `natalDomains` trong `0.9.0-alpha.1` tổ chức dữ liệu **một natal cá nhân** bằng selection profile `sevenmlabs-domain-selection` phiên bản `2.0`. Catalog có 10 lĩnh vực builtin; dev cũng có thể gửi `customProfiles` để tạo views theo selectors riêng. Mọi view dùng chung một natal, context, phép tính và advanced facts trong Rust core. SDK chỉ truyền request, gọi core cục bộ và trả JSON; không có công thức domain riêng trong Node.js, Python hoặc .NET.
 
 Profiles là quy tắc tổ chức dữ liệu của dự án hoặc caller. Việc đặt tên `identity`, `marriage` hay `dailyLife` không biến các facts hình học thành kết luận tính cách, tương hợp, dự đoán hoặc chẩn đoán. Ứng dụng dựng nội dung báo cáo trên những facts và phải quản lý quy tắc diễn giải của mình.
@@ -174,6 +177,6 @@ Rust gọi `astro_core::calculate_json(&request_json)`; C gọi `astro_calculate
 
 Full context giữ 26 points/325 pairs/12 houses cho mọi selection. Nhiều reports/sections có thể dùng lại cùng evidence và làm response lớn; chọn đúng builtin IDs và custom definitions cần dùng. Không cộng counts/aspects của các nhóm để suy ra tổng hoặc tạo điểm tốt/xấu. IDs/indexes chỉ được join trong cùng response, không tái sử dụng giữa những lần tính có options khác.
 
-Frontend có thể đọc catalog để tạo tab/filter và form editor, còn package vẫn chạy độc lập. Forecast đã có operation riêng với cùng catalog và selectors, xem [forecast.md](forecast.md). Browser WASM, MCP và public registry release chưa được triển khai. Lá số cặp đôi có operation riêng, không thay contract profiles cá nhân.
+Frontend có thể đọc catalog để tạo tab/filter và form editor, còn package vẫn chạy độc lập. Forecast đã có operation riêng với cùng catalog và selectors, xem [forecast.md](forecast.md). Browser WASM chưa triển khai. [Adapter MCP mẫu](integrations.md) đã có; gói npm/PyPI/NuGet 1.1.2 đã phát hành, xem [bằng chứng](release-1.1.2.md). Adapter chưa là một package MCP public riêng. Lá số cặp đôi có operation riêng, không thay contract profiles cá nhân.
 
 Lá số hai người dùng operation `couple` và catalog riêng; xem [contract cặp đôi](couple.md). Contract một người của tài liệu này được giữ nguyên.

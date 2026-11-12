@@ -1,7 +1,10 @@
-# Davison relationship charts — SDK 1.1.0
+# Davison relationship charts — SDK 1.1.2
 
-SDK 1.1.0 supports both `uncorrected` and `corrected` through the existing
-`calculate` / `calculateJson` entry points. Version **1.0.2 does not contain Davison**; install 1.1.0 to use this operation. No new public binding function or
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
+Available since 1.1.0; SDK 1.1.2 supports both `uncorrected` and `corrected` through the existing
+`calculate` / `calculateJson` entry points. Version **1.0.2 does not contain Davison**; install 1.1.2 for the current release. No new public binding function or
 ABI export is required. Node, Python, .NET and C all pass the same JSON to Rust.
 
 ```json

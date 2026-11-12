@@ -1,5 +1,8 @@
 # Payload natal theo lĩnh vực
 
+[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+
+
 Bản `0.9.0-alpha.1` cung cấp operation `natalDomains`: nhận dữ liệu sinh như natal cơ bản, tính **một lá số cá nhân** rồi trả dữ liệu nâng cao để dựng báo cáo thuộc 10 lĩnh vực cá nhân, hoặc lĩnh vực tùy chỉnh do dev định nghĩa. Package tính cục bộ qua cùng Rust core. `love` và `relationships` dùng natal của người đó, không cần hoặc so sánh chart người thứ hai.
 
 Profile `sevenmlabs-domain-selection` phiên bản `2.0` là bộ quy tắc chọn dữ liệu được dự án công bố. Mapping lĩnh vực và orb là cấu hình của profile, không phải chuẩn duy nhất của mọi trường phái. Output không có điểm số, lời luận giải hoặc dự đoán. View trọng tâm được giữ; `domain.report` bổ sung nhà hỗ trợ và facts nâng cao có evidence. Xem [contract báo cáo cá nhân](individual-reports.md) cho cách join, quy tắc dẫn xuất và giới hạn.
