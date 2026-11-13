@@ -182,7 +182,7 @@ The envelope contains `schemaVersion`, `engineVersion`, `calculation`, `data`, `
 
 ## Verification and releases
 
-**1.1.3 is a licensing packaging update.** It is the first registry release to include `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` and the updated `NOTICE`, making the scoped additional MIT permission available to package consumers. Whole-package metadata remains `AGPL-3.0-only`; APIs, calculation algorithms, ABI and schemas are unchanged. [The 1.1.3 record](docs/release-1.1.3.md) distinguishes required checks from finalized evidence.
+**1.1.3 is a licensing packaging update.** It is the first registry release to include `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` and the updated `NOTICE`, making the scoped additional MIT permission available to package consumers. Whole-package metadata remains `AGPL-3.0-only`; APIs, calculation algorithms, ABI and schemas are unchanged. [The completed 1.1.3 record](docs/release-1.1.3.md) reports 12/12 candidate checks, 13/13 publication checks, 339 conformance cases per publicly installed binding and 354 strict raw-response comparisons against public npm 1.1.2, removing only `engineVersion`.
 
 The earlier **1.1.2** release added a Python Linux x64 wheel. Its evidence includes 339 shared conformance cases across bindings, Python 3.10/3.13 and Node 18/24 across macOS ARM64/Linux x64, plus fresh public-registry installations. [The unchanged 1.1.2 report and checksums](docs/release-1.1.2.md) retain that release's exact source, results and tested scope.
 

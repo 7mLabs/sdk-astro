@@ -182,7 +182,7 @@ Envelope gồm `schemaVersion`, `engineVersion`, `calculation`, `data`, `warning
 
 ## Kiểm chứng và phiên bản
 
-**1.1.3 là bản cập nhật đóng gói giấy phép.** Lần đầu các gói registry đóng kèm `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` và `NOTICE` đã cập nhật để người cài tra cứu quyền MIT bổ sung cho phần mã 7mlabs. Metadata của toàn gói vẫn là `AGPL-3.0-only`; API, thuật toán, ABI và schema không đổi. [Hồ sơ 1.1.3](docs/release-1.1.3.md) phân biệt kế hoạch kiểm chứng với bằng chứng thực tế đã chốt.
+**1.1.3 là bản cập nhật đóng gói giấy phép.** Lần đầu các gói registry đóng kèm `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` và `NOTICE` đã cập nhật để người cài tra cứu quyền MIT bổ sung cho phần mã 7mlabs. Metadata của toàn gói vẫn là `AGPL-3.0-only`; API, thuật toán, ABI và schema không đổi. [Hồ sơ 1.1.3](docs/release-1.1.3.md) đã ghi 12/12 kiểm tra CI ứng viên, 13/13 bước phát hành, 339 ca conformance trên mỗi binding cài từ kho công khai và 354 kết quả raw đối chiếu nghiêm ngặt với npm 1.1.2; chỉ bỏ `engineVersion` khi so sánh.
 
 Mốc **1.1.2** trước đó bổ sung wheel Python Linux x64; bộ kiểm chứng có 339 ca chung qua các binding, Python 3.10/3.13 và Node 18/24 trên macOS ARM64/Linux x64, cùng cài thử từ cả ba kho công khai. [Báo cáo 1.1.2 và checksum](docs/release-1.1.2.md) giữ nguyên nguồn, kết quả và phạm vi lịch sử của lần phát hành đó.
 
