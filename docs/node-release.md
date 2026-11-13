@@ -1,8 +1,14 @@
 # Phát hành package Node.js
 
-## Bản hiện tại: 1.1.0
+## Bản SDK 1.1.3 — đóng gói quyền MIT bổ sung
 
-npm `latest` là **1.1.0**, phát hành bằng OIDC và xác minh registry trong
+1.1.3 là lần đầu tarball npm đóng kèm `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` và `NOTICE` cập nhật. Quyền MIT chỉ dành cho các đóng góp thuộc 7mlabs được kiểm kê; toàn gói native tiếp tục ghi `AGPL-3.0-only`. Swiss và các phụ thuộc giữ điều kiện riêng. API, thuật toán, ABI và schema không đổi; không bổ sung target native mới.
+
+Trạng thái CI, source commit, checksum cuối và xác minh registry của đợt này nằm trong [hồ sơ 1.1.3](release-1.1.3.md). Không dùng run hoặc checksum lịch sử bên dưới để chứng minh tarball 1.1.3. Xem [hướng dẫn giấy phép](license.md) trước khi chọn nhánh Swiss AGPL / Professional.
+
+## Mốc 1.1.0 đã phát hành (lịch sử)
+
+Ở lần phát hành **1.1.0**, npm `latest` được cập nhật bằng OIDC và xác minh registry trong
 [run 41000539170](https://github.com/7mLabs/sdk-astro/actions/runs/41000539170).
 Tarball SHA256 `01e59a881d2ecc151c8406b020e7ba692f862b6ef81a2ad7d4a8b4dd4210df3f`.
 Đủ bốn final consumers Mac ARM64/Linux x64 × Node 18/24 đã qua.
@@ -30,7 +36,7 @@ npm install @7mlabs/astrology@latest
 Để tái tạo đúng một phiên bản, chỉ định version và commit lockfile của ứng dụng:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.1.0
+npm install --save-exact @7mlabs/astrology@1.1.3
 ```
 
 Package chứa sẵn native addon; người dùng không cần Rust, compiler, server hay bước tải binary sau cài đặt. `npm ci` dùng lockfile để cài lại đúng dependency của dự án. Kênh `alpha` tiếp tục trỏ tới các bản thử nghiệm riêng; chọn `latest` không mở rộng phạm vi platform của binary.
@@ -65,14 +71,14 @@ Release gate chạy consumer tests trên minimum Node.js 18 và Node.js 24 ở m
 1. Chọn một commit đã qua toàn bộ Rust, fresh-install parity, compression và TypeScript checks trên cả hai target.
 2. Tải `candidate-darwin-arm64` và `candidate-linux-x64` từ cùng workflow run. So sánh SHA256 ZIP với artifact metadata của GitHub trước khi giải nén an toàn.
 3. Giữ manifest, ba package archives, ba test reports và `candidate-provenance.json` của từng target. Provenance build ghi repository, commit, workflow, run và target; manifest chứa archive checksums. Khi tải artifact thủ công, ghi thêm artifact ID và SHA256 ZIP đã xác minh; không lưu token hoặc URL tải có thời hạn.
-4. Dùng `scripts/prepare-npm-release.py` để ghép binary vào một npm tarball. Assembler phải kiểm tra checksum, evidence fingerprint, cùng version/commit, wrapper/types và đầy đủ LICENSE/NOTICE/third-party notices.
+4. Dùng `scripts/prepare-npm-release.py` để ghép binary vào một npm tarball. Assembler phải kiểm tra checksum, evidence fingerprint, cùng version/commit, wrapper/types và đầy đủ LICENSE/NOTICE/third-party notices, `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` và bản vá/phạm vi Swiss tương ứng.
 5. Fresh-install tarball cuối bằng npm offline với install scripts bị tắt. Chạy conformance, helper, compression roundtrip và TypeScript checks của release gate. Consumer evidence phải tham chiếu SHA256 của chính tarball sẽ publish; báo cáo bổ sung về repeated calls hoặc worker concurrency cần ghi đúng artifact và môi trường đã chạy.
 6. Publish cùng một tarball đúng một lần cho mỗi version. Không publish độc lập hai candidate tarballs cùng package name/version.
 
 Artifact đã build cũng có thể cài local để kiểm tra đúng tarball:
 
 ```sh
-npm install --offline --ignore-scripts /absolute/path/7mlabs-astrology-0.10.0.tgz
+npm install --offline --ignore-scripts /absolute/path/7mlabs-astrology-1.1.3.tgz
 ```
 
 ## Publish và phát hành tiếp theo

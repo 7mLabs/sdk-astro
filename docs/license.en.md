@@ -10,6 +10,8 @@
 - **Swiss Ephemeris:** retains its upstream AGPL / Swiss Ephemeris Professional options. The 7mlabs MIT grant does not supply Swiss rights.
 - **A combined work using Swiss:** needs appropriate permission for every component. MIT permission for one component does not exempt the entire combined binary from AGPL.
 
+**SDK 1.1.3** is the first registry release to bundle `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` and the updated `NOTICE` alongside corresponding source. Whole-package metadata remains `AGPL-3.0-only`. See [the 1.1.3 release record](release-1.1.3.md) for the distinction between required checks and finalized evidence.
+
 The already published npm/PyPI/NuGet **1.1.2 archives retain their original bytes, licensing contents and release evidence**. The permission documented here is an additional grant for contributions identified in a source revision carrying the grant files. It does not say that the published 1.1.2 archives have been repackaged or become MIT distributions.
 
 ## License map
@@ -51,7 +53,7 @@ The public Swiss agreement checked on **12 November 2026** is the September 2026
 
 ## Packaging and compatibility
 
-`LICENSE` and the combined native package metadata continue to state `AGPL-3.0-only`. Do not label the whole package `MIT` or `AGPL-3.0-only OR MIT`. The additional MIT/scope files identify separate permission for the covered 7mlabs contributions. Retain the full AGPL text, `NOTICE`, Swiss notices, provenance and dependency licenses alongside packages/source archives newly prepared under this policy.
+`LICENSE` and the combined native package metadata continue to state `AGPL-3.0-only`. Do not label the whole package `MIT` or `AGPL-3.0-only OR MIT`. From 1.1.3, the additional MIT/scope files and updated `NOTICE` accompany installation packages and source archives to identify separate permission for the covered 7mlabs contributions. Retain the full AGPL text, `NOTICE`, Swiss notices, provenance and dependency licenses alongside packages/source archives newly prepared under this policy.
 
 The additional permission changes no functions, algorithms, JSON, ABI or calling conventions and requires no application code changes. The SDK has no Professional-key entry or verification mechanism. A successful calculation does not establish licensing entitlement.
 

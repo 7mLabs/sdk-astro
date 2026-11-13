@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/hero.en.dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/hero.en.light.svg">
-  <img src="docs/assets/readme/hero.en.light.svg" width="1280" alt="7mlabs Astro SDK 1.1.2 — full brand logo, offline computation, multiple runtimes">
+  <img src="docs/assets/readme/hero.en.light.svg" width="1280" alt="7mlabs Astro SDK 1.1.3 — full brand logo, offline computation, multiple runtimes">
 </picture>
 
 [Tiếng Việt](README.md) · **English**
@@ -15,9 +15,9 @@
 <a href="docs/rules.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/badge-system.dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/badge-system.light.svg"><img src="docs/assets/readme/badge-system.light.svg" height="28" alt="Tropical"></picture></a>
 </p>
 
-[Quick start](#quick-start) · [Features](#features) · [Formulas](docs/features-and-formulas.md) · [Rules](docs/rules.md) · [Verification](docs/formula-verification.md) · [Web guides](https://7mlabs.com/en/astro/sdk/docs/1.1.2/overview/)
+[Quick start](#quick-start) · [Features](#features) · [Formulas](docs/features-and-formulas.md) · [Rules](docs/rules.md) · [Verification](docs/formula-verification.md) · [Web guides](https://7mlabs.com/en/astro/sdk/docs/1.1.3/overview/)
 
-**Astro SDK 1.1.2 by 7mlabs** is an offline Rust engine using Swiss Ephemeris to calculate charts, relationships and astronomical events inside your application. Node.js/TypeScript, Python, .NET, Rust and C share the calculation core; no engine server or external calculation API is needed.
+**Astro SDK 1.1.3 by 7mlabs** is an offline Rust engine using Swiss Ephemeris to calculate charts, relationships and astronomical events inside your application. Node.js/TypeScript, Python, .NET, Rust and C share the calculation core; no engine server or external calculation API is needed.
 
 Results contain **numbers, effective settings, selection policies and evidence**. SVG and chart models support presentation. Narrative interpretation and compatibility scoring belong to the consuming application.
 
@@ -46,7 +46,7 @@ Names above follow Node.js. Python uses snake_case and .NET uses PascalCase; ope
 
 ## Calculation system and rules
 
-**1.1.2 calculates tropical, geocentric, apparent ecliptic-of-date positions with Placidus or Whole Sign houses.** Moshier supplies the ten main bodies; optional Chiron uses embedded asteroid data. No separate Swiss installation is required.
+**1.1.3 calculates tropical, geocentric, apparent ecliptic-of-date positions with Placidus or Whole Sign houses.** Moshier supplies the ten main bodies; optional Chiron uses embedded asteroid data. No separate Swiss installation is required.
 
 `rulership: traditional | modern` selects the ruler table, not a zodiac system. Sign-only dignity flags retain explicitly declared traditional rules. Composite and Davison are distinct methods. `includeMetadata: true` opts into additional metadata; caller-declared geometry remains unverified.
 
@@ -60,19 +60,19 @@ Names above follow Node.js. Python uses snake_case and .NET uses PascalCase; ope
 
 ## Installation and platforms
 
-| Package 1.1.2 | Runtime | Published native targets |
+| Package 1.1.3 | Runtime | Native targets |
 | --- | --- | --- |
-| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.1.2) | Node.js ≥18; tested 18/24 | macOS ARM64, Linux x64 |
-| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.1.2/) | Python ≥3.10; tested 3.10/3.13 | macOS ARM64, Linux x64 |
-| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.1.2) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
+| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.1.3) | Node.js ≥18; test matrix 18/24 | macOS ARM64, Linux x64 |
+| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.1.3/) | Python ≥3.10; test matrix 3.10/3.13 | macOS ARM64, Linux x64 |
+| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.1.3) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
 | Rust / C | Source integration and C ABI | [Build instructions](docs/packages.md); no separate crates.io package |
 
 Linux requires **glibc ≥2.38 and libgcc_s.so.1**, tested on Ubuntu 24.04. Ubuntu 22.04, Debian 12, Alpine/musl, Windows, Intel Mac and Linux ARM64 are outside this binary matrix. macOS native deployment target is 11.0; the selected language runtime has its own OS requirements. **Browser WASM is not included**; a frontend can call a backend/desktop host using the SDK.
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.1.2
-python -m pip install sevenmlabs-astrology==1.1.2
-dotnet add package SevenMLabs.Astrology --version 1.1.2
+npm install --save-exact @7mlabs/astrology@1.1.3
+python -m pip install sevenmlabs-astrology==1.1.3
+dotnet add package SevenMLabs.Astrology --version 1.1.3
 ```
 
 These are separate language choices, not three required installations. [Linux wheel details](docs/python-linux.md).
@@ -102,7 +102,7 @@ const payload = astro.calculate({
   houseSystem: 'placidus',
   includeMetadata: true
 });
-console.log(payload.engineVersion, payload.data.placements.length); // 1.1.2 10
+console.log(payload.engineVersion, payload.data.placements.length); // 1.1.3 10
 const svg = astro.renderChartPart(payload, 'wheel');
 ```
 
@@ -117,7 +117,7 @@ payload = astro.calculate({
     "houseSystem": "placidus",
     "includeMetadata": True,
 })
-print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.1.2 10
+print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.1.3 10
 svg = astro.render_chart_part(payload, "wheel")
 ```
 
@@ -159,7 +159,7 @@ This is the same instant as the UTC example. Coordinates do not infer a timezone
 
 ## Actual payload example
 
-[Sample request](docs/examples/natal-request.json) · [Actual 1.1.2 response](docs/examples/natal-response.json) · [Geometry example](docs/examples/geometry-request.json).
+[Sample request](docs/examples/natal-request.json) · [Actual 1.1.2 response retained as an example](docs/examples/natal-response.json) · [Geometry example](docs/examples/geometry-request.json).
 
 The envelope contains `schemaVersion`, `engineVersion`, `calculation`, `data`, `warnings` and `errors`. `schemaVersion: "1.0"` identifies the JSON contract, not the package release. Keep source settings with exported data for UI/AI consumers; do not infer a calculation school from the brand or a domain label.
 
@@ -182,7 +182,9 @@ The envelope contains `schemaVersion`, `engineVersion`, `calculation`, `data`, `
 
 ## Verification and releases
 
-1.1.2 adds a Python Linux x64 wheel; calculation code, APIs and schemas remain unchanged from 1.1.1. Release evidence includes 339 shared conformance cases across bindings, Python 3.10/3.13 and Node 18/24 across macOS ARM64/Linux x64, plus fresh public-registry installations. [The 1.1.2 report and checksums](docs/release-1.1.2.md) identify the exact source and tested scope.
+**1.1.3 is a licensing packaging update.** It is the first registry release to include `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` and the updated `NOTICE`, making the scoped additional MIT permission available to package consumers. Whole-package metadata remains `AGPL-3.0-only`; APIs, calculation algorithms, ABI and schemas are unchanged. [The 1.1.3 record](docs/release-1.1.3.md) distinguishes required checks from finalized evidence.
+
+The earlier **1.1.2** release added a Python Linux x64 wheel. Its evidence includes 339 shared conformance cases across bindings, Python 3.10/3.13 and Node 18/24 across macOS ARM64/Linux x64, plus fresh public-registry installations. [The unchanged 1.1.2 report and checksums](docs/release-1.1.2.md) retain that release's exact source, results and tested scope.
 
 Davison was introduced in 1.1.0; optional metadata in 1.1.1. [CHANGELOG](CHANGELOG.md) retains history. Formula documents explain the current implementation, not a new algorithm release or universal agreement between astrology traditions.
 
@@ -198,8 +200,8 @@ Sidereal/ayanamsa, topocentric natal, progression/return charts, Browser WASM an
 
 ## License and provenance
 
-The public combined native distribution uses **AGPL-3.0-only**. Original 7mlabs-owned contributions identified in the [permission scope](LICENSE-SCOPE.md) and [inventory](LICENSE-SCOPE.json) additionally carry a [separate MIT permission](LICENSE-7MLABS-MIT), including the precisely identified original 7mlabs changes to Swiss source. This does not license Swiss code/data or the entire combined binary under MIT. Professional holders need appropriate Swiss permission for their actual use under their own agreement; We have not confirmed that the existing prebuilt binaries can automatically be used under Professional.
+The public combined native distribution uses **AGPL-3.0-only**. Original 7mlabs-owned contributions identified in the [permission scope](LICENSE-SCOPE.md) and [inventory](LICENSE-SCOPE.json) additionally carry a [separate MIT permission](LICENSE-7MLABS-MIT), including the precisely identified original 7mlabs changes to Swiss source. This does not license Swiss code/data or the entire combined binary under MIT. Professional holders need appropriate Swiss permission for their actual use under their own agreement; we have not confirmed that the existing prebuilt binaries can automatically be used under Professional.
 
 [English licensing guide](docs/license.en.md) · [Giải thích tiếng Việt](docs/license.md) · [Full AGPL](LICENSE) · [NOTICE](NOTICE) · [Pinned Swiss provenance](neutral-engine/crates/astro-provider-swiss/PROVENANCE.md).
 
-Already published **1.1.2 archives are unchanged**, with no repackaging or version change from this source update. Algorithms, APIs and calling conventions are unchanged.
+**1.1.3** carries the additional permission and scope files in the installation packages; that permission covers only inventoried contributions. Already published **1.1.2 archives are unchanged** and are not overwritten or repackaged. The separately granted MIT rights for covered revisions remain in effect; shipping the files in 1.1.3 does not change Swiss rights.

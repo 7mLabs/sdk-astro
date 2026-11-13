@@ -2,6 +2,10 @@
 
 Permission date: 2026-11-12. Copyright holder: 7mlabs.
 
+Scope inventory revision: 2026-11-13 for SDK 1.1.3. This revision updates
+identified source hashes for release-version metadata; the permission scope
+and previously granted rights remain unchanged.
+
 ## Grant
 
 In addition to the existing AGPL permission, 7mlabs offers the material
@@ -56,8 +60,8 @@ clarification from Swiss where the scope of a modified native build is unclear.
 
 No registry artifact, tag, version, API, calculation or schema is changed by
 this source-level permission. The original 1.1.2 registry archives retain
-their bytes and published notices. A later release is required to ship these
-new companion files through the registries. The separately granted MIT rights
+their bytes and published notices. Release 1.1.3 is the first package release to ship these
+companion files through the registries. The separately granted MIT rights
 apply to the covered source revisions identified here, not to third-party
 material in an old or new archive.
 
