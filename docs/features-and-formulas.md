@@ -174,7 +174,7 @@ Compression runs after calculation. Lossless compact mode can be expanded; scope
 
 ## Examples and source mapping
 
-- [Natal request](examples/natal-request.json), [actual 1.1.2 response](examples/natal-response.json), [geometry request](examples/geometry-request.json).
+- [Natal request](examples/natal-request.json), [actual 1.1.3 response](examples/natal-response.json), [geometry request](examples/geometry-request.json).
 - [Defaults and rules](rules.md).
 - [Sources, verification types and interpretation of evidence](formula-verification.md).
 

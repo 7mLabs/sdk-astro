@@ -87,4 +87,4 @@ Nếu còn lệch, lưu request tối thiểu, response có metadata/warnings, p
 
 Bản 1.1.3 hiện tại đóng kèm quyền MIT bổ sung theo phạm vi, kiểm kê đóng góp và NOTICE cập nhật trong các gói registry. API, thuật toán, default, ABI và schema giữ nguyên; mã phiên bản package/engine tăng lên 1.1.3. Metadata toàn gói native vẫn là AGPL-3.0-only, quyền Swiss theo điều kiện riêng. [Hướng dẫn giấy phép](license.md).
 
-Ngữ cảnh lịch sử: lần làm lại tài liệu ngày 12/11/2026 giải thích triển khai 1.1.2 đã phát hành mà không build hoặc upload lại các gói đó. Response mẫu được sinh bằng gói 1.1.2 đã phát hành, không viết tay tọa độ, và tiếp tục ghi đúng phiên bản thực tế ấy. Tag, archive, run ID và checksum của 1.1.2 giữ nguyên; 1.1.3 có hồ sơ phát hành và kiểm chứng riêng.
+Ngữ cảnh lịch sử: lần làm lại tài liệu ngày 12/11/2026 giải thích triển khai 1.1.2 đã phát hành mà không build hoặc upload lại các gói đó. Response mẫu hiện tại được sinh lại từ request không đổi bằng gói công khai 1.1.3; tọa độ là đầu ra thực của SDK. Kho tài liệu 1.1.2 giữ nguyên ví dụ gốc. Tag, archive, run ID và checksum của 1.1.2 giữ nguyên; 1.1.3 có hồ sơ phát hành và kiểm chứng riêng.

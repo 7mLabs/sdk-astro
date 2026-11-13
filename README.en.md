@@ -159,7 +159,7 @@ This is the same instant as the UTC example. Coordinates do not infer a timezone
 
 ## Actual payload example
 
-[Sample request](docs/examples/natal-request.json) · [Actual 1.1.2 response retained as an example](docs/examples/natal-response.json) · [Geometry example](docs/examples/geometry-request.json).
+[Sample request](docs/examples/natal-request.json) · [Actual response from the public 1.1.3 package](docs/examples/natal-response.json) · [Geometry example](docs/examples/geometry-request.json).
 
 The envelope contains `schemaVersion`, `engineVersion`, `calculation`, `data`, `warnings` and `errors`. `schemaVersion: "1.0"` identifies the JSON contract, not the package release. Keep source settings with exported data for UI/AI consumers; do not infer a calculation school from the brand or a domain label.
 

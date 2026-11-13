@@ -174,7 +174,7 @@ Renderer dùng payload đã tính, không gọi Swiss để “sửa” tọa đ
 
 ## Ví dụ và đối chiếu
 
-- [Request natal](examples/natal-request.json), [response thật 1.1.2](examples/natal-response.json), [request hình học](examples/geometry-request.json).
+- [Request natal](examples/natal-request.json), [response thật 1.1.3](examples/natal-response.json), [request hình học](examples/geometry-request.json).
 - [Quy tắc và cấu hình mặc định](rules.vi.md).
 - [Nguồn, loại kiểm chứng và giới hạn kết luận](formula-verification.vi.md).
 

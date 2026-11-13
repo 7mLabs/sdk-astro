@@ -159,7 +159,7 @@ const payload = astro.calculateFromLocal({
 
 ## Payload thực tế
 
-[Request mẫu](docs/examples/natal-request.json) · [Response thật từ gói 1.1.2, giữ làm ví dụ](docs/examples/natal-response.json) · [Ví dụ hình học](docs/examples/geometry-request.json).
+[Request mẫu](docs/examples/natal-request.json) · [Response thật từ gói công khai 1.1.3](docs/examples/natal-response.json) · [Ví dụ hình học](docs/examples/geometry-request.json).
 
 Envelope gồm `schemaVersion`, `engineVersion`, `calculation`, `data`, `warnings`, `errors`. `schemaVersion: "1.0"` là hợp đồng JSON, không phải phiên bản gói. Giữ cấu hình nguồn cùng dữ liệu khi đưa cho UI/AI; đừng suy trường phái từ tên thương hiệu hay tên nhóm báo cáo.
 
