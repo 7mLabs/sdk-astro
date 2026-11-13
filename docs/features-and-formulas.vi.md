@@ -1,6 +1,6 @@
 <a href="../README.md"><img src="assets/readme/logo-7mlabs.png" width="180" alt="7mlabs — full logo"></a>
 
-# Chức năng và công thức Astro 1.1.2
+# Chức năng và công thức Astro 1.1.3
 
 **Tiếng Việt** · [English](features-and-formulas.md)
 
@@ -8,7 +8,9 @@
 
 ---
 
-Tài liệu mô tả **cách Astro SDK 1.1.2 đang tính**, không thêm phép tính hoặc trường dữ liệu mới. Các đường dẫn bên dưới tính từ envelope thành công; đường dẫn tương đối trong `data` thay đổi theo operation. Tên API/JSON giữ nguyên tiếng Anh.
+Tài liệu mô tả **cách Astro SDK 1.1.3 đang tính**, không thêm phép tính hoặc trường dữ liệu mới. Các đường dẫn bên dưới tính từ envelope thành công; đường dẫn tương đối trong `data` thay đổi theo operation. Tên API/JSON giữ nguyên tiếng Anh.
+
+1.1.3 cập nhật bộ tệp giấy phép trong gói cài đặt; các phép tính, API và schema ở đây giữ nguyên. MIT bổ sung chỉ dành cho phần đóng góp thuộc 7mlabs được kiểm kê; toàn gói native công khai vẫn là AGPL-3.0-only. [Hồ sơ phát hành](release-1.1.3.md) · [Phạm vi giấy phép](license.md).
 
 <details open>
 <summary><strong>Trên trang này</strong></summary>

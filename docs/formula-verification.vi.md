@@ -1,6 +1,6 @@
 <a href="../README.md"><img src="assets/readme/logo-7mlabs.png" width="180" alt="7mlabs — full logo"></a>
 
-# Nguồn và kiểm chứng công thức Astro 1.1.2
+# Nguồn và kiểm chứng công thức Astro 1.1.3
 
 **Tiếng Việt** · [English](formula-verification.md)
 
@@ -8,7 +8,7 @@
 
 ---
 
-Trang này giúp phân biệt **quy ước đã công bố**, **khớp triển khai** và **đối chiếu độc lập**. Không dùng một badge hoặc tên provider để thay thế bằng chứng. Tài liệu áp dụng cho SDK 1.1.2; lần làm lại README không phát hành engine mới.
+Trang này giúp phân biệt **quy ước đã công bố**, **khớp triển khai** và **đối chiếu độc lập**. Không dùng một badge hoặc tên provider để thay thế bằng chứng. Tài liệu áp dụng cho SDK 1.1.3: bản cập nhật đóng gói giấy phép giữ nguyên API, thuật toán và schema. Các bằng chứng của bản trước được ghi rõ là lịch sử.
 
 <details open>
 <summary><strong>Trên trang này</strong></summary>
@@ -62,6 +62,10 @@ Không coi chính sách orb, domain selectors hoặc dignity sign-only của SDK
 
 ## Bằng chứng đã có
 
+[Hồ sơ 1.1.3](release-1.1.3.md) theo dõi kiểm tra trên chính các gói mới. Trạng thái và báo cáo trong hồ sơ đó xác định phần đã hoàn tất; các mốc dưới đây không thay thế kiểm chứng artifact cuối hoặc cài mới từ registry của 1.1.3.
+
+Bằng chứng lịch sử và kiểm thử nguồn:
+
 1. [Báo cáo phát hành 1.1.2](release-1.1.2.md): 12 candidate checks và phát hành npm qua; Linux/macOS, Python 3.10/3.13, Node 18/24; 339 ca conformance trong các consumer cuối. Có cài mới npm/PyPI/NuGet từ kho công khai và checksum cụ thể.
 2. [Báo cáo Davison 64 chart](reviews/2026-11-02-davison/README.md): so với một quy trình lắp ghép Swiss riêng và đối chiếu vị trí/góc bằng Skyfield/JPL. Tách parity cùng provider khỏi đối chiếu provider khác; kết quả chỉ mô tả bộ ca và tolerances trong báo cáo.
 3. [Testing](testing.md) và [test nguồn](../neutral-engine/crates/astro-core/tests/): natal, calendars, các biên hình học, concurrency, response schemas, reports và event search. Các fixture Moon/eclipse có nguồn ghi trong test.
@@ -81,6 +85,6 @@ Nếu còn lệch, lưu request tối thiểu, response có metadata/warnings, p
 
 ## Thay đổi tài liệu và phiên bản
 
-Lần này bổ sung mô tả/ảnh/ví dụ và sửa câu trạng thái cũ. Source tính toán, binding, schemas, manifests và tag v1.1.2 giữ nguyên. Response mẫu được sinh bằng gói 1.1.2 đã phát hành, không viết tay các tọa độ.
+Bản 1.1.3 hiện tại đóng kèm quyền MIT bổ sung theo phạm vi, kiểm kê đóng góp và NOTICE cập nhật trong các gói registry. API, thuật toán, default, ABI và schema giữ nguyên; mã phiên bản package/engine tăng lên 1.1.3. Metadata toàn gói native vẫn là AGPL-3.0-only, quyền Swiss theo điều kiện riêng. [Hướng dẫn giấy phép](license.md).
 
-Không tạo tag mới, không upload lại các gói 1.1.2 và không tăng lên 1.1.3. Source ở main có thể có commit tài liệu sau commit tag; đó không phải thay đổi binary của release.
+Ngữ cảnh lịch sử: lần làm lại tài liệu ngày 12/11/2026 giải thích triển khai 1.1.2 đã phát hành mà không build hoặc upload lại các gói đó. Response mẫu được sinh bằng gói 1.1.2 đã phát hành, không viết tay tọa độ, và tiếp tục ghi đúng phiên bản thực tế ấy. Tag, archive, run ID và checksum của 1.1.2 giữ nguyên; 1.1.3 có hồ sơ phát hành và kiểm chứng riêng.

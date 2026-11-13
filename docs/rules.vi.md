@@ -1,6 +1,6 @@
 <a href="../README.md"><img src="assets/readme/logo-7mlabs.png" width="180" alt="7mlabs — full logo"></a>
 
-# Quy tắc tính Astro 1.1.2
+# Quy tắc tính Astro 1.1.3
 
 **Tiếng Việt** · [English](rules.md)
 
@@ -8,7 +8,7 @@
 
 ---
 
-Đây là mô tả cấu hình và quy ước **SDK 1.1.2 hiện hành**, không tạo một trường phái hay mã rules mới trong payload. Các version của domain, report, facts, provider và tzdb có ý nghĩa riêng; đọc giá trị thực mà response công bố.
+Đây là mô tả cấu hình và quy ước **SDK 1.1.3 hiện hành**, không tạo một trường phái hay mã rules mới trong payload. Các version của domain, report, facts, provider và tzdb có ý nghĩa riêng; đọc giá trị thực mà response công bố.
 
 <details open>
 <summary><strong>Trên trang này</strong></summary>
@@ -90,8 +90,8 @@ F64 nguồn không phải chuỗi độ-phút hiển thị. Giữ JSON number g�
 
 ## Phân phối và tương thích
 
-Bản cập nhật tài liệu giữ **engine/package 1.1.2, envelope 1.0**; không đổi tên hàm, default, schema, wrapper, binary hoặc công thức. Các gói và tag v1.1.2 đã phát hành giữ nguyên; tài liệu trên main có thể được làm rõ sau đó.
+1.1.3 tăng **mã phiên bản engine/package lên 1.1.3, giữ envelope schema 1.0** và đóng kèm bộ tệp quyền MIT theo phạm vi cùng NOTICE cập nhật trong các gói registry. Tên hàm, default, schema, hành vi wrapper, ABI và công thức giữ nguyên so với 1.1.2. Metadata toàn gói vẫn là AGPL-3.0-only; quyền Swiss giữ riêng. Các gói, source snapshot và tag 1.1.2 đã phát hành không bị thay thế. [Hướng dẫn giấy phép](license.md).
 
-Binary hiện có: npm/Python/.NET cho macOS ARM64 và Linux x64; .NET 10, Python ≥3.10, Node ≥18. Linux cần glibc ≥2.38 và libgcc_s.so.1. [Ma trận và cài đặt](../README.md#platforms), [bằng chứng release](release-1.1.2.md).
+Binary hiện có: npm/Python/.NET cho macOS ARM64 và Linux x64; .NET 10, Python ≥3.10, Node ≥18. Linux cần glibc ≥2.38 và libgcc_s.so.1. [Ma trận và cài đặt](../README.md#platforms), [hồ sơ phát hành 1.1.3](release-1.1.3.md).
 
 Browser WASM, Sidereal/ayanamsa, topocentric natal, progression/return charts và targets ngoài ma trận chưa được triển khai. SVG là trình bày, MCP/worker là adapter; không tự mở rộng phạm vi tính toán của core.
