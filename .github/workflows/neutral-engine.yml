@@ -39,7 +39,10 @@ jobs:
           python-version: '3.13'
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '10.0.404'
+          global-json-file: global.json
+      - name: Verify pinned .NET build SDK
+        run: python scripts/check-dotnet-sdk.py
       - name: Source, documentation and metadata checks
         run: |
           python -m compileall -q scripts
@@ -83,6 +86,9 @@ jobs:
           npm install --prefix artifacts/public-baseline-111 --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.1
           BASELINE_ASTRO_MODULE=artifacts/public-baseline-111/node_modules/@7mlabs/astrology node scripts/check-upgrade-compatibility.cjs
           cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-111.json
+          npm install --prefix artifacts/public-baseline-112 --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.2
+          BASELINE_ASTRO_MODULE=artifacts/public-baseline-112/node_modules/@7mlabs/astrology node scripts/check-upgrade-compatibility.cjs
+          cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-112.json
       - name: Fresh consumer installation and parity
         run: python scripts/test-packages.py
       - name: Installed time helpers and SVG service parity
@@ -223,8 +229,8 @@ jobs:
         with:
           name: npm-release
           path: artifacts/npm-release
-      - name: Install published 1.0.2 compatibility baseline
-        run: npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.0.2
+      - name: Install published 1.1.2 compatibility baseline
+        run: npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.2
       - name: Fresh install, repeated-call parity, schema and TypeScript checks
         run: >-
           node scripts/test-npm-release.cjs
@@ -250,10 +256,13 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '10.0.404'
+          global-json-file: global.json
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
+      - name: Verify pinned .NET build SDK
+        run: python scripts/check-dotnet-sdk.py
       - uses: actions/download-artifact@v7
         with:
           name: candidate-darwin-arm64
@@ -321,7 +330,10 @@ jobs:
           python-version: ${{ matrix.python }}
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '10.0.404'
+          global-json-file: global.json
+      - name: Verify pinned .NET build SDK
+        run: python scripts/check-dotnet-sdk.py
       - uses: actions/download-artifact@v7
         with:
           name: managed-release

@@ -1,6 +1,6 @@
 <a href="../README.en.md"><img src="assets/readme/logo-7mlabs.png" width="180" alt="7mlabs — full logo"></a>
 
-# Astro 1.1.2 features and formulas
+# Astro 1.1.3 features and formulas
 
 [Tiếng Việt](features-and-formulas.vi.md) · **English**
 
@@ -8,7 +8,9 @@
 
 ---
 
-This document describes **the current Astro SDK 1.1.2 implementation**. It introduces no new algorithms or payload fields. Paths refer to a successful engine envelope; the structure under `data` depends on the operation. API and JSON identifiers remain English in both documentation languages.
+This document describes **the current Astro SDK 1.1.3 implementation**. It introduces no new algorithms or payload fields. Paths refer to a successful engine envelope; the structure under `data` depends on the operation. API and JSON identifiers remain English in both documentation languages.
+
+1.1.3 updates licensing contents in the packages; it does not change these calculations, public APIs or schemas. The additional MIT permission covers only identified 7mlabs contributions; the complete public native package remains AGPL-3.0-only. [Release record](release-1.1.3.md) · [Licensing scope](license.en.md).
 
 <details open>
 <summary><strong>On this page</strong></summary>

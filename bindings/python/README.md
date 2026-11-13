@@ -8,7 +8,7 @@ as its three development paths.
 ## Installation and platform support
 
 ```sh
-python -m pip install 'sevenmlabs-astrology==1.1.2'
+python -m pip install 'sevenmlabs-astrology==1.1.3'
 ```
 
 This release has wheels for **Python 3.10+ on macOS 11+ Apple Silicon
@@ -127,9 +127,9 @@ envelope. `get_capabilities()` describes the installed engine.
 
 ## Source, documentation and license
 
-This release is **1.1.2**. The matching project source snapshot
+This release is **1.1.3**. The matching project source snapshot
 and build instructions are bundled at
-`sevenmlabs_astrology/source/astro-sdk-1.1.2.tar.gz` inside the wheel.
+`sevenmlabs_astrology/source/astro-sdk-1.1.3.tar.gz` inside the wheel.
 The archive includes the Rust/C engine, Python wrapper, locked dependency
 declarations, embedded data, renderer assets, schemas, tests and dependency
 notices; it excludes credentials and local build outputs.
@@ -142,8 +142,8 @@ contracts and `docs/license.md` for license details. The public repository may
 advance independently; use the bundled snapshot to reproduce this wheel.
 
 The public combined SDK/native-renderer distribution uses **AGPL-3.0-only**,
-choosing Swiss Ephemeris's AGPL route. In source revisions carrying the grant,
-identified original 7mlabs-owned contributions additionally have a separate MIT
+choosing Swiss Ephemeris's AGPL route. This 1.1.3 package includes the grant
+and scope files. Identified original 7mlabs-owned contributions additionally have a separate MIT
 permission, including only the original 7mlabs changes identified by the Swiss
 provenance diff. This does not license the entire modified Swiss file, Swiss
 data or combined native binary under MIT. See the [permission scope](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-SCOPE.md),
@@ -152,8 +152,11 @@ data or combined native binary under MIT. See the [permission scope](https://git
 Professional holders need Swiss permission covering their actual use; we have not confirmed that existing
 prebuilt binaries can automatically be used under Professional.
 License texts and third-party notices remain applicable; upstream font and
-dependency terms are retained. Already published **1.1.2 wheels and their source
-snapshots are unchanged**; they retain their included `LICENSE` and `NOTICE`.
-The additional source grant does not say those wheels have been repackaged.
+dependency terms are retained. 1.1.3 is the first registry release to include
+`LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` and the updated
+`NOTICE`, including those files in the bundled corresponding-source snapshot.
+Whole-package metadata remains `AGPL-3.0-only`; APIs, calculation algorithms,
+ABI and schemas are unchanged. Already published **1.1.2 wheels and their source
+snapshots remain unchanged**. See the [1.1.3 release record](https://github.com/7mLabs/sdk-astro/blob/main/docs/release-1.1.3.md) for evidence and scope.
 
-Davison was introduced in SDK 1.1.0 and remains available in 1.1.2 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.2/docs/davison.md).
+Davison was introduced in SDK 1.1.0 and remains available in 1.1.3 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.3/docs/davison.md).

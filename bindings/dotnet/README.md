@@ -6,7 +6,7 @@ conversion and modular SVG charts, using the shared 7mlabs Astro engine.
 ## Install and supported runtimes
 
 ```sh
-dotnet add package SevenMLabs.Astrology --version 1.1.2
+dotnet add package SevenMLabs.Astrology --version 1.1.3
 ```
 
 The managed assembly targets **.NET 10 (`net10.0`)**. The public package includes
@@ -77,13 +77,20 @@ available services. Native output is freed by the wrapper.
 
 ## Documentation and license
 
+The corresponding source and build scripts for this package are in the matching
+`v1.1.3` source release. Use that snapshot to reproduce this native/managed combination.
+
+Source builds use .NET SDK **10.0.404**, selected exactly by the repository's
+`global.json`; `python3 scripts/check-dotnet-sdk.py` verifies the compiler SDK.
+This build pin does not raise the installed package's .NET 10 runtime requirement.
+
 [Repository](https://github.com/7mlabs/sdk-astro) ·
 [API contracts](https://github.com/7mlabs/sdk-astro/blob/main/docs/time-and-svg.md) ·
 [1.0 release contract](https://github.com/7mlabs/sdk-astro/blob/main/docs/release-1.0.md)
 
 The public combined SDK/native-renderer distribution uses **AGPL-3.0-only**,
-choosing Swiss Ephemeris's AGPL route. In source revisions carrying the grant,
-identified original 7mlabs-owned contributions additionally have a separate MIT
+choosing Swiss Ephemeris's AGPL route. This 1.1.3 package includes the grant
+and scope files. Identified original 7mlabs-owned contributions additionally have a separate MIT
 permission, including only the original 7mlabs changes identified by the Swiss
 provenance diff. It does not license the entire modified Swiss file, Swiss data
 or the combined native binary under MIT. See the [permission scope](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-SCOPE.md),
@@ -92,8 +99,12 @@ or the combined native binary under MIT. See the [permission scope](https://gith
 Professional holders need Swiss permission covering their actual use; we have not confirmed that existing
 prebuilt binaries can automatically be used under Professional.
 Full license text, NOTICE and upstream dependency/font notices remain applicable.
-Already published **1.1.2 packages are unchanged**. Their corresponding source
-and build scripts remain in the matching `v1.1.2` source release; the additional
-source grant does not say those packages have been repackaged.
+1.1.3 is the first registry release to include `LICENSE-7MLABS-MIT`,
+`LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` and the updated `NOTICE` alongside the
+existing AGPL and third-party texts. Whole-package metadata remains
+`AGPL-3.0-only`; APIs, calculation algorithms, ABI and schemas are unchanged.
+Already published **1.1.2 packages remain unchanged**; their corresponding source
+and build scripts remain in the matching `v1.1.2` source release. See the
+[1.1.3 release record](https://github.com/7mLabs/sdk-astro/blob/main/docs/release-1.1.3.md) for evidence and scope.
 
-Davison was introduced in SDK 1.1.0 and remains available in 1.1.2 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.2/docs/davison.md).
+Davison was introduced in SDK 1.1.0 and remains available in 1.1.3 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.3/docs/davison.md).

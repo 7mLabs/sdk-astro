@@ -1,8 +1,14 @@
 # Python Linux x64 wheel
 
-SDK 1.1.2 adds a Python 3.10+ Linux x64 wheel. The Python API, astronomical
-algorithms, JSON schemas, defaults and ABI remain unchanged; engineVersion and
-package versions advance to 1.1.2. The existing macOS ARM64 wheel is retained.
+SDK 1.1.2 introduced the Python 3.10+ Linux x64 wheel alongside macOS ARM64.
+The current **1.1.3** release retains that target matrix and updates the bundled
+licensing files: additional MIT permission for identified 7mlabs-owned code,
+its explicit scope/inventory and the updated NOTICE. The public combined native
+package remains AGPL-3.0-only; Swiss retains its separate terms.
+
+The Python API, astronomical algorithms, JSON schemas, defaults and ABI remain
+unchanged from 1.1.2. Package/engine identifiers advance to 1.1.3; envelope schema
+remains 1.0. [Licensing guide](license.en.md).
 
 ## Supported host
 
@@ -13,7 +19,7 @@ Alpine/musl, Ubuntu 22.04 or Debian 12 wheel. The minimum glibc matches the
 existing Linux npm and NuGet distributions; it does not expand their targets.
 
 ```sh
-python3 -m pip install --only-binary=:all: sevenmlabs-astrology==1.1.2
+python3 -m pip install --only-binary=:all: sevenmlabs-astrology==1.1.3
 python3 -c "import sevenmlabs_astrology as a; print(a.__version__)"
 ```
 
@@ -50,9 +56,9 @@ asset in the coordinated release.
 - Fresh-install the exact final Linux wheel on Python 3.10 and 3.13.
 - Compare 339 shared cases, local/IANA time conversion, extended points, SVG,
   JSON models and both Davison variants with final npm and NuGet artifacts.
-- Compare unchanged calls with public 1.1.1, 1.1.0 and 1.0.2; ignore only the
+- Compare unchanged calls with public 1.1.2, 1.1.1, 1.1.0 and 1.0.2; ignore only the
   version marker and the previously documented legacy differences.
-- Verify target tags, RECORD, native/source hashes and license notices before
+- Verify target tags, RECORD, native/source hashes, scoped MIT files and license notices before
   publication. Run the Python README and sample against the installed wheel.
 
-Release evidence is recorded in [the 1.1.2 release notes](release-1.1.2.md).
+Current checks and final evidence belong to [the 1.1.3 release record](release-1.1.3.md). [The original 1.1.2 report](release-1.1.2.md) retains the historical wheel-introduction results and checksums; those results do not by themselves verify a newly built 1.1.3 wheel.

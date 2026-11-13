@@ -3,7 +3,7 @@
   "copyrightHolder": "7mlabs",
   "permission": "MIT",
   "permissionDate": "2026-11-12",
-  "sourceBaseCommit": "726e7d6b54a15a7dc5b146d5932b29242683c225",
+  "sourceBaseCommit": "b1f70c4feef6e40a4592eae89a7ef1ecadb64fc6",
   "scopePolicy": "Only original copyrightable contributions owned by 7mlabs; not an MIT license for the combined native distribution. See LICENSE-SCOPE.md.",
   "mitTextSha256": "2d09db0537773bdff508996e665357e61b72be8d85e59b8e0abf7106ad07a70e",
   "originalFiles": [
@@ -25,7 +25,7 @@
     },
     {
       "path": "bindings/python/sevenmlabs_astrology/__init__.py",
-      "sha256": "955669a60e15c8a9d5d59d7748efca642fdcf98bdd98b6fa903bf201551454bf"
+      "sha256": "ba93df8808a9799d0dba4175f946ab57f1cacff8edfc09125657dd3ee1d0a422"
     },
     {
       "path": "examples/c/main.c",
@@ -33,7 +33,7 @@
     },
     {
       "path": "examples/dotnet/Example.csproj",
-      "sha256": "d172fdc1f15ee4bc315560982a4ce02b14b1f81bd691ad69a2b1a565e1542ba9"
+      "sha256": "bbba682cebab0cf1aac67f3fb3c4d0b12031558ae676ab072a5c7932678eb2d0"
     },
     {
       "path": "examples/dotnet/Program.cs",
@@ -197,7 +197,7 @@
     },
     {
       "path": "neutral-engine/Cargo.toml",
-      "sha256": "7896108e628d439d9b2db868958a4b8beedf8deed420df181b86adc351b7c806"
+      "sha256": "6f9300d6e8e960b148e3a1965930fb1e8cd3a208ed5e23143925a380269c8810"
     },
     {
       "path": "neutral-engine/crates/astro-core/Cargo.toml",
@@ -777,7 +777,7 @@
     },
     {
       "path": "third-party/rust/manifest.json",
-      "sha256": "ee789b0b9d560614089dbd6556366d6b15f4f38efe6493d398cdafb2210961a8"
+      "sha256": "787c7417e04ec70b0271c16f2af7bcb398d34b96e11d92f52826a891c1f8ccb2"
     },
     {
       "path": "third-party/rust/num-traits-0.2.19-LICENSE-APACHE",
@@ -982,5 +982,6 @@
   ],
   "separatelyLicensed": [
     "examples/frontend/ui/LICENSE"
-  ]
+  ],
+  "scopeRevisionDate": "2026-11-13"
 }

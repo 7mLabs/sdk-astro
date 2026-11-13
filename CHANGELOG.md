@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.3 — scoped 7mlabs MIT permission in packages
+
+- Ship the additional standard MIT text, explicit 7mlabs contribution inventory, permission-scope guide and updated NOTICE in the registry packages and corresponding-source archives for the first time. Preserve the original AGPL text, Swiss provenance and all third-party notices.
+- Retain `AGPL-3.0-only` for the complete public native package. The separate MIT permission covers only identified 7mlabs-owned contributions; Swiss code/data and combined-distribution rights remain subject to their own terms.
+- Keep public APIs, calling conventions, calculation algorithms, default payload fields, ABI and schema version unchanged; advance only package/engine release identifiers. Reuse the existing macOS ARM64/Linux x64 target matrix.
+- Refresh Vietnamese/English README, binding documentation and licensing guides. Preserve all historical 1.1.2 artifacts and release evidence.
+- Pin the .NET build SDK to 10.0.404 with exact SDK selection, so a newer SDK preinstalled on a runner cannot change the managed assembly's compiler. Keep the full cross-platform assembly identity gate.
+- Track candidate, publication and public-install evidence in [the 1.1.3 release record](docs/release-1.1.3.md); no new compatibility claim is inferred merely from the license-file update.
+
 ## 1.1.2 — Python Linux x64 packaging
 
 - Add an audited Python 3.10+ Linux x64 wheel for glibc 2.38+ alongside macOS ARM64. Keep calculation algorithms, existing APIs and default JSON contracts unchanged.

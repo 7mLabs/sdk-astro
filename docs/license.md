@@ -10,6 +10,8 @@
 - **Swiss Ephemeris:** giữ giấy phép kép của upstream: AGPL hoặc Swiss Ephemeris Professional. MIT của 7mlabs không cấp thay quyền của Swiss.
 - **Phần mềm kết hợp với Swiss:** phải có quyền phù hợp cho tất cả thành phần. Giấy phép MIT của một phần không tự miễn AGPL cho cả binary kết hợp.
 
+**SDK 1.1.3** là lần đầu bộ tệp `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` và `NOTICE` cập nhật được đóng kèm đồng bộ trong các gói registry cùng corresponding source. Metadata của toàn gói vẫn là `AGPL-3.0-only`. Xem [hồ sơ phát hành 1.1.3](release-1.1.3.md) để phân biệt kiểm tra dự kiến và bằng chứng đã chốt.
+
 Các gói npm/PyPI/NuGet **1.1.2 đã phát hành giữ nguyên bytes, nội dung giấy phép và bằng chứng phát hành**. Quyền MIT được mô tả ở đây là quyền bổ sung cho phần đóng góp được xác định trong revision source có các tệp cấp quyền; không phải tuyên bố các archive 1.1.2 đã được đóng gói lại hay trở thành MIT.
 
 ## Bản đồ giấy phép
@@ -51,7 +53,7 @@ Hợp đồng Swiss công khai được kiểm tra ngày **12/11/2026** là bả
 
 ## Đóng gói và tính tương thích
 
-`LICENSE` và metadata của gói native kết hợp tiếp tục ghi `AGPL-3.0-only`; chúng không được đổi thành `MIT` hoặc `AGPL-3.0-only OR MIT` cho cả gói. Các tệp MIT/phạm vi được cung cấp thêm để nhận diện quyền riêng cho phần đóng góp thuộc 7mlabs. Giữ toàn văn AGPL, `NOTICE`, Swiss notices, provenance và giấy phép phụ thuộc đi cùng các gói/source archive mới được chuẩn bị theo chính sách này.
+`LICENSE` và metadata của gói native kết hợp tiếp tục ghi `AGPL-3.0-only`; chúng không được đổi thành `MIT` hoặc `AGPL-3.0-only OR MIT` cho cả gói. Từ 1.1.3, các tệp MIT/phạm vi và `NOTICE` cập nhật đi cùng các gói cài đặt và source archive để nhận diện quyền riêng cho phần đóng góp thuộc 7mlabs. Giữ toàn văn AGPL, `NOTICE`, Swiss notices, provenance và giấy phép phụ thuộc đi cùng các gói/source archive mới được chuẩn bị theo chính sách này.
 
 Việc bổ sung quyền không đổi hàm, thuật toán, JSON, ABI hay cách gọi SDK; không yêu cầu người dùng sửa code. Không có cơ chế nhập hoặc kiểm tra khóa Professional trong SDK. Giấy phép là quyền sử dụng; việc chạy được một lệnh không chứng minh đã có đủ quyền.
 

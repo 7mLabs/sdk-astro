@@ -1,6 +1,6 @@
 <a href="../README.en.md"><img src="assets/readme/logo-7mlabs.png" width="180" alt="7mlabs — full logo"></a>
 
-# Astro 1.1.2 calculation rules
+# Astro 1.1.3 calculation rules
 
 [Tiếng Việt](rules.vi.md) · **English**
 
@@ -8,7 +8,7 @@
 
 ---
 
-These are the effective conventions of **SDK 1.1.2**, not a new astrology school or a new payload rules ID. Domain, report, facts, provider and tzdb versions have separate meanings; read the values actually returned.
+These are the effective conventions of **SDK 1.1.3**, not a new astrology school or a new payload rules ID. Domain, report, facts, provider and tzdb versions have separate meanings; read the values actually returned.
 
 <details open>
 <summary><strong>On this page</strong></summary>
@@ -90,8 +90,8 @@ Source f64 numbers differ from display degree/minute strings. Keep original numb
 
 ## Distribution and compatibility
 
-This documentation refresh retains **engine/package 1.1.2 and envelope 1.0**. Function names, defaults, schemas, wrappers, binaries and calculation algorithms are unchanged. Published packages and tag v1.1.2 remain immutable; main-branch documentation can be clarified later.
+1.1.3 advances the **engine/package identifier to 1.1.3 while envelope schema stays 1.0**. It adds the scoped 7mlabs MIT permission files and updated NOTICE to registry packages. Function names, defaults, schemas, wrapper behavior, ABI and calculation algorithms are unchanged from 1.1.2. Whole-package metadata remains AGPL-3.0-only; Swiss rights remain separate. Published 1.1.2 packages, source snapshots and tag stay immutable. [Licensing guide](license.en.md).
 
-npm/Python/.NET binaries cover macOS ARM64 and Linux x64; .NET 10, Python ≥3.10 and Node ≥18. Linux requires glibc ≥2.38 and libgcc_s.so.1. [Installation matrix](../README.en.md#platforms), [release evidence](release-1.1.2.md).
+npm/Python/.NET binaries cover macOS ARM64 and Linux x64; .NET 10, Python ≥3.10 and Node ≥18. Linux requires glibc ≥2.38 and libgcc_s.so.1. [Installation matrix](../README.en.md#platforms), [1.1.3 release record](release-1.1.3.md).
 
 Browser WASM, Sidereal/ayanamsa, topocentric natal, progression/return charts and other binary targets are not implemented. SVG is presentation and MCP/workers are adapters, not automatic extensions of calculation scope.

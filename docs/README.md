@@ -1,8 +1,8 @@
 <a href="../README.md"><img src="assets/readme/logo-7mlabs.png" width="180" alt="7mlabs"></a>
 
-# Tài liệu Astro SDK 1.1.2
+# Tài liệu Astro SDK 1.1.3
 
-[README tiếng Việt](../README.md) · [English README](../README.en.md) · [Tài liệu web](https://7mlabs.com/astro/sdk/docs/1.1.2/overview/)
+[README tiếng Việt](../README.md) · [English README](../README.en.md) · [Tài liệu web](https://7mlabs.com/astro/sdk/docs/1.1.3/overview/)
 
 ## Bắt đầu từ đây
 
@@ -22,10 +22,10 @@
 
 ## Ví dụ và phát hành
 
-[Request natal](examples/natal-request.json) · [Response thật 1.1.2](examples/natal-response.json) · [Geometry](examples/geometry-request.json) · [Báo cáo và checksum 1.1.2](release-1.1.2.md) · [Lịch sử thay đổi](../CHANGELOG.md).
+[Request natal](examples/natal-request.json) · [Response thật 1.1.2](examples/natal-response.json) · [Geometry](examples/geometry-request.json) · [Hồ sơ phát hành 1.1.3](release-1.1.3.md) · [Báo cáo và checksum lịch sử 1.1.2](release-1.1.2.md) · [Lịch sử thay đổi](../CHANGELOG.md).
 
-Các tệp release/review mô tả đúng thời điểm của chúng. Các số alpha/phiên bản cũ trong ghi chú lịch sử không xác định version SDK hiện hành. Các contract dùng lại trong 1.1.2 không có nghĩa mọi API đều được thêm mới trong bản này. Các bộ quy tắc riêng giữ ID/version trong payload; tài liệu không tự nâng chúng.
+Các tệp release/review mô tả đúng thời điểm của chúng. Các số alpha/phiên bản cũ trong ghi chú lịch sử không xác định version SDK hiện hành. Các contract dùng lại trong 1.1.3 không có nghĩa mọi API đều được thêm mới trong bản này. Các bộ quy tắc riêng giữ ID/version trong payload; tài liệu không tự nâng chúng.
 
 ## Giấy phép theo thành phần
 
-Bản phân phối native công khai giữ `AGPL-3.0-only`. Revision source mang các tệp cấp quyền còn có [MIT cho phần đóng góp thuộc 7mlabs](../LICENSE-7MLABS-MIT), với [phạm vi](../LICENSE-SCOPE.md) và [kiểm kê](../LICENSE-SCOPE.json) cụ thể. Swiss và các phụ thuộc giữ quyền riêng; không có tuyên bố cả binary là MIT hoặc mọi binary dựng sẵn tự động dùng được theo Professional. Các archive 1.1.2 đã phát hành giữ nguyên. Đọc [hướng dẫn tiếng Việt](license.md) hoặc [English](license.en.md) trước khi chọn cách tích hợp.
+1.1.3 là lần đầu gói registry đóng kèm bộ tệp MIT/phạm vi và `NOTICE` cập nhật. Bản phân phối native công khai giữ `AGPL-3.0-only`. Các phần đóng góp được kiểm kê còn có [MIT cho phần đóng góp thuộc 7mlabs](../LICENSE-7MLABS-MIT), với [phạm vi](../LICENSE-SCOPE.md) và [kiểm kê](../LICENSE-SCOPE.json) cụ thể. Swiss và các phụ thuộc giữ quyền riêng; không có tuyên bố cả binary là MIT hoặc mọi binary dựng sẵn tự động dùng được theo Professional. Các archive 1.1.2 đã phát hành giữ nguyên. Đọc [hướng dẫn tiếng Việt](license.md) hoặc [English](license.en.md) trước khi chọn cách tích hợp.

@@ -1,13 +1,15 @@
 # Cài package và chạy source mẫu
 
-[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+[Astro 1.1.3 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
 
 
-npm `@7mlabs/astrology`, PyPI `sevenmlabs-astrology` và NuGet `SevenMLabs.Astrology` đã public **1.1.2**; cả ba đã được tải về xác minh và cài thử mới. Xem [phạm vi nền tảng và bằng chứng release](release-1.1.2.md). Artifacts local từ builder chỉ chứa binary của host; bản npm/NuGet cuối ghép Mac ARM64 và Linux x64.
+Version của đợt này là **1.1.3** cho npm `@7mlabs/astrology`, PyPI `sevenmlabs-astrology` và NuGet `SevenMLabs.Astrology`. Trạng thái CI, publication và cài mới từ từng registry được ghi trong [hồ sơ phát hành 1.1.3](release-1.1.3.md); không suy ra đã xác minh gói mới từ bằng chứng của bản trước. Artifacts local từ builder chỉ chứa binary của host; bản npm/NuGet cuối ghép Mac ARM64 và Linux x64.
+
+1.1.3 bổ sung bộ tệp MIT/phạm vi và NOTICE cập nhật trong gói cài đặt cùng source tương ứng. MIT chỉ dành cho đóng góp thuộc 7mlabs được kiểm kê; metadata toàn gói vẫn AGPL-3.0-only, Swiss giữ quyền riêng. API, thuật toán, ABI, schema và phạm vi nền tảng giữ nguyên. [Giấy phép tiếng Việt](license.md) · [English](license.en.md).
 
 ## Build từ repo
 
-Yêu cầu máy build: Rust 1.83+, Node 18+/npm, Python 3.10+ với setuptools/wheel, .NET 10 SDK và C compiler. Clone repo, chạy tại root:
+Yêu cầu máy build: Rust 1.83+, Node 18+/npm, Python 3.10+ với setuptools/wheel, .NET SDK **10.0.404** và C compiler. Repo khóa SDK build chính xác trong `global.json`; chạy `python3 scripts/check-dotnet-sdk.py` để kiểm tra. Cấu hình này giúp các runner dùng cùng compiler dù máy có sẵn .NET mới hơn. Đây là yêu cầu dựng source của repo; ứng dụng cài gói vẫn dùng phạm vi .NET 10 đã công bố. Clone repo, chạy tại root:
 
 ```bash
 python3 -m venv artifacts/python-build
@@ -27,9 +29,9 @@ npm install @7mlabs/astrology
 node sample.cjs
 ```
 
-Cập nhật kênh ổn định tường minh bằng `npm install @7mlabs/astrology@latest`. Để pin version, dùng `npm install --save-exact @7mlabs/astrology@1.1.2` và commit lockfile; `npm ci` cài lại theo lockfile.
+Cập nhật kênh ổn định tường minh bằng `npm install @7mlabs/astrology@latest`. Để pin version, dùng `npm install --save-exact @7mlabs/astrology@1.1.3` và commit lockfile; `npm ci` cài lại theo lockfile.
 
-Package npm chứa sẵn addon cho macOS ARM64 và Linux x64/glibc 2.38+. Tarball ổn định đã qua đủ bốn consumer jobs trên hai target với Node 18/24, rồi được xác minh checksum/integrity và cài mới từ registry trên macOS ARM64; Windows, macOS Intel, Linux ARM64 và Alpine/musl chưa hỗ trợ. Consumer không cần Rust/compiler/server hoặc tải binary sau cài đặt. Xem [nền tảng và release evidence](node-release.md). Muốn thử artifact local, thay tên package trong lệnh bằng đường dẫn tuyệt đối tới `.tgz`.
+Package npm chứa sẵn addon cho macOS ARM64 và Linux x64/glibc 2.38+. Gate yêu cầu chính tarball cuối qua bốn consumer jobs trên hai target với Node 18/24, sau đó xác minh checksum/integrity và cài mới từ registry; Windows, macOS Intel, Linux ARM64 và Alpine/musl chưa hỗ trợ. Consumer không cần Rust/compiler/server hoặc tải binary sau cài đặt. Xem [nền tảng và release evidence](node-release.md). Muốn thử artifact local, thay tên package trong lệnh bằng đường dẫn tuyệt đối tới `.tgz`.
 
 ```js
 const { calculate } = require('@7mlabs/astrology');
@@ -46,7 +48,7 @@ Package có TypeScript declarations. `calculate` synchronous, dùng cho natal/ge
 
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install sevenmlabs-astrology==1.1.2
+.venv/bin/python -m pip install sevenmlabs-astrology==1.1.3
 .venv/bin/python sample.py
 ```
 
@@ -59,11 +61,11 @@ result = calculate({"operation": "natal",
 print(result["data"]["placements"])
 ```
 
-Wheel public 1.1.2 hỗ trợ macOS ARM64 và Linux x64/glibc 2.38+, Python 3.10+; đã kiểm tra Python 3.10/3.13 trên cả hai target. Khi cài artifact local, dùng filename wheel theo đúng host. ctypes wrapper tự giải phóng output Rust trong finally.
+Ma trận wheel 1.1.3 giữ macOS ARM64 và Linux x64/glibc 2.38+, Python 3.10+; gate kiểm tra Python 3.10/3.13 trên cả hai target từ chính wheel cuối. Khi cài artifact local, dùng filename wheel theo đúng host. ctypes wrapper tự giải phóng output Rust trong finally.
 
 ## .NET
 
-Thêm SDK vào ứng dụng .NET 10 bằng `dotnet add package SevenMLabs.Astrology --version 1.1.2`. Package gồm Mac ARM64 và Linux x64/glibc 2.38+; không có Windows native binary. Sample `examples/dotnet/Example.csproj` đã có PackageReference đúng tên/version:
+Thêm SDK vào ứng dụng .NET 10 bằng `dotnet add package SevenMLabs.Astrology --version 1.1.3`. Package gồm Mac ARM64 và Linux x64/glibc 2.38+; không có Windows native binary. Sample `examples/dotnet/Example.csproj` đã có PackageReference đúng tên/version:
 
 ```bash
 dotnet restore examples/dotnet/Example.csproj --source https://api.nuget.org/v3/index.json
@@ -118,14 +120,14 @@ Examples từ consumer đã cài: `node composite.cjs`, `python composite.py`, `
 
 Dedicated examples: `node forecast.cjs`, `python forecast.py`, `.NET Example --forecast`. Rust/C và các default sample CLIs nhận raw JSON như trước. Native calculate synchronous; dùng worker cho scans dài trong ứng dụng có UI/event loop.
 
-## Các registry còn lại
+## Bằng chứng registry theo bản phát hành
 
-PyPI/NuGet 1.1.2 đã phát hành, xác minh payload và cài mới thành công. Python public wheel có Mac ARM64 và Linux x64/glibc ≥2.38; .NET public package cần .NET 10 và host Mac ARM64/Linux x64. Rust crates.io chưa phát hành. SDK tính cục bộ, không cần credential hoặc tải ephemeris lúc import.
+Hồ sơ [1.1.2](release-1.1.2.md) giữ bằng chứng lịch sử PyPI/NuGet đã phát hành, xác minh payload và cài mới thành công. Publication và các lượt cài sạch của đợt 1.1.3 phải được ghi riêng trong [hồ sơ 1.1.3](release-1.1.3.md). Python public wheel có Mac ARM64 và Linux x64/glibc ≥2.38; .NET public package cần .NET 10 và host Mac ARM64/Linux x64. Rust crates.io chưa phát hành. SDK tính cục bộ, không cần credential hoặc tải ephemeris lúc import.
 
 ## Bộ nén payload riêng
 
 Dòng version `0.10` thêm `compressPayload`, `expandContext`, `calculateWithContext` trong Node; API tương ứng dạng snake_case trong Python và `Engine.CompressPayload/ExpandContext/CalculateWithContext` trong .NET. Rust/C dùng cùng thuật toán core. Xem [contract và ví dụ](payload-compression.md). Chạy `scripts/test-compression.py` sau kiểm thử cài package, và `scripts/check-compression-bindings.py` để xác minh helper/TypeScript trên SDK đã cài.
 
-## Davison có từ 1.1.0, tiếp tục trong 1.1.2
+## Davison có từ 1.1.0, tiếp tục trong 1.1.3
 
-Operation `davison` hỗ trợ `variant: "uncorrected" | "corrected"` qua cùng API tính toán. Có trong gói 1.1.2; xem [contract và trạng thái kiểm chứng](davison.md).
+Operation `davison` hỗ trợ `variant: "uncorrected" | "corrected"` qua cùng API tính toán. Tiếp tục có trong gói 1.1.3 mà không đổi thuật toán hoặc cách gọi; xem [contract và trạng thái kiểm chứng](davison.md).
