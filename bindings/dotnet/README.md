@@ -80,6 +80,10 @@ available services. Native output is freed by the wrapper.
 The corresponding source and build scripts for this package are in the matching
 `v1.1.3` source release. Use that snapshot to reproduce this native/managed combination.
 
+Source builds use .NET SDK **10.0.404**, selected exactly by the repository's
+`global.json`; `python3 scripts/check-dotnet-sdk.py` verifies the compiler SDK.
+This build pin does not raise the installed package's .NET 10 runtime requirement.
+
 [Repository](https://github.com/7mlabs/sdk-astro) ·
 [API contracts](https://github.com/7mlabs/sdk-astro/blob/main/docs/time-and-svg.md) ·
 [1.0 release contract](https://github.com/7mlabs/sdk-astro/blob/main/docs/release-1.0.md)

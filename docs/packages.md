@@ -9,7 +9,7 @@ Version của đợt này là **1.1.3** cho npm `@7mlabs/astrology`, PyPI `seven
 
 ## Build từ repo
 
-Yêu cầu máy build: Rust 1.83+, Node 18+/npm, Python 3.10+ với setuptools/wheel, .NET 10 SDK và C compiler. Clone repo, chạy tại root:
+Yêu cầu máy build: Rust 1.83+, Node 18+/npm, Python 3.10+ với setuptools/wheel, .NET SDK **10.0.404** và C compiler. Repo khóa SDK build chính xác trong `global.json`; chạy `python3 scripts/check-dotnet-sdk.py` để kiểm tra. Cấu hình này giúp các runner dùng cùng compiler dù máy có sẵn .NET mới hơn. Đây là yêu cầu dựng source của repo; ứng dụng cài gói vẫn dùng phạm vi .NET 10 đã công bố. Clone repo, chạy tại root:
 
 ```bash
 python3 -m venv artifacts/python-build

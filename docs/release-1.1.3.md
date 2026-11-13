@@ -22,6 +22,12 @@ Package and engine release identifiers advance to **1.1.3**. Public APIs, call s
 
 Linux requires glibc 2.38+ and `libgcc_s.so.1`; Ubuntu 24.04 is the build/test baseline. macOS native deployment target is 11.0, with separate language-runtime OS requirements. Windows, Intel Mac, Linux ARM64, Alpine/musl and Browser WASM remain outside this matrix. This table describes release targets, not a claim that final consumers have passed before their reports exist.
 
+The repository pins the source-build .NET SDK to **10.0.404** in `global.json`
+with exact SDK selection. CI logs and verifies the selected SDK before building;
+a newer SDK preinstalled on a hosted runner must not change the compiler. The
+cross-platform managed-assembly API, IL and normalized-PE checks remain enabled.
+Consumers of the NuGet package retain the .NET 10 runtime requirement above.
+
 ## Evidence to finalize
 
 | Evidence | Current record |

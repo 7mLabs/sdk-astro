@@ -39,7 +39,10 @@ jobs:
           python-version: '3.13'
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '10.0.404'
+          global-json-file: global.json
+      - name: Verify pinned .NET build SDK
+        run: python scripts/check-dotnet-sdk.py
       - name: Source, documentation and metadata checks
         run: |
           python -m compileall -q scripts
@@ -253,10 +256,13 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '10.0.404'
+          global-json-file: global.json
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
+      - name: Verify pinned .NET build SDK
+        run: python scripts/check-dotnet-sdk.py
       - uses: actions/download-artifact@v7
         with:
           name: candidate-darwin-arm64
@@ -324,7 +330,10 @@ jobs:
           python-version: ${{ matrix.python }}
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '10.0.404'
+          global-json-file: global.json
+      - name: Verify pinned .NET build SDK
+        run: python scripts/check-dotnet-sdk.py
       - uses: actions/download-artifact@v7
         with:
           name: managed-release
