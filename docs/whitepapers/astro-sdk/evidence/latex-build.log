@@ -1,0 +1,11 @@
+note: Running TeX ...
+warning: main.tex:350: Underfull \hbox (badness 1264) in paragraph at lines 349--350
+warning: main.tex:350: Underfull \hbox (badness 1418) in paragraph at lines 349--350
+note: Rerunning TeX because "main.aux" changed ...
+warning: main.tex:350: Underfull \hbox (badness 1264) in paragraph at lines 349--350
+warning: main.tex:350: Underfull \hbox (badness 1418) in paragraph at lines 349--350
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
+note: Running xdvipdfmx ...
+note: Writing `docs/whitepapers/astro-sdk/latex/main.pdf` (640.259765625 KiB)
+note: Writing `docs/whitepapers/astro-sdk/latex/main.log` (20.201171875 KiB)
+note: Skipped writing 2 intermediate files (use --keep-intermediates to keep them)

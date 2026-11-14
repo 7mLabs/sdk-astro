@@ -1,0 +1,1036 @@
+{
+  "runUtc": "2026-10-22T08:18:54.747157+00:00",
+  "sourceCommit": "cd768d0192cd7e6f7aff266b8ebdb3f8685eeb39",
+  "platform": "macOS-26.1-arm64-arm-64bit",
+  "python": "3.12.14",
+  "rustc": "rustc 1.93.1 (01f6ddf75 2026-02-11) (Homebrew)",
+  "fixtureCount": 17,
+  "roundtripsPassed": 17,
+  "totalInputBytes": 20014085,
+  "totalOutputBytes": 11554591,
+  "aggregateReductionPercent": 42.26770297018325,
+  "medianPerFixtureReductionPercent": 40.1214883732563,
+  "smaller": 15,
+  "larger": 2,
+  "compression": [
+    {
+      "fixture": "composite-result.json",
+      "sha256": "67ba757eff4848d7b47369dc8f74f767bdc391bcfca352396a5b3748f08740d4",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 2206657,
+      "outputBytes": 1374846,
+      "reductionPercent": 37.69552766922997,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 2206657,
+      "expandedNativeBytes": 2206657,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "331b8a4eeb9c6df5b95205990bfc65166743a43d9c01dd25c8a698ffc6b8f8ef",
+      "expandedSha256": "d13be9bff7da982576d011a69d13580e3f95bf10bf1ef22b3793a722bff965ee"
+    },
+    {
+      "fixture": "couple-composite-result.json",
+      "sha256": "7ead5a9991a92fd9572b80620dd4596dd25fdaaa2be21afc35ec87664ada2251",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 4126966,
+      "outputBytes": 2353132,
+      "reductionPercent": 42.98155109588981,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 4126966,
+      "expandedNativeBytes": 4126966,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "eccacd4a7849e3a6aca0b4271fb5a9476b48e51e71c6095939cccf4468ffa3e6",
+      "expandedSha256": "dce60dc698cbfc7a44ccb470f1a745b11756942a49167b33970aff3ad3b44b3a"
+    },
+    {
+      "fixture": "couple-result.json",
+      "sha256": "962e54fdf57ec1263897e0e03cc10b9b601c798aa48dbd9b797b009614566ffc",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 2101342,
+      "outputBytes": 1101529,
+      "reductionPercent": 47.579737139409005,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 2101342,
+      "expandedNativeBytes": 2101342,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "3f849ac77a10c47b087d1c4830bcc8cb759815e22bcb797f6f60227cdcdda5ed",
+      "expandedSha256": "60f8bd594d21440d273547198ad6565796b150df719503e9b94a48268041a5b1"
+    },
+    {
+      "fixture": "custom-composite-result.json",
+      "sha256": "8b782c07a4158982c578e6f17a670580d12f28859fb5b14ff59668dd92a05c6b",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 319866,
+      "outputBytes": 191531,
+      "reductionPercent": 40.1214883732563,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 319866,
+      "expandedNativeBytes": 319866,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "6266717a7fad238ecf1fba4b9c0515c5a0a1a5289838f5d70a2dacfeda66724a",
+      "expandedSha256": "6de72270985f979386396345b716263991fb919ef122d36594c5cc2cf28f2b19"
+    },
+    {
+      "fixture": "custom-couple-result.json",
+      "sha256": "bf812e464502ef9beac13b0ad2ebe123a4e8c867930f4e78d91afded0369f238",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 709819,
+      "outputBytes": 386109,
+      "reductionPercent": 45.60458370373293,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 709819,
+      "expandedNativeBytes": 709819,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "76d6920fb58fda57a289dd8e17eb589d41417c76799fa30457549712d8526a06",
+      "expandedSha256": "477df4570062997a18a95d8ee47feb137ba3673118ea714539b5cc78d4b6d117"
+    },
+    {
+      "fixture": "custom-forecast-result.json",
+      "sha256": "7b4ca799738e95b3e2a2609418c798ff4d15d0c014430ec4cdb94309da9fc7b1",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 411884,
+      "outputBytes": 201689,
+      "reductionPercent": 51.03257227763156,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 411888,
+      "expandedNativeBytes": 411884,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "5dc3406e12714ba36269a8ff55d3ff63186f43ba4c3b0bdd1f3e21055f1def11",
+      "expandedSha256": "0dc7f09bb020a5537fc86da8e1b90a27e9aaee8237ea23f77c4e0809e90cdf33"
+    },
+    {
+      "fixture": "custom-profiles-result.json",
+      "sha256": "816ad3de98da75a68c61eef509fa73ba36c1a6fd9392e229e6f9affc4b08b0b4",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 256206,
+      "outputBytes": 143847,
+      "reductionPercent": 43.85494484906677,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 256206,
+      "expandedNativeBytes": 256206,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "395154847eb33be0fc2cae8e6c24d8210938e4a05d67b64a4e6e5200119d14bf",
+      "expandedSha256": "8f96e4cbf2a567a3c99a572eebf826ec4d4cf40f1deea1a07ce0bcfdfe9c9788"
+    },
+    {
+      "fixture": "events-year-result.json",
+      "sha256": "1b7b700bd03ed7df577b5089ea447ac8f38fb787c63aa296a9f83c6515f6f6bc",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 1264416,
+      "outputBytes": 1054977,
+      "reductionPercent": 16.564089666691974,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 1264438,
+      "expandedNativeBytes": 1264416,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "8db12dbeec9534c3453d0f00c0209bed1820533c5600f0b8e4b1a4bb282250ff",
+      "expandedSha256": "46d46c0778073198e02241539971d275a5eba0a79fc4a4e41ef03ba5afb5a6b5"
+    },
+    {
+      "fixture": "forecast-day-result.json",
+      "sha256": "d44dfa7c957f5248848e8c72bed9e684c304fca49c18531e8b997e74246113d9",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 306138,
+      "outputBytes": 158573,
+      "reductionPercent": 48.202117999072314,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 306145,
+      "expandedNativeBytes": 306138,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "b4629b51a5d42fe66c856d898b3725a9f5e6e89883d7e0e8242e09d2a8d1a472",
+      "expandedSha256": "ed5286d6752004d353aefa867bc01810cf761577f63dc2f53904c38040ae0590"
+    },
+    {
+      "fixture": "forecast-month-result.json",
+      "sha256": "2bbf63b333ce8a609668fe57433a06f7a9fb8dc99478026537c77aee676d4e23",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 4296721,
+      "outputBytes": 2195074,
+      "reductionPercent": 48.91281048967341,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 4296725,
+      "expandedNativeBytes": 4296721,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "499f247d1b3180a24c32e062611492276995218d5a774eef94fd61f72e3b6a98",
+      "expandedSha256": "68296944950c75b29336751833368c0f8253992fc066883a9901d93ccf14ffe1"
+    },
+    {
+      "fixture": "forecast-year-result.json",
+      "sha256": "34abaf0e59cecf34e2f82a3aa4a48fed6b968d07c9ca9c84abb9fd923780346a",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 1828614,
+      "outputBytes": 1062147,
+      "reductionPercent": 41.915188224524144,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 1828621,
+      "expandedNativeBytes": 1828614,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "9520de9db6960afc3cb3675c871a096093675817b598c324ffe57a1a4d5ba8d6",
+      "expandedSha256": "aca4286524e80697e121693f54f9eeef226c90e3b0361ebbc1cf7276fd6a5b0d"
+    },
+    {
+      "fixture": "natal-domains-result.json",
+      "sha256": "fb32dcf0a9c8dcf9a40a73303455a6c0b9c5f294a17fdaec2bd5a1773aea21f0",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 2129952,
+      "outputBytes": 1291076,
+      "reductionPercent": 39.384737308634186,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 2129952,
+      "expandedNativeBytes": 2129952,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "6239926cdc44a7a9d3f61b8025622645bdaf24ea0f5a41ba9546f53ad9d81d75",
+      "expandedSha256": "c8cbaed2019baa9d33acdb5a36ad6074b3acd5b9224127939cd6ea8ec472dfee"
+    },
+    {
+      "fixture": "natal-result.json",
+      "sha256": "f45c546c02b5ee6bf8745dc05dd18b4c800bec1910b82672b2f4bcc1adaaeeac",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 7147,
+      "outputBytes": 5269,
+      "reductionPercent": 26.276759479501887,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 7147,
+      "expandedNativeBytes": 7147,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "1d0d24d6f64a73f5045b94d5838aa839b0c9cb47e6d1edc7bffeba1d3e27c668",
+      "expandedSha256": "f0c4ea698eb16daae21acf89368cf6f23f21ca5c04cc4bc0ce8d0d41ae96b883"
+    },
+    {
+      "fixture": "query-aspects-result.json",
+      "sha256": "db9a8be0b312bc7fe8fbb988545dbe2902224c7e5b1815b1f7a4faf72cdd802a",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 1908,
+      "outputBytes": 2266,
+      "reductionPercent": -18.763102725366878,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 1908,
+      "expandedNativeBytes": 1908,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "47f04e41736c5ab6211b7e1bafebff80d88d1093eae7d7acba16713320cc9b4b",
+      "expandedSha256": "39b4b6446a193b1b9f9bcbd0d4fe228f7f205b34767abe3323130cfec26ac199"
+    },
+    {
+      "fixture": "query-between-result.json",
+      "sha256": "21c046efe171535a3044c6852cdb79ed32ec36edbf8f138aee59f7a6d56fa1aa",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 900,
+      "outputBytes": 1288,
+      "reductionPercent": -43.1111111111111,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 900,
+      "expandedNativeBytes": 900,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "759c53ced05af8ecd733293f47293396b616e23350d9d92fa4b5dd0aebcb7f27",
+      "expandedSha256": "7ce22e7e4fb32e533e90368b80753d7bc599ab16cad843af08ed75f553a5a58f"
+    },
+    {
+      "fixture": "query-houses-result.json",
+      "sha256": "c05b49428494b70cd3d9cb984e1733e38bb06addbb8159d49b02e1b6a66ba07a",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 28666,
+      "outputBytes": 18636,
+      "reductionPercent": 34.989185795018486,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 28666,
+      "expandedNativeBytes": 28666,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "a451ddc90631ded1ec1753211e0d9b7d02efcb264cd067beb6403997b755a1c5",
+      "expandedSha256": "325a2be1005f9526d84039144426959d1293e7c6d8dd94b9647b6b7fb85bf50a"
+    },
+    {
+      "fixture": "query-points-result.json",
+      "sha256": "67e54185749a009f45043b132e73df2e83717057766aff9fe7981a0c5eddaa6b",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 16883,
+      "outputBytes": 12602,
+      "reductionPercent": 25.356867855238995,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true,
+      "sourceLexicalMinifiedBytes": 16883,
+      "expandedNativeBytes": 16883,
+      "expandedBytesMatchInputMetric": true,
+      "coverageComplete": true,
+      "omittedEmpty": true,
+      "contextSha256": "5214ac13e6f6a37c4b2858c5f1dab237571f0aea6ab5a7e6c404054127de3696",
+      "expandedSha256": "6caccdde14217dec514a6cd8ae50cf14f77e5fc43cc175c19bc87f11bfec3f10"
+    }
+  ],
+  "references": [
+    {
+      "case": "1950-6-15 placidus",
+      "request": {
+        "operation": "natal",
+        "utc": {
+          "year": 1950,
+          "month": 6,
+          "day": 15,
+          "hour": 3,
+          "minute": 0
+        },
+        "location": {
+          "latitude": 51.5074,
+          "longitude": -0.1278
+        },
+        "houseSystem": "placidus"
+      },
+      "swiss": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.0,
+        "perBody": [
+          {
+            "body": "sun",
+            "actual": "83.45153318126421",
+            "reference": "83.45153318126421",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "moon",
+            "actual": "77.45498155054392",
+            "reference": "77.45498155054392",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "mercury",
+            "actual": "60.63143295431094",
+            "reference": "60.63143295431094",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "venus",
+            "actual": "45.60513122043134",
+            "reference": "45.60513122043134",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "mars",
+            "actual": "181.2289307824383",
+            "reference": "181.2289307824383",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "jupiter",
+            "actual": "337.22614620677575",
+            "reference": "337.22614620677575",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "saturn",
+            "actual": "163.38407923482413",
+            "reference": "163.38407923482413",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "uranus",
+            "actual": "94.45643918389011",
+            "reference": "94.45643918389011",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "neptune",
+            "actual": "194.60962087328787",
+            "reference": "194.60962087328787",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "pluto",
+            "actual": "136.276764823099",
+            "reference": "136.276764823099",
+            "longitudeErrorDegrees": 0.0
+          }
+        ]
+      },
+      "skyfield": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.00010719615417,
+        "perBody": [
+          {
+            "body": "sun",
+            "actual": "83.45153318126421",
+            "reference": "83.45152343508553",
+            "longitudeErrorDegrees": 9.74617868e-06
+          },
+          {
+            "body": "moon",
+            "actual": "77.45498155054392",
+            "reference": "77.45488397862827",
+            "longitudeErrorDegrees": 9.757191565e-05
+          },
+          {
+            "body": "mercury",
+            "actual": "60.63143295431094",
+            "reference": "60.63142571979313",
+            "longitudeErrorDegrees": 7.23451781e-06
+          },
+          {
+            "body": "venus",
+            "actual": "45.60513122043134",
+            "reference": "45.60512092606401",
+            "longitudeErrorDegrees": 1.029436733e-05
+          },
+          {
+            "body": "mars",
+            "actual": "181.2289307824383",
+            "reference": "181.22893038551484",
+            "longitudeErrorDegrees": 3.9692346e-07
+          },
+          {
+            "body": "jupiter",
+            "actual": "337.22614620677575",
+            "reference": "337.226139406486",
+            "longitudeErrorDegrees": 6.80028975e-06
+          },
+          {
+            "body": "saturn",
+            "actual": "163.38407923482413",
+            "reference": "163.38409730236373",
+            "longitudeErrorDegrees": 1.80675396e-05
+          },
+          {
+            "body": "uranus",
+            "actual": "94.45643918389011",
+            "reference": "94.456470648845",
+            "longitudeErrorDegrees": 3.146495489e-05
+          },
+          {
+            "body": "neptune",
+            "actual": "194.60962087328787",
+            "reference": "194.60968754183048",
+            "longitudeErrorDegrees": 6.666854261e-05
+          },
+          {
+            "body": "pluto",
+            "actual": "136.276764823099",
+            "reference": "136.27665762694483",
+            "longitudeErrorDegrees": 0.00010719615417
+          }
+        ]
+      }
+    },
+    {
+      "case": "2000-1-1 placidus",
+      "request": {
+        "operation": "natal",
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0
+        },
+        "location": {
+          "latitude": 10.8231,
+          "longitude": 106.6297
+        },
+        "houseSystem": "placidus"
+      },
+      "swiss": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.0,
+        "perBody": [
+          {
+            "body": "sun",
+            "actual": "280.3689238651327",
+            "reference": "280.3689238651327",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "moon",
+            "actual": "223.32382484474934",
+            "reference": "223.32382484474934",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "mercury",
+            "actual": "271.8892814035698",
+            "reference": "271.8892814035698",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "venus",
+            "actual": "241.56580329523328",
+            "reference": "241.56580329523328",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "mars",
+            "actual": "327.96331650650734",
+            "reference": "327.96331650650734",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "jupiter",
+            "actual": "25.25303047695292",
+            "reference": "25.25303047695292",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "saturn",
+            "actual": "40.39563887401721",
+            "reference": "40.39563887401721",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "uranus",
+            "actual": "314.8092233733791",
+            "reference": "314.8092233733791",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "neptune",
+            "actual": "303.1929813693768",
+            "reference": "303.1929813693768",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "pluto",
+            "actual": "251.45470899112763",
+            "reference": "251.45470899112763",
+            "longitudeErrorDegrees": 0.0
+          }
+        ]
+      },
+      "skyfield": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 7.165193009e-05,
+        "perBody": [
+          {
+            "body": "sun",
+            "actual": "280.3689238651327",
+            "reference": "280.3689225724006",
+            "longitudeErrorDegrees": 1.2927321e-06
+          },
+          {
+            "body": "moon",
+            "actual": "223.32382484474934",
+            "reference": "223.32380023432404",
+            "longitudeErrorDegrees": 2.46104253e-05
+          },
+          {
+            "body": "mercury",
+            "actual": "271.8892814035698",
+            "reference": "271.8892831534986",
+            "longitudeErrorDegrees": 1.7499288e-06
+          },
+          {
+            "body": "venus",
+            "actual": "241.56580329523328",
+            "reference": "241.5657930850282",
+            "longitudeErrorDegrees": 1.021020508e-05
+          },
+          {
+            "body": "mars",
+            "actual": "327.96331650650734",
+            "reference": "327.9633055563196",
+            "longitudeErrorDegrees": 1.095018774e-05
+          },
+          {
+            "body": "jupiter",
+            "actual": "25.25303047695292",
+            "reference": "25.253086881939037",
+            "longitudeErrorDegrees": 5.6404986117e-05
+          },
+          {
+            "body": "saturn",
+            "actual": "40.39563887401721",
+            "reference": "40.39566304174984",
+            "longitudeErrorDegrees": 2.416773263e-05
+          },
+          {
+            "body": "uranus",
+            "actual": "314.8092233733791",
+            "reference": "314.8091908490416",
+            "longitudeErrorDegrees": 3.25243375e-05
+          },
+          {
+            "body": "neptune",
+            "actual": "303.1929813693768",
+            "reference": "303.1930147957128",
+            "longitudeErrorDegrees": 3.3426336e-05
+          },
+          {
+            "body": "pluto",
+            "actual": "251.45470899112763",
+            "reference": "251.45478064305772",
+            "longitudeErrorDegrees": 7.165193009e-05
+          }
+        ]
+      }
+    },
+    {
+      "case": "2020-2-29 placidus",
+      "request": {
+        "operation": "natal",
+        "utc": {
+          "year": 2020,
+          "month": 2,
+          "day": 29,
+          "hour": 18,
+          "minute": 0
+        },
+        "location": {
+          "latitude": -33.86,
+          "longitude": 151.21
+        },
+        "houseSystem": "placidus"
+      },
+      "swiss": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.0,
+        "perBody": [
+          {
+            "body": "sun",
+            "actual": "340.61472947817174",
+            "reference": "340.61472947817174",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "moon",
+            "actual": "47.18149766510415",
+            "reference": "47.18149766510415",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "mercury",
+            "actual": "333.04114243801746",
+            "reference": "333.04114243801746",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "venus",
+            "actual": "25.15503535999383",
+            "reference": "25.15503535999383",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "mars",
+            "actual": "279.1453251817343",
+            "reference": "279.1453251817343",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "jupiter",
+            "actual": "289.4989190565078",
+            "reference": "289.4989190565078",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "saturn",
+            "actual": "298.14023595296226",
+            "reference": "298.14023595296226",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "uranus",
+            "actual": "33.67973290736387",
+            "reference": "33.67973290736387",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "neptune",
+            "actual": "348.10077796551235",
+            "reference": "348.10077796551235",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "pluto",
+            "actual": "294.2520789751373",
+            "reference": "294.2520789751373",
+            "longitudeErrorDegrees": 0.0
+          }
+        ]
+      },
+      "skyfield": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.00012131835345,
+        "perBody": [
+          {
+            "body": "sun",
+            "actual": "340.61472947817174",
+            "reference": "340.61472551007853",
+            "longitudeErrorDegrees": 3.96809321e-06
+          },
+          {
+            "body": "moon",
+            "actual": "47.18149766510415",
+            "reference": "47.1813763467507",
+            "longitudeErrorDegrees": 0.00012131835345
+          },
+          {
+            "body": "mercury",
+            "actual": "333.04114243801746",
+            "reference": "333.0411309697815",
+            "longitudeErrorDegrees": 1.146823596e-05
+          },
+          {
+            "body": "venus",
+            "actual": "25.15503535999383",
+            "reference": "25.15503188859789",
+            "longitudeErrorDegrees": 3.47139594e-06
+          },
+          {
+            "body": "mars",
+            "actual": "279.1453251817343",
+            "reference": "279.14531665479905",
+            "longitudeErrorDegrees": 8.52693525e-06
+          },
+          {
+            "body": "jupiter",
+            "actual": "289.4989190565078",
+            "reference": "289.49890287498795",
+            "longitudeErrorDegrees": 1.618151985e-05
+          },
+          {
+            "body": "saturn",
+            "actual": "298.14023595296226",
+            "reference": "298.1402507474645",
+            "longitudeErrorDegrees": 1.479450224e-05
+          },
+          {
+            "body": "uranus",
+            "actual": "33.67973290736387",
+            "reference": "33.67973443462941",
+            "longitudeErrorDegrees": 1.52726554e-06
+          },
+          {
+            "body": "neptune",
+            "actual": "348.10077796551235",
+            "reference": "348.1007781787814",
+            "longitudeErrorDegrees": 2.1326905e-07
+          },
+          {
+            "body": "pluto",
+            "actual": "294.2520789751373",
+            "reference": "294.2521193662925",
+            "longitudeErrorDegrees": 4.03911552e-05
+          }
+        ]
+      }
+    },
+    {
+      "case": "2000-1-1 wholeSign",
+      "request": {
+        "operation": "natal",
+        "utc": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 12,
+          "minute": 0
+        },
+        "location": {
+          "latitude": 80,
+          "longitude": 0
+        },
+        "houseSystem": "wholeSign"
+      },
+      "swiss": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.0,
+        "perBody": [
+          {
+            "body": "sun",
+            "actual": "280.3689238651327",
+            "reference": "280.3689238651327",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "moon",
+            "actual": "223.32382484474934",
+            "reference": "223.32382484474934",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "mercury",
+            "actual": "271.8892814035698",
+            "reference": "271.8892814035698",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "venus",
+            "actual": "241.56580329523328",
+            "reference": "241.56580329523328",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "mars",
+            "actual": "327.96331650650734",
+            "reference": "327.96331650650734",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "jupiter",
+            "actual": "25.25303047695292",
+            "reference": "25.25303047695292",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "saturn",
+            "actual": "40.39563887401721",
+            "reference": "40.39563887401721",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "uranus",
+            "actual": "314.8092233733791",
+            "reference": "314.8092233733791",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "neptune",
+            "actual": "303.1929813693768",
+            "reference": "303.1929813693768",
+            "longitudeErrorDegrees": 0.0
+          },
+          {
+            "body": "pluto",
+            "actual": "251.45470899112763",
+            "reference": "251.45470899112763",
+            "longitudeErrorDegrees": 0.0
+          }
+        ]
+      },
+      "skyfield": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 7.165193009e-05,
+        "perBody": [
+          {
+            "body": "sun",
+            "actual": "280.3689238651327",
+            "reference": "280.3689225724006",
+            "longitudeErrorDegrees": 1.2927321e-06
+          },
+          {
+            "body": "moon",
+            "actual": "223.32382484474934",
+            "reference": "223.32380023432404",
+            "longitudeErrorDegrees": 2.46104253e-05
+          },
+          {
+            "body": "mercury",
+            "actual": "271.8892814035698",
+            "reference": "271.8892831534986",
+            "longitudeErrorDegrees": 1.7499288e-06
+          },
+          {
+            "body": "venus",
+            "actual": "241.56580329523328",
+            "reference": "241.5657930850282",
+            "longitudeErrorDegrees": 1.021020508e-05
+          },
+          {
+            "body": "mars",
+            "actual": "327.96331650650734",
+            "reference": "327.9633055563196",
+            "longitudeErrorDegrees": 1.095018774e-05
+          },
+          {
+            "body": "jupiter",
+            "actual": "25.25303047695292",
+            "reference": "25.253086881939037",
+            "longitudeErrorDegrees": 5.6404986117e-05
+          },
+          {
+            "body": "saturn",
+            "actual": "40.39563887401721",
+            "reference": "40.39566304174984",
+            "longitudeErrorDegrees": 2.416773263e-05
+          },
+          {
+            "body": "uranus",
+            "actual": "314.8092233733791",
+            "reference": "314.8091908490416",
+            "longitudeErrorDegrees": 3.25243375e-05
+          },
+          {
+            "body": "neptune",
+            "actual": "303.1929813693768",
+            "reference": "303.1930147957128",
+            "longitudeErrorDegrees": 3.3426336e-05
+          },
+          {
+            "body": "pluto",
+            "actual": "251.45470899112763",
+            "reference": "251.45478064305772",
+            "longitudeErrorDegrees": 7.165193009e-05
+          }
+        ]
+      }
+    }
+  ],
+  "suites": [
+    {
+      "suite": "Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_core-10e70f1959eeef2c)",
+      "status": "ok",
+      "passed": 84,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Running tests/composite_contract.rs (neutral-engine/target/debug/deps/composite_contract-b8209e8766702107)",
+      "status": "ok",
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Running tests/couple_contract.rs (neutral-engine/target/debug/deps/couple_contract-c734d157ddff568c)",
+      "status": "ok",
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Running tests/forecast_contract.rs (neutral-engine/target/debug/deps/forecast_contract-909031049e0ae78b)",
+      "status": "ok",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_engine-7fcf1d07854ca94c)",
+      "status": "ok",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_provider_swiss-8b6505e6cdb60624)",
+      "status": "ok",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Running tests/initialization.rs (neutral-engine/target/debug/deps/initialization-6f4423f1ba943ade)",
+      "status": "ok",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_render_svg-573e2cb822e2a598)",
+      "status": "ok",
+      "passed": 12,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_sdk-61e5d5acea538066)",
+      "status": "ok",
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Running unittests src/lib.rs (neutral-engine/target/debug/deps/astro_time-3f196b81c9e04185)",
+      "status": "ok",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Doc-tests astro_core",
+      "status": "ok",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Doc-tests astro_provider_swiss",
+      "status": "ok",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Doc-tests astro_render_svg",
+      "status": "ok",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Doc-tests astro_sdk",
+      "status": "ok",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "suite": "Doc-tests astro_time",
+      "status": "ok",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "passedTests": 132,
+  "comparatorControls": [
+    "bool-number",
+    "null-bool",
+    "numeric-change",
+    "array-order",
+    "missing-key",
+    "object-order",
+    "number-spelling",
+    "duplicate-key-rejected",
+    "NaN-rejected",
+    "Infinity-rejected"
+  ],
+  "artifactHashes": {
+    "examples/rust/target/debug/astrology-rust-example": "c9aaff8edd073578734cfbd5487f2d3e022d68c1dea090d6f8d3a0c45d0a8a54",
+    "neutral-engine/Cargo.lock": "4a318758a6f70914f25637e556fc3abb4dc624d4eaf329b4a7ce10ed2863d358",
+    "examples/rust/Cargo.lock": "9c8e3123c716ee05dab739f4a1aeaa63e8b5cb46807470171a78d0a0c8e1bb10",
+    "tests/conformance/natal-references.json": "c502b373fd301ee6ddf025c0f7d0ed605c21f77038b3fb7bf26af4866bf9eee1",
+    "docs/whitepapers/astro-sdk/evidence/review-v1.1/recheck.py": "960b18199761f871e7e1001cc4b0150c76b86a9adf893e536aaf49dde6a21e5a",
+    "docs/whitepapers/astro-sdk/evidence/review-v1.1/cargo-test.log": "0d49eb81793db3411d11793f3b4770509b2f1e95ec4740fc6394c7c4c604738d"
+  }
+}

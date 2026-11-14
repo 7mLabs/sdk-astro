@@ -1,0 +1,88 @@
+{
+  "latex": {
+    "pages": 11,
+    "expectedTextUnits": 289,
+    "orderedAllTextUnitsFound": true,
+    "failed": [],
+    "gaps": [
+      {
+        "beforeUnit": 36,
+        "text": "D(E(x))≡xvớimọix∈X.(1)"
+      },
+      {
+        "beforeUnit": 38,
+        "text": "x≡D(E(x))=D(E(y))≡y.(2)"
+      },
+      {
+        "beforeUnit": 44,
+        "text": "∆B=B−C,R=100B−CB=100(1−CB).(3)"
+      },
+      {
+        "beforeUnit": 48,
+        "text": "Rtổng=100∑ni=1(Bi−Ci)∑ni=1Bi=n∑i=1wiRi,wi=Bi∑nj=1Bj.(4)"
+      },
+      {
+        "beforeUnit": 49,
+        "text": "n∑i=1wiRi=n∑i=1Bi∑nj=1Bj100Bi−CiBi=100∑ni=1(Bi−Ci)∑nj=1Bj.(5)"
+      },
+      {
+        "beforeUnit": 54,
+        "text": "δ=|a−b|mod360◦,d(a,b)=min(δ,360◦−δ).(6)"
+      }
+    ],
+    "verifiedRepeatedTableHeaders": [
+      {
+        "beforeUnit": 257,
+        "text": "ThuậtngữNghĩatrongphạmvibài"
+      }
+    ]
+  },
+  "word_render": {
+    "pages": 12,
+    "expectedTextUnits": 289,
+    "orderedAllTextUnitsFound": true,
+    "failed": [],
+    "gaps": [
+      {
+        "beforeUnit": 36,
+        "text": "D(E(x))≡xvớimọix∈X.(1)"
+      },
+      {
+        "beforeUnit": 38,
+        "text": "x≡D(E(x))=D(E(y))≡y.(2)"
+      },
+      {
+        "beforeUnit": 44,
+        "text": "ΔB=B−C,R=100×B−CB=100×(1−CB).(3)"
+      },
+      {
+        "beforeUnit": 48,
+        "text": "Rtổng=100×∑i=1n(Bi−Ci)∑i=1nBi=∑i=1nwiRi,wi=Bi∑j=1nBj.(4)"
+      },
+      {
+        "beforeUnit": 49,
+        "text": "∑i=1nwiRi=∑i=1nBi∑j=1nBj×100×Bi−CiBi=100×∑i=1n(Bi−Ci)∑j=1nBj.(5)"
+      },
+      {
+        "beforeUnit": 54,
+        "text": "δ=|a−b|mod360°,d(a,b)=min(δ,360°−δ).(6)"
+      }
+    ],
+    "verifiedRepeatedTableHeaders": [
+      {
+        "beforeUnit": 81,
+        "text": "BướcCôngviệccủaSDKĐiềuvẫncầnkiểmtra"
+      },
+      {
+        "beforeUnit": 236,
+        "text": "NhómSốcađạt"
+      }
+    ]
+  },
+  "officeMathCount": 6,
+  "sha256": {
+    "Paper Astro SDK 7MLabs.pdf": "4f73084ad4ab24b65cc9b3bce5bcb5c35b9d361e1f5bd023f13130b37282f915",
+    "Paper Astro SDK 7MLabs.docx": "e7422753375f8bec6100d87d7b74ed81c3c60e5e2d74eab1a602e386063faa20",
+    "latex/main.tex": "4d9b6fc840e10a39c11b07a485201524058e738249edf1940900027439bf6d21"
+  }
+}

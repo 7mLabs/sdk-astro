@@ -1,0 +1,185 @@
+{
+  "scope": "Reanalysis of archived raw outputs and source files; no new product run or new astronomical oracle",
+  "sourceHashesMatch": {
+    "examples/rust/target/debug/astrology-rust-example": true,
+    "neutral-engine/Cargo.lock": true,
+    "examples/rust/Cargo.lock": true,
+    "tests/conformance/natal-references.json": true,
+    "docs/whitepapers/astro-sdk/evidence/review-v1.1/recheck.py": true,
+    "docs/whitepapers/astro-sdk/evidence/review-v1.1/cargo-test.log": true
+  },
+  "compression": [
+    {
+      "fixture": "composite-result.json",
+      "B": 2206657,
+      "C": 1374846,
+      "R": "37.69552766922997094700263793"
+    },
+    {
+      "fixture": "couple-composite-result.json",
+      "B": 4126966,
+      "C": 2353132,
+      "R": "42.98155109588981348525769294"
+    },
+    {
+      "fixture": "couple-result.json",
+      "B": 2101342,
+      "C": 1101529,
+      "R": "47.57973713940900624458084405"
+    },
+    {
+      "fixture": "custom-composite-result.json",
+      "B": 319866,
+      "C": 191531,
+      "R": "40.12148837325630107607560666"
+    },
+    {
+      "fixture": "custom-couple-result.json",
+      "B": 709819,
+      "C": 386109,
+      "R": "45.60458370373292346358719617"
+    },
+    {
+      "fixture": "custom-forecast-result.json",
+      "B": 411884,
+      "C": 201689,
+      "R": "51.03257227763156616911557623"
+    },
+    {
+      "fixture": "custom-profiles-result.json",
+      "B": 256206,
+      "C": 143847,
+      "R": "43.85494484906676658626261680"
+    },
+    {
+      "fixture": "events-year-result.json",
+      "B": 1264416,
+      "C": 1054977,
+      "R": "16.56408966669197479310606636"
+    },
+    {
+      "fixture": "forecast-day-result.json",
+      "B": 306138,
+      "C": 158573,
+      "R": "48.20211799907231379312597587"
+    },
+    {
+      "fixture": "forecast-month-result.json",
+      "B": 4296721,
+      "C": 2195074,
+      "R": "48.91281048967340444026968472"
+    },
+    {
+      "fixture": "forecast-year-result.json",
+      "B": 1828614,
+      "C": 1062147,
+      "R": "41.91518822452414779718409681"
+    },
+    {
+      "fixture": "natal-domains-result.json",
+      "B": 2129952,
+      "C": 1291076,
+      "R": "39.38473730863418518351587266"
+    },
+    {
+      "fixture": "natal-result.json",
+      "B": 7147,
+      "C": 5269,
+      "R": "26.27675947950188890443542745"
+    },
+    {
+      "fixture": "query-aspects-result.json",
+      "B": 1908,
+      "C": 2266,
+      "R": "-18.76310272536687631027253669"
+    },
+    {
+      "fixture": "query-between-result.json",
+      "B": 900,
+      "C": 1288,
+      "R": "-43.11111111111111111111111111"
+    },
+    {
+      "fixture": "query-houses-result.json",
+      "B": 28666,
+      "C": 18636,
+      "R": "34.98918579501848880206516431"
+    },
+    {
+      "fixture": "query-points-result.json",
+      "B": 16883,
+      "C": 12602,
+      "R": "25.35686785523899780844636617"
+    }
+  ],
+  "totalB": 20014085,
+  "totalC": 11554591,
+  "reduction": "42.26770297018324844728100235",
+  "median": "40.12148837325630107607560666",
+  "min": "-43.11111111111111111111111111",
+  "max": "51.03257227763156616911557623",
+  "referenceChecks": [
+    {
+      "case": "1950-6-15 placidus",
+      "source": "swiss",
+      "pairs": 10,
+      "maxDegrees": "0E-14"
+    },
+    {
+      "case": "1950-6-15 placidus",
+      "source": "skyfield",
+      "pairs": 10,
+      "maxDegrees": "0.00010719615417"
+    },
+    {
+      "case": "2000-1-1 placidus",
+      "source": "swiss",
+      "pairs": 10,
+      "maxDegrees": "0E-13"
+    },
+    {
+      "case": "2000-1-1 placidus",
+      "source": "skyfield",
+      "pairs": 10,
+      "maxDegrees": "0.00007165193009"
+    },
+    {
+      "case": "2020-2-29 placidus",
+      "source": "swiss",
+      "pairs": 10,
+      "maxDegrees": "0E-14"
+    },
+    {
+      "case": "2020-2-29 placidus",
+      "source": "skyfield",
+      "pairs": 10,
+      "maxDegrees": "0.00012131835345"
+    },
+    {
+      "case": "2000-1-1 wholeSign",
+      "source": "swiss",
+      "pairs": 10,
+      "maxDegrees": "0E-13"
+    },
+    {
+      "case": "2000-1-1 wholeSign",
+      "source": "skyfield",
+      "pairs": 10,
+      "maxDegrees": "0.00007165193009"
+    }
+  ],
+  "testCountFromLog": 132,
+  "citationIds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ]
+}

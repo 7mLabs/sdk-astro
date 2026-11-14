@@ -1,0 +1,306 @@
+{
+  "sourceCommit": "cd768d0192cd7e6f7aff266b8ebdb3f8685eeb39",
+  "platform": "macOS-26.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "rustc": "rustc 1.93.1 (01f6ddf75 2026-02-11) (Homebrew)",
+  "cargo": "cargo 1.93.1 (Homebrew)",
+  "fixtureCount": 17,
+  "roundtripsPassed": 17,
+  "totalInputBytes": 20014085,
+  "totalOutputBytes": 11554591,
+  "compression": [
+    {
+      "fixture": "composite-result.json",
+      "sha256": "67ba757eff4848d7b47369dc8f74f767bdc391bcfca352396a5b3748f08740d4",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 2206657,
+      "outputBytes": 1374846,
+      "reductionPercent": 37.69552766922997,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "couple-composite-result.json",
+      "sha256": "7ead5a9991a92fd9572b80620dd4596dd25fdaaa2be21afc35ec87664ada2251",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 4126966,
+      "outputBytes": 2353132,
+      "reductionPercent": 42.98155109588981,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "couple-result.json",
+      "sha256": "962e54fdf57ec1263897e0e03cc10b9b601c798aa48dbd9b797b009614566ffc",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 2101342,
+      "outputBytes": 1101529,
+      "reductionPercent": 47.579737139409005,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "custom-composite-result.json",
+      "sha256": "8b782c07a4158982c578e6f17a670580d12f28859fb5b14ff59668dd92a05c6b",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 319866,
+      "outputBytes": 191531,
+      "reductionPercent": 40.1214883732563,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "custom-couple-result.json",
+      "sha256": "bf812e464502ef9beac13b0ad2ebe123a4e8c867930f4e78d91afded0369f238",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 709819,
+      "outputBytes": 386109,
+      "reductionPercent": 45.60458370373293,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "custom-forecast-result.json",
+      "sha256": "7b4ca799738e95b3e2a2609418c798ff4d15d0c014430ec4cdb94309da9fc7b1",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 411884,
+      "outputBytes": 201689,
+      "reductionPercent": 51.03257227763156,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "custom-profiles-result.json",
+      "sha256": "816ad3de98da75a68c61eef509fa73ba36c1a6fd9392e229e6f9affc4b08b0b4",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 256206,
+      "outputBytes": 143847,
+      "reductionPercent": 43.85494484906677,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "events-year-result.json",
+      "sha256": "1b7b700bd03ed7df577b5089ea447ac8f38fb787c63aa296a9f83c6515f6f6bc",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 1264416,
+      "outputBytes": 1054977,
+      "reductionPercent": 16.564089666691974,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "forecast-day-result.json",
+      "sha256": "d44dfa7c957f5248848e8c72bed9e684c304fca49c18531e8b997e74246113d9",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 306138,
+      "outputBytes": 158573,
+      "reductionPercent": 48.202117999072314,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "forecast-month-result.json",
+      "sha256": "2bbf63b333ce8a609668fe57433a06f7a9fb8dc99478026537c77aee676d4e23",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 4296721,
+      "outputBytes": 2195074,
+      "reductionPercent": 48.91281048967341,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "forecast-year-result.json",
+      "sha256": "34abaf0e59cecf34e2f82a3aa4a48fed6b968d07c9ca9c84abb9fd923780346a",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 1828614,
+      "outputBytes": 1062147,
+      "reductionPercent": 41.915188224524144,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "natal-domains-result.json",
+      "sha256": "fb32dcf0a9c8dcf9a40a73303455a6c0b9c5f294a17fdaec2bd5a1773aea21f0",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 2129952,
+      "outputBytes": 1291076,
+      "reductionPercent": 39.384737308634186,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "natal-result.json",
+      "sha256": "f45c546c02b5ee6bf8745dc05dd18b4c800bec1910b82672b2f4bcc1adaaeeac",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 7147,
+      "outputBytes": 5269,
+      "reductionPercent": 26.276759479501887,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "query-aspects-result.json",
+      "sha256": "db9a8be0b312bc7fe8fbb988545dbe2902224c7e5b1815b1f7a4faf72cdd802a",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 1908,
+      "outputBytes": 2266,
+      "reductionPercent": -18.763102725366878,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "query-between-result.json",
+      "sha256": "21c046efe171535a3044c6852cdb79ed32ec36edbf8f138aee59f7a6d56fa1aa",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 900,
+      "outputBytes": 1288,
+      "reductionPercent": -43.1111111111111,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "query-houses-result.json",
+      "sha256": "c05b49428494b70cd3d9cb984e1733e38bb06addbb8159d49b02e1b6a66ba07a",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 28666,
+      "outputBytes": 18636,
+      "reductionPercent": 34.989185795018486,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    },
+    {
+      "fixture": "query-points-result.json",
+      "sha256": "67e54185749a009f45043b132e73df2e83717057766aff9fe7981a0c5eddaa6b",
+      "sourceVersion": "0.10.0-alpha.1",
+      "inputBytes": 16883,
+      "outputBytes": 12602,
+      "reductionPercent": 25.356867855238995,
+      "roundtrip": true,
+      "nativeOutputBytesMatch": true
+    }
+  ],
+  "references": [
+    {
+      "case": "1950-6-15 placidus",
+      "swiss": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.0
+      },
+      "skyfield": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.00010719615417542627
+      }
+    },
+    {
+      "case": "2000-1-1 placidus",
+      "swiss": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.0
+      },
+      "skyfield": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 7.165193008518145e-05
+      }
+    },
+    {
+      "case": "2020-2-29 placidus",
+      "swiss": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.0
+      },
+      "skyfield": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.00012131835345030595
+      }
+    },
+    {
+      "case": "2000-1-1 wholeSign",
+      "swiss": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 0.0
+      },
+      "skyfield": {
+        "n": 10,
+        "maxLongitudeErrorDegrees": 7.165193008518145e-05
+      }
+    }
+  ],
+  "tests": [
+    [
+      84,
+      0,
+      0
+    ],
+    [
+      9,
+      0,
+      0
+    ],
+    [
+      9,
+      0,
+      0
+    ],
+    [
+      6,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      12,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ]
+}
