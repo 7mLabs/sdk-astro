@@ -62,7 +62,7 @@ pub fn resolve_birth_time_json(text: &str) -> String {
     }
 }
 
-/// Accept a local birth at the root, personA/personB, or birth (forecast/query).
+/// Resolve local time at the input path for the selected operation.
 /// UTC-only callers keep using astro_core::calculate_json without this helper.
 pub fn calculate_from_local_json(text: &str) -> String {
     match input(text, astro_core::MAX_REQUEST_BYTES) {
@@ -76,13 +76,16 @@ pub fn calculate_from_local_json(text: &str) -> String {
     root.entry("operation".into())
         .or_insert_with(|| RawValue::from_string("\"natal\"".into()).unwrap());
     let operation = serde_json::from_str::<String>(root["operation"].get()).unwrap_or_default();
-    let paths:Vec<&str>=match operation.as_str() {
-        "natal"|"natalDomains"=>vec![""],"couple"|"composite"|"davison"=>vec!["personA","personB"],
-        "forecast"|"query"=>vec!["birth"],_=>return astro_core::error_json("UNSUPPORTED_LOCAL_OPERATION","Local-time calculation supports natal, natalDomains, couple, composite, davison, forecast and birth-based query"),
+    let paths: &[&str] = match operation.as_str() {
+        "natal" | "natalDomains" => &[""],
+        "couple" | "composite" | "davison" => &["personA", "personB"],
+        "forecast" | "query" => &["birth"],
+        "horary" => &["moment"],
+        _ => return astro_core::error_json("UNSUPPORTED_LOCAL_OPERATION", "Local-time calculation supports natal, natalDomains, couple, composite, davison, forecast, horary and birth-based query"),
     };
     let mut resolutions = serde_json::Map::new();
     let mut warnings = vec![];
-    for path in paths {
+    for &path in paths {
         let mut object = if path.is_empty() {
             std::mem::take(&mut root)
         } else {
@@ -193,7 +196,7 @@ pub fn render_chart_svg_json(text: &str) -> String {
 pub fn capabilities_json(_: &str) -> String {
     result(
         "sdk-capabilities",
-        json!({"abiVersion":1,"civilTime":{"iana":true,"tzdbVersion":bundled_tzdb_version(),"explicitOffsetSeconds":true,"ambiguousTime":"reject by default; earlier/later opt-in","nonexistentTime":"reject"},"svg":{"rendererVersion":astro_render_svg::RENDERER_VERSION,"details":["basic","advanced","professional"],"charts":["natal","A","B","C","synastry","transits"],"selfContained":true,"customZodiacSymbols":true,"customPlanetSymbols":true,"aspectColorGroups":["harmonious","challenging","neutral","minor","other"],"displayOverrides":true,"parts":["wheel","positions","houses","aspectMatrix","aspects","houseFocus"],"modelVersion":"1.0","houseFocus":true},"additionalPoints":{"operations":["natal","natalDomains"],"ids":["chiron","trueNorthNode","trueSouthNode","meanNorthNode","meanSouthNode","meanLilith","osculatingLilith"],"presets":["standard","all"],"embeddedChiron":true},"browserWasm":false}),
+        json!({"abiVersion":1,"civilTime":{"iana":true,"tzdbVersion":bundled_tzdb_version(),"explicitOffsetSeconds":true,"ambiguousTime":"reject by default; earlier/later opt-in","nonexistentTime":"reject"},"svg":{"rendererVersion":astro_render_svg::RENDERER_VERSION,"details":["basic","advanced","professional"],"charts":["natal","A","B","C","synastry","transits","horary"],"selfContained":true,"customZodiacSymbols":true,"customPlanetSymbols":true,"aspectColorGroups":["harmonious","challenging","neutral","minor","other"],"displayOverrides":true,"parts":["wheel","positions","houses","aspectMatrix","aspects","houseFocus"],"modelVersion":"1.0","houseFocus":true},"additionalPoints":{"operations":["natal","natalDomains"],"ids":["chiron","trueNorthNode","trueSouthNode","meanNorthNode","meanSouthNode","meanLilith","osculatingLilith"],"presets":["standard","all"],"embeddedChiron":true},"browserWasm":false}),
         json!([]),
     )
 }

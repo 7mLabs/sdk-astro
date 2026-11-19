@@ -6,8 +6,8 @@ const previousPath=path.resolve(process.env.BASELINE_ASTRO_MODULE||'artifacts/pu
 const currentPath=path.resolve(process.env.ASTRO_ENGINE_MODULE||path.join(root,'bindings/node'));
 const previous=require(previousPath),current=require(currentPath);
 const baselineVersion=require(path.join(previousPath,'package.json')).version;
-assert(['1.0.2','1.1.0','1.1.1','1.1.2'].includes(baselineVersion));
-const strictBaseline=baselineVersion==='1.1.2';
+assert(['1.0.2','1.1.0','1.1.1','1.1.2','1.1.3'].includes(baselineVersion));
+const strictBaseline=['1.1.2','1.1.3'].includes(baselineVersion);
 const additions=[];
 const extraFields=new Set(['operation','chartKind','inputProvenance','rulershipRulesVersion','houseAssignment','sourceBirth']);
 const normalizeMessage=s=>s.replaceAll('`includeMetadata`, ','').replaceAll(', `includeMetadata`','').replaceAll('`sourceContext`, ','').replaceAll(', `sourceContext`','').replaceAll('`otherSourceContext`, ','').replaceAll(', `otherSourceContext`','').replaceAll('GeometryInput','Request');
@@ -24,6 +24,11 @@ function compare(a,b,where='') {
 }
 const cases=JSON.parse(fs.readFileSync(path.join(root,'tests/conformance/cases.json')));
 for(const test of cases){const raw=test.rawRequest||JSON.stringify(test.request);compare(JSON.parse(previous.calculateJson(raw)),JSON.parse(current.calculateJson(raw)),test.name);}
+const davisonVariants = baselineVersion === '1.0.2' ? [] : ['corrected', 'uncorrected'];
+for (const variant of davisonVariants) {
+  const raw = fs.readFileSync(path.join(root, 'examples', `davison-${variant}-request.json`), 'utf8');
+  compare(JSON.parse(previous.calculateJson(raw)), JSON.parse(current.calculateJson(raw)), `davison/${variant}`);
+}
 const helpers=[['geometry','normalize',{longitude:-10}],['geometry','separation',{longitude1:350,longitude2:10}],['geometry','midpoint',{longitude1:350,longitude2:10}],['houses','locate',{longitude:350,houseCusps:Array.from({length:12},(_,i)=>i*30)}]];
 for(const [group,action,input]of helpers)compare(previous[group][action](input),current[group][action](input),`${group}.${action}`);
 const local={operation:'natalDomains',local:{year:1995,month:6,day:15,hour:14,minute:30},timeZone:'Asia/Ho_Chi_Minh',location:{latitude:10.8231,longitude:106.6297},additionalPoints:'all',domains:['love']};
@@ -34,5 +39,5 @@ compare(previous.buildChartModel(a,options),current.buildChartModel(b,options),'
 // Pass the identical legacy payload so embedded metadata cannot differ by version.
 assert.equal(current.renderChartSvg(a,options),previous.renderChartSvg(a,options),'legacy SVG');
 compare(previous.resolveBirthTime({local:local.local,timeZone:local.timeZone}),current.resolveBirthTime({local:local.local,timeZone:local.timeZone}),'resolveBirthTime');
-const report={result:'passed',baseline:baselineVersion,candidate:require(path.join(currentPath,'package.json')).version,platform:process.platform,arch:process.arch,cases:cases.length,helpers:helpers.length,services:['calculateFromLocal','resolveBirthTime','SVG','model','compression roundtrip'],strictBaseline,ignoredFields:['engineVersion'],addedMetadataPaths:[...new Set(additions)],angularCorrections};
+const report={result:'passed',baseline:baselineVersion,candidate:require(path.join(currentPath,'package.json')).version,platform:process.platform,arch:process.arch,cases:cases.length,davisonVariants,helpers:helpers.length,services:['calculateFromLocal','resolveBirthTime','SVG','model','compression roundtrip'],strictBaseline,ignoredFields:['engineVersion'],addedMetadataPaths:[...new Set(additions)],angularCorrections};
 fs.mkdirSync(path.join(root,'artifacts'),{recursive:true});fs.writeFileSync(path.join(root,'artifacts/upgrade-compatibility.json'),JSON.stringify(report,null,2)+'\n');fs.writeFileSync(path.join(root,'artifacts/public-compatibility.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

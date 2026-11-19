@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:7mlabs:astrology:horary-response:1.0",
+  "title": "Horary indicators for a question",
+  "type": "object",
+  "required": ["schemaVersion", "engineVersion", "data", "warnings", "errors"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "engineVersion": { "type": "string" },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "errors": {
+      "type": "array",
+      "items": { "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/error" }
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["calculation"],
+      "properties": {
+        "calculation": { "$ref": "#/$defs/calculation" },
+        "data": {
+          "type": "object",
+          "required": ["chart", "significators", "voidOfCourseMoon"],
+          "properties": {
+            "chart": { "$ref": "#/$defs/chart" },
+            "significators": {
+              "type": "object",
+              "required": ["querent", "quesited", "moonBodyId"],
+              "properties": {
+                "querent": {
+                  "$ref": "#/$defs/significator", "type": "object",
+                  "properties": { "houseNumber": { "const": 1 } }
+                },
+                "quesited": { "$ref": "#/$defs/significator" },
+                "moonBodyId": { "const": "moon" }
+              }
+            },
+            "voidOfCourseMoon": { "$ref": "#/$defs/moonCourse" }
+          }
+        },
+        "errors": { "const": [] }
+      }
+    },
+    {
+      "type": "object",
+      "properties": { "data": { "type": "null" }, "errors": { "type": "array", "minItems": 1 } }
+    }
+  ],
+  "$defs": {
+    "classicalBody": { "enum": ["sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn"] },
+    "majorAngle": { "enum": [0, 60, 90, 120, 180] },
+    "sign": { "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/placement/properties/sign" },
+    "calculation": {
+      "type": "object",
+      "required": [
+        "operation", "scope", "chartKind", "provider", "providerVersion", "ephemeris", "zodiac", "coordinates",
+        "positionType", "referenceFrame", "calendar", "inputTimeScale", "houseTimeScale", "planetTimeScale",
+        "timeModel", "julianDayTt", "julianDayUt1", "angleUnit", "speedUnit", "distanceUnit", "houseSystem",
+        "houseOrder", "ruleset", "rulesetVersion", "rulership", "bodyIds", "aspectRules"
+      ],
+      "properties": {
+        "operation": { "const": "horary" }, "scope": { "const": "horary-indicators" }, "chartKind": { "const": "horary" },
+        "provider": { "const": "swiss-ephemeris" }, "providerVersion": { "type": "string" }, "ephemeris": { "const": "moshier" },
+        "zodiac": { "const": "tropical" }, "coordinates": { "const": "geocentric" },
+        "positionType": { "const": "apparent" }, "referenceFrame": { "const": "ecliptic-of-date" },
+        "calendar": { "const": "gregorian" }, "inputTimeScale": { "const": "UTC" },
+        "houseTimeScale": { "const": "UT1" }, "planetTimeScale": { "const": "TT" },
+        "timeModel": { "type": "string" }, "julianDayTt": { "type": "number" }, "julianDayUt1": { "type": "number" },
+        "angleUnit": { "const": "degrees" }, "speedUnit": { "const": "degrees/day" }, "distanceUnit": { "const": "AU" },
+        "houseSystem": { "$ref": "urn:7mlabs:astrology:horary-request:1.0#/$defs/houseSystem" },
+        "houseOrder": { "enum": ["increasingLongitude", "decreasingLongitude"], "description": "Ecliptic longitude direction from house 1 through house 12, wrapping at 0 degrees." },
+        "ruleset": { "const": "western-traditional-v1" }, "rulesetVersion": { "const": 1 }, "rulership": { "const": "traditional" },
+        "bodyIds": { "const": ["sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn"] },
+        "aspectRules": { "const": [
+          { "angle": 0, "maxOrb": 8 }, { "angle": 60, "maxOrb": 6 }, { "angle": 90, "maxOrb": 8 },
+          { "angle": 120, "maxOrb": 8 }, { "angle": 180, "maxOrb": 8 }
+        ] }
+      },
+      "if": { "properties": { "houseOrder": { "const": "decreasingLongitude" } } },
+      "then": { "properties": { "houseSystem": { "const": "regiomontanus" } } }
+    },
+    "chart": {
+      "type": "object",
+      "required": ["utc", "location", "houseCusps", "houses", "placements", "angles", "aspects"],
+      "properties": {
+        "utc": { "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/utc" },
+        "location": { "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/location" },
+        "houseCusps": { "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/natal/properties/houseCusps" },
+        "houses": {
+          "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/natal/properties/houses",
+          "type": "array",
+          "items": { "type": "object", "required": ["rulerBodyId"], "properties": { "rulerBodyId": { "$ref": "#/$defs/classicalBody" } } }
+        },
+        "angles": { "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/natal/properties/angles" },
+        "placements": {
+          "type": "array", "minItems": 7, "maxItems": 7,
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/bodyPlacement",
+            "type": "object", "properties": { "id": { "$ref": "#/$defs/classicalBody" } }
+          }
+        },
+        "aspects": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:7mlabs:astrology:natal-domains-response:1.0#/$defs/natalAspect",
+            "type": "object",
+            "properties": {
+              "body1": { "$ref": "#/$defs/classicalBody" }, "body2": { "$ref": "#/$defs/classicalBody" },
+              "angle": { "$ref": "#/$defs/majorAngle" }
+            }
+          }
+        }
+      }
+    },
+    "significator": {
+      "type": "object",
+      "required": ["houseNumber", "cuspLongitude", "cuspSign", "rulerBodyId"],
+      "properties": {
+        "houseNumber": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "cuspLongitude": { "type": "number", "minimum": 0, "exclusiveMaximum": 360 },
+        "cuspSign": { "$ref": "#/$defs/sign" }, "rulerBodyId": { "$ref": "#/$defs/classicalBody" }
+      }
+    },
+    "moonCourse": {
+      "type": "object",
+      "required": ["isVoidOfCourse", "method", "currentSign", "nextIngress", "nextAspect"],
+      "properties": {
+        "method": { "const": "exactMajorAspectBeforeNextSignIngress" },
+        "currentSign": { "$ref": "#/$defs/sign" },
+        "nextIngress": {
+          "type": "object",
+          "required": ["utc", "julianDayUt1", "toSign"],
+          "properties": {
+            "utc": { "$ref": "urn:7mlabs:astrology:events-response:1.0#/$defs/utc" },
+            "julianDayUt1": { "type": "number" }, "toSign": { "$ref": "#/$defs/sign" }
+          }
+        }
+      },
+      "oneOf": [
+        { "type": "object", "properties": { "isVoidOfCourse": { "const": true }, "nextAspect": { "type": "null" } } },
+        {
+          "type": "object",
+          "properties": {
+            "isVoidOfCourse": { "const": false },
+            "nextAspect": {
+              "type": "object",
+              "required": ["utc", "julianDayUt1", "otherBodyId", "angle"],
+              "properties": {
+                "utc": { "$ref": "urn:7mlabs:astrology:events-response:1.0#/$defs/utc" },
+                "julianDayUt1": { "type": "number" },
+                "otherBodyId": { "enum": ["sun", "mercury", "venus", "mars", "jupiter", "saturn"] },
+                "angle": { "$ref": "#/$defs/majorAngle" }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

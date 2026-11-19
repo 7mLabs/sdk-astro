@@ -150,6 +150,48 @@ export interface DavisonResult extends Omit<NatalDomainsResult, 'calculation' | 
     customDomains: Record<string, DomainView<'davisonRelationship'>>;
   };
 }
+/** Revisions identify a fixed set of horary rules across SDK upgrades. */
+export type HoraryRuleset = 'western-traditional-v1';
+export type HoraryHouseSystem = 'regiomontanus' | NonNullable<BirthInput['houseSystem']>;
+export type HoraryHouseOrder = 'increasingLongitude' | 'decreasingLongitude';
+export type HoraryBodyId = Exclude<NatalBodyId, 'uranus' | 'neptune' | 'pluto'>;
+export type HoraryAspectAngle = 0 | 60 | 90 | 120 | 180;
+export type HoraryHouseNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export interface HoraryMoment extends Pick<BirthInput, 'utc' | 'location'> {
+  /** Defaults to regiomontanus for horary. */
+  houseSystem?: HoraryHouseSystem;
+}
+export interface HoraryRequest {
+  operation: 'horary'; moment: HoraryMoment; quesitedHouse: HoraryHouseNumber;
+  /** Omission selects western-traditional-v1. */
+  ruleset?: HoraryRuleset;
+}
+export interface HorarySignificator {
+  houseNumber: HoraryHouseNumber; cuspLongitude: number; cuspSign: string; rulerBodyId: HoraryBodyId;
+}
+interface HoraryEventTime { utc: Required<NatalRequest['utc']>; julianDayUt1: number; }
+export type HoraryMoonCourse = {
+  method: 'exactMajorAspectBeforeNextSignIngress'; currentSign: string;
+  nextIngress: HoraryEventTime & { toSign: string };
+} & (
+  | { isVoidOfCourse: true; nextAspect: null }
+  | { isVoidOfCourse: false; nextAspect: HoraryEventTime & { otherBodyId: Exclude<HoraryBodyId, 'moon'>; angle: HoraryAspectAngle } }
+);
+export interface HoraryResult extends Omit<Result, 'calculation' | 'data'> {
+  calculation: Omit<BasicNatalCalculation, 'scope' | 'houseSystem'> & {
+    operation: 'horary'; scope: 'horary-indicators'; chartKind: 'horary'; houseSystem: HoraryHouseSystem;
+    houseOrder: HoraryHouseOrder; ruleset: HoraryRuleset; rulesetVersion: 1; rulership: 'traditional'; bodyIds: HoraryBodyId[];
+  };
+  data: {
+    chart: Omit<NatalData, 'additionalPoints' | 'placements' | 'aspects' | 'houses'> & {
+      houses: Array<House & { rulerBodyId: HoraryBodyId }>;
+      placements: Array<Placement & { id: HoraryBodyId }>;
+      aspects: Array<Aspect & { body1: HoraryBodyId; body2: HoraryBodyId; angle: HoraryAspectAngle }>;
+    };
+    significators: { querent: HorarySignificator; quesited: HorarySignificator; moonBodyId: 'moon' };
+    voidOfCourseMoon: HoraryMoonCourse;
+  };
+}
 /** Fixed civil UTC offset; no IANA timezone conversion or DST inference. */
 export type ForecastPeriod =
   | { kind: 'day'; year: number; month: number; day: number; utcOffsetMinutes?: number; }
@@ -194,8 +236,8 @@ export type QueryRequest = GeometryNormalizeRequest | GeometrySeparationRequest 
   | AspectsBetweenRequest | HousesLocateRequest | AspectsInspectRequest | PointsInspectRequest | HousesInspectRequest;
 export type Request = GeometryRequest | NatalRequest | NatalDomainsRequest | CoupleRequest | CompositeRequest
   | EventsRequest | ForecastRequest | QueryRequest;
-/** All operations including Davison. Request retains the 1.0.x union for source compatibility. */
-export type CalculationRequest = Request | DavisonRequest;
+/** All operations. Request retains the 1.0.x union for source compatibility. */
+export type CalculationRequest = Request | DavisonRequest | HoraryRequest;
 export interface House { number: number; longitude: number; sign: string; degreeInSign: number; }
 export interface Placement {
   latitude?: number; distanceAu?: number;
@@ -806,6 +848,7 @@ export function calculate(input: CoupleRequest & { composite: CompositeOptions; 
 export function calculate(input: CoupleRequest): CoupleResult;
 export function calculate(input: CompositeRequest): CompositeResult;
 export function calculate(input: DavisonRequest): DavisonResult;
+export function calculate(input: HoraryRequest): HoraryResult;
 export function calculate(input: NatalDomainsRequest): NatalDomainsResult;
 /** Synchronous local calculation; validation errors throw with .code and .result. */
 export function calculate(input: GeometryRequest | NatalRequest | NatalDomainsRequest): Result;
@@ -886,6 +929,7 @@ export type CalculationResultFor<R extends CalculationRequest> =
   R extends CoupleRequest ? CoupleResult :
   R extends CompositeRequest ? CompositeResult :
   R extends DavisonRequest ? DavisonResult :
+  R extends HoraryRequest ? HoraryResult :
   R extends NatalDomainsRequest ? NatalDomainsResult : Result;
 export function calculateWithContext<R extends CalculationRequest>(input: R, options?: CompressionOptions): {
   result: CalculationResultFor<R>;
@@ -914,7 +958,8 @@ type LocalRequestFor<R> = R extends { utc: CivilTime } ? Omit<R, 'utc'> & BirthT
   R extends { birth: BirthInput } ? Omit<R, 'birth'> & { birth: LocalBirthInput } : never;
 export type LocalCalculationRequest = LocalRequestFor<Request>;
 export type LocalDavisonRequest = LocalRequestFor<DavisonRequest>;
-export type AllLocalCalculationRequest = LocalCalculationRequest | LocalDavisonRequest;
+export type LocalHoraryRequest = Omit<HoraryRequest, 'moment'> & { moment: Omit<HoraryMoment, 'utc'> & BirthTimeInput };
+export type AllLocalCalculationRequest = LocalCalculationRequest | LocalDavisonRequest | LocalHoraryRequest;
 export type WithTimeResolution<T extends { calculation: object }> = T & {
   calculation: T['calculation'] & { timeResolution: Record<string, ResolvedBirthTime> };
 };
@@ -923,6 +968,7 @@ export function resolveBirthTime(input: BirthTimeInput): ResolvedBirthTime;
 export function resolveBirthTimeJson(inputJson: string): string;
 export function calculateFromLocal(input: Omit<NatalRequest, 'utc' | 'operation'> & BirthTimeInput & { operation?: 'natal' }): WithTimeResolution<Result>;
 export function calculateFromLocal(input: LocalDavisonRequest): WithTimeResolution<DavisonResult>;
+export function calculateFromLocal(input: LocalHoraryRequest): WithTimeResolution<HoraryResult>;
 export function calculateFromLocal<R extends AllLocalCalculationRequest>(input: R): WithTimeResolution<CalculationResultFor<Extract<CalculationRequest, { operation: R['operation'] }> & R>>;
 export function calculateFromLocal<R extends LocalCalculationRequest>(input: R): WithTimeResolution<CalculationResultFor<Extract<Request, { operation: R['operation'] }> & R>>;
 export function calculateFromLocalJson(inputJson: string): string;
@@ -940,7 +986,7 @@ export interface SvgDisplayOptions {
   positionsTable?: boolean; housesTable?: boolean; aspectTable?: boolean; aspectMatrix?: boolean; legend?: boolean;
 }
 export type ChartPart = 'wheel' | 'positions' | 'houses' | 'aspectMatrix' | 'aspects' | 'houseFocus';
-export type ChartFocus = ({ house: number; layer?: 'N' | 'A' | 'B' | 'C'; pointIds?: never; } | { pointIds: string[]; house?: never; layer?: never; }) & { mode?: 'highlight' | 'isolate'; };
+export type ChartFocus = ({ house: number; layer?: 'N' | 'A' | 'B' | 'C' | 'Q'; pointIds?: never; } | { pointIds: string[]; house?: never; layer?: never; }) & { mode?: 'highlight' | 'isolate'; };
 export interface ChartCoordinate { x: number; y: number; }
 export interface ChartSection { part: ChartPart; x: number; y: number; width: number; height: number; }
 export interface ChartModelPoint {
@@ -949,6 +995,8 @@ export interface ChartModelPoint {
 }
 export interface ChartModelHouse {
   id: string; layer: string; number: number; longitude: number; width: number; occupantIds: string[];
+  /** Directed span in degrees for a Horary house, from this cusp to the next. */
+  signedWidth?: number;
   rulerId: string | null; rulerPlacement: { id: string; longitude: number; house: number | null; } | null;
   rulership: string | null; rulershipAvailable: boolean;
 }
@@ -970,7 +1018,7 @@ export interface SvgRenderOptions {
   /** Pixel width 128..4096; viewBox stays vector. */
   size?: number;
   title?: string; instanceId?: string;
-  chart?: 'natal' | 'A' | 'B' | 'C' | 'synastry' | 'transits';
+  chart?: 'natal' | 'horary' | 'A' | 'B' | 'C' | 'synastry' | 'transits';
   orientation?: 'ascendant' | 'aries'; showAspects?: boolean;
   maxAspectLines?: number; aspectAngles?: number[]; bodyIds?: ChartBodyId[];
   /** CSS hex only. Specific type overrides group, then theme defaults. */

@@ -2,9 +2,11 @@
 
 Permission date: 2026-11-12. Copyright holder: 7mlabs.
 
-Scope inventory revision: 2026-11-13 for SDK 1.1.3. This revision updates
-identified source hashes for release-version metadata; the permission scope
-and previously granted rights remain unchanged.
+The 2026-11-19 inventory for SDK 1.2.0 identifies the 7mlabs Horary
+implementation, its schemas and tests, and the revised 7mlabs files used by
+the feature and its packaging. Previously granted rights continue for the
+[1.1.3 inventory](https://github.com/7mLabs/sdk-astro/blob/5cab38638fd29621a8cb5e69de498cdd839c5cd5/LICENSE-SCOPE.json)
+and earlier covered revisions.
 
 ## Grant
 

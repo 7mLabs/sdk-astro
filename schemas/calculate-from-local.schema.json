@@ -2611,7 +2611,33 @@
           ]
         }
       }
+    },
+    {
+      "$id": "urn:7mlabs:astrology:local-horary-request:1.0",
+      "title": "Horary question chart from local civil time",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "moment", "quesitedHouse"],
+      "properties": {
+        "operation": { "const": "horary" },
+        "ruleset": { "const": "western-traditional-v1", "default": "western-traditional-v1" },
+        "quesitedHouse": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "moment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["local", "location"],
+          "properties": {
+            "location": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/location" },
+            "houseSystem": { "enum": ["regiomontanus", "placidus", "wholeSign"], "default": "regiomontanus" },
+            "local": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/local" },
+            "timeZone": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/timeZone" },
+            "utcOffsetSeconds": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/utcOffsetSeconds" },
+            "disambiguation": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/disambiguation" }
+          },
+          "allOf": [{ "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/allOf/0" }]
+        }
+      }
     }
   ],
-  "$comment": "UTC operations remain in their existing schemas. This facade requires at least one local birth and resolves it before invoking the unchanged calculation core. Runtime checks calendar, zone rules and UTC bounds."
+  "$comment": "UTC operations remain in their existing schemas. This facade requires at least one local time and resolves it before invoking the UTC calculation core. Runtime checks calendar, zone rules and UTC bounds."
 }

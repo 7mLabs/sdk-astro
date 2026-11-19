@@ -24,6 +24,45 @@ struct Location {
     longitude: f64,
 }
 
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub(super) struct HoraryMoment {
+    utc: Utc,
+    location: Location,
+    #[serde(default = "horary_house_system")]
+    house_system: String,
+}
+
+fn horary_house_system() -> String {
+    "regiomontanus".into()
+}
+
+pub(super) fn validate_horary_moment(moment: &HoraryMoment) -> Result<u8, String> {
+    validate_time_and_location(&moment.utc, &moment.location)?;
+    match moment.house_system.as_str() {
+        "regiomontanus" => Ok(b'R'),
+        "placidus" => Ok(b'P'),
+        "wholeSign" => Ok(b'W'),
+        _ => Err("Horary houseSystem must be regiomontanus, placidus or wholeSign".into()),
+    }
+}
+
+pub(super) fn horary_sky(
+    moment: &HoraryMoment,
+    system: u8,
+    rules: &[AspectRule],
+) -> Result<(Value, Value), String> {
+    let (chart, mut calculation, order) = compute_sky(
+        &moment.utc,
+        &moment.location,
+        &moment.house_system,
+        system,
+        rules,
+    )?;
+    calculation["houseOrder"] = json!(order);
+    Ok((chart, calculation))
+}
+
 pub(super) fn default_house_system() -> String {
     "placidus".into()
 }
@@ -237,6 +276,15 @@ pub(super) fn validate_birth(birth: &BirthInput) -> Result<u8, String> {
 }
 
 fn validate_birth_parts(utc: &Utc, location: &Location, house_system: &str) -> Result<u8, String> {
+    validate_time_and_location(utc, location)?;
+    match house_system {
+        "placidus" => Ok(b'P'),
+        "wholeSign" => Ok(b'W'),
+        _ => Err("houseSystem must be placidus or wholeSign".into()),
+    }
+}
+
+fn validate_time_and_location(utc: &Utc, location: &Location) -> Result<(), String> {
     let u = utc;
     if !(1800..=2399).contains(&u.year) || !(1..=12).contains(&u.month) {
         return Err("UTC requires a Gregorian year 1800..2399 and month 1..12".into());
@@ -274,12 +322,7 @@ fn validate_birth_parts(utc: &Utc, location: &Location, house_system: &str) -> R
     if location.latitude.abs() == 90.0 {
         return Err("House angles are undefined at the geographic poles".into());
     }
-    let system = match house_system {
-        "placidus" => b'P',
-        "wholeSign" => b'W',
-        _ => return Err("houseSystem must be placidus or wholeSign".into()),
-    };
-    Ok(system)
+    Ok(())
 }
 
 pub(super) fn compute_birth(
@@ -287,15 +330,78 @@ pub(super) fn compute_birth(
     system: u8,
     rules: &[AspectRule],
 ) -> Result<(Value, Value), String> {
-    let u = &birth.utc;
+    let (chart, calculation, _) = compute_sky(
+        &birth.utc,
+        &birth.location,
+        &birth.house_system,
+        system,
+        rules,
+    )?;
+    Ok((chart, calculation))
+}
+
+// In a polar Regiomontanus chart Swiss can return the numbered house cusps
+// in decreasing longitude. Keep the original house numbers in either direction.
+fn sky_placements(
+    positions: &[Position],
+    cusps: &[f64],
+    system: u8,
+) -> Result<(Vec<Placement>, &'static str), String> {
+    if system != b'R' {
+        validate_houses(&Some(cusps.to_vec()))?;
+        return Ok((placements(positions, Some(cusps)), "increasingLongitude"));
+    }
+    let invalid = "Regiomontanus cusps do not define 12 distinct houses at this time and location";
+    if cusps.len() != 12 || !cusps.iter().all(|cusp| (0.0..360.0).contains(cusp)) {
+        return Err(invalid.into());
+    }
+    let edges = || {
+        cusps
+            .iter()
+            .copied()
+            .zip(cusps.iter().copied().cycle().skip(1))
+    };
+    // A strict cycle has one wrap at 0°. Compare raw coordinates because
+    // legitimate cusp separations can be smaller than 1e-9° near a pole.
+    let increases = edges().filter(|(start, end)| start < end).count();
+    let decreases = edges().filter(|(start, end)| start > end).count();
+    let (direction, order) = match (increases, decreases) {
+        (11, 1) => (1.0, "increasingLongitude"),
+        (1, 11) => (-1.0, "decreasingLongitude"),
+        _ => return Err(invalid.into()),
+    };
+    let mut bodies = placements(positions, None);
+    for body in &mut bodies {
+        let longitude = body.longitude * direction;
+        body.house = edges()
+            .position(|(start, end)| {
+                let start = start * direction;
+                let end = end * direction;
+                if start < end {
+                    (start..end).contains(&longitude)
+                } else {
+                    longitude >= start || longitude < end
+                }
+            })
+            .map(|index| index + 1);
+    }
+    Ok((bodies, order))
+}
+
+fn compute_sky(
+    u: &Utc,
+    location: &Location,
+    house_system: &str,
+    system: u8,
+    rules: &[AspectRule],
+) -> Result<(Value, Value, &'static str), String> {
     let sky = astro_provider_swiss::natal(
         [u.year, u.month, u.day, u.hour, u.minute],
         u.second,
-        birth.location.latitude,
-        birth.location.longitude,
+        location.latitude,
+        location.longitude,
         system,
     )?;
-    validate_houses(&Some(sky.houses.clone()))?;
     let ids = [
         "sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn", "uranus", "neptune",
         "pluto",
@@ -310,7 +416,8 @@ pub(super) fn compute_birth(
             speed: Some(p[3]),
         })
         .collect();
-    let mut bodies = serde_json::to_value(placements(&positions, Some(&sky.houses))).unwrap();
+    let (planet_placements, house_order) = sky_placements(&positions, &sky.houses, system)?;
+    let mut bodies = serde_json::to_value(planet_placements).unwrap();
     for (body, coords) in bodies.as_array_mut().unwrap().iter_mut().zip(&sky.bodies) {
         body["latitude"] = json!(coords[1]);
         body["distanceAu"] = json!(coords[2]);
@@ -332,7 +439,7 @@ pub(super) fn compute_birth(
         let longitude = normalize(*cusp);
         json!({"number": i+1, "longitude": longitude, "sign": SIGNS[(longitude / 30.).floor() as usize], "degreeInSign": longitude % 30.})
     }).collect();
-    let natal = json!({"utc":birth.utc, "location":birth.location, "placements":bodies,
+    let natal = json!({"utc":u, "location":location, "placements":bodies,
         "angles":placements(&angles, None), "houses":houses, "houseCusps":sky.houses,
         "aspects":aspects(&positions, None, rules)});
     let calculation = json!({"scope":"basic-natal", "provider":"swiss-ephemeris", "providerVersion":"2.10.03",
@@ -340,10 +447,10 @@ pub(super) fn compute_birth(
             "positionType":"apparent", "referenceFrame":"ecliptic-of-date", "calendar":"gregorian",
             "inputTimeScale":"UTC", "houseTimeScale":"UT1", "planetTimeScale":"TT",
             "timeModel":"Swiss built-in leap seconds and Delta T; pre-1972 civil input treated as UT1",
-            "julianDayTt":sky.jd_tt, "julianDayUt1":sky.jd_ut1, "houseSystem":birth.house_system,
+            "julianDayTt":sky.jd_tt, "julianDayUt1":sky.jd_ut1, "houseSystem":house_system,
             "angleUnit":"degrees", "speedUnit":"degrees/day", "distanceUnit":"AU",
             "aspectRules":rules.iter().map(|v| json!({"angle":v.angle,"maxOrb":v.max_orb})).collect::<Vec<_>>()});
-    Ok((natal, calculation))
+    Ok((natal, calculation, house_order))
 }
 
 pub(super) fn calculate_json(raw: &str) -> String {
@@ -465,10 +572,36 @@ mod tests {
     fn run(r: Value) -> Value {
         serde_json::from_str(&super::super::calculate_json(&r.to_string())).unwrap()
     }
+
+    #[test]
+    fn horary_reverse_cusps_include_their_start_across_the_zodiac_seam() {
+        let cusps: Vec<_> = (0..12).map(|i| normalize(-30. * i as f64)).collect();
+        let positions: Vec<_> = [0., 359., 330., 329.9, 30., 0.001]
+            .into_iter()
+            .map(|longitude| Position {
+                id: "test".into(),
+                longitude,
+                speed: None,
+            })
+            .collect();
+        let (bodies, order) = sky_placements(&positions, &cusps, b'R').unwrap();
+        assert_eq!(order, "decreasingLongitude");
+        for (p, expected) in bodies.iter().zip([1, 1, 2, 2, 12, 12]) {
+            assert_eq!(p.house, Some(expected));
+        }
+        assert!(sky_placements(&positions, &cusps, b'P').is_err());
+        let mut disordered = cusps.clone();
+        disordered.swap(3, 4);
+        assert!(sky_placements(&positions, &disordered, b'R').is_err());
+        let mut duplicated = cusps;
+        duplicated[1] = duplicated[0];
+        assert!(sky_placements(&positions, &duplicated, b'R').is_err());
+    }
     #[test]
     fn natal_has_real_sky_and_houses() {
         let v = run(request());
         assert_eq!(v["errors"], json!([]));
+        assert!(v["calculation"].get("houseOrder").is_none());
         assert_eq!(v["data"]["placements"].as_array().unwrap().len(), 10);
         assert_eq!(v["data"]["houses"].as_array().unwrap().len(), 12);
         let sun = v["data"]["placements"][0]["longitude"].as_f64().unwrap();

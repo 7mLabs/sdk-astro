@@ -117,6 +117,7 @@ def verify_reports(directory, manifest, manifest_sha):
         require(report.get("nativeSha256") == native["sha256"], prefix + "Native evidence differs")
         checksum(report.get("referenceCliSha256"), prefix + "Rust reference")
         require(integer(report.get("conformanceCases"), 339), prefix + "Full conformance gate missing")
+        require(report.get("horaryContract") == "passed", prefix + "Horary contract gate missing")
         require(integer(report.get("queryHelpers"), 8), prefix + "Query helpers gate missing")
         query = query_pattern.fullmatch(report.get("querySchemaAndSemanticChecks", ""))
         require(query is not None, prefix + "Query schema/semantic evidence missing")

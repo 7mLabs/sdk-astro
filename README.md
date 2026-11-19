@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/hero.vi.dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/hero.vi.light.svg">
-  <img src="docs/assets/readme/hero.vi.light.svg" width="1280" alt="7mlabs Astro SDK 1.1.3 — logo đầy đủ, tính ngoại tuyến, nhiều nền tảng">
+  <img src="docs/assets/readme/hero.vi.light.svg" width="1280" alt="7mlabs Astro SDK 1.2.0 — logo đầy đủ, tính ngoại tuyến, nhiều nền tảng">
 </picture>
 
 **Tiếng Việt** · [English](README.en.md)
@@ -15,9 +15,9 @@
 <a href="docs/rules.vi.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/badge-system.dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/badge-system.light.svg"><img src="docs/assets/readme/badge-system.light.svg" height="28" alt="Tropical"></picture></a>
 </p>
 
-[Bắt đầu](#quick-start) · [Chức năng](#features) · [Công thức](docs/features-and-formulas.vi.md) · [Quy tắc](docs/rules.vi.md) · [Kiểm chứng](docs/formula-verification.vi.md) · [Tài liệu web](https://7mlabs.com/astro/sdk/docs/1.1.3/overview/)
+[Bắt đầu](#quick-start) · [Chức năng](#features) · [Công thức](docs/features-and-formulas.vi.md) · [Quy tắc](docs/rules.vi.md) · [Kiểm chứng](docs/formula-verification.vi.md) · [Tài liệu web 1.1.3](https://7mlabs.com/astro/sdk/docs/1.1.3/overview/)
 
-**Astro SDK 1.1.3** do **7mlabs phát triển**: lõi Rust dùng Swiss Ephemeris để tính lá số, quan hệ và sự kiện thiên văn ngay trong ứng dụng. Cùng một engine cho Node.js/TypeScript, Python, .NET, Rust và C; không cần máy chủ tính toán hay gọi API bên ngoài.
+**Astro SDK 1.2.0** của **7mlabs** dùng lõi Rust và Swiss Ephemeris để tính lá số, quan hệ và sự kiện thiên văn ngay trong ứng dụng. Cùng một engine cho Node.js/TypeScript, Python, .NET, Rust và C; không cần máy chủ tính toán hay gọi API bên ngoài.
 
 Đầu ra gồm **số liệu, cấu hình tính, quy tắc lựa chọn dữ liệu và bằng chứng**. SDK có SVG và model cho giao diện; phần viết luận giải hoặc chấm điểm tương hợp thuộc ứng dụng tích hợp.
 
@@ -29,6 +29,7 @@
 | Phạm vi | API / operation | Đầu ra chính |
 | --- | --- | --- |
 | Lá số cá nhân | `natal` | 10 thiên thể Sun–Pluto, cung, nhà, góc trục và góc chiếu; điểm mở rộng bật riêng. |
+| Bản đồ sao câu hỏi | `horary` | Bảy thiên thể cổ điển, chủ tinh các nhà, hành tinh đại diện, chỉ báo Void-of-Course Moon và lá số SVG. |
 | Dữ liệu theo lĩnh vực | `natalDomains` | Một natal, 10 nhóm/30 mục, facts, chủ tinh và nguồn bằng chứng; có custom profiles. |
 | So sánh hai lá số | `couple` | Hai natal, synastry, house overlays và 6 nhóm dữ liệu quan hệ; tùy chọn composite. |
 | Lá số trung điểm | `composite` | Chart C tượng trưng từ trung điểm cung ngắn; không giả ngày sinh hoặc tốc độ vật lý. |
@@ -46,7 +47,7 @@ Tên trên dùng kiểu Node.js. Python dùng snake_case; .NET dùng PascalCase.
 
 ## Hệ tính toán và quy tắc
 
-**1.1.3 dùng tropical, geocentric, apparent, ecliptic-of-date; nhà Placidus hoặc Whole Sign.** Moshier cho 10 thiên thể chính; Chiron tùy chọn dùng dữ liệu tiểu hành tinh nhúng sẵn. Không cần cài Swiss Ephemeris riêng.
+**SDK dùng tọa độ tropical, geocentric, apparent, ecliptic-of-date.** Lá số natal hỗ trợ Placidus và Whole Sign. Horary mặc định dùng Regiomontanus và cũng hỗ trợ Placidus hoặc Whole Sign. Moshier cho 10 thiên thể chính; Chiron tùy chọn dùng dữ liệu tiểu hành tinh nhúng sẵn. Không cần cài Swiss Ephemeris riêng.
 
 `rulership: traditional | modern` chọn bảng chủ tinh; **không** đổi hệ hoàng đạo, và các cờ dignity vẫn theo quy tắc truyền thống được ghi rõ. Composite và Davison là hai phương pháp khác nhau. `includeMetadata: true` thêm metadata tùy chọn; không biến tọa độ bên gọi cung cấp thành dữ liệu đã được engine xác minh.
 
@@ -60,19 +61,19 @@ Tên trên dùng kiểu Node.js. Python dùng snake_case; .NET dùng PascalCase.
 
 ## Cài đặt và nền tảng
 
-| Gói 1.1.3 | Runtime | Target native |
+| Gói 1.2.0 | Runtime | Target native |
 | --- | --- | --- |
-| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.1.3) | Node.js ≥18; matrix kiểm thử 18/24 | macOS ARM64, Linux x64 |
-| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.1.3/) | Python ≥3.10; matrix kiểm thử 3.10/3.13 | macOS ARM64, Linux x64 |
-| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.1.3) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
+| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.2.0) | Node.js ≥18; matrix kiểm thử 18/24 | macOS ARM64, Linux x64 |
+| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.2.0/) | Python ≥3.10; matrix kiểm thử 3.10/3.13 | macOS ARM64, Linux x64 |
+| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.2.0) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
 | Rust / C | Tích hợp source và C ABI | [Hướng dẫn build](docs/packages.md); chưa có gói crates.io riêng |
 
-Linux cần **glibc ≥2.38 và libgcc_s.so.1**, đã kiểm thử trên Ubuntu 24.04. Ubuntu 22.04, Debian 12, Alpine/musl, Windows, Intel Mac và Linux ARM64 chưa có binary phù hợp trong bản này. Native macOS có deployment target 11.0; runtime được chọn còn có yêu cầu OS riêng. **Chưa chạy trực tiếp trong browser bằng WASM**; frontend có thể gọi backend/desktop host dùng SDK.
+Linux cần **glibc ≥2.38 và libgcc_s.so.1**. Môi trường CI cho Linux là Ubuntu 24.04. Ubuntu 22.04, Debian 12, Alpine/musl, Windows, Intel Mac và Linux ARM64 chưa có binary phù hợp trong bản này. Native macOS có deployment target 11.0; runtime được chọn còn có yêu cầu OS riêng. **Chưa chạy trực tiếp trong browser bằng WASM**; frontend có thể gọi backend/desktop host dùng SDK.
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.1.3
-python -m pip install sevenmlabs-astrology==1.1.3
-dotnet add package SevenMLabs.Astrology --version 1.1.3
+npm install --save-exact @7mlabs/astrology@1.2.0
+python -m pip install sevenmlabs-astrology==1.2.0
+dotnet add package SevenMLabs.Astrology --version 1.2.0
 ```
 
 Ba dòng là ba lựa chọn theo ngôn ngữ, không cần cài cả ba. [Chi tiết wheel Linux](docs/python-linux.md).
@@ -102,7 +103,7 @@ const payload = astro.calculate({
   houseSystem: 'placidus',
   includeMetadata: true
 });
-console.log(payload.engineVersion, payload.data.placements.length); // 1.1.3 10
+console.log(payload.engineVersion, payload.data.placements.length); // 1.2.0 10
 const svg = astro.renderChartPart(payload, 'wheel');
 ```
 
@@ -117,7 +118,7 @@ payload = astro.calculate({
     "houseSystem": "placidus",
     "includeMetadata": True,
 })
-print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.1.3 10
+print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.2.0 10
 svg = astro.render_chart_part(payload, "wheel")
 ```
 
@@ -172,6 +173,7 @@ Envelope gồm `schemaVersion`, `engineVersion`, `calculation`, `data`, `warning
 | Biết từng chức năng tính gì | [Chức năng và công thức](docs/features-and-formulas.vi.md) |
 | So sánh kết quả với công cụ khác | [Quy tắc](docs/rules.vi.md), [phạm vi kiểm chứng](docs/formula-verification.vi.md) |
 | Tính natal và điểm mở rộng | [Natal](docs/natal.md), [domains](docs/domains.md) |
+| Bản đồ sao câu hỏi Horary | [Đầu vào, hành tinh đại diện và Void-of-Course Moon](docs/horary.md) |
 | Dùng dữ liệu hai người | [Couple](docs/couple.md), [composite](docs/composite.md), [Davison](docs/davison.md) |
 | Quét sự kiện và quá cảnh | [Forecast/events](docs/forecast.md) |
 | Tạo nhóm dữ liệu riêng | [Profiles](docs/profiles.md), [reports](docs/individual-reports.md) |
@@ -181,6 +183,8 @@ Envelope gồm `schemaVersion`, `engineVersion`, `calculation`, `data`, `warning
 <a id="validation"></a>
 
 ## Kiểm chứng và phiên bản
+
+**SDK 1.2.0 bổ sung bản đồ sao câu hỏi Horary và vẽ SVG.** Hồ sơ phát hành mô tả bộ quy tắc, đối chiếu nhà ở vùng cực và kiểm thử các gói SDK. [Hồ sơ 1.2.0](docs/release-1.2.0.md)
 
 **1.1.3 là bản cập nhật đóng gói giấy phép.** Lần đầu các gói registry đóng kèm `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` và `NOTICE` đã cập nhật để người cài tra cứu quyền MIT bổ sung cho phần mã 7mlabs. Metadata của toàn gói vẫn là `AGPL-3.0-only`; API, thuật toán, ABI và schema không đổi. [Hồ sơ 1.1.3](docs/release-1.1.3.md) đã ghi 12/12 kiểm tra CI ứng viên, 13/13 bước phát hành, 339 ca conformance trên mỗi binding cài từ kho công khai và 354 kết quả raw đối chiếu nghiêm ngặt với npm 1.1.2; chỉ bỏ `engineVersion` khi so sánh.
 

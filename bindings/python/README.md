@@ -8,12 +8,12 @@ as its three development paths.
 ## Installation and platform support
 
 ```sh
-python -m pip install 'sevenmlabs-astrology==1.1.3'
+python -m pip install 'sevenmlabs-astrology==1.2.0'
 ```
 
 This release has wheels for **Python 3.10+ on macOS 11+ Apple Silicon
 (ARM64)** and **Linux x64 with glibc 2.38+**. The Linux wheel is audited as
-`manylinux_2_38_x86_64` and requires `libgcc_s.so.1`; it is tested on Ubuntu
+`manylinux_2_38_x86_64` and requires `libgcc_s.so.1`. The Linux CI matrix uses Ubuntu
 24.04 with Python 3.10 and 3.13. Windows, Intel Mac, Linux ARM64 and
 Alpine/musl wheels are not included. Ubuntu 22.04 and Debian 12 have older
 glibc versions and are outside this wheel's compatibility range. This native package runs in backend, desktop and command-line Python
@@ -22,6 +22,8 @@ applications; it does not execute directly in a standard web browser.
 The wheel includes the native engine, timezone data, required ephemeris data,
 vector symbols and font outlines. No Rust compiler, runtime downloads, API key
 or external ephemeris installation is needed when using the supported wheel.
+
+Pass `operation: "horary"`, the question time and location, and `quesitedHouse` to `astro.calculate`. Use `astro.render_chart_svg(result)` to draw the chart. [Horary example and JSON contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/horary.en.md)
 
 ## Calculate from local birth time
 
@@ -127,9 +129,9 @@ envelope. `get_capabilities()` describes the installed engine.
 
 ## Source, documentation and license
 
-This release is **1.1.3**. The matching project source snapshot
+This package uses version **1.2.0**. The matching project source snapshot
 and build instructions are bundled at
-`sevenmlabs_astrology/source/astro-sdk-1.1.3.tar.gz` inside the wheel.
+`sevenmlabs_astrology/source/astro-sdk-1.2.0.tar.gz` inside the wheel.
 The archive includes the Rust/C engine, Python wrapper, locked dependency
 declarations, embedded data, renderer assets, schemas, tests and dependency
 notices; it excludes credentials and local build outputs.
@@ -142,7 +144,7 @@ contracts and `docs/license.md` for license details. The public repository may
 advance independently; use the bundled snapshot to reproduce this wheel.
 
 The public combined SDK/native-renderer distribution uses **AGPL-3.0-only**,
-choosing Swiss Ephemeris's AGPL route. This 1.1.3 package includes the grant
+choosing Swiss Ephemeris's AGPL route. This package includes the grant
 and scope files. Identified original 7mlabs-owned contributions additionally have a separate MIT
 permission, including only the original 7mlabs changes identified by the Swiss
 provenance diff. This does not license the entire modified Swiss file, Swiss
@@ -159,4 +161,4 @@ Whole-package metadata remains `AGPL-3.0-only`; APIs, calculation algorithms,
 ABI and schemas are unchanged. Already published **1.1.2 wheels and their source
 snapshots remain unchanged**. See the [1.1.3 release record](https://github.com/7mLabs/sdk-astro/blob/main/docs/release-1.1.3.md) for evidence and scope.
 
-Davison was introduced in SDK 1.1.0 and remains available in 1.1.3 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.3/docs/davison.md).
+Davison is available from SDK 1.1.0 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/davison.md).

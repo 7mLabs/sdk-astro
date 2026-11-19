@@ -3,7 +3,7 @@
   "copyrightHolder": "7mlabs",
   "permission": "MIT",
   "permissionDate": "2026-11-12",
-  "sourceBaseCommit": "b1f70c4feef6e40a4592eae89a7ef1ecadb64fc6",
+  "sourceBaseCommit": "5cab38638fd29621a8cb5e69de498cdd839c5cd5",
   "scopePolicy": "Only original copyrightable contributions owned by 7mlabs; not an MIT license for the combined native distribution. See LICENSE-SCOPE.md.",
   "mitTextSha256": "2d09db0537773bdff508996e665357e61b72be8d85e59b8e0abf7106ad07a70e",
   "originalFiles": [
@@ -17,7 +17,7 @@
     },
     {
       "path": "bindings/node/index.d.ts",
-      "sha256": "6b2d0576c90d3d39cc85d9388d04e1c6a88c3ec5616024966a6ca669ab1e93ab"
+      "sha256": "07dc04b4933630e25a6391292adcb1d8d737558df726618b284ac50fbb43e081"
     },
     {
       "path": "bindings/python/setup.py",
@@ -25,7 +25,7 @@
     },
     {
       "path": "bindings/python/sevenmlabs_astrology/__init__.py",
-      "sha256": "ba93df8808a9799d0dba4175f946ab57f1cacff8edfc09125657dd3ee1d0a422"
+      "sha256": "6ef895f06fca64c2fcfa9a2f4e118d9a4e1e6582ff4ef93f93ad7932f4ba6b84"
     },
     {
       "path": "examples/c/main.c",
@@ -33,7 +33,7 @@
     },
     {
       "path": "examples/dotnet/Example.csproj",
-      "sha256": "bbba682cebab0cf1aac67f3fb3c4d0b12031558ae676ab072a5c7932678eb2d0"
+      "sha256": "f9de11c34d734834e980c21370e9d52fda640d071666ee633e71ee48b09f37a2"
     },
     {
       "path": "examples/dotnet/Program.cs",
@@ -197,7 +197,7 @@
     },
     {
       "path": "neutral-engine/Cargo.toml",
-      "sha256": "6f9300d6e8e960b148e3a1965930fb1e8cd3a208ed5e23143925a380269c8810"
+      "sha256": "50b2c54dcc3184d16f433a83aca22901c45fe6a08cd62f50fdd84c6034e8066c"
     },
     {
       "path": "neutral-engine/crates/astro-core/Cargo.toml",
@@ -229,23 +229,31 @@
     },
     {
       "path": "neutral-engine/crates/astro-core/src/domains.rs",
-      "sha256": "0d075000f5dd45d7d1bf4e5db8ae3b4b9eefd9bf3c93816a0cb494d8ca47ecd7"
+      "sha256": "184e8691fe8e9d66d650681c7ae925bdbb9881bd6e5eaf4c6e91a3bb0de42621"
     },
     {
       "path": "neutral-engine/crates/astro-core/src/events.rs",
-      "sha256": "766eff59c2937805dcb374417bd3823541aa072f00e7255de7e312e19d4e1c8a"
+      "sha256": "5cbedd47bef5ef7ff26e7799cdf0654c708b1d13075c62ff0752bfc24c7a7916"
+    },
+    {
+      "path": "neutral-engine/crates/astro-core/src/events/horary.rs",
+      "sha256": "36717f8cebe6c1d0dfff6bfcf77c556a486d128a29393b8ef8ef2bbf1406d4c0"
     },
     {
       "path": "neutral-engine/crates/astro-core/src/forecast.rs",
       "sha256": "ba358e7606b444f636c4c4db7149773f62ad59f49c4fb07d89a821caa4acd02e"
     },
     {
+      "path": "neutral-engine/crates/astro-core/src/horary.rs",
+      "sha256": "0768147b64e3f8e59aca14ceff9985a375ac2361798e59938ad86403224c096d"
+    },
+    {
       "path": "neutral-engine/crates/astro-core/src/lib.rs",
-      "sha256": "5a3ee455c028d2076ef2424754a6189fbcc7822907283a1f539dbaa7d51341bf"
+      "sha256": "f417d56f6196280eefdfe276407bec9012c2b5b0c3502238654d24141cb652e9"
     },
     {
       "path": "neutral-engine/crates/astro-core/src/natal.rs",
-      "sha256": "cfaf12ed522c40a0c57eef94a1e50fdd140a64275db8bf45b0dfea25673fafaa"
+      "sha256": "a9695606262dd2fa710f7d3980c92ae306634bb70dd6c3ca458708ed94b39bda"
     },
     {
       "path": "neutral-engine/crates/astro-core/src/numbers.rs",
@@ -341,11 +349,11 @@
     },
     {
       "path": "neutral-engine/crates/astro-render-svg/src/lib.rs",
-      "sha256": "5a1961e0a636ca7da9181bdcf9a0bbd1e03ad72628a0393c30b428983976bd8d"
+      "sha256": "8c1fa3b22704aa74e54ab7462b7c28d98ebfdc38dbca2201d5df7e2bc384b5cd"
     },
     {
       "path": "neutral-engine/crates/astro-render-svg/src/model.rs",
-      "sha256": "209d6904dd4c6d71ed9f6f07106c0a38c4b33653d6498e16fd3c2b13c8e1b566"
+      "sha256": "e0601dcaca0dfe20b23cd5e832962a407f8fdcfb06584edc80c933157529a413"
     },
     {
       "path": "neutral-engine/crates/astro-render-svg/src/panels.rs",
@@ -353,7 +361,7 @@
     },
     {
       "path": "neutral-engine/crates/astro-render-svg/src/scene.rs",
-      "sha256": "39fae5535876295c69514673572afa2549aa7150aeeed54b391849036c1fe41b"
+      "sha256": "348af78142ca2fb16160fb5aac9251f91990befd653493ecaaa97ee6ee0eadb3"
     },
     {
       "path": "neutral-engine/crates/astro-render-svg/src/styles.rs",
@@ -369,11 +377,15 @@
     },
     {
       "path": "neutral-engine/crates/astro-sdk/src/lib.rs",
-      "sha256": "84f88b58dcab776edaad654142527e6cf51a069a1af09d29029ce0a9f782a4e4"
+      "sha256": "2f5ca2f1b73b85a2e9a1ff9ae7f6d520113113a4e96bd323c9c3de7edc16c5e4"
     },
     {
       "path": "neutral-engine/crates/astro-sdk/tests/davison_services.rs",
       "sha256": "4a8dc42359fef5a2b143e780554383f5e2778051faccc43d6bff3d2f938e3733"
+    },
+    {
+      "path": "neutral-engine/crates/astro-sdk/tests/horary_services.rs",
+      "sha256": "7fc3d625397533d29a4e070f0d5cb1f908f76df3603ff22568fe39e717d4d6d0"
     },
     {
       "path": "neutral-engine/crates/astro-time/Cargo.toml",
@@ -389,7 +401,7 @@
     },
     {
       "path": "schemas/calculate-from-local.schema.json",
-      "sha256": "50b9e7a9e31db222b38e2794387edea22c7fa4f7f52bf0515b781ebbf1fcaa8f"
+      "sha256": "08cf1e71c216deb3a5f666fd063a3659f7cc32a53041e3b102c75ca28da80d10"
     },
     {
       "path": "schemas/composite-request.schema.json",
@@ -444,6 +456,14 @@
       "sha256": "2006bc68e050d52e2206377e1a61950debddf4f94724feec19cfa1e937a763ce"
     },
     {
+      "path": "schemas/horary-request.schema.json",
+      "sha256": "74500e1a49c0f7a35c2878776ef4f90bd3b61daaae2019de757b35984a445b97"
+    },
+    {
+      "path": "schemas/horary-response.schema.json",
+      "sha256": "f6feab284ecf18ea9aa0b5b0aee14e14922b3bfa6f0cea83c6e7ffa3ba453c59"
+    },
+    {
       "path": "schemas/natal-domains-request.schema.json",
       "sha256": "d1bf869a19f6a46ecfe51cb51c50f2bffd6a9b311f991a2b866251da287b2e10"
     },
@@ -465,7 +485,7 @@
     },
     {
       "path": "schemas/render-chart-svg.schema.json",
-      "sha256": "d0e0ac0a81a61300514221e807e533e0578b900473101f4456b0ac5fbd0935b1"
+      "sha256": "25863a841fa255f9a599719a4ed2439e59e404cdf76741889638b38c0abc1a28"
     },
     {
       "path": "schemas/resolve-birth-time.schema.json",
@@ -494,6 +514,14 @@
     {
       "path": "tests/services/davison.cjs",
       "sha256": "f4d7bcead2533553653dcad4e78858149f8c9cedc9acf22dd920c6de32b2c0bd"
+    },
+    {
+      "path": "tests/services/horary-types.ts",
+      "sha256": "70a35bb9513fb5b862d0288449ef096c0be23f074012a3c684ba8c860e8f0acd"
+    },
+    {
+      "path": "tests/services/horary.cjs",
+      "sha256": "e8a98f33207b7a92654ab7dbb7bc774c61152e1fb21f8b046b06ab6b93ef590a"
     },
     {
       "path": "tests/services/payload-metadata.cjs",
@@ -777,7 +805,7 @@
     },
     {
       "path": "third-party/rust/manifest.json",
-      "sha256": "787c7417e04ec70b0271c16f2af7bcb398d34b96e11d92f52826a891c1f8ccb2"
+      "sha256": "d647f464488ee68af8dba14ffa6701f7d5589cf3760b1aa58621955a3d272074"
     },
     {
       "path": "third-party/rust/num-traits-0.2.19-LICENSE-APACHE",
@@ -983,5 +1011,5 @@
   "separatelyLicensed": [
     "examples/frontend/ui/LICENSE"
   ],
-  "scopeRevisionDate": "2026-11-13"
+  "scopeRevisionDate": "2026-11-19"
 }

@@ -89,6 +89,9 @@ jobs:
           npm install --prefix artifacts/public-baseline-112 --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.2
           BASELINE_ASTRO_MODULE=artifacts/public-baseline-112/node_modules/@7mlabs/astrology node scripts/check-upgrade-compatibility.cjs
           cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-112.json
+          npm install --prefix artifacts/public-baseline-113 --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.3
+          BASELINE_ASTRO_MODULE=artifacts/public-baseline-113/node_modules/@7mlabs/astrology node scripts/check-upgrade-compatibility.cjs
+          cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-113.json
       - name: Fresh consumer installation and parity
         run: python scripts/test-packages.py
       - name: Installed time helpers and SVG service parity
@@ -101,8 +104,9 @@ jobs:
           node scripts/check-svg-point-schema.cjs
           node tests/services/time-svg.cjs
           node tests/services/davison.cjs
+          node tests/services/horary.cjs
           node tests/services/payload-metadata.cjs
-          node artifacts/ci-tools/node_modules/typescript/lib/tsc.js --strict --noEmit --target ES2020 --module NodeNext --moduleResolution NodeNext examples/node/davison-types.ts tests/compatibility/legacy-types.ts
+          node artifacts/ci-tools/node_modules/typescript/lib/tsc.js --strict --noEmit --target ES2020 --module NodeNext --moduleResolution NodeNext examples/node/davison-types.ts tests/services/horary-types.ts tests/compatibility/legacy-types.ts
       - name: Compression parity and real payload roundtrips
         run: python scripts/test-compression.py
       - name: Installed compression helpers and TypeScript contracts
@@ -229,8 +233,8 @@ jobs:
         with:
           name: npm-release
           path: artifacts/npm-release
-      - name: Install published 1.1.2 compatibility baseline
-        run: npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.2
+      - name: Install published 1.1.3 compatibility baseline
+        run: npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.1.3
       - name: Fresh install, repeated-call parity, schema and TypeScript checks
         run: >-
           node scripts/test-npm-release.cjs

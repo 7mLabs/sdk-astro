@@ -117,6 +117,18 @@ for case in cases:
     if bool(reference["errors"]) != case.get("error", False): raise AssertionError(f"Unexpected validation result: {case['name']}")
     print("PASS parity:", case["name"])
 
+horary_examples = {"horary-request.json": "increasingLongitude", "horary-polar-request.json": "decreasingLongitude"}
+for filename, order in horary_examples.items():
+    horary_request = (ROOT / "examples" / filename).read_text()
+    horary_reference = json.loads(run(commands["rust"] + [horary_request], capture=True))
+    assert not horary_reference["errors"]
+    assert horary_reference["calculation"]["ruleset"] == "western-traditional-v1"
+    assert horary_reference["calculation"]["houseSystem"] == "regiomontanus"
+    assert horary_reference["calculation"]["houseOrder"] == order
+    for language, command in commands.items():
+        assert json.loads(run(command + [horary_request], capture=True)) == horary_reference, language
+    print("PASS Horary:", filename, ", ".join(commands))
+
 couple_request = (ROOT / "examples/couple-request.json").read_text()
 couple_reference = json.loads(run(commands["rust"] + [couple_request], capture=True))
 couple_examples = {"node": [node, node_dir / "couple.cjs"],
@@ -224,6 +236,7 @@ summary["queryConcurrentPythonCalls"] = 20
 summary["queryConcurrentDotnetCalls"] = 20
 summary["queryParityCases"] = sum(case["name"].startswith("query ") for case in cases)
 summary["queryDedicatedExamples"] = 3
+summary["horaryParityCases"] = len(horary_examples)
 summary["natalReferenceCases"] = len(references["cases"])
 summary["maxIndependentLongitudeDifferenceDegrees"] = max_independent_angle
 (ROOT / "artifacts/test-results.json").write_text(json.dumps(summary, indent=2) + "\n")

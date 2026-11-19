@@ -6,7 +6,7 @@ conversion and modular SVG charts, using the shared 7mlabs Astro engine.
 ## Install and supported runtimes
 
 ```sh
-dotnet add package SevenMLabs.Astrology --version 1.1.3
+dotnet add package SevenMLabs.Astrology --version 1.2.0
 ```
 
 The managed assembly targets **.NET 10 (`net10.0`)**. The public package includes
@@ -15,6 +15,8 @@ glibc 2.38+ with `libgcc_s.so.1`)**. The host OS must also meet .NET 10 runtime
 requirements. Windows, Intel Mac, Linux ARM64 and Alpine/musl are not included.
 The engine needs no server, runtime download, external ephemeris installation,
 Rust compiler or API key. Native libraries are shipped under `runtimes/<rid>/native`.
+
+Pass `operation = "horary"`, the question time and location, and `quesitedHouse` to `Engine.Calculate`. Use `Engine.RenderChartSvg(result)` to draw the chart. [Horary example and JSON contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/horary.en.md)
 
 ## Birth time and SVG
 
@@ -77,8 +79,7 @@ available services. Native output is freed by the wrapper.
 
 ## Documentation and license
 
-The corresponding source and build scripts for this package are in the matching
-`v1.1.3` source release. Use that snapshot to reproduce this native/managed combination.
+The matching source tag is `v1.2.0`. [SDK source](https://github.com/7mLabs/sdk-astro/tree/v1.2.0)
 
 Source builds use .NET SDK **10.0.404**, selected exactly by the repository's
 `global.json`; `python3 scripts/check-dotnet-sdk.py` verifies the compiler SDK.
@@ -89,7 +90,7 @@ This build pin does not raise the installed package's .NET 10 runtime requiremen
 [1.0 release contract](https://github.com/7mlabs/sdk-astro/blob/main/docs/release-1.0.md)
 
 The public combined SDK/native-renderer distribution uses **AGPL-3.0-only**,
-choosing Swiss Ephemeris's AGPL route. This 1.1.3 package includes the grant
+choosing Swiss Ephemeris's AGPL route. This package includes the grant
 and scope files. Identified original 7mlabs-owned contributions additionally have a separate MIT
 permission, including only the original 7mlabs changes identified by the Swiss
 provenance diff. It does not license the entire modified Swiss file, Swiss data
@@ -107,4 +108,4 @@ Already published **1.1.2 packages remain unchanged**; their corresponding sourc
 and build scripts remain in the matching `v1.1.2` source release. See the
 [1.1.3 release record](https://github.com/7mLabs/sdk-astro/blob/main/docs/release-1.1.3.md) for evidence and scope.
 
-Davison was introduced in SDK 1.1.0 and remains available in 1.1.3 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.3/docs/davison.md).
+Davison is available from SDK 1.1.0 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/davison.md).
