@@ -355,6 +355,17 @@ fn sky_placements(
     if cusps.len() != 12 || !cusps.iter().all(|cusp| (0.0..360.0).contains(cusp)) {
         return Err(invalid.into());
     }
+    // When the common north/south horizon axis of the house circles lies on
+    // the ecliptic, all cusps collapse onto its two ends. Fused and non-fused
+    // Swiss sidereal-time arithmetic can spread this singular result by a
+    // few 1e-8 degrees. Test the entire axis, never an individual house width.
+    const AXIS_TOLERANCE_DEG: f64 = 1e-7;
+    if cusps.iter().all(|cusp| {
+        let offset = (cusp - cusps[0]).rem_euclid(180.);
+        offset.min(180. - offset) <= AXIS_TOLERANCE_DEG
+    }) {
+        return Err(invalid.into());
+    }
     let edges = || {
         cusps
             .iter()
@@ -596,6 +607,35 @@ mod tests {
         let mut duplicated = cusps;
         duplicated[1] = duplicated[0];
         assert!(sky_placements(&positions, &duplicated, b'R').is_err());
+    }
+
+    #[test]
+    fn horary_rejects_numerically_split_antipodal_cusps() {
+        // Swiss 2.10.03 with FMA disabled, 2026-11-19T16:59:59Z,
+        // 78.2232° N, 17.51775540282449° E. All twelve outputs are distinct
+        // and ordered even though the house circles intersect on one axis.
+        let cusps = [
+            149.12741870184715,
+            149.12741870208114,
+            149.12741870232114,
+            149.12741870282008,
+            329.12741868334246,
+            329.1274187013962,
+            329.12741870184715,
+            329.12741870208117,
+            329.12741870232117,
+            329.12741870282008,
+            149.12741868334246,
+            149.12741870139624,
+        ];
+        assert!(sky_placements(&[], &cusps, b'R').is_err());
+
+        // A second distinct axis restores the partition, including the very
+        // narrow houses elsewhere in the ring.
+        let mut resolved = cusps;
+        resolved[3] += 5e-6;
+        resolved[9] += 5e-6;
+        assert!(sky_placements(&[], &resolved, b'R').is_ok());
     }
     #[test]
     fn natal_has_real_sky_and_houses() {

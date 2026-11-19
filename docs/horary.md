@@ -35,7 +35,7 @@ Với đầu vào trên, đỉnh nhà 1 ở Bạch Dương nên chủ tinh là S
 
 Ở vùng cực, có lúc các nhà Regiomontanus từ 1 đến 12 đi theo chiều kinh độ giảm. SDK giữ nguyên đỉnh nhà do Swiss Ephemeris tính và dùng chiều đó để gán hành tinh, xác định chủ tinh và vẽ lá số. [Swiss Ephemeris, mục 6.4](https://www.astro.com/swisseph/swisseph.htm)
 
-`calculation.houseOrder` trả `decreasingLongitude` cho trường hợp này và `increasingLongitude` cho chiều thông thường. Mảng `houseCusps` luôn xếp theo số nhà 1–12. Một hành tinh nằm đúng đỉnh nhà được tính vào nhà bắt đầu tại đỉnh đó. Trong mô hình hiển thị, `width` là độ rộng dương và `signedWidth` là độ rộng có dấu theo chiều kinh độ. Nếu các đỉnh trùng nhau đến mức không xác định được đủ 12 nhà riêng biệt, SDK trả lỗi tính toán. Đầu vào yêu cầu vĩ độ lớn hơn −90° và nhỏ hơn 90°. [Ví dụ Longyearbyen](../examples/horary-polar-request.json)
+`calculation.houseOrder` trả `decreasingLongitude` cho trường hợp này và `increasingLongitude` cho chiều thông thường. Mảng `houseCusps` luôn xếp theo số nhà 1–12. Một hành tinh nằm đúng đỉnh nhà được tính vào nhà bắt đầu tại đỉnh đó. Trong mô hình hiển thị, `width` là độ rộng dương và `signedWidth` là độ rộng có dấu theo chiều kinh độ. SDK trả lỗi khi cả 12 đỉnh cùng hội tụ về hai đầu của một trục trong sai số 0,0000001°. Các nhà riêng lẻ rất hẹp vẫn được hỗ trợ. Đầu vào yêu cầu vĩ độ lớn hơn −90° và nhỏ hơn 90°. [Ví dụ Longyearbyen](../examples/horary-polar-request.json)
 
 Nếu đầu vào là giờ địa phương, dùng `calculateFromLocal` với `moment.local`, `moment.location` và một trong hai trường `moment.timeZone` hoặc `moment.utcOffsetSeconds`. Kết quả ghi cách đổi giờ ở `calculation.timeResolution.moment`. [Quy tắc giờ địa phương](time-and-svg.md)
 

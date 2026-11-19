@@ -253,7 +253,7 @@
     },
     {
       "path": "neutral-engine/crates/astro-core/src/natal.rs",
-      "sha256": "a9695606262dd2fa710f7d3980c92ae306634bb70dd6c3ca458708ed94b39bda"
+      "sha256": "64744f281f13776262a62c5192ac10e4e3219dd55b403cd57c4cad3a2cf51e1f"
     },
     {
       "path": "neutral-engine/crates/astro-core/src/numbers.rs",

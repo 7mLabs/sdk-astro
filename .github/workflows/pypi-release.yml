@@ -1,0 +1,127 @@
+name: PyPI release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_run_id:
+        description: Successful npm release run for this Git tag
+        type: string
+        required: true
+
+permissions: {}
+concurrency:
+  group: pypi-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.repository == '7mLabs/sdk-astro' && github.ref_type == 'tag'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      wheels_id: ${{ steps.wheels.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Verify the official tag run and source commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: ${{ inputs.release_run_id }}
+        run: |
+          set -eu
+          [[ "$SOURCE_RUN" =~ ^[1-9][0-9]*$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN" > "$RUNNER_TEMP/release-run.json"
+          python3 - <<'PY'
+          import json, os, re, subprocess, tomllib
+          from pathlib import Path
+          version = tomllib.loads(Path("neutral-engine/Cargo.toml").read_text())["workspace"]["package"]["version"]
+          tag = os.environ["GITHUB_REF_NAME"]
+          assert re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+", tag) and tag == "v" + version
+          commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          run = json.loads((Path(os.environ["RUNNER_TEMP"]) / "release-run.json").read_text())
+          assert run["repository"]["full_name"] == run["head_repository"]["full_name"] == os.environ["GITHUB_REPOSITORY"]
+          assert run["path"] == ".github/workflows/npm-release.yml"
+          assert run["event"] == "push" and run["head_branch"] == tag
+          assert run["head_sha"] == commit == os.environ["GITHUB_SHA"]
+          assert run["status"] == "completed" and run["conclusion"] == "success"
+          PY
+      - uses: actions/download-artifact@v7
+        with:
+          name: managed-release
+          path: managed-release
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.release_run_id }}
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: managed-verification-*
+          path: managed-reports
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.release_run_id }}
+      - name: Verify the managed files and all final consumer reports, then stage both wheels
+        run: |
+          python3 scripts/check-managed-release.py --manifest managed-release/manifest.json --reports managed-reports --commit "$GITHUB_SHA"
+          python3 - <<'PY'
+          import json, shutil
+          from pathlib import Path
+          root = Path("managed-release")
+          manifest = json.loads((root / "manifest.json").read_text())
+          out = Path("verified-wheels")
+          out.mkdir()
+          for target in ("macosx_11_0_arm64", "manylinux_2_38_x86_64"):
+              wheel = f"sevenmlabs_astrology-{manifest['version']}-py3-none-{target}.whl"
+              assert wheel in manifest["files"]
+              shutil.copyfile(root / wheel, out / wheel)
+          PY
+      - id: wheels
+        uses: actions/upload-artifact@v7
+        with:
+          name: verified-wheels-${{ github.run_attempt }}
+          path: verified-wheels/*.whl
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-24.04
+    environment: pypi-release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          artifact-ids: ${{ needs.verify.outputs.wheels_id }}
+          merge-multiple: true
+          path: dist
+      - name: Publish both verified wheels using the project trusted publisher
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # release/v1
+        with:
+          skip-existing: true
+      - name: Verify public wheel identities, including any already uploaded before a retry
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, time, urllib.error, urllib.request
+          from pathlib import Path
+          version = os.environ["GITHUB_REF_NAME"][1:]
+          expected = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in Path("dist").glob("*.whl")}
+          assert len(expected) == 2
+          url = f"https://pypi.org/pypi/sevenmlabs-astrology/{version}/json"
+          for attempt in range(18):
+              try:
+                  with urllib.request.urlopen(url, timeout=20) as response:
+                      uploaded = {r["filename"]: r["digests"]["sha256"] for r in json.load(response)["urls"]}
+              except urllib.error.HTTPError as error:
+                  if error.code != 404:
+                      raise
+                  uploaded = {}
+              for name in uploaded.keys() & expected.keys():
+                  assert uploaded[name] == expected[name], f"Unexpected registry SHA-256 for {name}"
+              if uploaded == expected:
+                  break
+              time.sleep(5)
+          else:
+              raise SystemExit("PyPI did not report the two verified release wheels")
+          PY
