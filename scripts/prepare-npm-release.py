@@ -120,6 +120,7 @@ def load_candidate(directory, platform, arch, commit, version):
         if name == "test-results.json":
             require(report.get("parityCases", 0) >= 339 and report.get("platform") == platform,
                     "Full candidate parity/platform evidence missing")
+            require(report.get("horaryParityCases", 0) >= 2, "Candidate Horary parity evidence missing")
         if name == "compression-test-results.json":
             require(report.get("packageManifestSha256") == digest(manifest_path.read_bytes()),
                     "Compression evidence references another manifest")

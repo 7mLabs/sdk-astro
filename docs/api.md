@@ -11,6 +11,7 @@ SDK có operation `natal` nhận ngày giờ UTC và tọa độ, xem [contract 
 | `natalDomains` | UTC, tọa độ và options lĩnh vực | Một natal, full context, 10 builtin views và custom views |
 | `couple` | Hai birth inputs và options lĩnh vực | Hai natal/full contexts, 676 cross-relations, aspects, overlays, paired views và optional composite C |
 | `composite` | Hai birth inputs và options midpoint/nhà/profile | Hai natal nguồn và chart C/full context, 10 builtin views cùng custom views |
+| `horary` (1.2.0 đang phát triển) | `moment`, `quesitedHouse`, `ruleset` tùy chọn | [Lá số câu hỏi, hai hành tinh đại diện và Void-of-Course Moon](horary.md) |
 | `events` | Period ngày/tháng/năm, families/bodies/rules | Global events, midpoint snapshot, coverage và numeric search metadata |
 | `forecast` | Birth natal và period ngày/tháng/năm | Shared natal, snapshot, global/exact natal events, personalImpact, 10 views/30 sections và overview |
 | `chart` | Positions và cusps optional | Placements, aspects, midpoints |

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0 — Horary question charts
+
+- Add the `horary` operation for a question moment and a selected house. The
+  default `western-traditional-v1` ruleset uses Regiomontanus houses, traditional
+  domicile rulers and seven classical bodies. The response identifies the
+  effective ruleset and reports whether the Moon completes a major aspect
+  before its next tropical sign ingress, with event times.
+- Accept a local civil time for the question through `calculateFromLocal`.
+- Support polar Regiomontanus charts in both zodiacal directions, including
+  house assignments, significators and SVG. Horary reports the direction in
+  `calculation.houseOrder`. See the [1.2.0 release record](docs/release-1.2.0.md).
+
 ## 1.1.3 — scoped 7mlabs MIT permission in packages
 
 - Ship the additional standard MIT text, explicit 7mlabs contribution inventory, permission-scope guide and updated NOTICE in the registry packages and corresponding-source archives for the first time. Preserve the original AGPL text, Swiss provenance and all third-party notices.

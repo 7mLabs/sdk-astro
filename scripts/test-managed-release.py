@@ -98,7 +98,7 @@ def invoke(mode,request):
         assert value==reference,f'{mode} differs in {name}'
     return reference
 
-counts={'conformance':0,'time':0,'extended':0,'svg':0,'model':0,'davison':0}
+counts={'conformance':0,'time':0,'extended':0,'svg':0,'model':0,'davison':0,'horary':0}
 try:
     caps=invoke('capabilities',{})['data'];assert caps['abiVersion']==1 and caps['svg']['rendererVersion']=='1.2.0'
     for case in json.loads((ROOT/'tests/conformance/cases.json').read_text()):
@@ -129,6 +129,23 @@ try:
             assert not rendered['errors'];ET.fromstring(rendered['data']['svg']);counts['svg']+=1
         model=invoke('render',{'payload':payload,'options':{'sections':['wheel','houseFocus'],'focus':{'house':7,'mode':'isolate'},'output':'model'}})
         assert not model['errors'] and 'svg' not in model['data'];assert model['data']['model']['focus']['house']['number']==7;counts['model']+=1
+    question=json.loads((ROOT/'examples/horary-request.json').read_text())
+    chart=invoke('calculate',question)
+    assert not chart['errors'] and chart['calculation']['ruleset']=='western-traditional-v1'
+    assert chart['data']['significators']['quesited']['rulerBodyId']=='venus'
+    counts['horary']+=1
+    moment=question['moment']
+    local={**moment['utc'],'hour':15}
+    local_chart=invoke('local',{**question,'moment':{'local':local,'timeZone':'Asia/Ho_Chi_Minh','location':moment['location']}})
+    assert not local_chart['errors'] and local_chart['data']==chart['data']
+    counts['horary']+=1
+    model=invoke('render',{'payload':chart,'options':{'chart':'horary','output':'model','focus':{'house':7,'layer':'Q'}}})
+    assert not model['errors'] and model['data']['model']['focus']['house']['rulerId']=='venus'
+    counts['horary']+=1
+    polar=invoke('calculate',json.loads((ROOT/'examples/horary-polar-request.json').read_text()))
+    assert not polar['errors'] and polar['calculation']['houseOrder']=='decreasingLongitude'
+    assert polar['calculation']['houseSystem']=='regiomontanus'
+    counts['horary']+=1
     # Exercise Davison through the actual final wheel/NuGet/npm installations.
     for variant in ['uncorrected','corrected']:
         request=json.loads((ROOT/f'examples/davison-{variant}-request.json').read_text())

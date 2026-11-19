@@ -753,12 +753,16 @@ impl Wheel<'_> {
         }
         if let Some(h) = focus.get("house").filter(|h| h.is_object()) {
             let start = h["longitude"].as_f64().unwrap();
-            let width = h["width"].as_f64().unwrap();
+            let span = h["signedWidth"]
+                .as_f64()
+                .unwrap_or_else(|| h["width"].as_f64().unwrap());
             let a = pos(start, 222., asc);
-            let b = pos(start + width, 222., asc);
-            let c = pos(start + width, 178., asc);
+            let b = pos(start + span, 222., asc);
+            let c = pos(start + span, 178., asc);
             let d = pos(start, 178., asc);
-            write!(svg,"<path data-focus-house=\"{}\" d=\"M{} {} A222 222 0 {} 0 {} {} L{} {} A178 178 0 {} 1 {} {} Z\" fill=\"{}\" opacity=\"0.22\"/>",h["number"],a.0,a.1,if width>180.{1}else{0},b.0,b.1,c.0,c.1,if width>180.{1}else{0},d.0,d.1,p.violet).unwrap();
+            let large = u8::from(span.abs() > 180.);
+            let sweep = u8::from(span < 0.);
+            write!(svg,"<path data-focus-house=\"{}\" d=\"M{} {} A222 222 0 {large} {sweep} {} {} L{} {} A178 178 0 {large} {} {} {} Z\" fill=\"{}\" opacity=\"0.22\"/>",h["number"],a.0,a.1,b.0,b.1,c.0,c.1,1-sweep,d.0,d.1,p.violet).unwrap();
         }
         if options.display.houses.unwrap_or(true) {
             for (index, layer) in scene.layers.iter().enumerate() {
@@ -781,8 +785,7 @@ impl Wheel<'_> {
                         },
                     );
                     if index == 0 {
-                        let center =
-                            cusp + (layer.houses[(i + 1) % 12] - cusp).rem_euclid(360.) / 2.;
+                        let center = cusp + layer.signed_house_width(i) / 2.;
                         let (x, y) = pos(center, 195., asc);
                         svg.push_str(&font.text(
                             &(i + 1).to_string(),

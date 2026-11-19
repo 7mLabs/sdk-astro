@@ -86,6 +86,7 @@
         "chart": {
           "enum": [
             "natal",
+            "horary",
             "A",
             "B",
             "C",
@@ -461,6 +462,7 @@
             "layer": {
               "enum": [
                 "N",
+                "Q",
                 "A",
                 "B",
                 "C"

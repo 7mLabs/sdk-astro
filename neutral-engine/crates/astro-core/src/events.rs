@@ -4,6 +4,9 @@ use super::*;
 use astro_provider_swiss::{CivilUtc, EphemerisSession};
 use std::collections::HashMap;
 
+mod horary;
+pub(super) use horary::horary_moon;
+
 pub(super) const BODY_IDS: [&str; 10] = [
     "sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto",
 ];

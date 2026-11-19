@@ -5,12 +5,12 @@ Offline natal, synastry, composite, forecasts and astronomical event data using 
 ## Install and update
 
 ```sh
-npm install @7mlabs/astrology
+npm install --save-exact @7mlabs/astrology@1.2.0
 ```
 
-This release uses version `1.1.3` and the stable `latest` channel. Update explicitly with the same command. Pin `@7mlabs/astrology@1.1.3` and commit your application's lockfile to reproduce a specific release; `npm ci` restores that lockfile. New applications should use Node.js 22 or 24. Minimum supported Node.js is 18.
+This release uses version `1.2.0`. Pass `operation: "horary"`, the question time and location, and `quesitedHouse` to `calculate`. Pass its result to `renderChartSvg` to draw the question chart. [Horary example](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/horary.en.md)
 
-The public tarball includes both `darwin-arm64` (Apple Silicon) and `linux-x64` (glibc **2.38+**, with `libgcc_s.so.1`) addons. macOS 15 and Ubuntu 24.04 are the verified build/test environments. The macOS addon targets macOS 11+, but your Node.js version can require a newer OS. Windows, macOS Intel, Linux ARM64 and Alpine/musl are not included. See [platform and release details](https://github.com/7mlabs/sdk-astro/blob/main/docs/node-release.md).
+The public tarball includes both `darwin-arm64` (Apple Silicon) and `linux-x64` (glibc **2.38+**, with `libgcc_s.so.1`) addons. The CI build and test environments are macOS 15 and Ubuntu 24.04. The macOS addon targets macOS 11+, but your Node.js version can require a newer OS. Windows, macOS Intel, Linux ARM64 and Alpine/musl are not included. See [platform and release details](https://github.com/7mlabs/sdk-astro/blob/main/docs/node-release.md).
 
 No compiler, Rust installation, engine server or runtime binary download is needed. The installed addon calculates locally; it requires a supported native Node.js host.
 
@@ -25,13 +25,13 @@ console.log(result.data.placements, result.data.houses);
 
 Package includes TypeScript declarations. `calculate` is synchronous and throws errors with `.code`/`.result`; `calculateJson` returns the envelope including errors. Native Node package does not run in a browser. Maximum input: 4 MiB; geometry permits 1–64 bodies. Source developers can build guarded local candidates with `scripts/build-packages.py`; the public release assembler combines two validated candidates from the same commit.
 
-Operations: natal, natalDomains, couple, composite, davison, events, forecast, chart, harmonic, synastry. `natalDomains` uses the same UTC/location input and returns `data.natal`, `data.context`, `data.domains` for career/love/relationships/family/finance/identity/learning/creativity/innerLife/dailyLife. It defaults to all ten domains, traditional rulers and extended aspect rules. Optional `domains` selects unique IDs; `rulership` selects traditional/modern; `aspectPreset` selects major/extended or supply `aspectRules` (mutually exclusive). Context includes all 325 angle relations among 10 bodies, 4 angles and 12 house cusps, house rulers/occupants and dispositors. Domain selection reasons and references are explicit; no scores or narrative. Full domain contract: repository `docs/domains.md`.
+Operations: natal, horary, natalDomains, couple, composite, davison, events, forecast, chart, harmonic, synastry. `natalDomains` uses the same UTC/location input and returns `data.natal`, `data.context`, `data.domains` for career/love/relationships/family/finance/identity/learning/creativity/innerLife/dailyLife. It defaults to all ten domains, traditional rulers and extended aspect rules. Optional `domains` selects unique IDs; `rulership` selects traditional/modern; `aspectPreset` selects major/extended or supply `aspectRules` (mutually exclusive). Context includes all 325 angle relations among 10 bodies, 4 angles and 12 house cusps, house rulers/occupants and dispositors. Domain selection reasons and references are explicit; no scores or narrative. Full domain contract: repository `docs/domains.md`.
 
 Basic natal supports Gregorian UTC 1800–2399, tropical geocentric apparent Sun–Pluto, Placidus/Whole Sign houses, ASC/MC/DSC/IC and major aspects. Use UTC, not local civil time. Coordinates use degrees, north/east positive. Longitude is normalized and speed is degrees/day. Placidus polar failure returns an error without silently changing house systems. The compiled Moshier and time models require no external data files or downloads.
 
 Source: https://github.com/7mlabs/sdk-astro. The public combined native distribution uses **AGPL-3.0-only**, choosing Swiss Ephemeris's AGPL route.
 
-This 1.1.3 package includes the grant and scope files. Identified original 7mlabs-owned contributions additionally have a separate MIT permission; this includes only the original 7mlabs changes identified by the Swiss provenance diff, not the entire modified Swiss file. See the [permission scope](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-SCOPE.md), [MIT text](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-7MLABS-MIT) and [English licensing guide](https://github.com/7mLabs/sdk-astro/blob/main/docs/license.en.md). Swiss code/data and dependency/font licenses remain separate. There is no unconditional MIT option for the complete native binary.
+This package includes the grant and scope files. Identified original 7mlabs-owned contributions additionally have a separate MIT permission; this includes only the original 7mlabs changes identified by the Swiss provenance diff, not the entire modified Swiss file. See the [permission scope](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-SCOPE.md), [MIT text](https://github.com/7mLabs/sdk-astro/blob/main/LICENSE-7MLABS-MIT) and [English licensing guide](https://github.com/7mLabs/sdk-astro/blob/main/docs/license.en.md). Swiss code/data and dependency/font licenses remain separate. There is no unconditional MIT option for the complete native binary.
 
 Professional holders must have Swiss permission covering their actual use; we have not confirmed that existing prebuilt binaries can automatically be used under Professional.
 
@@ -114,4 +114,4 @@ const model = sdk.buildChartModel(payload, { sections: ['wheel'] });
 
 See [the 1.0 release contract](https://github.com/7mlabs/sdk-astro/blob/main/docs/release-1.0.md).
 
-Davison was introduced in SDK 1.1.0 and remains available in 1.1.3 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.1.3/docs/davison.md).
+Davison is available from SDK 1.1.0 (`operation: "davison"`, `variant: "uncorrected"` or `"corrected"`) through the existing calculation entry point. Existing 1.0.x request shapes remain supported. [Davison contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/davison.md).

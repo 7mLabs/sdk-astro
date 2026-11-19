@@ -8,6 +8,7 @@ mod davison;
 mod domains;
 mod events;
 mod forecast;
+mod horary;
 mod natal;
 mod numbers;
 #[cfg(test)]
@@ -372,6 +373,9 @@ pub fn calculate_json(input: &str) -> String {
     }
     if operation == "forecast" {
         return forecast::calculate_json(input);
+    }
+    if operation == "horary" {
+        return horary::calculate_json(input);
     }
     if operation == "davison" {
         return davison::calculate_json(input);

@@ -247,9 +247,10 @@ function main() {
   const schemaEnv = { AJV_2020_MODULE: args['ajv-module'], ASTRO_ENGINE_MODULE: installed };
 
   console.log(run(process.execPath, [path.join(root, 'tests/services/davison.cjs')], consumer, schemaEnv).trim());
+  console.log(run(process.execPath, [path.join(root, 'tests/services/horary.cjs')], consumer, schemaEnv).trim());
   console.log(run(process.execPath, [path.join(root, 'tests/services/payload-metadata.cjs')], consumer, schemaEnv).trim());
   console.log(run(process.execPath, [path.join(root, 'scripts/check-upgrade-compatibility.cjs')], root, {ASTRO_ENGINE_MODULE: installed}).trim());
-  for (const relative of ['examples/node/davison-types.ts', 'tests/compatibility/legacy-types.ts']) {
+  for (const relative of ['examples/node/davison-types.ts', 'tests/services/horary-types.ts', 'tests/compatibility/legacy-types.ts']) {
     const filename = path.join(consumer, path.basename(relative));
     fs.writeFileSync(filename, fs.readFileSync(path.join(root, relative), 'utf8').replace("from '../../bindings/node'", "from '@7mlabs/astrology'"));
     run(process.execPath, [args.typescript, '--strict', '--noEmit', '--target', 'ES2020', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', filename], consumer);
@@ -292,7 +293,7 @@ function main() {
     archivedNativeTargets: targetNames, conformanceCases: cases.length, conformanceSha256: sha(fs.readFileSync(casesPath)),
     referenceCliSha256: sha(fs.readFileSync(args['reference-cli'])), queryHelpers: queryCalls.length,
     querySchemaAndSemanticChecks: querySchema.trim(), compressionSchemaAndRoundtripChecks: compressionSchema,
-    typescript: 'passed', unsupportedTargetsRejected: ['win32-x64', 'darwin-x64', 'linux-arm64'],
+    horaryContract: 'passed', typescript: 'passed', unsupportedTargetsRejected: ['win32-x64', 'darwin-x64', 'linux-arm64'],
     installation: 'fresh-consumer-offline-ignore-scripts', runtimeDownloads: false
   };
   fs.writeFileSync(failureReportPath, JSON.stringify(report, null, 2) + '\n');

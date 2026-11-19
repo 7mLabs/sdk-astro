@@ -32,6 +32,7 @@ fn context<'a>(payload: &'a Value, scene: &scene::Scene, layer: &str) -> &'a Val
     match scene.key.as_str() {
         "A" | "B" | "synastry" => &d["subjects"][layer]["context"],
         "C" => &d["composite"]["context"],
+        "horary" => &d["chart"],
         "transits" if layer == "N" => &d["subject"]["context"],
         "transits" => &Value::Null,
         _ => &d["context"],
@@ -41,6 +42,11 @@ pub fn houses(payload: &Value, scene: &scene::Scene) -> Result<Vec<Value>, Rende
     let mut result = vec![];
     for layer in &scene.layers {
         let c = context(payload, scene, &layer.key);
+        let rulership = if scene.key == "horary" {
+            &payload["calculation"]["rulership"]
+        } else {
+            &c["rulership"]
+        };
         for (i, cusp) in layer.houses.iter().enumerate() {
             let source = c["houses"]
                 .as_array()
@@ -53,11 +59,16 @@ pub fn houses(payload: &Value, scene: &scene::Scene) -> Result<Vec<Value>, Rende
                     "Source house ruler does not identify a rendered chart body",
                 ));
             }
-            result.push(json!({"id":qualified(scene,&layer.key,&format!("H{}",i+1)),"layer":layer.key,"number":i+1,"longitude":cusp,
-                "width":(layer.houses[(i+1)%12]-cusp).rem_euclid(360.),
+            let span = layer.signed_house_width(i);
+            let mut row = json!({"id":qualified(scene,&layer.key,&format!("H{}",i+1)),"layer":layer.key,"number":i+1,"longitude":cusp,
+                "width":span.abs(),
                 "occupantIds":layer.points.iter().filter(|p| p.house==Some((i+1) as u64)).map(|p| &p.id).collect::<Vec<_>>(),
                 "rulerId":ruler_point.map(|p| &p.id),"rulerPlacement":ruler_point.map(|p|json!({"id":p.id,"longitude":p.longitude,"house":p.house})),
-                "rulership":if ruler.is_some(){c["rulership"].clone()}else{Value::Null},"rulershipAvailable":ruler.is_some()}));
+                "rulership":if ruler.is_some(){rulership.clone()}else{Value::Null},"rulershipAvailable":ruler.is_some()});
+            if scene.key == "horary" {
+                row["signedWidth"] = json!(span);
+            }
+            result.push(row);
         }
     }
     Ok(result)
@@ -226,8 +237,14 @@ impl Builder<'_> {
             }
         }
         if wheel_y.is_some() {
-            for h in houses.iter().filter(|h| h["layer"] == scene.layers[0].key) {
-                targets.push(json!({"kind":"house","id":h["id"],"layer":h["layer"],"house":h["number"],"center":transform(h["longitude"].as_f64().unwrap()+h["width"].as_f64().unwrap()/2.,195.),"radius":18.}));
+            let layer = &scene.layers[0];
+            for (index, h) in houses
+                .iter()
+                .filter(|h| h["layer"] == layer.key)
+                .enumerate()
+            {
+                let midpoint = layer.houses[index] + layer.signed_house_width(index) / 2.;
+                targets.push(json!({"kind":"house","id":h["id"],"layer":h["layer"],"house":h["number"],"center":transform(midpoint,195.),"radius":18.}));
             }
         }
         let anchors = anchors(scene);

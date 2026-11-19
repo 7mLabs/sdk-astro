@@ -15,6 +15,29 @@ pub struct Layer {
     pub points: Vec<Point>,
     pub houses: Vec<f64>,
     pub angles: Vec<(String, f64)>,
+    house_order: HouseOrder,
+}
+
+#[derive(Clone, Copy)]
+enum HouseOrder {
+    Increasing,
+    Decreasing,
+}
+
+impl HouseOrder {
+    fn span(self, start: f64, end: f64) -> f64 {
+        match self {
+            Self::Increasing => (end - start).rem_euclid(360.),
+            Self::Decreasing => -(start - end).rem_euclid(360.),
+        }
+    }
+}
+
+impl Layer {
+    pub fn signed_house_width(&self, index: usize) -> f64 {
+        self.house_order
+            .span(self.houses[index], self.houses[(index + 1) % 12])
+    }
 }
 pub struct Scene {
     pub key: String,
@@ -37,6 +60,7 @@ fn layer(
     key: &str,
     qualified: bool,
     allow_no_houses: bool,
+    house_order: HouseOrder,
 ) -> Result<Layer, RenderError> {
     let values = chart["placements"]
         .as_array()
@@ -106,7 +130,7 @@ fn layer(
     }
     if !houses.is_empty() {
         let widths: Vec<f64> = (0..12)
-            .map(|i| (houses[(i + 1) % 12] - houses[i]).rem_euclid(360.))
+            .map(|i| house_order.span(houses[i], houses[(i + 1) % 12]).abs())
             .collect();
         if widths.iter().any(|w| *w <= 0.) || (widths.iter().sum::<f64>() - 360.).abs() > 1e-7 {
             return Err(error(
@@ -133,6 +157,7 @@ fn layer(
         points,
         houses,
         angles,
+        house_order,
     })
 }
 fn aspects(chart: &Value, context: &Value) -> Vec<Value> {
@@ -160,10 +185,13 @@ pub fn parse(payload: &Value, requested: Option<&str>) -> Result<Scene, RenderEr
         "synastry"
     } else if d["subject"]["natal"].is_object() {
         "transits"
+    } else if payload["calculation"]["chartKind"] == "horary" {
+        "horary"
     } else {
         "natal"
     });
     let mut layers = vec![];
+    use HouseOrder::Increasing;
     let contacts = match key {
         "natal" => {
             let chart = if d["natal"].is_object() {
@@ -171,22 +199,50 @@ pub fn parse(payload: &Value, requested: Option<&str>) -> Result<Scene, RenderEr
             } else {
                 d
             };
-            layers.push(layer(chart, "N", false, false)?);
+            layers.push(layer(chart, "N", false, false, Increasing)?);
             aspects(chart, &d["context"])
+        }
+        "horary" if payload["calculation"]["chartKind"] == "horary" => {
+            let chart = &d["chart"];
+            let calculation = &payload["calculation"];
+            let order = match calculation.get("houseOrder") {
+                None => Increasing,
+                Some(v) if v == "increasingLongitude" => Increasing,
+                Some(v)
+                    if v == "decreasingLongitude"
+                        && calculation["houseSystem"] == "regiomontanus" =>
+                {
+                    HouseOrder::Decreasing
+                }
+                _ => {
+                    return Err(error(
+                        "INVALID_CHART_DATA",
+                        "Invalid house order for the Horary house system",
+                    ))
+                }
+            };
+            layers.push(layer(chart, "Q", false, false, order)?);
+            aspects(chart, &Value::Null)
         }
         "A" | "B" => {
             let subject = &d["subjects"][key];
-            layers.push(layer(&subject["natal"], key, false, false)?);
+            layers.push(layer(&subject["natal"], key, false, false, Increasing)?);
             aspects(&subject["natal"], &subject["context"])
         }
         "C" => {
             let c = &d["composite"];
-            layers.push(layer(&c["chart"], "C", false, false)?);
+            layers.push(layer(&c["chart"], "C", false, false, Increasing)?);
             aspects(&c["chart"], &c["context"])
         }
         "synastry" => {
             for key in ["A", "B"] {
-                layers.push(layer(&d["subjects"][key]["natal"], key, true, false)?);
+                layers.push(layer(
+                    &d["subjects"][key]["natal"],
+                    key,
+                    true,
+                    false,
+                    Increasing,
+                )?);
             }
             d["context"]["aspects"]
                 .as_array()
@@ -194,8 +250,8 @@ pub fn parse(payload: &Value, requested: Option<&str>) -> Result<Scene, RenderEr
                 .ok_or_else(|| error("MISSING_CHART_DATA", "No cross-chart aspects"))?
         }
         "transits" => {
-            layers.push(layer(&d["subject"]["natal"], "N", true, false)?);
-            layers.push(layer(&d["snapshot"], "T", true, true)?);
+            layers.push(layer(&d["subject"]["natal"], "N", true, false, Increasing)?);
+            layers.push(layer(&d["snapshot"], "T", true, true, Increasing)?);
             d["snapshot"]["aspects"]
                 .as_array()
                 .cloned()
@@ -204,7 +260,11 @@ pub fn parse(payload: &Value, requested: Option<&str>) -> Result<Scene, RenderEr
         _ => {
             return Err(error(
                 "UNSUPPORTED_CHART",
-                "chart must be natal, A, B, C, synastry or transits",
+                if key == "horary" {
+                    "chart horary requires a Horary result"
+                } else {
+                    "chart must be natal, A, B, C, synastry or transits"
+                },
             ))
         }
     };

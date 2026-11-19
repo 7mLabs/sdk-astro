@@ -114,6 +114,18 @@ couple = probe("local", request)
 assert couple["errors"] == []
 probe("local", {**birth, "utc": resolved["data"]["utc"], "location": location})
 svg_cases = 0
+polar_request = json.loads((ROOT / "examples/horary-polar-request.json").read_text())
+polar_moment = polar_request["moment"]
+polar_moment["local"] = polar_moment.pop("utc")
+polar_moment["utcOffsetSeconds"] = 0
+polar = probe("local", polar_request)
+assert polar["errors"] == [] and polar["calculation"]["houseOrder"] == "decreasingLongitude"
+polar_view = probe("render", {"payload": polar, "options": {"chart": "horary", "focus": {"house": 7, "layer": "Q"}}})
+assert polar_view["errors"] == []
+assert polar_view["data"]["model"]["focus"]["house"]["rulerId"] == "sun"
+assert all(row["signedWidth"] < 0 for row in polar_view["data"]["model"]["houses"])
+ET.fromstring(polar_view["data"]["svg"])
+svg_cases += 1
 for detail in ["basic", "advanced", "professional"]:
     for theme in ["dark", "light"]:
         out = probe("render", {"payload": natal, "options": {"detail": detail, "theme": theme}})
@@ -184,7 +196,7 @@ renderChartSvg(p,{detail:'incorrect'});
 ''')
     run([node, args.typescript.resolve(), "--strict", "--noEmit", "--target", "ES2022", "--module", "commonjs", types])
 summary = {"passed": True, "engineVersion": manifest["engineVersion"], "platform": manifest["platform"], "arch": manifest["arch"],
-           "bindings": list(commands), "timeCases": len(time_cases), "localCalculationCases": 5, "svgCases": svg_cases,
+           "bindings": list(commands), "timeCases": len(time_cases), "localCalculationCases": 6, "svgCases": svg_cases,
            "fullJsonAndSvgParity": True, "tzdbVersion": capabilities["civilTime"]["tzdbVersion"], "typescript": bool(args.typescript), "artifactFingerprint": fingerprint}
 (ROOT / "artifacts/time-svg-tests.json").write_text(json.dumps(summary, indent=2) + "\n")
 print(json.dumps(summary, indent=2))

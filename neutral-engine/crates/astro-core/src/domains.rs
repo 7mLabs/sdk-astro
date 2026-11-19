@@ -1,7 +1,7 @@
 //! Versioned selection views over shared chart facts; no scoring or interpretation.
 use super::*;
 
-const TRADITIONAL: [&str; 12] = [
+pub(super) const TRADITIONAL: [&str; 12] = [
     "mars", "venus", "mercury", "moon", "sun", "mercury", "venus", "mars", "jupiter", "saturn",
     "saturn", "jupiter",
 ];

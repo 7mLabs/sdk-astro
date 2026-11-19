@@ -1,0 +1,8 @@
+{
+  "operation": "horary",
+  "moment": {
+    "utc": { "year": 2026, "month": 11, "day": 19, "hour": 16, "minute": 59, "second": 59 },
+    "location": { "latitude": 78.2232, "longitude": 15.6469 }
+  },
+  "quesitedHouse": 7
+}
