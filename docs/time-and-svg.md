@@ -1,14 +1,16 @@
-# Civil time và SVG chart — SDK 1.1.2
+# Civil time và SVG chart
 
-[Astro 1.1.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+[Tài liệu Astro SDK](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
 
 
 Các API dưới đây có trong **1.1.2** đã phát hành và xác minh trên npm/PyPI/NuGet. [Trạng thái và bằng chứng release](release-1.1.2.md). Các lời gọi UTC cũ giữ nguyên hành vi; đổi giờ và điểm mở rộng là tùy chọn rõ ràng.
 
+Từ SDK 1.2.0, `renderChartSvg` cũng vẽ được lá số giờ hỏi từ kết quả của `calculate`. [Hướng dẫn Horary](horary.md)
+
 ## Hai luồng tích hợp
 
 ```js
-// Node: npm install @7mlabs/astrology@1.1.2
+// Node: npm install @7mlabs/astrology@1.2.1
 const {
   calculate, resolveBirthTime, calculateFromLocal,
   renderChartSvg, renderChartSvgResult, getCapabilities

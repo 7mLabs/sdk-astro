@@ -5,10 +5,10 @@ Offline natal, synastry, composite, forecasts and astronomical event data using 
 ## Install and update
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.2.0
+npm install --save-exact @7mlabs/astrology@1.2.1
 ```
 
-This release uses version `1.2.0`. Pass `operation: "horary"`, the question time and location, and `quesitedHouse` to `calculate`. Pass its result to `renderChartSvg` to draw the question chart. [Horary example](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/horary.en.md)
+This release uses version `1.2.1`. Pass `operation: "horary"`, the question time and location, and `quesitedHouse` to `calculate`. Pass its result to `renderChartSvg` to draw the question chart. [Horary example](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/horary.en.md)
 
 The public tarball includes both `darwin-arm64` (Apple Silicon) and `linux-x64` (glibc **2.38+**, with `libgcc_s.so.1`) addons. The CI build and test environments are macOS 15 and Ubuntu 24.04. The macOS addon targets macOS 11+, but your Node.js version can require a newer OS. Windows, macOS Intel, Linux ARM64 and Alpine/musl are not included. See [platform and release details](https://github.com/7mlabs/sdk-astro/blob/main/docs/node-release.md).
 

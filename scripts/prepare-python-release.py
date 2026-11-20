@@ -11,6 +11,7 @@ import tarfile
 import tomllib
 import zipfile
 from pathlib import Path, PurePosixPath
+from wheel_record import verify_wheel_record
 
 ROOT = Path(__file__).resolve().parents[1]
 LICENSE_COMPANIONS = ('LICENSE-7MLABS-MIT','LICENSE-SCOPE.json','LICENSE-SCOPE.md')
@@ -79,8 +80,8 @@ for folder in ('neutral-engine','bindings/python','schemas','third-party/rust','
             continue
         files.add(path)
 for name in ('LICENSE','NOTICE',*LICENSE_COMPANIONS,'global.json','README.md','CHANGELOG.md','docs/license.md','docs/license.en.md','docs/time-and-svg.md',
-             'docs/payload-metadata.md','docs/release-1.1.2.md','docs/release-1.1.3.md','docs/release-1.2.0.md','docs/python-linux.md','docs/domains.md','docs/query.md','docs/profiles.md','docs/couple.md','docs/composite.md',
-             'docs/forecast.md','docs/horary.md','docs/horary.en.md','docs/payload-compression.md','scripts/prepare-python-release.py'):
+             'docs/payload-metadata.md','docs/release-1.1.2.md','docs/release-1.1.3.md','docs/release-1.2.0.md','docs/release-1.2.1.md','docs/python-linux.md','docs/domains.md','docs/query.md','docs/profiles.md','docs/couple.md','docs/composite.md',
+             'docs/forecast.md','docs/horary.md','docs/horary.en.md','docs/payload-compression.md','scripts/prepare-python-release.py','scripts/wheel_record.py'):
     files.add(ROOT / name)
 files.update((ROOT / 'examples').glob('*.json'))
 prefix = f'astro-sdk-{core_version}'
@@ -134,6 +135,8 @@ record_name=f'sevenmlabs_astrology-{version}.dist-info/RECORD'
 entries.pop(record_name)
 rows=[]
 for name,data in sorted(entries.items()):
+    if name.endswith('/'):
+        continue  # auditwheel can include explicit directory entries in the ZIP.
     digest=base64.urlsafe_b64encode(hashlib.sha256(data).digest()).rstrip(b'=').decode()
     rows.append([name,'sha256='+digest,str(len(data))])
 rows.append([record_name,'',''])
@@ -144,6 +147,8 @@ with zipfile.ZipFile(wheel,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9)
     for name,data in sorted(entries.items()):
         info=zipfile.ZipInfo(name,date_time=(2020,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
         result.writestr(info,data)
+with zipfile.ZipFile(wheel) as result:
+    verify_wheel_record(result, record_name)
 manifest={'version':version,'engineVersion':core_version,'platform':args.platform,
           'baselineWheelSha256':hashlib.sha256(baseline.read_bytes()).hexdigest(),
           'nativeSha256':hashlib.sha256(entries[native_name]).hexdigest(),'sourceFileCount':len(files),

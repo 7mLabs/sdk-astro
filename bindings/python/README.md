@@ -8,7 +8,7 @@ as its three development paths.
 ## Installation and platform support
 
 ```sh
-python -m pip install 'sevenmlabs-astrology==1.2.0'
+python -m pip install 'sevenmlabs-astrology==1.2.1'
 ```
 
 This release has wheels for **Python 3.10+ on macOS 11+ Apple Silicon
@@ -129,9 +129,9 @@ envelope. `get_capabilities()` describes the installed engine.
 
 ## Source, documentation and license
 
-This package uses version **1.2.0**. The matching project source snapshot
+This package uses version **1.2.1**. The matching project source snapshot
 and build instructions are bundled at
-`sevenmlabs_astrology/source/astro-sdk-1.2.0.tar.gz` inside the wheel.
+`sevenmlabs_astrology/source/astro-sdk-1.2.1.tar.gz` inside the wheel.
 The archive includes the Rust/C engine, Python wrapper, locked dependency
 declarations, embedded data, renderer assets, schemas, tests and dependency
 notices; it excludes credentials and local build outputs.

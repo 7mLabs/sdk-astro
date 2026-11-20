@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/hero.vi.dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/hero.vi.light.svg">
-  <img src="docs/assets/readme/hero.vi.light.svg" width="1280" alt="7mlabs Astro SDK 1.2.0 — logo đầy đủ, tính ngoại tuyến, nhiều nền tảng">
+  <img src="docs/assets/readme/hero.vi.light.svg" width="1280" alt="7mlabs Astro SDK 1.2.1 — logo đầy đủ, tính ngoại tuyến, nhiều nền tảng">
 </picture>
 
 **Tiếng Việt** · [English](README.en.md)
@@ -17,7 +17,7 @@
 
 [Bắt đầu](#quick-start) · [Chức năng](#features) · [Công thức](docs/features-and-formulas.vi.md) · [Quy tắc](docs/rules.vi.md) · [Kiểm chứng](docs/formula-verification.vi.md) · [Tài liệu web 1.1.3](https://7mlabs.com/astro/sdk/docs/1.1.3/overview/)
 
-**Astro SDK 1.2.0** của **7mlabs** dùng lõi Rust và Swiss Ephemeris để tính lá số, quan hệ và sự kiện thiên văn ngay trong ứng dụng. Cùng một engine cho Node.js/TypeScript, Python, .NET, Rust và C; không cần máy chủ tính toán hay gọi API bên ngoài.
+**Astro SDK 1.2.1** của **7mlabs** dùng lõi Rust và Swiss Ephemeris để tính lá số, quan hệ và sự kiện thiên văn ngay trong ứng dụng. Cùng một engine cho Node.js/TypeScript, Python, .NET, Rust và C; không cần máy chủ tính toán hay gọi API bên ngoài.
 
 Đầu ra gồm **số liệu, cấu hình tính, quy tắc lựa chọn dữ liệu và bằng chứng**. SDK có SVG và model cho giao diện; phần viết luận giải hoặc chấm điểm tương hợp thuộc ứng dụng tích hợp.
 
@@ -61,19 +61,19 @@ Tên trên dùng kiểu Node.js. Python dùng snake_case; .NET dùng PascalCase.
 
 ## Cài đặt và nền tảng
 
-| Gói 1.2.0 | Runtime | Target native |
+| Gói 1.2.1 | Runtime | Target native |
 | --- | --- | --- |
-| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.2.0) | Node.js ≥18; matrix kiểm thử 18/24 | macOS ARM64, Linux x64 |
-| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.2.0/) | Python ≥3.10; matrix kiểm thử 3.10/3.13 | macOS ARM64, Linux x64 |
-| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.2.0) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
+| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.2.1) | Node.js ≥18; matrix kiểm thử 18/24 | macOS ARM64, Linux x64 |
+| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.2.1/) | Python ≥3.10; matrix kiểm thử 3.10/3.13 | macOS ARM64, Linux x64 |
+| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.2.1) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
 | Rust / C | Tích hợp source và C ABI | [Hướng dẫn build](docs/packages.md); chưa có gói crates.io riêng |
 
 Linux cần **glibc ≥2.38 và libgcc_s.so.1**. Môi trường CI cho Linux là Ubuntu 24.04. Ubuntu 22.04, Debian 12, Alpine/musl, Windows, Intel Mac và Linux ARM64 chưa có binary phù hợp trong bản này. Native macOS có deployment target 11.0; runtime được chọn còn có yêu cầu OS riêng. **Chưa chạy trực tiếp trong browser bằng WASM**; frontend có thể gọi backend/desktop host dùng SDK.
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.2.0
-python -m pip install sevenmlabs-astrology==1.2.0
-dotnet add package SevenMLabs.Astrology --version 1.2.0
+npm install --save-exact @7mlabs/astrology@1.2.1
+python -m pip install sevenmlabs-astrology==1.2.1
+dotnet add package SevenMLabs.Astrology --version 1.2.1
 ```
 
 Ba dòng là ba lựa chọn theo ngôn ngữ, không cần cài cả ba. [Chi tiết wheel Linux](docs/python-linux.md).
@@ -103,7 +103,7 @@ const payload = astro.calculate({
   houseSystem: 'placidus',
   includeMetadata: true
 });
-console.log(payload.engineVersion, payload.data.placements.length); // 1.2.0 10
+console.log(payload.engineVersion, payload.data.placements.length); // 1.2.1 10
 const svg = astro.renderChartPart(payload, 'wheel');
 ```
 
@@ -118,7 +118,7 @@ payload = astro.calculate({
     "houseSystem": "placidus",
     "includeMetadata": True,
 })
-print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.2.0 10
+print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.2.1 10
 svg = astro.render_chart_part(payload, "wheel")
 ```
 
@@ -183,6 +183,8 @@ Envelope gồm `schemaVersion`, `engineVersion`, `calculation`, `data`, `warning
 <a id="validation"></a>
 
 ## Kiểm chứng và phiên bản
+
+**SDK 1.2.1 sửa danh mục tệp trong gói Python và kiểm tra kích thước cùng SHA-256 của từng tệp trước khi phát hành.** [Hồ sơ 1.2.1](docs/release-1.2.1.md)
 
 **SDK 1.2.0 bổ sung bản đồ sao câu hỏi Horary và vẽ SVG.** Hồ sơ phát hành mô tả bộ quy tắc, đối chiếu nhà ở vùng cực và kiểm thử các gói SDK. [Hồ sơ 1.2.0](docs/release-1.2.0.md)
 

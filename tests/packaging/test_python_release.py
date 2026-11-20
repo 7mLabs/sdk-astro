@@ -15,6 +15,9 @@ import unittest
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT/'scripts'))
+from wheel_record import verify_wheel_record
+
 VERSION = tomllib.loads((ROOT/'bindings/python/pyproject.toml').read_text())['project']['version']
 LICENSE_COMPANIONS = ('LICENSE-7MLABS-MIT', 'LICENSE-SCOPE.json', 'LICENSE-SCOPE.md')
 
@@ -51,6 +54,10 @@ class PythonReleaseTests(unittest.TestCase):
                     f'License-Expression: {license_expression}',
                     *[f'License-File: {name}' for name in ('LICENSE', 'NOTICE', *declared_companions)]]
         with zipfile.ZipFile(path, 'w') as wheel:
+            if target == 'linux-x64':
+                wheel.writestr('sevenmlabs_astrology/native/linux-x64/', b'')
+                wheel.writestr(info+'licenses/', b'')
+            wheel.writestr('sevenmlabs_astrology/empty.txt', b'')
             wheel.writestr(f'sevenmlabs_astrology/native/{target}/{filename}', native)
             wheel.writestr('sevenmlabs_astrology/__init__.py', (ROOT/'bindings/python/sevenmlabs_astrology/__init__.py').read_bytes())
             wheel.writestr(info+'METADATA', ('\n'.join(metadata)+'\n\n').encode()
@@ -87,7 +94,8 @@ class PythonReleaseTests(unittest.TestCase):
                     self.assertEqual(wheel.read(info+'licenses/'+name), (ROOT/name).read_bytes())
                 record = f'sevenmlabs_astrology-{VERSION}.dist-info/RECORD'
                 rows = list(csv.reader(io.StringIO(wheel.read(record).decode())))
-                self.assertEqual({row[0] for row in rows}, set(wheel.namelist()))
+                self.assertCountEqual((row[0] for row in rows),
+                                      (member.filename for member in wheel.infolist() if not member.is_dir()))
                 for name, digest, size in rows:
                     if name == record:
                         self.assertEqual((digest, size), ('', ''))
@@ -101,6 +109,7 @@ class PythonReleaseTests(unittest.TestCase):
                 prefix = f'astro-sdk-{VERSION}/'
                 manifest = json.load(archive.extractfile(prefix+'SOURCE-MANIFEST.json'))
                 self.assertIn('bindings/python/setup.py', manifest)
+                self.assertIn('scripts/wheel_record.py', manifest)
                 self.assertIn('docs/python-linux.md', manifest)
                 for name in (*LICENSE_COMPANIONS, 'licensing/swisseph-sweph.c.patch',
                              'licensing/swisseph-modifications.json'):
@@ -110,6 +119,30 @@ class PythonReleaseTests(unittest.TestCase):
                 for name, digest in manifest.items():
                     self.assertEqual(hashlib.sha256(archive.extractfile(prefix+name).read()).hexdigest(), digest)
         self.assertEqual(sources[0], sources[1])
+
+    def test_final_wheel_gate_rejects_invalid_records(self):
+        record = 'example.dist-info/RECORD'
+        file_row = ['pkg/empty', 'sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU', '0']
+        self_row = [record, '', '']
+        for defect, rows in {
+            'directory': [self_row, file_row, ['pkg/', *file_row[1:]]],
+            'missing file': [self_row],
+            'duplicate file': [self_row, file_row, file_row],
+            'wrong hash': [self_row, ['pkg/empty', 'sha256=bad', '0']],
+            'wrong size': [self_row, ['pkg/empty', file_row[1], '1']],
+            'missing self': [file_row],
+            'hashed self': [file_row, [record, *file_row[1:]]],
+        }.items():
+            with self.subTest(defect=defect):
+                content = io.StringIO(newline='')
+                csv.writer(content).writerows(rows)
+                wheel = self.folder/'example.whl'
+                with zipfile.ZipFile(wheel, 'w') as archive:
+                    archive.writestr('pkg/', b'')
+                    archive.writestr('pkg/empty', b'')
+                    archive.writestr(record, content.getvalue())
+                with zipfile.ZipFile(wheel) as archive, self.assertRaises(ValueError):
+                    verify_wheel_record(archive, record)
 
     def test_scoped_companions_must_be_declared(self):
         for target in ['darwin-arm64', 'linux-x64']:
