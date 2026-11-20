@@ -505,7 +505,7 @@
     },
     {
       "path": "tests/packaging/test_python_release.py",
-      "sha256": "68c0092cc694f9fdddf6c5eade062c897d7b03286c206364de4304b423ce12c1"
+      "sha256": "cb78a745d46317f02ab2a7a40c040f5e7b6ad3ebe6eb0b696d76769eb3eb7bb2"
     },
     {
       "path": "tests/packaging/test_wheel_tag.py",

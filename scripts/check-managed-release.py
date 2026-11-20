@@ -8,6 +8,7 @@ from pathlib import Path
 import tomllib
 import tarfile
 import zipfile
+from wheel_record import verify_wheel_record
 
 ROOT=Path(__file__).resolve().parents[1]
 LICENSE_COMPANIONS=('LICENSE-7MLABS-MIT','LICENSE-SCOPE.json','LICENSE-SCOPE.md')
@@ -31,9 +32,10 @@ with zipfile.ZipFile(a.manifest.parent/f'SevenMLabs.Astrology.{v}.nupkg') as arc
   assert hashlib.sha256(archive.read(f'runtimes/{rid}/native/{filename}')).hexdigest()==m['nativeSha256'][rid]
 for target,tag,rid,native in [('darwin-arm64','macosx_11_0_arm64','osx-arm64','libastro_engine.dylib'),('linux-x64','manylinux_2_38_x86_64','linux-x64','libastro_engine.so')]:
  with zipfile.ZipFile(a.manifest.parent/f'sevenmlabs_astrology-{v}-py3-none-{tag}.whl') as archive:
+  dist_info=f'sevenmlabs_astrology-{v}.dist-info'
+  verify_wheel_record(archive, f'{dist_info}/RECORD')
   source_bytes=archive.read(f'sevenmlabs_astrology/source/astro-sdk-{v}.tar.gz')
   assert hashlib.sha256(source_bytes).hexdigest()==m['pythonSourceSha256']
-  dist_info=f'sevenmlabs_astrology-{v}.dist-info'
   metadata=BytesParser().parsebytes(archive.read(f'{dist_info}/METADATA'))
   assert metadata.get('License-Expression')=='AGPL-3.0-only'
   assert {'LICENSE','NOTICE',*LICENSE_COMPANIONS}.issubset(metadata.get_all('License-File',[]))
