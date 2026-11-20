@@ -25,7 +25,7 @@
     },
     {
       "path": "bindings/python/sevenmlabs_astrology/__init__.py",
-      "sha256": "6ef895f06fca64c2fcfa9a2f4e118d9a4e1e6582ff4ef93f93ad7932f4ba6b84"
+      "sha256": "7e24e1cb8d3bb9b08db7bdee5e7e5dbf89e1de4b648adfa36b76f0576b82f22f"
     },
     {
       "path": "examples/c/main.c",
@@ -33,7 +33,7 @@
     },
     {
       "path": "examples/dotnet/Example.csproj",
-      "sha256": "f9de11c34d734834e980c21370e9d52fda640d071666ee633e71ee48b09f37a2"
+      "sha256": "c8d71f60e8297aae1b0ca2874ddd8179fda33c77493d705cc3234a63efad1f64"
     },
     {
       "path": "examples/dotnet/Program.cs",
@@ -197,7 +197,7 @@
     },
     {
       "path": "neutral-engine/Cargo.toml",
-      "sha256": "50b2c54dcc3184d16f433a83aca22901c45fe6a08cd62f50fdd84c6034e8066c"
+      "sha256": "ce7c0c1e1c5a41becbd859baf94f8197931d34c123803e468f5387d218eda10b"
     },
     {
       "path": "neutral-engine/crates/astro-core/Cargo.toml",
@@ -805,7 +805,7 @@
     },
     {
       "path": "third-party/rust/manifest.json",
-      "sha256": "d647f464488ee68af8dba14ffa6701f7d5589cf3760b1aa58621955a3d272074"
+      "sha256": "56d2ba59cf8f96d59e917128ba630589c7d8ba45279d5e0e079243d343a27bfd"
     },
     {
       "path": "third-party/rust/num-traits-0.2.19-LICENSE-APACHE",

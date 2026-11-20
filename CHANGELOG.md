@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.1 — Python wheel file inventory
+
+- Omit ZIP directory entries from the Python wheel’s `RECORD`. Verify the file
+  list, SHA-256 hashes and sizes in both final platform wheels before publication.
+- The npm, Python and NuGet packages use the same 1.2.1 version. Horary
+  calculations and SVG rendering use the API introduced in 1.2.0.
+  [Packaging details](docs/release-1.2.1.md)
+
 ## 1.2.0 — Horary question charts
 
 - Add the `horary` operation for a question moment and a selected house. The

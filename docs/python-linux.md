@@ -1,14 +1,13 @@
 # Python Linux x64 wheel
 
-SDK 1.1.2 introduced the Python 3.10+ Linux x64 wheel alongside macOS ARM64.
-The current **1.1.3** release retains that target matrix and updates the bundled
-licensing files: additional MIT permission for identified 7mlabs-owned code,
-its explicit scope/inventory and the updated NOTICE. The public combined native
-package remains AGPL-3.0-only; Swiss retains its separate terms.
+SDK 1.1.2 introduced the Python 3.10+ Linux x64 wheel. In 1.2.1, the
+wheel’s `RECORD` lists files and their hashes and sizes. The build and release
+checks verify that explicit ZIP directories have no rows in `RECORD` and
+that every file appears once. [1.2.1 release record](release-1.2.1.md)
 
-The Python API, astronomical algorithms, JSON schemas, defaults and ABI remain
-unchanged from 1.1.2. Package/engine identifiers advance to 1.1.3; envelope schema
-remains 1.0. [Licensing guide](license.en.md).
+The combined native package uses AGPL-3.0-only. Version 1.1.3 first shipped
+the additional MIT permission for identified 7mlabs-owned contributions.
+[Licensing guide](license.en.md)
 
 ## Supported host
 
@@ -19,7 +18,7 @@ Alpine/musl, Ubuntu 22.04 or Debian 12 wheel. The minimum glibc matches the
 existing Linux npm and NuGet distributions; it does not expand their targets.
 
 ```sh
-python3 -m pip install --only-binary=:all: sevenmlabs-astrology==1.1.3
+python3 -m pip install --only-binary=:all: sevenmlabs-astrology==1.2.1
 python3 -c "import sevenmlabs_astrology as a; print(a.__version__)"
 ```
 
@@ -61,4 +60,4 @@ asset in the coordinated release.
 - Verify target tags, RECORD, native/source hashes, scoped MIT files and license notices before
   publication. Run the Python README and sample against the installed wheel.
 
-Current checks and final evidence belong to [the 1.1.3 release record](release-1.1.3.md). [The original 1.1.2 report](release-1.1.2.md) retains the historical wheel-introduction results and checksums; those results do not by themselves verify a newly built 1.1.3 wheel.
+See the [1.2.1 packaging record](release-1.2.1.md) and the [1.1.2 Linux wheel introduction](release-1.1.2.md) for the corresponding release evidence.

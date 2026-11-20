@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/hero.en.dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/hero.en.light.svg">
-  <img src="docs/assets/readme/hero.en.light.svg" width="1280" alt="7mlabs Astro SDK 1.2.0 — full brand logo, offline computation, multiple runtimes">
+  <img src="docs/assets/readme/hero.en.light.svg" width="1280" alt="7mlabs Astro SDK 1.2.1 — full brand logo, offline computation, multiple runtimes">
 </picture>
 
 [Tiếng Việt](README.md) · **English**
@@ -17,7 +17,7 @@
 
 [Quick start](#quick-start) · [Features](#features) · [Formulas](docs/features-and-formulas.md) · [Rules](docs/rules.md) · [Verification](docs/formula-verification.md) · [1.1.3 web guides](https://7mlabs.com/en/astro/sdk/docs/1.1.3/overview/)
 
-**Astro SDK 1.2.0 by 7mlabs** is an offline Rust engine using Swiss Ephemeris to calculate charts, relationships and astronomical events inside your application. Node.js/TypeScript, Python, .NET, Rust and C share the calculation core; no engine server or external calculation API is needed.
+**Astro SDK 1.2.1 by 7mlabs** is an offline Rust engine using Swiss Ephemeris to calculate charts, relationships and astronomical events inside your application. Node.js/TypeScript, Python, .NET, Rust and C share the calculation core; no engine server or external calculation API is needed.
 
 Results contain **numbers, effective settings, selection policies and evidence**. SVG and chart models support presentation. Narrative interpretation and compatibility scoring belong to the consuming application.
 
@@ -61,19 +61,19 @@ Names above follow Node.js. Python uses snake_case and .NET uses PascalCase; ope
 
 ## Installation and platforms
 
-| Package 1.2.0 | Runtime | Native targets |
+| Package 1.2.1 | Runtime | Native targets |
 | --- | --- | --- |
-| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.2.0) | Node.js ≥18; test matrix 18/24 | macOS ARM64, Linux x64 |
-| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.2.0/) | Python ≥3.10; test matrix 3.10/3.13 | macOS ARM64, Linux x64 |
-| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.2.0) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
+| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.2.1) | Node.js ≥18; test matrix 18/24 | macOS ARM64, Linux x64 |
+| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.2.1/) | Python ≥3.10; test matrix 3.10/3.13 | macOS ARM64, Linux x64 |
+| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.2.1) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
 | Rust / C | Source integration and C ABI | [Build instructions](docs/packages.md); no separate crates.io package |
 
 Linux requires **glibc ≥2.38 and libgcc_s.so.1**. The Linux CI target is Ubuntu 24.04. Ubuntu 22.04, Debian 12, Alpine/musl, Windows, Intel Mac and Linux ARM64 are outside this binary matrix. macOS native deployment target is 11.0; the selected language runtime has its own OS requirements. **Browser WASM is not included**; a frontend can call a backend/desktop host using the SDK.
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.2.0
-python -m pip install sevenmlabs-astrology==1.2.0
-dotnet add package SevenMLabs.Astrology --version 1.2.0
+npm install --save-exact @7mlabs/astrology@1.2.1
+python -m pip install sevenmlabs-astrology==1.2.1
+dotnet add package SevenMLabs.Astrology --version 1.2.1
 ```
 
 These are separate language choices, not three required installations. [Linux wheel details](docs/python-linux.md).
@@ -103,7 +103,7 @@ const payload = astro.calculate({
   houseSystem: 'placidus',
   includeMetadata: true
 });
-console.log(payload.engineVersion, payload.data.placements.length); // 1.2.0 10
+console.log(payload.engineVersion, payload.data.placements.length); // 1.2.1 10
 const svg = astro.renderChartPart(payload, 'wheel');
 ```
 
@@ -118,7 +118,7 @@ payload = astro.calculate({
     "houseSystem": "placidus",
     "includeMetadata": True,
 })
-print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.2.0 10
+print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.2.1 10
 svg = astro.render_chart_part(payload, "wheel")
 ```
 
@@ -184,7 +184,9 @@ The envelope contains `schemaVersion`, `engineVersion`, `calculation`, `data`, `
 
 ## Verification and releases
 
-**SDK 1.2.0 adds Horary question charts and SVG rendering.** The release record describes the calculation rules, polar-house checks and package verification. [1.2.0 release record](docs/release-1.2.0.md)
+**SDK 1.2.1 corrects the Python wheel’s file inventory and verifies every listed file’s size and SHA-256 before publication.** [1.2.1 release record](docs/release-1.2.1.md)
+
+**SDK 1.2.0 introduced Horary question charts and SVG rendering.** The release record describes the calculation rules, polar-house checks and package verification. [1.2.0 release record](docs/release-1.2.0.md)
 
 **1.1.3 was a licensing packaging update.** It is the first registry release to include `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` and the updated `NOTICE`, making the scoped additional MIT permission available to package consumers. Whole-package metadata remains `AGPL-3.0-only`; APIs, calculation algorithms, ABI and schemas are unchanged. [The completed 1.1.3 record](docs/release-1.1.3.md) reports 12/12 candidate checks, 13/13 publication checks, 339 conformance cases per publicly installed binding and 354 strict raw-response comparisons against public npm 1.1.2, removing only `engineVersion`.
 

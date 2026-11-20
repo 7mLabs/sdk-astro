@@ -6,7 +6,7 @@ conversion and modular SVG charts, using the shared 7mlabs Astro engine.
 ## Install and supported runtimes
 
 ```sh
-dotnet add package SevenMLabs.Astrology --version 1.2.0
+dotnet add package SevenMLabs.Astrology --version 1.2.1
 ```
 
 The managed assembly targets **.NET 10 (`net10.0`)**. The public package includes
@@ -79,7 +79,7 @@ available services. Native output is freed by the wrapper.
 
 ## Documentation and license
 
-The matching source tag is `v1.2.0`. [SDK source](https://github.com/7mLabs/sdk-astro/tree/v1.2.0)
+The matching source tag is `v1.2.1`. [SDK source](https://github.com/7mLabs/sdk-astro/tree/v1.2.1)
 
 Source builds use .NET SDK **10.0.404**, selected exactly by the repository's
 `global.json`; `python3 scripts/check-dotnet-sdk.py` verifies the compiler SDK.
