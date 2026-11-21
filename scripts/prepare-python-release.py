@@ -80,7 +80,7 @@ for folder in ('neutral-engine','bindings/python','schemas','third-party/rust','
             continue
         files.add(path)
 for name in ('LICENSE','NOTICE',*LICENSE_COMPANIONS,'global.json','README.md','CHANGELOG.md','docs/license.md','docs/license.en.md','docs/time-and-svg.md',
-             'docs/payload-metadata.md','docs/release-1.1.2.md','docs/release-1.1.3.md','docs/release-1.2.0.md','docs/release-1.2.1.md','docs/python-linux.md','docs/domains.md','docs/query.md','docs/profiles.md','docs/couple.md','docs/composite.md',
+             'docs/payload-metadata.md','docs/release-1.1.2.md','docs/release-1.1.3.md','docs/release-1.2.0.md','docs/release-1.2.1.md','docs/release-1.2.2.md','docs/python-linux.md','docs/domains.md','docs/query.md','docs/profiles.md','docs/couple.md','docs/composite.md',
              'docs/forecast.md','docs/horary.md','docs/horary.en.md','docs/payload-compression.md','scripts/prepare-python-release.py','scripts/wheel_record.py'):
     files.add(ROOT / name)
 files.update((ROOT / 'examples').glob('*.json'))

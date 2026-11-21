@@ -6,8 +6,8 @@ const previousPath=path.resolve(process.env.BASELINE_ASTRO_MODULE||'artifacts/pu
 const currentPath=path.resolve(process.env.ASTRO_ENGINE_MODULE||path.join(root,'bindings/node'));
 const previous=require(previousPath),current=require(currentPath);
 const baselineVersion=require(path.join(previousPath,'package.json')).version;
-assert(['1.0.2','1.1.0','1.1.1','1.1.2','1.1.3','1.2.0'].includes(baselineVersion));
-const strictBaseline=['1.1.2','1.1.3','1.2.0'].includes(baselineVersion);
+assert(['1.0.2','1.1.0','1.1.1','1.1.2','1.1.3','1.2.0','1.2.1'].includes(baselineVersion));
+const strictBaseline=['1.1.2','1.1.3','1.2.0','1.2.1'].includes(baselineVersion);
 const additions=[];
 const extraFields=new Set(['operation','chartKind','inputProvenance','rulershipRulesVersion','houseAssignment','sourceBirth']);
 const normalizeMessage=s=>s.replaceAll('`includeMetadata`, ','').replaceAll(', `includeMetadata`','').replaceAll('`sourceContext`, ','').replaceAll(', `sourceContext`','').replaceAll('`otherSourceContext`, ','').replaceAll(', `otherSourceContext`','').replaceAll('GeometryInput','Request');
@@ -24,7 +24,7 @@ function compare(a,b,where='') {
 }
 const cases=JSON.parse(fs.readFileSync(path.join(root,'tests/conformance/cases.json')));
 for(const test of cases){const raw=test.rawRequest||JSON.stringify(test.request);compare(JSON.parse(previous.calculateJson(raw)),JSON.parse(current.calculateJson(raw)),test.name);}
-if (baselineVersion === '1.2.0') {
+if (['1.2.0', '1.2.1'].includes(baselineVersion)) {
   for (const fixture of ['horary-request.json', 'horary-polar-request.json']) {
     const request = JSON.parse(fs.readFileSync(path.join(root, 'examples', fixture), 'utf8'));
     const original = previous.calculate(request);

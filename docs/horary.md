@@ -26,6 +26,10 @@ console.log(result.data.voidOfCourseMoon.nextAspect);
 
 Với đầu vào trên, đỉnh nhà 1 ở Bạch Dương nên chủ tinh là Sao Hỏa, còn đỉnh nhà 7 ở Thiên Bình nên chủ tinh là Sao Kim. Mặt Trăng đạt góc 120° với Mặt Trời lúc khoảng 01:46 UTC ngày 20/11/2026, trước khi vào Bạch Dương khoảng 05:52 UTC cùng ngày. Vì thế chỉ báo `isVoidOfCourse` có giá trị `false`.
 
+## Tùy chọn Lilly từ bản 1.2.2
+
+Truyền `ruleset: 'lilly-1647-v1'` để dùng Regiomontanus và orb bằng nửa tổng orb của hai hành tinh theo cột đầu bảng Lilly. SDK trả khoảng cách tới đỉnh nhà kế tiếp nếu nằm trong 5°. Chỉ báo Mặt Trăng xét cả góc đang tách còn trong orb lẫn góc đang tiến tới trong orb, kể cả khi góc chính xác sau lúc đổi cung. Khi chỉ có góc đang tiến tới, trường `applicationWithoutSeparation` cho biết tiếp xúc đó. Ứng dụng chọn cách luận từ các dữ kiện này. [Bảng orb, quy ước và lá số đối chiếu](release-1.2.2.md)
+
 ## Bộ quy tắc
 
 - Khi bỏ `ruleset`, SDK dùng `western-traditional-v1`. ID này cũng dùng để yêu cầu tường minh đúng bộ quy tắc về sau. SDK trả lỗi nếu ID không được hỗ trợ. `calculation.ruleset` và `calculation.rulesetVersion` luôn cho biết bộ quy tắc đã chạy.

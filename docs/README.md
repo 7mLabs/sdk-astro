@@ -1,6 +1,6 @@
 <a href="../README.md"><img src="assets/readme/logo-7mlabs.png" width="180" alt="7mlabs"></a>
 
-# Tài liệu Astro SDK 1.2.1
+# Tài liệu Astro SDK 1.2.2
 
 [README tiếng Việt](../README.md) · [English README](../README.en.md) · [Tài liệu web 1.1.3](https://7mlabs.com/astro/sdk/docs/1.1.3/overview/)
 
@@ -23,7 +23,7 @@
 
 ## Ví dụ và phát hành
 
-[Request natal](examples/natal-request.json) · [Response thật 1.1.3](examples/natal-response.json) · [Geometry](examples/geometry-request.json) · [Gói cài đặt 1.2.1](release-1.2.1.md) · [Hồ sơ Horary 1.2.0](release-1.2.0.md) · [Hồ sơ phát hành 1.1.3](release-1.1.3.md) · [Báo cáo và checksum lịch sử 1.1.2](release-1.1.2.md) · [Lịch sử thay đổi](../CHANGELOG.md).
+[Request natal](examples/natal-request.json) · [Response thật 1.1.3](examples/natal-response.json) · [Geometry](examples/geometry-request.json) · [Gói cài đặt 1.2.2](release-1.2.2.md) · [Hồ sơ Horary 1.2.0](release-1.2.0.md) · [Hồ sơ phát hành 1.1.3](release-1.1.3.md) · [Báo cáo và checksum lịch sử 1.1.2](release-1.1.2.md) · [Lịch sử thay đổi](../CHANGELOG.md).
 
 Các tệp release/review mô tả đúng thời điểm của chúng. Các số alpha/phiên bản cũ trong ghi chú lịch sử không xác định version SDK hiện hành. Các contract dùng lại trong 1.1.3 không có nghĩa mọi API đều được thêm mới trong bản này. Các bộ quy tắc riêng giữ ID/version trong payload; tài liệu không tự nâng chúng.
 

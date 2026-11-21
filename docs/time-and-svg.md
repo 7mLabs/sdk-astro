@@ -10,7 +10,7 @@ Từ SDK 1.2.0, `renderChartSvg` cũng vẽ được lá số giờ hỏi từ k
 ## Hai luồng tích hợp
 
 ```js
-// Node: npm install @7mlabs/astrology@1.2.1
+// Node: npm install @7mlabs/astrology@1.2.2
 const {
   calculate, resolveBirthTime, calculateFromLocal,
   renderChartSvg, renderChartSvgResult, getCapabilities

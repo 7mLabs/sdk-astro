@@ -1,6 +1,6 @@
 # GitHub công khai và phân phối package
 
-Các gói npm `@7mlabs/astrology`, PyPI `sevenmlabs-astrology` và NuGet `SevenMLabs.Astrology` dùng chung phiên bản **1.2.1**. Thay đổi ở bản này là danh mục tệp của wheel Python. [Kho mã nguồn](https://github.com/7mLabs/sdk-astro) · [Hồ sơ 1.2.1](release-1.2.1.md)
+Các gói npm `@7mlabs/astrology`, PyPI `sevenmlabs-astrology` và NuGet `SevenMLabs.Astrology` dùng chung phiên bản **1.2.2**. Bản này bổ sung tùy chọn Horary theo Lilly. [Kho mã nguồn](https://github.com/7mLabs/sdk-astro) · [Hồ sơ 1.2.2](release-1.2.2.md)
 
 ## Phạm vi quyền bổ sung và gói 1.1.3
 
@@ -22,7 +22,7 @@ Checkout mới chỉ chứa `neutral-engine/`, `bindings/`, `schemas/`, `tests/`
 
 ## Package naming và version
 
-Ba tên package npm/PyPI/NuGet được đồng bộ theo version **1.2.1**; trạng thái publication và bằng chứng mỗi registry phải được ghi trong hồ sơ phát hành của chính version đó. Core và các SDK native dùng cùng package version; ABI/schema giữ vòng version riêng. Rust crates giữ `publish = false`. UI renderer giữ version độc lập. Version artifact public không được tái sử dụng cho bytes khác.
+Ba tên package npm/PyPI/NuGet được đồng bộ theo version **1.2.2**; trạng thái publication và bằng chứng mỗi registry phải được ghi trong hồ sơ phát hành của chính version đó. Core và các SDK native dùng cùng package version; ABI/schema giữ vòng version riêng. Rust crates giữ `publish = false`. UI renderer giữ version độc lập. Version artifact public không được tái sử dụng cho bytes khác.
 
 ## Cài và cập nhật thuận tiện
 
@@ -32,7 +32,7 @@ Mỗi runtime có một package; engine native được đóng gói hoặc chọ
 npm install @7mlabs/astrology
 ```
 
-Cập nhật tường minh bằng `npm install @7mlabs/astrology@latest`. Pin bằng `npm install --save-exact @7mlabs/astrology@1.2.1` và commit lockfile. Kênh ổn định dùng `latest`; nền tảng và libc requirements nằm trong [hướng dẫn Node.js](node-release.md).
+Cập nhật tường minh bằng `npm install @7mlabs/astrology@latest`. Pin bằng `npm install --save-exact @7mlabs/astrology@1.2.2` và commit lockfile. Kênh ổn định dùng `latest`; nền tảng và libc requirements nằm trong [hướng dẫn Node.js](node-release.md).
 
 Candidate build một platform mỗi lần, tạo tgz/nupkg cùng tên giữa hai job. npm assembler đã ghép hai candidate vào một tarball duy nhất trước release; không publish riêng hai candidate cùng package/version. NuGet ghép hai RID osx-arm64/linux-x64 trong một nupkg. Từ 1.1.2, Python có wheel macOS ARM64 và wheel `manylinux_2_38_x86_64` cho Linux x64; giữ yêu cầu Python 3.10+, glibc 2.38+ và `libgcc_s.so.1`. Ubuntu 24.04 là baseline kiểm thử Linux; Windows, macOS Intel, Linux ARM64 và Alpine/musl không nằm trong matrix này. 1.1.3 giữ nguyên phạm vi platform, vẫn phải kiểm tra cài sạch từ chính các archive cuối.
 

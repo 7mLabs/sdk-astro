@@ -1,0 +1,9 @@
+{
+  "operation": "horary",
+  "moment": {
+    "utc": { "year": 2026, "month": 11, "day": 20, "hour": 3, "minute": 58, "second": 40 },
+    "location": { "latitude": 10.8231, "longitude": 106.6297 }
+  },
+  "quesitedHouse": 7,
+  "ruleset": "lilly-1647-v1"
+}

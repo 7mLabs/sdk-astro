@@ -117,12 +117,13 @@ for case in cases:
     if bool(reference["errors"]) != case.get("error", False): raise AssertionError(f"Unexpected validation result: {case['name']}")
     print("PASS parity:", case["name"])
 
-horary_examples = {"horary-request.json": "increasingLongitude", "horary-polar-request.json": "decreasingLongitude"}
+horary_examples = {"horary-request.json": "increasingLongitude", "horary-polar-request.json": "decreasingLongitude",
+                  "horary-lilly-request.json": "increasingLongitude"}
 for filename, order in horary_examples.items():
     horary_request = (ROOT / "examples" / filename).read_text()
     horary_reference = json.loads(run(commands["rust"] + [horary_request], capture=True))
     assert not horary_reference["errors"]
-    assert horary_reference["calculation"]["ruleset"] == "western-traditional-v1"
+    assert horary_reference["calculation"]["ruleset"] == json.loads(horary_request).get("ruleset", "western-traditional-v1")
     assert horary_reference["calculation"]["houseSystem"] == "regiomontanus"
     assert horary_reference["calculation"]["houseOrder"] == order
     for language, command in commands.items():

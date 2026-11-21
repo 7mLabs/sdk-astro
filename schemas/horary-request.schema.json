@@ -5,6 +5,8 @@
   "type": "object",
   "additionalProperties": false,
   "required": ["operation", "moment", "quesitedHouse"],
+  "if": { "required": ["ruleset"], "properties": { "ruleset": { "const": "lilly-1647-v1" } } },
+  "then": { "properties": { "moment": { "type": "object", "properties": { "houseSystem": { "const": "regiomontanus" } } } } },
   "properties": {
     "operation": { "const": "horary" },
     "moment": {
@@ -21,7 +23,7 @@
       "description": "House of the matter asked about, selected by the caller.",
       "type": "integer", "minimum": 1, "maximum": 12
     },
-    "ruleset": { "const": "western-traditional-v1", "default": "western-traditional-v1" }
+    "ruleset": { "enum": ["western-traditional-v1", "lilly-1647-v1"], "default": "western-traditional-v1" }
   },
   "$defs": {
     "houseSystem": { "enum": ["regiomontanus", "placidus", "wholeSign"], "default": "regiomontanus" }

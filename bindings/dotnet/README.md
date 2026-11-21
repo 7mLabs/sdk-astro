@@ -6,7 +6,7 @@ conversion and modular SVG charts, using the shared 7mlabs Astro engine.
 ## Install and supported runtimes
 
 ```sh
-dotnet add package SevenMLabs.Astrology --version 1.2.1
+dotnet add package SevenMLabs.Astrology --version 1.2.2
 ```
 
 The managed assembly targets **.NET 10 (`net10.0`)**. The public package includes
@@ -16,7 +16,7 @@ requirements. Windows, Intel Mac, Linux ARM64 and Alpine/musl are not included.
 The engine needs no server, runtime download, external ephemeris installation,
 Rust compiler or API key. Native libraries are shipped under `runtimes/<rid>/native`.
 
-Pass `operation = "horary"`, the question time and location, and `quesitedHouse` to `Engine.Calculate`. Use `Engine.RenderChartSvg(result)` to draw the chart. [Horary example and JSON contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/horary.en.md)
+Pass `operation = "horary"`, the question time and location, and `quesitedHouse` to `Engine.Calculate`. Use `Engine.RenderChartSvg(result)` to draw the chart. [Horary example and JSON contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.2/docs/horary.en.md)
 
 ## Birth time and SVG
 
@@ -79,7 +79,7 @@ available services. Native output is freed by the wrapper.
 
 ## Documentation and license
 
-The matching source tag is `v1.2.1`. [SDK source](https://github.com/7mLabs/sdk-astro/tree/v1.2.1)
+The matching source tag is `v1.2.2`. [SDK source](https://github.com/7mLabs/sdk-astro/tree/v1.2.2)
 
 Source builds use .NET SDK **10.0.404**, selected exactly by the repository's
 `global.json`; `python3 scripts/check-dotnet-sdk.py` verifies the compiler SDK.

@@ -95,6 +95,9 @@ jobs:
           npm install --prefix artifacts/public-baseline-120 --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.2.0
           BASELINE_ASTRO_MODULE=artifacts/public-baseline-120/node_modules/@7mlabs/astrology node scripts/check-upgrade-compatibility.cjs
           cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-120.json
+          npm install --prefix artifacts/public-baseline-121 --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.2.1
+          BASELINE_ASTRO_MODULE=artifacts/public-baseline-121/node_modules/@7mlabs/astrology node scripts/check-upgrade-compatibility.cjs
+          cp artifacts/upgrade-compatibility.json artifacts/upgrade-compatibility-121.json
       - name: Fresh consumer installation and parity
         run: python scripts/test-packages.py
       - name: Installed time helpers and SVG service parity
@@ -236,8 +239,8 @@ jobs:
         with:
           name: npm-release
           path: artifacts/npm-release
-      - name: Install published 1.2.0 compatibility baseline
-        run: npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.2.0
+      - name: Install published 1.2.1 compatibility baseline
+        run: npm install --prefix artifacts/public-baseline --ignore-scripts --no-audit --no-fund @7mlabs/astrology@1.2.1
       - name: Fresh install, repeated-call parity, schema and TypeScript checks
         run: >-
           node scripts/test-npm-release.cjs
