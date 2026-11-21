@@ -15,7 +15,7 @@
 <a href="docs/rules.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/badge-system.dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/badge-system.light.svg"><img src="docs/assets/readme/badge-system.light.svg" height="28" alt="Tropical"></picture></a>
 </p>
 
-[Quick start](#quick-start) · [Features](#features) · [Formulas](docs/features-and-formulas.md) · [Rules](docs/rules.md) · [Verification](docs/formula-verification.md) · [1.1.3 web guides](https://7mlabs.com/en/astro/sdk/docs/1.1.3/overview/)
+[Quick start](#quick-start) · [Features](#features) · [Horary](#horary) · [Release history](#validation) · [Formulas](docs/features-and-formulas.md) · [Rules](docs/rules.md) · [Verification](docs/formula-verification.md) · [1.1.3 web guides](https://7mlabs.com/en/astro/sdk/docs/1.1.3/overview/)
 
 **Astro SDK 1.2.2 by 7mlabs** is an offline Rust engine using Swiss Ephemeris to calculate charts, relationships and astronomical events inside your application. Node.js/TypeScript, Python, .NET, Rust and C share the calculation core; no engine server or external calculation API is needed.
 
@@ -47,7 +47,7 @@ Names above follow Node.js. Python uses snake_case and .NET uses PascalCase; ope
 
 ## Calculation system and rules
 
-**The SDK calculates tropical, geocentric, apparent ecliptic-of-date positions.** Natal charts support Placidus and Whole Sign houses. Horary uses Regiomontanus by default and also accepts Placidus or Whole Sign. Moshier supplies the ten main bodies; optional Chiron uses embedded asteroid data. No separate Swiss installation is required.
+**The SDK calculates tropical, geocentric, apparent ecliptic-of-date positions.** Natal charts support Placidus and Whole Sign houses. Horary defaults to Regiomontanus. The SDK convention also accepts Placidus or Whole Sign. The Lilly profile requires Regiomontanus. Moshier supplies the ten main bodies; optional Chiron uses embedded asteroid data. No separate Swiss installation is required.
 
 `rulership: traditional | modern` selects the ruler table, not a zodiac system. Sign-only dignity flags retain explicitly declared traditional rules. Composite and Davison are distinct methods. `includeMetadata: true` opts into additional metadata; caller-declared geometry remains unverified.
 
@@ -156,6 +156,41 @@ This is the same instant as the UTC example. Coordinates do not infer a timezone
 
 </details>
 
+<a id="horary"></a>
+
+## Horary in SDK 1.2.2
+
+Pass the **time and location of the question** in `moment`. House 1 represents the querent. The application selects `quesitedHouse` (1–12) for the subject of the question. The SDK returns the traditional domicile ruler of each cusp sign. Both roles can share a ruler. Save `calculation.ruleset` with the result so readers can identify the conventions used.
+
+| What does your application need? | Select `ruleset` | When is the Moon recorded as void of course? |
+| --- | --- | --- |
+| A fixed-orb aspect calendar or reproduction of a 1.2.0–1.2.1 chart | `western-traditional-v1` (default), a calculation convention defined by 7mlabs. | No major contact between the Moon and the other six classical bodies becomes exact after the question and before the next sign ingress. |
+| The William Lilly indicators implemented by the SDK | `lilly-1647-v1` (explicit selection, Regiomontanus houses). | At the question instant the SDK looks for both a separating contact still within orb and an applying contact already within orb. If either is absent, `isVoidOfCourse = true`. The applying contact can become exact after ingress. |
+
+**Aspect calculation.** For two ecliptic longitudes in [0°, 360°), let `d = abs(λ₁ − λ₂)` and `s = min(d, 360° − d)`. For a major angle `A` of 0°, 60°, 90°, 120° or 180°, the deviation from exact is `orb = abs(s − A)`. The SDK includes the contact in `data.chart.aspects` when `orb ≤ maxOrb`.
+
+- **SDK convention.** The limit for a 60° sextile is 6°. The other four angles use 8°. These limits select chart aspects at the question instant. The before-ingress Moon search uses the time of exact contact.
+- **SDK’s Lilly convention.** The limit is `maxOrb = (O₁ + O₂) / 2`. The SDK selects the first column of Lilly’s table on p. 107: Sun 17°, Moon 12.5°, Mercury 7°, Venus 8°, Mars 7.5°, Jupiter 12°, Saturn 10°. The Moon–Saturn limit is therefore **11.25°**. The SDK also reports the distance to the next house cusp when the distance in house order is greater than 0° and at most 5°. [Sources, lunar convention and output fields](docs/release-1.2.2.md)
+
+**Same question moment in Ho Chi Minh City, 20 November 2026 at 10:58:40 (UTC+7).**
+
+```js
+const { calculate } = require('@7mlabs/astrology');
+const moment = {
+  utc: { year: 2026, month: 11, day: 20, hour: 3, minute: 58, second: 40 },
+  location: { latitude: 10.8231, longitude: 106.6297 }
+};
+for (const ruleset of ['western-traditional-v1', 'lilly-1647-v1']) {
+  const r = calculate({ operation: 'horary', moment, quesitedHouse: 7, ruleset });
+  const moon = r.data.voidOfCourseMoon;
+  console.log(r.calculation.ruleset, moon.isVoidOfCourse, moon.nextAspect?.otherBodyId ?? null);
+}
+```
+
+The two rows report `true, null` and `false, saturn`. The Moon changes sign at about **05:52 UTC** and reaches conjunction with Saturn at about **20:44 UTC** that day. At the question instant it is still separating from a trine to the Sun and is **9.36°** from conjunction with Saturn, inside the 11.25° limit. This accounts for the different flags. The application interprets the evidence in the context of the question.
+
+**Proposed development.** The default profile prioritizes compatibility and accuracy against its specification. For Lilly, the proposed 1.3.0 milestone covers dignities, reception and turned houses. The proposed 1.4.0 milestone covers aspect history and the conditions for perfection or interruption. [Integration guide and roadmap](docs/horary.en.md)
+
 <a id="payload"></a>
 
 ## Actual payload example
@@ -184,15 +219,20 @@ The envelope contains `schemaVersion`, `engineVersion`, `calculation`, `data`, `
 
 ## Verification and releases
 
-**SDK 1.2.2 adds an explicit Lilly Horary profile with planetary orbs, lunar contacts and cusp proximity.** [1.2.2 release record](docs/release-1.2.2.md)
+**The latest release is 1.2.2, published on 21 November 2026 on npm, PyPI and NuGet.** Fresh installations from the three registries matched across 339 cases per binding. [Release assets and checksums](https://github.com/7mLabs/sdk-astro/releases/tag/v1.2.2) · [Verification record](docs/release-1.2.2.md)
 
-**SDK 1.2.0 introduced Horary question charts and SVG rendering.** The release record describes the calculation rules, polar-house checks and package verification. [1.2.0 release record](docs/release-1.2.0.md)
-
-**1.1.3 was a licensing packaging update.** It is the first registry release to include `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` and the updated `NOTICE`, making the scoped additional MIT permission available to package consumers. Whole-package metadata remains `AGPL-3.0-only`; APIs, calculation algorithms, ABI and schemas are unchanged. [The completed 1.1.3 record](docs/release-1.1.3.md) reports 12/12 candidate checks, 13/13 publication checks, 339 conformance cases per publicly installed binding and 354 strict raw-response comparisons against public npm 1.1.2, removing only `engineVersion`.
-
-The earlier **1.1.2** release added a Python Linux x64 wheel. Its evidence includes 339 shared conformance cases across bindings, Python 3.10/3.13 and Node 18/24 across macOS ARM64/Linux x64, plus fresh public-registry installations. [The unchanged 1.1.2 report and checksums](docs/release-1.1.2.md) retain that release's exact source, results and tested scope.
-
-Davison was introduced in 1.1.0; optional metadata in 1.1.1. [CHANGELOG](CHANGELOG.md) retains history. Formula documents explain the current implementation, not a new algorithm release or universal agreement between astrology traditions.
+| Version | What shipped |
+| --- | --- |
+| [1.2.2](docs/release-1.2.2.md) | Adds the opt-in Lilly conventions. Omitting `ruleset` still selects the SDK default. |
+| [1.2.1](docs/release-1.2.1.md) | Corrects and verifies the Python wheel file inventory. Horary uses the 1.2.0 formulas. |
+| [1.2.0](docs/release-1.2.0.md) | Introduces Horary with the SDK convention, significators, Moon course and question-chart SVG. |
+| [1.1.3](docs/release-1.1.3.md) | Ships the scoped MIT grant for identified 7mlabs contributions. The complete native distribution uses AGPL-3.0-only. |
+| [1.1.2](docs/release-1.1.2.md) | Adds a Linux x64 Python wheel (glibc 2.38+) alongside macOS ARM64. |
+| [1.1.1](docs/release-1.1.1.md) | Adds optional metadata for calculation identity and provenance. |
+| [1.1.0](docs/release-1.1.0.md) | Adds the corrected and uncorrected Davison relationship charts. |
+| [1.0.1 → 1.0.2](docs/release-1.0.2.md) | 1.0.1 fixes SVG request validation on npm only. 1.0.2 carries that fix and corrected installation instructions to all three registries. |
+| [1.0.0](docs/release-1.0.md) | Coordinated three-registry release with offline local-time conversion and SVG rendering. |
+| [0.10.0-alpha.1 → 0.10.1](CHANGELOG.md) | The public npm alpha ships the offline engine. 0.10.0 moves to the stable channel and 0.10.1 updates npm metadata. |
 
 <a id="development"></a>
 

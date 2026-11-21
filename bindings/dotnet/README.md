@@ -18,6 +18,8 @@ Rust compiler or API key. Native libraries are shipped under `runtimes/<rid>/nat
 
 Pass `operation = "horary"`, the question time and location, and `quesitedHouse` to `Engine.Calculate`. Use `Engine.RenderChartSvg(result)` to draw the chart. [Horary example and JSON contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.2/docs/horary.en.md)
 
+The default `western-traditional-v1` reproduces the SDK’s fixed orbs and its search for exact lunar contacts before the next sign ingress, as used in 1.2.0–1.2.1. For the supported William Lilly indicators, select `lilly-1647-v1` when calculating the chart. The pair limit is half the sum of the two planetary orbs. The Moon test checks both a separating and an applying contact within orb at the question instant. [Formulas and worked example](https://github.com/7mLabs/sdk-astro/blob/main/README.en.md#horary) · [SDK release history](https://github.com/7mLabs/sdk-astro/blob/main/README.en.md#validation)
+
 ## Birth time and SVG
 
 ```csharp

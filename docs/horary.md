@@ -4,6 +4,19 @@
 
 Từ SDK **1.2.0**, `calculate` nhận thời điểm và địa điểm lập lá số cho câu hỏi. Người gọi chọn `quesitedHouse`, số nhà đại diện cho vấn đề được hỏi, từ 1 đến 12. Kết quả gồm các vị trí thiên văn, nhà, hành tinh đại diện và chỉ báo Void-of-Course Moon để ứng dụng tự diễn giải.
 
+## Chọn bộ quy tắc theo mục đích
+
+| Ứng dụng cần gì? | Chọn `ruleset` | Cách dùng kết quả |
+| --- | --- | --- |
+| Tái tạo lá số từ SDK 1.2.0–1.2.1 hoặc tra góc theo orb cố định | `western-traditional-v1` (mặc định) | Dùng `nextAspect` để trả lời “Mặt Trăng sẽ hoàn tất góc chính nào trước khi đổi cung?”. Giá trị `null` nghĩa là không có góc nào thỏa điều kiện trong khoảng đó. |
+| Đọc lá số theo các quy tắc Lilly đã được SDK triển khai | `lilly-1647-v1` | Chọn ID này khi lập lá số để SDK áp dụng bảng orb theo hành tinh và điều kiện tiếp xúc của Mặt Trăng. [Nguồn và phạm vi](release-1.2.2.md) |
+
+`western-traditional-v1` là tên bộ quy ước tính do 7mlabs định nghĩa. SDK không quy toàn bộ tổ hợp này cho một tác giả hay trường phái lịch sử cụ thể. Nếu đưa vào giao diện, hãy ghi **Quy ước SDK 1.2.0–1.2.1** ở phần tùy chọn tính toán. Trong danh sách trường phái, mục **William Lilly** tương ứng với `lilly-1647-v1`.
+
+Khi đọc lại lá số đã lưu, xem `calculation.ruleset` để biết các chỉ báo mang nghĩa gì. Muốn đọc lá số cũ theo Lilly, hãy tính lại từ cùng thời điểm, địa điểm và nhà của vấn đề được hỏi với `lilly-1647-v1` và hệ nhà Regiomontanus. Giá trị `isVoidOfCourse` mô tả trạng thái Mặt Trăng theo quy ước đã chọn. Việc trả lời “có” hay “không” cho câu hỏi đời thực thuộc phần luận của ứng dụng.
+
+## Ví dụ dùng quy ước SDK
+
 ```js
 const { calculate } = require('@7mlabs/astrology');
 
@@ -30,7 +43,7 @@ Với đầu vào trên, đỉnh nhà 1 ở Bạch Dương nên chủ tinh là S
 
 Truyền `ruleset: 'lilly-1647-v1'` để dùng Regiomontanus và orb bằng nửa tổng orb của hai hành tinh theo cột đầu bảng Lilly. SDK trả khoảng cách tới đỉnh nhà kế tiếp nếu nằm trong 5°. Chỉ báo Mặt Trăng xét cả góc đang tách còn trong orb lẫn góc đang tiến tới trong orb, kể cả khi góc chính xác sau lúc đổi cung. Khi chỉ có góc đang tiến tới, trường `applicationWithoutSeparation` cho biết tiếp xúc đó. Ứng dụng chọn cách luận từ các dữ kiện này. [Bảng orb, quy ước và lá số đối chiếu](release-1.2.2.md)
 
-## Bộ quy tắc
+## Chi tiết của bộ mặc định `western-traditional-v1`
 
 - Khi bỏ `ruleset`, SDK dùng `western-traditional-v1`. ID này cũng dùng để yêu cầu tường minh đúng bộ quy tắc về sau. SDK trả lỗi nếu ID không được hỗ trợ. `calculation.ruleset` và `calculation.rulesetVersion` luôn cho biết bộ quy tắc đã chạy.
 - Lá số tropical, địa tâm. `moment.houseSystem` mặc định `regiomontanus`; có thể chọn `placidus` hoặc `wholeSign`. Hệ nhà thực tế nằm ở `calculation.houseSystem`.
@@ -46,3 +59,22 @@ Nếu đầu vào là giờ địa phương, dùng `calculateFromLocal` với `m
 `renderChartSvg(result)` vẽ lá số từ chính kết quả trên. Để làm nổi bật nhà 7 trong lá số câu hỏi (lớp `Q`), dùng `renderChartSvg(result, { chart: 'horary', focus: { house: 7, layer: 'Q' } })`. `buildChartModel(result)` trả dữ liệu cho giao diện tùy chỉnh. [Mẫu đầu vào JSON](../examples/horary-request.json)
 
 Để đối chiếu các cách hiểu khác nhau về Void-of-Course, xem [Deborah Houlding, The Moon as the transmitter of influences](https://www.skyscript.co.uk/moon2.html).
+
+## Hướng phát triển sau 1.2.2
+
+### Quy ước của SDK · `western-traditional-v1`
+
+Bộ này phục vụ hai việc: tái tạo kết quả đã lưu và cung cấp một phép tra cứu độc lập cho ứng dụng dùng orb cố định. Ví dụ, lịch chiêm tinh có thể hiển thị góc chính tiếp theo của Mặt Trăng trước lúc đổi cung, cùng thời điểm chính xác. Ứng dụng đó có thể dùng bộ mặc định ngay cả khi người dùng chưa từng lập lá số bằng bản cũ.
+
+Hướng nâng cấp đề xuất là sửa các lỗi sai với đặc tả, cải thiện tốc độ và kiểm thử ở ranh giới đổi cung. Nếu có nhu cầu xem toàn bộ các góc trước khi đổi cung, có thể thêm một truy vấn tùy chọn. Đổi ngưỡng orb hay đổi định nghĩa vô hành là thay đổi phương pháp và cần ID quy tắc mới. Nếu sau này quyết định ngừng hỗ trợ, cần chỉ rõ cách đọc kết quả đã lưu và cách chuyển các lời gọi đang bỏ trống `ruleset` trước khi gỡ ID.
+
+### William Lilly · `lilly-1647-v1`
+
+**Đã phát hành trong 1.2.2.** SDK lập lá số Regiomontanus, xác định chủ tinh cho nhà của người hỏi và nhà của đối tượng do ứng dụng chọn, xét năm góc chính theo orb của từng cặp hành tinh, trả khoảng cách đến đỉnh nhà kế tiếp trong 5° và tính chỉ báo Mặt Trăng theo quy ước đã công bố. [Nguồn, các lựa chọn khi chuyển quy tắc thành phép tính và ca đối chiếu](release-1.2.2.md)
+
+| Mốc đề xuất | Dữ kiện mà ứng dụng sẽ nhận | Cách kiểm tra trước khi phát hành |
+| --- | --- | --- |
+| 1.3.0 · Phẩm chất, tiếp nhận và nhà phái sinh | Phẩm chất hành tinh theo cung, độ và ngày/đêm khi quy tắc yêu cầu; hành tinh nào tiếp nhận hành tinh nào, theo phẩm chất nào, có tiếp nhận lẫn nhau hay không. Với nhà phái sinh, ứng dụng chọn vai trò và nhà gốc; SDK đếm nhà, trả chủ tinh và chỉ rõ khi hai vai trò trùng chủ tinh. | Đối chiếu bảng phẩm chất trang 104 của Lilly; thử hai phía của ranh giới độ, lá số ngày/đêm, tiếp nhận một chiều/hai chiều và trường hợp đếm nhà qua nhà 12. [Bản chụp bảng của Lilly](https://www.skyscript.co.uk/ca_downloads.html) |
+| 1.4.0 · Diễn biến và sự hoàn tất góc (*perfection*) | Với các hành tinh đại diện đã chọn, trả các góc vừa hoàn tất và thứ tự tiếp xúc sắp tới trong khoảng khảo sát. Từ chuỗi đó, nhận diện góc hoàn tất trực tiếp, truyền sáng (*translation*), tụ sáng (*collection*) và trường hợp bị ngăn hoặc gián đoạn (*prohibition*, *frustration*, *refranation*) theo từng điều kiện đã đối chiếu. | Mỗi cơ chế cần nguồn, ví dụ thỏa điều kiện và ví dụ gần giống nhưng thiếu điều kiện. Kiểm tra đổi cung, đổi chiều và trường hợp hết khoảng khảo sát khi góc còn đang tiến tới. [William Lilly, Christian Astrology](https://lib.wildla.in/books/Christian%20Astrology%201-2%20by%20William%20Lilly.pdf) |
+
+Hai mốc trên là đề xuất cho phần dữ kiện tính được của hệ Lilly. Khi ra mắt một chỉ báo, tài liệu cần cho biết căn cứ, lựa chọn của SDK ở điểm có nhiều cách hiểu và dữ liệu nào cho phép ứng dụng kiểm tra kết quả. Ứng dụng chọn đối tượng của câu hỏi và cân nhắc các chỉ báo để đưa ra lời luận.

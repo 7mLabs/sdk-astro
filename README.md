@@ -15,7 +15,7 @@
 <a href="docs/rules.vi.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/badge-system.dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/badge-system.light.svg"><img src="docs/assets/readme/badge-system.light.svg" height="28" alt="Tropical"></picture></a>
 </p>
 
-[Bắt đầu](#quick-start) · [Chức năng](#features) · [Công thức](docs/features-and-formulas.vi.md) · [Quy tắc](docs/rules.vi.md) · [Kiểm chứng](docs/formula-verification.vi.md) · [Tài liệu web 1.1.3](https://7mlabs.com/astro/sdk/docs/1.1.3/overview/)
+[Bắt đầu](#quick-start) · [Chức năng](#features) · [Horary](#horary) · [Lịch sử phiên bản](#validation) · [Công thức](docs/features-and-formulas.vi.md) · [Quy tắc](docs/rules.vi.md) · [Kiểm chứng](docs/formula-verification.vi.md) · [Tài liệu web 1.1.3](https://7mlabs.com/astro/sdk/docs/1.1.3/overview/)
 
 **Astro SDK 1.2.2** của **7mlabs** dùng lõi Rust và Swiss Ephemeris để tính lá số, quan hệ và sự kiện thiên văn ngay trong ứng dụng. Cùng một engine cho Node.js/TypeScript, Python, .NET, Rust và C; không cần máy chủ tính toán hay gọi API bên ngoài.
 
@@ -47,7 +47,7 @@ Tên trên dùng kiểu Node.js. Python dùng snake_case; .NET dùng PascalCase.
 
 ## Hệ tính toán và quy tắc
 
-**SDK dùng tọa độ tropical, geocentric, apparent, ecliptic-of-date.** Lá số natal hỗ trợ Placidus và Whole Sign. Horary mặc định dùng Regiomontanus và cũng hỗ trợ Placidus hoặc Whole Sign. Moshier cho 10 thiên thể chính; Chiron tùy chọn dùng dữ liệu tiểu hành tinh nhúng sẵn. Không cần cài Swiss Ephemeris riêng.
+**SDK dùng tọa độ tropical, geocentric, apparent, ecliptic-of-date.** Lá số natal hỗ trợ Placidus và Whole Sign. Horary mặc định dùng Regiomontanus. Bộ quy ước SDK cũng cho phép chọn Placidus hoặc Whole Sign. Bộ Lilly yêu cầu Regiomontanus. Moshier cho 10 thiên thể chính; Chiron tùy chọn dùng dữ liệu tiểu hành tinh nhúng sẵn. Không cần cài Swiss Ephemeris riêng.
 
 `rulership: traditional | modern` chọn bảng chủ tinh; **không** đổi hệ hoàng đạo, và các cờ dignity vẫn theo quy tắc truyền thống được ghi rõ. Composite và Davison là hai phương pháp khác nhau. `includeMetadata: true` thêm metadata tùy chọn; không biến tọa độ bên gọi cung cấp thành dữ liệu đã được engine xác minh.
 
@@ -156,6 +156,41 @@ const payload = astro.calculateFromLocal({
 
 </details>
 
+<a id="horary"></a>
+
+## Horary trong SDK 1.2.2
+
+Truyền **giờ và địa điểm của câu hỏi** vào `moment`. Nhà 1 đại diện người hỏi. Ứng dụng chọn `quesitedHouse` (1–12) cho đối tượng được hỏi. SDK trả chủ tinh truyền thống của cung tại mỗi đỉnh nhà. Hai vai trò có thể cùng một chủ tinh. Hãy lưu `calculation.ruleset` cùng kết quả để biết cách đọc các chỉ báo.
+
+| Bạn muốn làm gì? | Chọn `ruleset` | Khi nào Mặt Trăng được ghi là vô hành? |
+| --- | --- | --- |
+| Làm lịch góc chiếu theo orb cố định hoặc tái tạo kết quả 1.2.0–1.2.1 | `western-traditional-v1` (mặc định). Đây là quy ước tính của 7mlabs. | Không có góc chính nào giữa Mặt Trăng và sáu thiên thể cổ điển còn lại đạt chính xác sau lúc hỏi và trước lần đổi cung kế tiếp. |
+| Lấy các chỉ báo đã triển khai theo William Lilly | `lilly-1647-v1` (chọn tường minh, dùng Regiomontanus). | SDK xét hai điều kiện tại lúc hỏi: còn một góc đang tách trong orb và có một góc đang tiến tới trong orb. Thiếu một trong hai thì `isVoidOfCourse = true`. Góc đang tiến tới có thể hoàn tất sau khi đổi cung. |
+
+**Cách tính orb.** Với hai kinh độ hoàng đạo từ 0° đến dưới 360°, đặt `d = abs(λ₁ − λ₂)` và `s = min(d, 360° − d)`. Với góc chính `A` bằng 0°, 60°, 90°, 120° hoặc 180°, độ lệch là `orb = abs(s − A)`. SDK ghi góc vào `data.chart.aspects` khi `orb ≤ maxOrb`.
+
+- **Quy ước SDK:** ngưỡng cho góc 60° là 6°. Bốn góc còn lại dùng 8°. Các ngưỡng này dùng để liệt kê góc tại thời điểm hỏi. Phép dò Mặt Trăng trước khi đổi cung xét thời điểm góc đạt chính xác.
+- **Quy ước Lilly trong SDK:** `maxOrb = (O₁ + O₂) / 2`. SDK chọn cột đầu bảng orb ở trang 107: Mặt Trời 17°, Mặt Trăng 12,5°, Thủy 7°, Kim 8°, Hỏa 7,5°, Mộc 12°, Thổ 10°. Ví dụ, cặp Mặt Trăng–Sao Thổ có ngưỡng **11,25°**. SDK cũng trả khoảng cách tới đỉnh nhà kế tiếp khi khoảng cách theo chiều thứ tự nhà lớn hơn 0° và tối đa 5°. [Nguồn, quy ước Mặt Trăng và các trường JSON](docs/release-1.2.2.md)
+
+**Cùng một câu hỏi tại TP.HCM, 10:58:40 ngày 20/11/2026 (UTC+7).**
+
+```js
+const { calculate } = require('@7mlabs/astrology');
+const moment = {
+  utc: { year: 2026, month: 11, day: 20, hour: 3, minute: 58, second: 40 },
+  location: { latitude: 10.8231, longitude: 106.6297 }
+};
+for (const ruleset of ['western-traditional-v1', 'lilly-1647-v1']) {
+  const r = calculate({ operation: 'horary', moment, quesitedHouse: 7, ruleset });
+  const moon = r.data.voidOfCourseMoon;
+  console.log(r.calculation.ruleset, moon.isVoidOfCourse, moon.nextAspect?.otherBodyId ?? null);
+}
+```
+
+Kết quả lần lượt là `true, null` và `false, saturn`. Mặt Trăng đổi cung khoảng **05:52 UTC**, rồi mới giao hội với Sao Thổ khoảng **20:44 UTC** cùng ngày. Tại lúc hỏi, Mặt Trăng vẫn trong orb của góc tam hợp đang tách với Mặt Trời và cách góc giao hội với Sao Thổ **9,36°**, trong ngưỡng 11,25°. Đây là lý do cùng một bầu trời cho hai nhãn khác nhau. Ứng dụng chịu trách nhiệm luận câu hỏi từ các dữ kiện đó.
+
+**Hướng phát triển đề xuất:** bộ mặc định ưu tiên tính tương thích và độ chính xác theo đặc tả. Với Lilly, mốc 1.3.0 hướng tới phẩm chất hành tinh, tiếp nhận và nhà phái sinh. Mốc 1.4.0 hướng tới lịch sử góc và các điều kiện hoàn tất hoặc gián đoạn (*perfection*). Cả hai mốc đang ở mức đề xuất. [Hướng dẫn tích hợp và lộ trình](docs/horary.md)
+
 <a id="payload"></a>
 
 ## Payload thực tế
@@ -184,15 +219,20 @@ Envelope gồm `schemaVersion`, `engineVersion`, `calculation`, `data`, `warning
 
 ## Kiểm chứng và phiên bản
 
-**SDK 1.2.2 bổ sung tùy chọn Horary theo Lilly với orb theo cặp hành tinh, tiếp xúc của Mặt Trăng và khoảng cách tới đỉnh nhà kế tiếp.** [Hồ sơ 1.2.2](docs/release-1.2.2.md)
+**Bản mới nhất là 1.2.2, phát hành ngày 21/11/2026 trên npm, PyPI và NuGet.** Cài thử từ cả ba kho cho kết quả khớp ở 339 ca trên mỗi binding. [Bản phát hành và checksum](https://github.com/7mLabs/sdk-astro/releases/tag/v1.2.2) · [Hồ sơ kiểm thử](docs/release-1.2.2.md)
 
-**SDK 1.2.0 bổ sung bản đồ sao câu hỏi Horary và vẽ SVG.** Hồ sơ phát hành mô tả bộ quy tắc, đối chiếu nhà ở vùng cực và kiểm thử các gói SDK. [Hồ sơ 1.2.0](docs/release-1.2.0.md)
-
-**1.1.3 là bản cập nhật đóng gói giấy phép.** Lần đầu các gói registry đóng kèm `LICENSE-7MLABS-MIT`, `LICENSE-SCOPE.md`, `LICENSE-SCOPE.json` và `NOTICE` đã cập nhật để người cài tra cứu quyền MIT bổ sung cho phần mã 7mlabs. Metadata của toàn gói vẫn là `AGPL-3.0-only`; API, thuật toán, ABI và schema không đổi. [Hồ sơ 1.1.3](docs/release-1.1.3.md) đã ghi 12/12 kiểm tra CI ứng viên, 13/13 bước phát hành, 339 ca conformance trên mỗi binding cài từ kho công khai và 354 kết quả raw đối chiếu nghiêm ngặt với npm 1.1.2; chỉ bỏ `engineVersion` khi so sánh.
-
-Mốc **1.1.2** trước đó bổ sung wheel Python Linux x64; bộ kiểm chứng có 339 ca chung qua các binding, Python 3.10/3.13 và Node 18/24 trên macOS ARM64/Linux x64, cùng cài thử từ cả ba kho công khai. [Báo cáo 1.1.2 và checksum](docs/release-1.1.2.md) giữ nguyên nguồn, kết quả và phạm vi lịch sử của lần phát hành đó.
-
-Davison có từ 1.1.0; metadata tùy chọn có từ 1.1.1. [CHANGELOG](CHANGELOG.md) giữ lịch sử; tài liệu công thức mô tả cách engine đang tính, không công bố thuật toán mới hay chứng nhận mọi trường phái đều giống nhau.
+| Phiên bản | Thay đổi đã phát hành |
+| --- | --- |
+| [1.2.2](docs/release-1.2.2.md) | Bổ sung tùy chọn Lilly. Lời gọi bỏ qua `ruleset` vẫn dùng bộ mặc định. |
+| [1.2.1](docs/release-1.2.1.md) | Sửa danh mục tệp và kiểm tra hash trong wheel Python. Horary dùng cùng công thức với 1.2.0. |
+| [1.2.0](docs/release-1.2.0.md) | Ra mắt Horary với bộ quy ước SDK, chủ tinh, chỉ báo Mặt Trăng và SVG lá số câu hỏi. |
+| [1.1.3](docs/release-1.1.3.md) | Đóng gói văn bản MIT và phạm vi cấp quyền bổ sung cho phần đóng góp của 7mlabs. Toàn bộ gói native dùng AGPL-3.0-only. |
+| [1.1.2](docs/release-1.1.2.md) | Bổ sung wheel Python cho Linux x64 (glibc 2.38+) bên cạnh macOS ARM64. |
+| [1.1.1](docs/release-1.1.1.md) | Bổ sung metadata tùy chọn để truy nguồn và nhận diện phép tính. |
+| [1.1.0](docs/release-1.1.0.md) | Thêm lá số quan hệ Davison với hai biến thể corrected và uncorrected. |
+| [1.0.1 → 1.0.2](docs/release-1.0.2.md) | 1.0.1 sửa kiểm tra JSON khi vẽ SVG và chỉ lên npm. 1.0.2 mang bản sửa cùng hướng dẫn cài đặt đã hiệu chỉnh lên cả ba kho. |
+| [1.0.0](docs/release-1.0.md) | Phát hành đồng bộ ba kho, đổi giờ địa phương ngoại tuyến và vẽ SVG từ kết quả tính. |
+| [0.10.0-alpha.1 → 0.10.1](CHANGELOG.md) | Bản alpha công khai trên npm có lõi tính ngoại tuyến. 0.10.0 lên kênh ổn định. 0.10.1 cập nhật metadata npm. |
 
 <a id="development"></a>
 

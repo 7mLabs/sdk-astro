@@ -10,6 +10,8 @@ npm install --save-exact @7mlabs/astrology@1.2.2
 
 This release uses version `1.2.2`. Pass `operation: "horary"`, the question time and location, and `quesitedHouse` to `calculate`. Pass its result to `renderChartSvg` to draw the question chart. [Horary example](https://github.com/7mLabs/sdk-astro/blob/v1.2.2/docs/horary.en.md)
 
+The default `western-traditional-v1` reproduces the SDK’s fixed orbs and its search for exact lunar contacts before the next sign ingress, as used in 1.2.0–1.2.1. For the supported William Lilly indicators, select `lilly-1647-v1` when calculating the chart. The pair limit is half the sum of the two planetary orbs. The Moon test checks both a separating and an applying contact within orb at the question instant. [Formulas and worked example](https://github.com/7mLabs/sdk-astro/blob/main/README.en.md#horary) · [SDK release history](https://github.com/7mLabs/sdk-astro/blob/main/README.en.md#validation)
+
 The public tarball includes both `darwin-arm64` (Apple Silicon) and `linux-x64` (glibc **2.38+**, with `libgcc_s.so.1`) addons. The CI build and test environments are macOS 15 and Ubuntu 24.04. The macOS addon targets macOS 11+, but your Node.js version can require a newer OS. Windows, macOS Intel, Linux ARM64 and Alpine/musl are not included. See [platform and release details](https://github.com/7mlabs/sdk-astro/blob/main/docs/node-release.md).
 
 No compiler, Rust installation, engine server or runtime binary download is needed. The installed addon calculates locally; it requires a supported native Node.js host.
