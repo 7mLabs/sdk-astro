@@ -1,0 +1,73 @@
+{
+  "sameInputBytesAsV1": true,
+  "sameOutputBytesAsV1": true,
+  "sameAllFixtureSizes": true,
+  "sourceLexicalMinifiedTotal": 20014129,
+  "lexicalVsNativeDifference": 44,
+  "normalizationExamples": [
+    {
+      "fixture": "custom-forecast-result.json",
+      "oldSpellings": {
+        "0.000001": 1
+      },
+      "nativeSpellings": {
+        "1e-6": 1
+      },
+      "lexicalByteDifference": 4
+    },
+    {
+      "fixture": "events-year-result.json",
+      "oldSpellings": {
+        "0.000001": 1,
+        "0.000003762061149754172": 1,
+        "0.0000012742951649235514": 1,
+        "0.000007277577394876858": 2,
+        "-0.000008604698677837296": 1,
+        "0.0000015884314395675141": 1
+      },
+      "nativeSpellings": {
+        "1e-6": 1,
+        "3.762061149754172e-6": 1,
+        "1.2742951649235514e-6": 1,
+        "7.277577394876858e-6": 2,
+        "-8.604698677837296e-6": 1,
+        "1.5884314395675141e-6": 1
+      },
+      "lexicalByteDifference": 22
+    },
+    {
+      "fixture": "forecast-day-result.json",
+      "oldSpellings": {
+        "0.000001": 1,
+        "-0.000009222011548164669": 1
+      },
+      "nativeSpellings": {
+        "1e-6": 1,
+        "-9.222011548164669e-6": 1
+      },
+      "lexicalByteDifference": 7
+    },
+    {
+      "fixture": "forecast-month-result.json",
+      "oldSpellings": {
+        "0.000001": 1
+      },
+      "nativeSpellings": {
+        "1e-6": 1
+      },
+      "lexicalByteDifference": 4
+    },
+    {
+      "fixture": "forecast-year-result.json",
+      "oldSpellings": {
+        "0.000001": 1,
+        "0.000007277577459054818": 1
+      },
+      "nativeSpellings": {
+        "1e-6": 1,
+        "7.277577459054818e-6": 1
+      },
+      "lexicalByteDifference": 7
+    }
+  ]
+}
