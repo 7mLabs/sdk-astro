@@ -26,7 +26,11 @@ House 1 represents the querent. This example uses house 7 for the quesited at th
 
 For this input, Aries on the first cusp gives Mars for the querent. Libra on the seventh cusp gives Venus for the quesited. The Moon completes a 120° aspect with the Sun at about 01:46 UTC on 20 November 2026, before entering Aries at about 05:52 UTC that day. The resulting `isVoidOfCourse` flag is `false`.
 
-## Ruleset
+## Lilly profile in 1.2.2
+
+Pass `ruleset: 'lilly-1647-v1'` to use Regiomontanus, planetary half-orbs, lunar in-orb continuity and the distance to the following cusp within 5°. The result identifies the selected method. [Exact rules and reference chart](release-1.2.2.md)
+
+## Default ruleset
 
 - Omitting `ruleset` selects `western-traditional-v1`. Callers can also request this fixed ruleset by ID. Unsupported IDs raise a validation error. The response always identifies the effective rules in `calculation.ruleset` and `calculation.rulesetVersion`.
 - The question chart uses tropical, geocentric positions. `moment.houseSystem` defaults to `regiomontanus` and also accepts `placidus` and `wholeSign`. The effective system appears in `calculation.houseSystem`.

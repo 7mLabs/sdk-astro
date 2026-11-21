@@ -3,19 +3,13 @@ use super::*;
 
 // The default identifies a specific edition of the rules. Callers omitting the
 // selector keep these semantics when other rulesets are introduced.
-#[derive(Default, Deserialize, Serialize)]
+#[derive(Default, Deserialize, Serialize, PartialEq)]
 enum Ruleset {
     #[default]
     #[serde(rename = "western-traditional-v1")]
     WesternTraditionalV1,
-}
-
-impl Ruleset {
-    fn calculate(&self, request: &HoraryRequest) -> Result<Value, (&'static str, String)> {
-        match self {
-            Self::WesternTraditionalV1 => western_traditional_v1(request),
-        }
-    }
+    #[serde(rename = "lilly-1647-v1")]
+    Lilly1647V1,
 }
 
 #[derive(Deserialize)]
@@ -57,16 +51,42 @@ fn significator(chart: &Value, house_number: usize) -> Value {
     })
 }
 
-fn western_traditional_v1(request: &HoraryRequest) -> Result<Value, (&'static str, String)> {
+// Christian Astrology, p. 107, first column (the text also gives alternatives).
+const LILLY_ORBS: [f64; 7] = [17., 12.5, 7., 8., 7.5, 12., 10.];
+
+pub(super) fn lilly_pair_orb(first: usize, second: usize) -> f64 {
+    (LILLY_ORBS[first] + LILLY_ORBS[second]) / 2.
+}
+
+fn next_cusp(house: usize, longitude: f64, cusps: &[Value], direction: f64) -> Value {
+    let next = house % 12;
+    let distance = normalize(direction * (cusps[next].as_f64().unwrap() - longitude));
+    if distance > 0. && distance <= 5. {
+        json!({"houseNumber": next + 1, "distanceDegrees": distance})
+    } else {
+        Value::Null
+    }
+}
+
+fn calculate(request: &HoraryRequest) -> Result<Value, (&'static str, String)> {
     let invalid = |message| ("INVALID_INPUT", message);
     let failed = |message| ("CALCULATION_FAILED", message);
     if request.operation != "horary" || !(1..=12).contains(&request.quesited_house) {
         return Err(invalid("Expected horary and quesitedHouse in 1..12".into()));
     }
     let system = natal::validate_horary_moment(&request.moment).map_err(invalid)?;
+    let lilly = request.ruleset == Ruleset::Lilly1647V1;
+    if lilly && system != b'R' {
+        return Err(invalid(
+            "lilly-1647-v1 requires regiomontanus houses".into(),
+        ));
+    }
     let rules: Vec<_> = [(0., 8.), (60., 6.), (90., 8.), (120., 8.), (180., 8.)]
         .into_iter()
-        .map(|(angle, max_orb)| AspectRule { angle, max_orb })
+        .map(|(angle, max_orb)| AspectRule {
+            angle,
+            max_orb: if lilly { lilly_pair_orb(0, 1) } else { max_orb },
+        })
         .collect();
     let (mut chart, mut calculation) =
         natal::horary_sky(&request.moment, system, &rules).map_err(failed)?;
@@ -78,11 +98,45 @@ fn western_traditional_v1(request: &HoraryRequest) -> Result<Value, (&'static st
         .as_array_mut()
         .unwrap()
         .retain(|a| classical(&a["body1"]) && classical(&a["body2"]));
+    if lilly {
+        chart["aspects"]
+            .as_array_mut()
+            .unwrap()
+            .retain_mut(|aspect| {
+                let index = |key: &str| {
+                    CLASSICAL_BODIES
+                        .iter()
+                        .position(|id| aspect[key] == *id)
+                        .unwrap()
+                };
+                let limit = lilly_pair_orb(index("body1"), index("body2"));
+                aspect["maxOrb"] = json!(limit);
+                aspect["orb"].as_f64().unwrap() <= limit
+            });
+        let cusps = chart["houseCusps"].as_array().unwrap().clone();
+        let direction = if calculation["houseOrder"] == "decreasingLongitude" {
+            -1.
+        } else {
+            1.
+        };
+        for placement in chart["placements"].as_array_mut().unwrap() {
+            placement["nextCuspWithinFiveDegrees"] = next_cusp(
+                placement["house"].as_u64().unwrap() as usize,
+                placement["longitude"].as_f64().unwrap(),
+                &cusps,
+                direction,
+            );
+        }
+        calculation["orbPolicy"] = json!({
+            "method": "sumOfPlanetaryMoieties",
+            "planetaryOrbs": CLASSICAL_BODIES.into_iter().zip(LILLY_ORBS).collect::<std::collections::BTreeMap<_,_>>()
+        });
+    }
     assign_rulers(&mut chart);
     let querent = significator(&chart, 1);
     let quesited = significator(&chart, request.quesited_house as usize);
     let jd = calculation["julianDayUt1"].as_f64().unwrap();
-    let moon = events::horary_moon(jd, &rules).map_err(failed)?;
+    let moon = events::horary_moon(jd, &rules, lilly).map_err(failed)?;
     calculation["operation"] = json!("horary");
     calculation["scope"] = json!("horary-indicators");
     calculation["chartKind"] = json!("horary");
@@ -106,7 +160,7 @@ fn western_traditional_v1(request: &HoraryRequest) -> Result<Value, (&'static st
 
 pub(super) fn calculate_json(raw: &str) -> String {
     match serde_json::from_str::<HoraryRequest>(raw) {
-        Ok(request) => match request.ruleset.calculate(&request) {
+        Ok(request) => match calculate(&request) {
             Ok(value) => value.to_string(),
             Err((code, message)) => error_json(code, &message),
         },
@@ -184,6 +238,22 @@ mod tests {
         assert_eq!(roles["quesited"]["rulerBodyId"], "venus");
         assert_eq!(roles["moonBodyId"], "moon");
         assert!(data["voidOfCourseMoon"]["isVoidOfCourse"].is_boolean());
+    }
+
+    #[test]
+    fn cusp_proximity_uses_house_order_and_includes_the_five_degree_boundary() {
+        let cusps: Vec<_> = (0..12).map(|h| json!(h * 30)).collect();
+        assert_eq!(
+            next_cusp(12, 355., &cusps, 1.),
+            json!({"houseNumber":1,"distanceDegrees":5.})
+        );
+        assert!(next_cusp(12, 354.99999, &cusps, 1.).is_null());
+        assert!(next_cusp(1, 0., &cusps, 1.).is_null());
+        let reversed: Vec<_> = (0..12).map(|h| json!((360 - h * 30) % 360)).collect();
+        assert_eq!(
+            next_cusp(12, 4., &reversed, -1.),
+            json!({"houseNumber":1,"distanceDegrees":4.})
+        );
     }
 
     fn polar_request(latitude: f64, longitude: f64, hour: i32) -> Value {

@@ -1,0 +1,13 @@
+# 1.2.2 — Lilly Horary conventions
+
+Select `"ruleset": "lilly-1647-v1"` in a Horary request. The same selector works with local civil time. Omission and `western-traditional-v1` retain the 1.2.1 computation. Both profiles return chart data for interpretation by the caller.
+
+* **Houses.** The Lilly profile uses Regiomontanus. An explicit incompatible house system returns `INVALID_INPUT`. Each placement retains its geometric house. Its `nextCuspWithinFiveDegrees` gives the following house and directed longitude distance when the cusp is within five degrees, or null otherwise. The SDK leaves the significance of that proximity to the caller.
+* **Aspects.** For the five major angles, the maximum separation from exact is half the sum of the two planetary orbs. The profile selects the first column on p. 107: Sun 17°, Moon 12.5°, Mercury 7°, Venus 8°, Mars 7.5°, Jupiter 12°, Saturn 10°. Lilly also prints alternatives. The inclusive limit for each pair appears in the aspect’s `maxOrb`. The angle list in `calculation.aspectRules` reports the outer search limit. The actual table appears in `calculation.orbPolicy`. Aspects use ecliptic longitude and can cross a sign boundary. [William Lilly, *Christian Astrology*, pp. 106–108 and 154](https://lib.wildla.in/books/Christian%20Astrology%201-2%20by%20William%20Lilly.pdf)
+* **Moon.** `inOrbLunarContinuity` implements a specified reading of Lilly’s examples. Continuity requires a separating major contact still within the pair’s orb and another contact already applying within orb. The earliest such application may complete after ingress. A contact at the question instant is excluded from future events (one millisecond time tolerance). When continuity holds, `nextAspect` gives the first eligible perfection. When only an application exists, `isVoidOfCourse` is true, `nextAspect` is null and `applicationWithoutSeparation` preserves the upcoming contact. `hasSeparatingContact` exposes the other half of the test. [Deborah Houlding, analysis of Lilly’s charts](https://www.skyscript.co.uk/moon2.html)
+
+## Example
+
+For Ho Chi Minh City (10.8231° N, 106.6297° E) on 20 November 2026 at 10:58:40 ICT, the legacy Moon indicator is void before ingress. Under the Lilly profile the Moon is separating from a trine to the Sun and applying to a conjunction with Saturn. The conjunction completes after the Moon changes sign. Both results can be reproduced from [the request](../examples/horary-lilly-request.json) by selecting the corresponding ruleset.
+
+This release covers the indicators listed here. Reception, a full dignity table and question-specific judgments are outside this profile’s current output.

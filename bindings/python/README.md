@@ -8,7 +8,7 @@ as its three development paths.
 ## Installation and platform support
 
 ```sh
-python -m pip install 'sevenmlabs-astrology==1.2.1'
+python -m pip install 'sevenmlabs-astrology==1.2.2'
 ```
 
 This release has wheels for **Python 3.10+ on macOS 11+ Apple Silicon
@@ -23,7 +23,7 @@ The wheel includes the native engine, timezone data, required ephemeris data,
 vector symbols and font outlines. No Rust compiler, runtime downloads, API key
 or external ephemeris installation is needed when using the supported wheel.
 
-Pass `operation: "horary"`, the question time and location, and `quesitedHouse` to `astro.calculate`. Use `astro.render_chart_svg(result)` to draw the chart. [Horary example and JSON contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.0/docs/horary.en.md)
+Pass `operation: "horary"`, the question time and location, and `quesitedHouse` to `astro.calculate`. Use `astro.render_chart_svg(result)` to draw the chart. [Horary example and JSON contract](https://github.com/7mLabs/sdk-astro/blob/v1.2.2/docs/horary.en.md)
 
 ## Calculate from local birth time
 
@@ -129,9 +129,9 @@ envelope. `get_capabilities()` describes the installed engine.
 
 ## Source, documentation and license
 
-This package uses version **1.2.1**. The matching project source snapshot
+This package uses version **1.2.2**. The matching project source snapshot
 and build instructions are bundled at
-`sevenmlabs_astrology/source/astro-sdk-1.2.1.tar.gz` inside the wheel.
+`sevenmlabs_astrology/source/astro-sdk-1.2.2.tar.gz` inside the wheel.
 The archive includes the Rust/C engine, Python wrapper, locked dependency
 declarations, embedded data, renderer assets, schemas, tests and dependency
 notices; it excludes credentials and local build outputs.

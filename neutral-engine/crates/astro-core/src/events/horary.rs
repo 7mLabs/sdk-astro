@@ -1,4 +1,4 @@
-//! Lunar perfections strictly between the question and the next tropical ingress.
+//! Exact lunar contacts and ingress evidence for versioned Horary conventions.
 use super::*;
 
 const MOON: usize = 1;
@@ -36,7 +36,7 @@ fn next_crossing(
     Ok(Some(root.t))
 }
 
-pub(crate) fn horary_moon(start: f64, rules: &[AspectRule]) -> Result<Value, String> {
+pub(crate) fn horary_moon(start: f64, rules: &[AspectRule], lilly: bool) -> Result<Value, String> {
     let mut sampler = Sampler {
         session: EphemerisSession::new()?,
         cache: HashMap::new(),
@@ -61,17 +61,32 @@ pub(crate) fn horary_moon(start: f64, rules: &[AspectRule]) -> Result<Value, Str
     .ok_or("The Moon did not enter the next sign within four days")?;
     let mut earliest: Option<(f64, usize, f64)> = None;
     let branches = aspect_branches(rules);
+    let mut separating = false;
+    // Four days safely brackets contacts already within the largest 14.75° moiety,
+    // including those that perfect in the following sign.
+    let end = if lilly { start + 4. } else { ingress };
     for other in OTHER_CLASSICAL_BODIES {
         let relative = Model {
             first: MOON,
             second: Some(other),
             fixed: 0.,
         };
+        let origin = relative.evaluate(&mut sampler, start)?.0;
         for &(branch, angle) in &branches {
-            if let Some(jd) = next_crossing(&mut sampler, relative, start, ingress, branch)? {
+            if lilly {
+                let delta = signed_difference(branch, origin);
+                let limit = crate::horary::lilly_pair_orb(MOON, other);
+                if delta < -LUNAR_ROOT_TOLERANCE && -delta <= limit {
+                    separating = true;
+                }
+                if delta <= LUNAR_ROOT_TOLERANCE || delta > limit {
+                    continue;
+                }
+            }
+            if let Some(jd) = next_crossing(&mut sampler, relative, start, end, branch)? {
                 // Same one-millisecond identity threshold as the event scanner.
                 if (jd - start) * 86400. > DUPLICATE_SECONDS
-                    && (ingress - jd) * 86400. > DUPLICATE_SECONDS
+                    && (lilly || (ingress - jd) * 86400. > DUPLICATE_SECONDS)
                     && earliest.is_none_or(|(previous, _, _)| jd < previous)
                 {
                     earliest = Some((jd, other, angle));
@@ -86,13 +101,21 @@ pub(crate) fn horary_moon(start: f64, rules: &[AspectRule]) -> Result<Value, Str
     } else {
         None
     };
-    Ok(json!({
-        "method":"exactMajorAspectBeforeNextSignIngress",
+    let mut result = json!({
+        "method":if lilly {"inOrbLunarContinuity"} else {"exactMajorAspectBeforeNextSignIngress"},
         "currentSign":SIGNS[sign],
-        "isVoidOfCourse":aspect.is_none(),
+        "isVoidOfCourse":aspect.is_none() || (lilly && !separating),
         "nextAspect":aspect,
         "nextIngress":{"utc":sampler.times(ingress, 0)?.0,"julianDayUt1":ingress,"toSign":SIGNS[next_sign]}
-    }))
+    });
+    if lilly {
+        result["hasSeparatingContact"] = json!(separating);
+        if !separating && !result["nextAspect"].is_null() {
+            let contact = result["nextAspect"].take();
+            result["applicationWithoutSeparation"] = contact;
+        }
+    }
+    Ok(result)
 }
 
 #[cfg(test)]
@@ -124,7 +147,7 @@ mod tests {
             ],
             0.,
         );
-        let moon = horary_moon(expected - 300. / 86400., &default_rules()).unwrap();
+        let moon = horary_moon(expected - 300. / 86400., &default_rules(), false).unwrap();
         let aspect = &moon["nextAspect"];
         assert_eq!(aspect["otherBodyId"], "sun");
         assert_eq!(aspect["angle"], 180.);
@@ -141,7 +164,7 @@ mod tests {
         let saturn_square = jd([2026, 1, 2, 7, 9], 27.828);
         let ingress = jd([2026, 1, 2, 13, 8], 59.866);
         let second = 1. / 86400.;
-        let before = horary_moon(saturn_square - second, &rules).unwrap();
+        let before = horary_moon(saturn_square - second, &rules, false).unwrap();
         let aspect = &before["nextAspect"];
         assert_eq!(aspect["otherBodyId"], "saturn");
         assert_eq!(aspect["angle"], 90.);
@@ -156,7 +179,7 @@ mod tests {
             exact + second,
             ingress - second,
         ] {
-            let moon = horary_moon(t, &rules).unwrap();
+            let moon = horary_moon(t, &rules, false).unwrap();
             assert_eq!(moon["isVoidOfCourse"], true);
             assert_eq!(moon["nextAspect"], Value::Null);
             assert_eq!(moon["currentSign"], "Gemini");
@@ -166,7 +189,7 @@ mod tests {
                     < 0.25 * second
             );
         }
-        let after = horary_moon(ingress + second, &rules).unwrap();
+        let after = horary_moon(ingress + second, &rules, false).unwrap();
         assert_eq!(after["isVoidOfCourse"], false);
         assert_eq!(after["currentSign"], "Cancer");
         assert_eq!(after["nextAspect"]["otherBodyId"], "mercury");
@@ -178,7 +201,7 @@ mod tests {
         let rules = default_rules();
         for epoch in [[1800, 1, 1, 0, 0], [2399, 12, 31, 23, 59]] {
             let start = jd(epoch, 0.);
-            let moon = horary_moon(start, &rules).unwrap();
+            let moon = horary_moon(start, &rules, false).unwrap();
             let ingress = moon["nextIngress"]["julianDayUt1"].as_f64().unwrap();
             assert!(ingress > start && ingress < start + 4.);
             if epoch[0] == 2399 {

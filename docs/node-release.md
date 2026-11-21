@@ -1,6 +1,6 @@
 # Phát hành package Node.js
 
-SDK 1.2.1 đồng bộ phiên bản npm với bản vá đóng gói Python. Horary và lá số SVG dùng cùng cách gọi từ bản 1.2.0. [Hồ sơ 1.2.1](release-1.2.1.md) · [Hướng dẫn Horary](horary.md)
+SDK 1.2.2 bổ sung tùy chọn Horary theo Lilly. Horary và lá số SVG dùng cùng cách gọi từ bản 1.2.0. [Hồ sơ 1.2.2](release-1.2.2.md) · [Hướng dẫn Horary](horary.md)
 
 ## Bản SDK 1.1.3 — đóng gói quyền MIT bổ sung
 
@@ -38,7 +38,7 @@ npm install @7mlabs/astrology@latest
 Để tái tạo đúng một phiên bản, chỉ định version và commit lockfile của ứng dụng:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.2.1
+npm install --save-exact @7mlabs/astrology@1.2.2
 ```
 
 Package chứa sẵn native addon; người dùng không cần Rust, compiler, server hay bước tải binary sau cài đặt. `npm ci` dùng lockfile để cài lại đúng dependency của dự án. Kênh `alpha` tiếp tục trỏ tới các bản thử nghiệm riêng; chọn `latest` không mở rộng phạm vi platform của binary.

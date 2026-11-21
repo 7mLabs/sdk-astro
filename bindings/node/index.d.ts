@@ -151,7 +151,7 @@ export interface DavisonResult extends Omit<NatalDomainsResult, 'calculation' | 
   };
 }
 /** Revisions identify a fixed set of horary rules across SDK upgrades. */
-export type HoraryRuleset = 'western-traditional-v1';
+export type HoraryRuleset = 'western-traditional-v1' | 'lilly-1647-v1';
 export type HoraryHouseSystem = 'regiomontanus' | NonNullable<BirthInput['houseSystem']>;
 export type HoraryHouseOrder = 'increasingLongitude' | 'decreasingLongitude';
 export type HoraryBodyId = Exclude<NatalBodyId, 'uranus' | 'neptune' | 'pluto'>;
@@ -170,22 +170,25 @@ export interface HorarySignificator {
   houseNumber: HoraryHouseNumber; cuspLongitude: number; cuspSign: string; rulerBodyId: HoraryBodyId;
 }
 interface HoraryEventTime { utc: Required<NatalRequest['utc']>; julianDayUt1: number; }
+type HoraryLunarContact = HoraryEventTime & { otherBodyId: Exclude<HoraryBodyId, 'moon'>; angle: HoraryAspectAngle };
 export type HoraryMoonCourse = {
-  method: 'exactMajorAspectBeforeNextSignIngress'; currentSign: string;
+  method: 'exactMajorAspectBeforeNextSignIngress' | 'inOrbLunarContinuity'; currentSign: string;
+  hasSeparatingContact?: boolean;
+  applicationWithoutSeparation?: HoraryLunarContact;
   nextIngress: HoraryEventTime & { toSign: string };
 } & (
   | { isVoidOfCourse: true; nextAspect: null }
-  | { isVoidOfCourse: false; nextAspect: HoraryEventTime & { otherBodyId: Exclude<HoraryBodyId, 'moon'>; angle: HoraryAspectAngle } }
+  | { isVoidOfCourse: false; nextAspect: HoraryLunarContact }
 );
 export interface HoraryResult extends Omit<Result, 'calculation' | 'data'> {
   calculation: Omit<BasicNatalCalculation, 'scope' | 'houseSystem'> & {
     operation: 'horary'; scope: 'horary-indicators'; chartKind: 'horary'; houseSystem: HoraryHouseSystem;
-    houseOrder: HoraryHouseOrder; ruleset: HoraryRuleset; rulesetVersion: 1; rulership: 'traditional'; bodyIds: HoraryBodyId[];
+    houseOrder: HoraryHouseOrder; ruleset: HoraryRuleset; rulesetVersion: 1; orbPolicy?: { method: 'sumOfPlanetaryMoieties'; planetaryOrbs: Record<HoraryBodyId, number> }; rulership: 'traditional'; bodyIds: HoraryBodyId[];
   };
   data: {
     chart: Omit<NatalData, 'additionalPoints' | 'placements' | 'aspects' | 'houses'> & {
       houses: Array<House & { rulerBodyId: HoraryBodyId }>;
-      placements: Array<Placement & { id: HoraryBodyId }>;
+      placements: Array<Placement & { id: HoraryBodyId; nextCuspWithinFiveDegrees?: { houseNumber: HoraryHouseNumber; distanceDegrees: number } | null }>;
       aspects: Array<Aspect & { body1: HoraryBodyId; body2: HoraryBodyId; angle: HoraryAspectAngle }>;
     };
     significators: { querent: HorarySignificator; quesited: HorarySignificator; moonBodyId: 'moon' };

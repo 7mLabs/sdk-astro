@@ -2618,9 +2618,11 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["operation", "moment", "quesitedHouse"],
+      "if": { "required": ["ruleset"], "properties": { "ruleset": { "const": "lilly-1647-v1" } } },
+      "then": { "properties": { "moment": { "type": "object", "properties": { "houseSystem": { "const": "regiomontanus" } } } } },
       "properties": {
         "operation": { "const": "horary" },
-        "ruleset": { "const": "western-traditional-v1", "default": "western-traditional-v1" },
+        "ruleset": { "enum": ["western-traditional-v1", "lilly-1647-v1"], "default": "western-traditional-v1" },
         "quesitedHouse": { "type": "integer", "minimum": 1, "maximum": 12 },
         "moment": {
           "type": "object",

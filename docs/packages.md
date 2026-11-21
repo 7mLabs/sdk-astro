@@ -1,9 +1,9 @@
 # Cài package và chạy source mẫu
 
-[Astro 1.2.1 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
+[Astro 1.2.2 — tài liệu](README.md) · [Công thức (VI)](features-and-formulas.vi.md) · [Quy tắc (VI)](rules.vi.md) · [English formulas](features-and-formulas.md)
 
 
-Ba gói SDK dùng cùng phiên bản **1.2.1**. Bản vá sửa danh mục tệp trong wheel Python. Gói dựng trên máy người dùng chỉ chứa binary cho máy đó. Hai gói npm và NuGet phát hành cho người dùng đóng kèm binary cho cả macOS ARM64 và Linux x64. [Hồ sơ 1.2.1](release-1.2.1.md)
+Ba gói SDK dùng cùng phiên bản **1.2.2**. Bản vá bổ sung tùy chọn Horary theo Lilly. Gói dựng trên máy người dùng chỉ chứa binary cho máy đó. Hai gói npm và NuGet phát hành cho người dùng đóng kèm binary cho cả macOS ARM64 và Linux x64. [Hồ sơ 1.2.2](release-1.2.2.md)
 
 1.1.3 bổ sung bộ tệp MIT/phạm vi và NOTICE cập nhật trong gói cài đặt cùng source tương ứng. MIT chỉ dành cho đóng góp thuộc 7mlabs được kiểm kê; metadata toàn gói vẫn AGPL-3.0-only, Swiss giữ quyền riêng. API, thuật toán, ABI, schema và phạm vi nền tảng giữ nguyên. [Giấy phép tiếng Việt](license.md) · [English](license.en.md).
 
@@ -29,7 +29,7 @@ npm install @7mlabs/astrology
 node sample.cjs
 ```
 
-Cập nhật kênh ổn định tường minh bằng `npm install @7mlabs/astrology@latest`. Để pin version, dùng `npm install --save-exact @7mlabs/astrology@1.2.1` và commit lockfile; `npm ci` cài lại theo lockfile.
+Cập nhật kênh ổn định tường minh bằng `npm install @7mlabs/astrology@latest`. Để pin version, dùng `npm install --save-exact @7mlabs/astrology@1.2.2` và commit lockfile; `npm ci` cài lại theo lockfile.
 
 Package npm chứa sẵn addon cho macOS ARM64 và Linux x64/glibc 2.38+. Gate yêu cầu chính tarball cuối qua bốn consumer jobs trên hai target với Node 18/24, sau đó xác minh checksum/integrity và cài mới từ registry; Windows, macOS Intel, Linux ARM64 và Alpine/musl chưa hỗ trợ. Consumer không cần Rust/compiler/server hoặc tải binary sau cài đặt. Xem [nền tảng và release evidence](node-release.md). Muốn thử artifact local, thay tên package trong lệnh bằng đường dẫn tuyệt đối tới `.tgz`.
 
@@ -48,7 +48,7 @@ Package có TypeScript declarations. `calculate` synchronous, dùng cho natal/ge
 
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install sevenmlabs-astrology==1.2.1
+.venv/bin/python -m pip install sevenmlabs-astrology==1.2.2
 .venv/bin/python sample.py
 ```
 
@@ -61,11 +61,11 @@ result = calculate({"operation": "natal",
 print(result["data"]["placements"])
 ```
 
-Wheel 1.2.1 hỗ trợ macOS ARM64 và Linux x64/glibc 2.38+, Python 3.10+; gate kiểm tra Python 3.10/3.13 trên cả hai target từ chính wheel cuối. Khi cài artifact local, dùng filename wheel theo đúng host. ctypes wrapper tự giải phóng output Rust trong finally.
+Wheel 1.2.2 hỗ trợ macOS ARM64 và Linux x64/glibc 2.38+, Python 3.10+; gate kiểm tra Python 3.10/3.13 trên cả hai target từ chính wheel cuối. Khi cài artifact local, dùng filename wheel theo đúng host. ctypes wrapper tự giải phóng output Rust trong finally.
 
 ## .NET
 
-Thêm SDK vào ứng dụng .NET 10 bằng `dotnet add package SevenMLabs.Astrology --version 1.2.1`. Package gồm Mac ARM64 và Linux x64/glibc 2.38+; không có Windows native binary. Sample `examples/dotnet/Example.csproj` đã có PackageReference đúng tên/version:
+Thêm SDK vào ứng dụng .NET 10 bằng `dotnet add package SevenMLabs.Astrology --version 1.2.2`. Package gồm Mac ARM64 và Linux x64/glibc 2.38+; không có Windows native binary. Sample `examples/dotnet/Example.csproj` đã có PackageReference đúng tên/version:
 
 ```bash
 dotnet restore examples/dotnet/Example.csproj --source https://api.nuget.org/v3/index.json

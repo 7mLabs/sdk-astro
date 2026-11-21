@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2 — Explicit Lilly Horary conventions
+
+- Select `lilly-1647-v1` for planetary half-orbs, lunar in-orb continuity and proximity to the following Regiomontanus cusp. Omitting the selector preserves the 1.2.1 calculation. [Conventions and example](docs/release-1.2.2.md)
+
 ## 1.2.1 — Python wheel file inventory
 
 - Omit ZIP directory entries from the Python wheel’s `RECORD`. Verify the file
