@@ -1558,6 +1558,11 @@
         "includeMetadata": {
           "type": "boolean",
           "default": false
+        },
+        "includeTransitRange": {
+          "type": "boolean",
+          "default": false,
+          "description": "Resolve full transit windows and house boundary contacts against fixed natal longitudes."
         }
       },
       "allOf": [
@@ -1596,6 +1601,27 @@
               "customProfiles": {
                 "type": "array",
                 "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "required": [
+              "includeTransitRange"
+            ],
+            "properties": {
+              "includeTransitRange": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "includeNatalTransits": {
+                "const": true
               }
             }
           }
@@ -1691,6 +1717,48 @@
               "required": [
                 "kind",
                 "year"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "range"
+                },
+                "year": {
+                  "type": "integer",
+                  "minimum": 1800,
+                  "maximum": 2399
+                },
+                "utcOffsetMinutes": {
+                  "type": "integer",
+                  "minimum": -840,
+                  "maximum": 840,
+                  "default": 0
+                },
+                "month": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "day": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 31
+                },
+                "dayCount": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 366
+                }
+              },
+              "required": [
+                "kind",
+                "year",
+                "month",
+                "day",
+                "dayCount"
               ],
               "additionalProperties": false
             }
@@ -2617,26 +2685,86 @@
       "title": "Horary question chart from local civil time",
       "type": "object",
       "additionalProperties": false,
-      "required": ["operation", "moment", "quesitedHouse"],
-      "if": { "required": ["ruleset"], "properties": { "ruleset": { "const": "lilly-1647-v1" } } },
-      "then": { "properties": { "moment": { "type": "object", "properties": { "houseSystem": { "const": "regiomontanus" } } } } },
+      "required": [
+        "operation",
+        "moment",
+        "quesitedHouse"
+      ],
+      "if": {
+        "required": [
+          "ruleset"
+        ],
+        "properties": {
+          "ruleset": {
+            "const": "lilly-1647-v1"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "moment": {
+            "type": "object",
+            "properties": {
+              "houseSystem": {
+                "const": "regiomontanus"
+              }
+            }
+          }
+        }
+      },
       "properties": {
-        "operation": { "const": "horary" },
-        "ruleset": { "enum": ["western-traditional-v1", "lilly-1647-v1"], "default": "western-traditional-v1" },
-        "quesitedHouse": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "operation": {
+          "const": "horary"
+        },
+        "ruleset": {
+          "enum": [
+            "western-traditional-v1",
+            "lilly-1647-v1"
+          ],
+          "default": "western-traditional-v1"
+        },
+        "quesitedHouse": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
         "moment": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["local", "location"],
+          "required": [
+            "local",
+            "location"
+          ],
           "properties": {
-            "location": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/location" },
-            "houseSystem": { "enum": ["regiomontanus", "placidus", "wholeSign"], "default": "regiomontanus" },
-            "local": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/local" },
-            "timeZone": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/timeZone" },
-            "utcOffsetSeconds": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/utcOffsetSeconds" },
-            "disambiguation": { "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/disambiguation" }
+            "location": {
+              "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/location"
+            },
+            "houseSystem": {
+              "enum": [
+                "regiomontanus",
+                "placidus",
+                "wholeSign"
+              ],
+              "default": "regiomontanus"
+            },
+            "local": {
+              "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/local"
+            },
+            "timeZone": {
+              "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/timeZone"
+            },
+            "utcOffsetSeconds": {
+              "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/utcOffsetSeconds"
+            },
+            "disambiguation": {
+              "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/properties/disambiguation"
+            }
           },
-          "allOf": [{ "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/allOf/0" }]
+          "allOf": [
+            {
+              "$ref": "urn:7mlabs:astrology:local-natal-request:1.0#/allOf/0"
+            }
+          ]
         }
       }
     }

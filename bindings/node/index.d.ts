@@ -213,8 +213,9 @@ export type ForecastAspectSettings =
   | { aspectRules: AspectRule[]; aspectPreset?: never; };
 /** Major aspects by default; bounded root search fails rather than truncating. */
 export type EventsRequest = EventSearchOptions & ForecastAspectSettings & { operation: 'events'; includeMetadata?: boolean; };
-export type ForecastRequest = EventSearchOptions & ForecastAspectSettings & {
-  operation: 'forecast'; includeMetadata?: boolean; birth: BirthInput; includeNatalTransits?: boolean;
+export type ForecastRangePeriod = { kind: 'range'; year: number; month: number; day: number; dayCount: number; utcOffsetMinutes?: number; };
+export type ForecastRequest = Omit<EventSearchOptions, 'period'> & ForecastAspectSettings & {
+  operation: 'forecast'; period: ForecastPeriod | ForecastRangePeriod; includeTransitRange?: boolean; includeMetadata?: boolean; birth: BirthInput; includeNatalTransits?: boolean;
   domains?: DomainName[]; customProfiles?: CustomProfileInput[]; rulership?: 'traditional' | 'modern';
 };
 export type QueryMotionMode = 'none' | 'relative' | 'fixedSecond';
@@ -740,7 +741,7 @@ export interface ForecastView {
   natalPointIds: NatalForecastPointId[]; natalHouseIds: Array<`N:${NatalHouseId}`>;
   snapshotAspectIndexes: number[]; snapshotOverlayPointIds: TransitForecastPointId[];
   eventReferences: ForecastEventReference[]; highlightEventIds: string[]; sections: ForecastSection[];
-  messageContext: { kind: 'dailyMessage' | 'monthlyOverview' | 'yearlyOverview';
+  messageContext: { kind: 'dailyMessage' | 'monthlyOverview' | 'yearlyOverview' | 'rangeOverview';
     snapshotAspectIndexes: number[]; eventIds: string[]; highlightEventIds: string[];
     natalHouseIds: Array<`N:${NatalHouseId}`>; narrative: null; };
 }
@@ -750,10 +751,23 @@ export interface ForecastOverview {
   days: Array<{ date: string; eventIds: string[]; highlightEventIds: string[]; }>;
   months: Array<{ year: number; month: number; eventIds: string[]; highlightEventIds: string[]; }>;
 }
+export interface TransitTime { julianDayUt1: number; utc: EventUtc; }
+export interface TransitWindow {
+  id: string; bodyId: NatalBodyId; targetPointId: `N:${NatalPointId}`; angle: number; maxOrb: number;
+  entry: TransitTime | null; exit: TransitTime | null; exact: TransitTime[];
+  closest: TransitTime; minimumOrb: number; domainIds: string[];
+}
+export interface TransitRangeData {
+  windows: TransitWindow[];
+  houseBoundaries: Array<{ time: TransitTime; bodyId: NatalBodyId; cuspId: `N:${NatalHouseId}`;
+    fromHouse: number; toHouse: number; kind: 'touch' | 'crossing'; motion: 'direct' | 'retrograde' | 'stationary'; }>;
+  groups: Array<{ start: TransitTime; end: TransitTime; windowIds: string[]; themeEvidence: Record<string, string[]>; }>;
+}
 export interface ForecastData {
+  transitRange?: TransitRangeData;
   chartKind: 'individualForecast'; subjectCount: 1;
   subject: { id: 'N'; natal: NatalData; context: NatalContext; calculation: BasicNatalCalculation; };
-  period: NormalizedForecastPeriod; snapshot: ForecastSnapshot; events: ForecastEvent[];
+  period: Omit<NormalizedForecastPeriod, 'kind'> & { kind: NormalizedForecastPeriod['kind'] | 'range' }; snapshot: ForecastSnapshot; events: ForecastEvent[];
   domains: Partial<Record<DomainName, ForecastView>>; customDomains: Record<string, ForecastView>;
   profileCatalog: ProfileDefinition[]; overview: ForecastOverview;
 }

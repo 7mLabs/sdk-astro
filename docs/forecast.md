@@ -187,6 +187,10 @@ Year personal sample lọc Jupiter–Pluto; year sky sample dùng toàn bộ Sun
 
 ## Phạm vi tiếp theo và frontend
 
-Hiện có transit longitude/aspects vào natal, ingress, stations, primary Moon phases và global solar/lunar eclipses. Chưa có local eclipse visibility, transit horizon angles/houses từ current location, sidereal/topocentric, nodes/asteroids/fixed stars, progression, solar-return chart, event duration/orb-entry-exit windows, forecasting chart đôi hoặc narrative templates.
+Hiện có transit longitude/aspects vào natal, ingress, stations, primary Moon phases và global solar/lunar eclipses. Chưa có local eclipse visibility, transit horizon angles/houses từ current location, sidereal/topocentric, nodes/asteroids/fixed stars, progression, solar-return chart, forecasting chart đôi hoặc narrative templates.
 
 Frontend có thể thêm day/month/year calendar, chọn body/family/domain, timeline exact contacts, highlight filter, lunar/eclipse labels, event drawer với natal overlays/contacts/ruler links và evidence navigation. Day panel đọc messageContext; month/year đọc overview và event references. Hiển thị cả precision/method/options/coverage. Browser runtime WASM chưa có; UI native có thể gọi package, browser tĩnh cần provider WASM riêng. Không render một lunarPhase như eclipse hay dùng natal house placement làm visibility tại nơi ở.
+
+## Transit Range (1.3.0)
+
+Truyền `includeTransitRange: true` để bổ sung `data.transitRange`. Các trường `windows`, `houseBoundaries` và `groups` lần lượt cung cấp khoảng trong orb, mốc chạm/vượt đỉnh nhà và các nhóm giao nhau kèm căn cứ theo lĩnh vực. Kỳ quét tùy chọn nhận `{"kind":"range","year":2026,"month":12,"day":28,"dayCount":10}`. Lời gọi theo ngày/tháng/năm vẫn dùng được. [Ví dụ và quy ước biên](release-1.3.0.md)

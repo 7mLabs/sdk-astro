@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/hero.en.dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/hero.en.light.svg">
-  <img src="docs/assets/readme/hero.en.light.svg" width="1280" alt="7mlabs Astro SDK 1.2.2 — full brand logo, offline computation, multiple runtimes">
+  <img src="docs/assets/readme/hero.en.light.svg" width="1280" alt="7mlabs Astro SDK 1.3.0 — full brand logo, offline computation, multiple runtimes">
 </picture>
 
 [Tiếng Việt](README.md) · **English**
@@ -17,7 +17,7 @@
 
 [Quick start](#quick-start) · [Features](#features) · [Horary](#horary) · [Release history](#validation) · [Formulas](docs/features-and-formulas.md) · [Rules](docs/rules.md) · [Verification](docs/formula-verification.md) · [1.1.3 web guides](https://7mlabs.com/en/astro/sdk/docs/1.1.3/overview/)
 
-**Astro SDK 1.2.2 by 7mlabs** is an offline Rust engine using Swiss Ephemeris to calculate charts, relationships and astronomical events inside your application. Node.js/TypeScript, Python, .NET, Rust and C share the calculation core; no engine server or external calculation API is needed.
+**Astro SDK 1.3.0 by 7mlabs** is an offline Rust engine using Swiss Ephemeris to calculate charts, relationships and astronomical events inside your application. Node.js/TypeScript, Python, .NET, Rust and C share the calculation core; no engine server or external calculation API is needed.
 
 Results contain **numbers, effective settings, selection policies and evidence**. SVG and chart models support presentation. Narrative interpretation and compatibility scoring belong to the consuming application.
 
@@ -61,19 +61,19 @@ Names above follow Node.js. Python uses snake_case and .NET uses PascalCase; ope
 
 ## Installation and platforms
 
-| Package 1.2.2 | Runtime | Native targets |
+| Package 1.3.0 | Runtime | Native targets |
 | --- | --- | --- |
-| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.2.2) | Node.js ≥18; test matrix 18/24 | macOS ARM64, Linux x64 |
-| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.2.2/) | Python ≥3.10; test matrix 3.10/3.13 | macOS ARM64, Linux x64 |
-| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.2.2) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
+| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.3.0) | Node.js ≥18; test matrix 18/24 | macOS ARM64, Linux x64 |
+| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.3.0/) | Python ≥3.10; test matrix 3.10/3.13 | macOS ARM64, Linux x64 |
+| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.3.0) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
 | Rust / C | Source integration and C ABI | [Build instructions](docs/packages.md); no separate crates.io package |
 
 Linux requires **glibc ≥2.38 and libgcc_s.so.1**. The Linux CI target is Ubuntu 24.04. Ubuntu 22.04, Debian 12, Alpine/musl, Windows, Intel Mac and Linux ARM64 are outside this binary matrix. macOS native deployment target is 11.0; the selected language runtime has its own OS requirements. **Browser WASM is not included**; a frontend can call a backend/desktop host using the SDK.
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.2.2
-python -m pip install sevenmlabs-astrology==1.2.2
-dotnet add package SevenMLabs.Astrology --version 1.2.2
+npm install --save-exact @7mlabs/astrology@1.3.0
+python -m pip install sevenmlabs-astrology==1.3.0
+dotnet add package SevenMLabs.Astrology --version 1.3.0
 ```
 
 These are separate language choices, not three required installations. [Linux wheel details](docs/python-linux.md).
@@ -103,7 +103,7 @@ const payload = astro.calculate({
   houseSystem: 'placidus',
   includeMetadata: true
 });
-console.log(payload.engineVersion, payload.data.placements.length); // 1.2.2 10
+console.log(payload.engineVersion, payload.data.placements.length); // 1.3.0 10
 const svg = astro.renderChartPart(payload, 'wheel');
 ```
 
@@ -118,7 +118,7 @@ payload = astro.calculate({
     "houseSystem": "placidus",
     "includeMetadata": True,
 })
-print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.2.2 10
+print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.3.0 10
 svg = astro.render_chart_part(payload, "wheel")
 ```
 
@@ -189,7 +189,7 @@ for (const ruleset of ['western-traditional-v1', 'lilly-1647-v1']) {
 
 The two rows report `true, null` and `false, saturn`. The Moon changes sign at about **05:52 UTC** and reaches conjunction with Saturn at about **20:44 UTC** that day. At the question instant it is still separating from a trine to the Sun and is **9.36°** from conjunction with Saturn, inside the 11.25° limit. This accounts for the different flags. The application interprets the evidence in the context of the question.
 
-**Proposed development.** The default profile prioritizes compatibility and accuracy against its specification. For Lilly, the proposed 1.3.0 milestone covers dignities, reception and turned houses. The proposed 1.4.0 milestone covers aspect history and the conditions for perfection or interruption. [Integration guide and roadmap](docs/horary.en.md)
+**Proposed development.** The default profile prioritizes compatibility and accuracy against its specification. For Lilly, the next proposed milestone covers dignities, reception and turned houses. The proposed 1.4.0 milestone covers aspect history and the conditions for perfection or interruption. [Integration guide and roadmap](docs/horary.en.md)
 
 <a id="payload"></a>
 
@@ -219,10 +219,11 @@ The envelope contains `schemaVersion`, `engineVersion`, `calculation`, `data`, `
 
 ## Verification and releases
 
-**The latest release is 1.2.2, published on 21 November 2026 on npm, PyPI and NuGet.** Fresh installations from the three registries matched across 339 cases per binding. [Release assets and checksums](https://github.com/7mLabs/sdk-astro/releases/tag/v1.2.2) · [Verification record](docs/release-1.2.2.md)
+**Version 1.2.2 was published on 21 November 2026 on npm, PyPI and NuGet.** Fresh installations from the three registries matched across 339 cases per binding. [Release assets and checksums](https://github.com/7mLabs/sdk-astro/releases/tag/v1.2.2) · [Verification record](docs/release-1.2.2.md)
 
 | Version | What shipped |
 | --- | --- |
+| [1.3.0](docs/release-1.3.0.md) | Transit Range adds house crossings, full orb windows and overlap groups. |
 | [1.2.2](docs/release-1.2.2.md) | Adds the opt-in Lilly conventions. Omitting `ruleset` still selects the SDK default. |
 | [1.2.1](docs/release-1.2.1.md) | Corrects and verifies the Python wheel file inventory. Horary uses the 1.2.0 formulas. |
 | [1.2.0](docs/release-1.2.0.md) | Introduces Horary with the SDK convention, significators, Moon course and question-chart SVG. |

@@ -18,7 +18,7 @@ Alpine/musl, Ubuntu 22.04 or Debian 12 wheel. The minimum glibc matches the
 existing Linux npm and NuGet distributions; it does not expand their targets.
 
 ```sh
-python3 -m pip install --only-binary=:all: sevenmlabs-astrology==1.2.2
+python3 -m pip install --only-binary=:all: sevenmlabs-astrology==1.3.0
 python3 -c "import sevenmlabs_astrology as a; print(a.__version__)"
 ```
 

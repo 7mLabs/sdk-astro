@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 — Transit Range
+
+- Opt in with `includeTransitRange` to resolve natal house crossings, stationary touches, full orb windows and groups with domain evidence. Forecast also accepts a fixed-offset civil date range of 1–366 days. [Integration example](docs/release-1.3.0.md)
+
 ## 1.2.2 — Explicit Lilly Horary conventions
 
 - Select `lilly-1647-v1` for planetary half-orbs, lunar in-orb continuity and proximity to the following Regiomontanus cusp. Omitting the selector preserves the 1.2.1 calculation. [Conventions and example](docs/release-1.2.2.md)

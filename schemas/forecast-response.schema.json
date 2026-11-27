@@ -2108,7 +2108,8 @@
               "enum": [
                 "dailyMessage",
                 "monthlyOverview",
-                "yearlyOverview"
+                "yearlyOverview",
+                "rangeOverview"
               ]
             },
             "snapshotAspectIndexes": {
@@ -2409,7 +2410,7 @@
             "additionalProperties": false
           },
           "minItems": 1,
-          "maxItems": 12
+          "maxItems": 13
         }
       },
       "required": [
@@ -2460,7 +2461,69 @@
           "$ref": "#/$defs/subject"
         },
         "period": {
-          "$ref": "urn:7mlabs:astrology:events-response:1.0#/$defs/period"
+          "oneOf": [
+            {
+              "$ref": "urn:7mlabs:astrology:events-response:1.0#/$defs/period"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "range"
+                },
+                "year": {
+                  "type": "integer",
+                  "minimum": 1800,
+                  "maximum": 2399
+                },
+                "month": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "day": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 31
+                },
+                "utcOffsetMinutes": {
+                  "type": "integer",
+                  "minimum": -840,
+                  "maximum": 840
+                },
+                "startUtc": {
+                  "$ref": "urn:7mlabs:astrology:events-response:1.0#/$defs/utc"
+                },
+                "endUtc": {
+                  "$ref": "urn:7mlabs:astrology:events-response:1.0#/$defs/utc"
+                },
+                "startJulianDayUt1": {
+                  "type": "number"
+                },
+                "endJulianDayUt1": {
+                  "type": "number"
+                },
+                "durationDays": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 367
+                }
+              },
+              "required": [
+                "kind",
+                "year",
+                "month",
+                "day",
+                "utcOffsetMinutes",
+                "startUtc",
+                "endUtc",
+                "startJulianDayUt1",
+                "endJulianDayUt1",
+                "durationDays"
+              ],
+              "additionalProperties": false
+            }
+          ]
         },
         "snapshot": {
           "$ref": "#/$defs/snapshot"
@@ -2556,6 +2619,9 @@
         },
         "overview": {
           "$ref": "#/$defs/overview"
+        },
+        "transitRange": {
+          "$ref": "#/$defs/transitRange"
         }
       },
       "required": [
@@ -2828,6 +2894,203 @@
         "transitTargetMotion",
         "snapshotPolicy",
         "highlightPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "transitTime": {
+      "type": "object",
+      "properties": {
+        "julianDayUt1": {
+          "type": "number"
+        },
+        "utc": {
+          "$ref": "urn:7mlabs:astrology:events-response:1.0#/$defs/utc"
+        }
+      },
+      "required": [
+        "julianDayUt1",
+        "utc"
+      ],
+      "additionalProperties": false
+    },
+    "transitWindow": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "bodyId": {
+          "type": "string"
+        },
+        "targetPointId": {
+          "type": "string"
+        },
+        "angle": {
+          "type": "number"
+        },
+        "maxOrb": {
+          "type": "number"
+        },
+        "entry": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/transitTime"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/transitTime"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exact": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/transitTime"
+          }
+        },
+        "closest": {
+          "$ref": "#/$defs/transitTime"
+        },
+        "minimumOrb": {
+          "type": "number"
+        },
+        "domainIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "bodyId",
+        "targetPointId",
+        "angle",
+        "maxOrb",
+        "entry",
+        "exit",
+        "exact",
+        "closest",
+        "minimumOrb",
+        "domainIds"
+      ],
+      "additionalProperties": false
+    },
+    "houseBoundary": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "$ref": "#/$defs/transitTime"
+        },
+        "bodyId": {
+          "type": "string"
+        },
+        "cuspId": {
+          "type": "string"
+        },
+        "fromHouse": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "toHouse": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "kind": {
+          "enum": [
+            "touch",
+            "crossing"
+          ]
+        },
+        "motion": {
+          "enum": [
+            "direct",
+            "retrograde",
+            "stationary"
+          ]
+        }
+      },
+      "required": [
+        "time",
+        "bodyId",
+        "cuspId",
+        "fromHouse",
+        "toHouse",
+        "kind",
+        "motion"
+      ],
+      "additionalProperties": false
+    },
+    "transitGroup": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "$ref": "#/$defs/transitTime"
+        },
+        "end": {
+          "$ref": "#/$defs/transitTime"
+        },
+        "windowIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "themeEvidence": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "windowIds",
+        "themeEvidence"
+      ],
+      "additionalProperties": false
+    },
+    "transitRange": {
+      "type": "object",
+      "properties": {
+        "windows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/transitWindow"
+          }
+        },
+        "houseBoundaries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/houseBoundary"
+          }
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/transitGroup"
+          }
+        }
+      },
+      "required": [
+        "windows",
+        "houseBoundaries",
+        "groups"
       ],
       "additionalProperties": false
     }

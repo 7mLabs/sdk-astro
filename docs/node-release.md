@@ -38,7 +38,7 @@ npm install @7mlabs/astrology@latest
 Để tái tạo đúng một phiên bản, chỉ định version và commit lockfile của ứng dụng:
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.2.2
+npm install --save-exact @7mlabs/astrology@1.3.0
 ```
 
 Package chứa sẵn native addon; người dùng không cần Rust, compiler, server hay bước tải binary sau cài đặt. `npm ci` dùng lockfile để cài lại đúng dependency của dự án. Kênh `alpha` tiếp tục trỏ tới các bản thử nghiệm riêng; chọn `latest` không mở rộng phạm vi platform của binary.

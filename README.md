@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/hero.vi.dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="docs/assets/readme/hero.vi.light.svg">
-  <img src="docs/assets/readme/hero.vi.light.svg" width="1280" alt="7mlabs Astro SDK 1.2.2 — logo đầy đủ, tính ngoại tuyến, nhiều nền tảng">
+  <img src="docs/assets/readme/hero.vi.light.svg" width="1280" alt="7mlabs Astro SDK 1.3.0 — logo đầy đủ, tính ngoại tuyến, nhiều nền tảng">
 </picture>
 
 **Tiếng Việt** · [English](README.en.md)
@@ -17,7 +17,7 @@
 
 [Bắt đầu](#quick-start) · [Chức năng](#features) · [Horary](#horary) · [Lịch sử phiên bản](#validation) · [Công thức](docs/features-and-formulas.vi.md) · [Quy tắc](docs/rules.vi.md) · [Kiểm chứng](docs/formula-verification.vi.md) · [Tài liệu web 1.1.3](https://7mlabs.com/astro/sdk/docs/1.1.3/overview/)
 
-**Astro SDK 1.2.2** của **7mlabs** dùng lõi Rust và Swiss Ephemeris để tính lá số, quan hệ và sự kiện thiên văn ngay trong ứng dụng. Cùng một engine cho Node.js/TypeScript, Python, .NET, Rust và C; không cần máy chủ tính toán hay gọi API bên ngoài.
+**Astro SDK 1.3.0** của **7mlabs** dùng lõi Rust và Swiss Ephemeris để tính lá số, quan hệ và sự kiện thiên văn ngay trong ứng dụng. Cùng một engine cho Node.js/TypeScript, Python, .NET, Rust và C; không cần máy chủ tính toán hay gọi API bên ngoài.
 
 Đầu ra gồm **số liệu, cấu hình tính, quy tắc lựa chọn dữ liệu và bằng chứng**. SDK có SVG và model cho giao diện; phần viết luận giải hoặc chấm điểm tương hợp thuộc ứng dụng tích hợp.
 
@@ -61,19 +61,19 @@ Tên trên dùng kiểu Node.js. Python dùng snake_case; .NET dùng PascalCase.
 
 ## Cài đặt và nền tảng
 
-| Gói 1.2.2 | Runtime | Target native |
+| Gói 1.3.0 | Runtime | Target native |
 | --- | --- | --- |
-| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.2.2) | Node.js ≥18; matrix kiểm thử 18/24 | macOS ARM64, Linux x64 |
-| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.2.2/) | Python ≥3.10; matrix kiểm thử 3.10/3.13 | macOS ARM64, Linux x64 |
-| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.2.2) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
+| [`@7mlabs/astrology`](https://www.npmjs.com/package/@7mlabs/astrology/v/1.3.0) | Node.js ≥18; matrix kiểm thử 18/24 | macOS ARM64, Linux x64 |
+| [`sevenmlabs-astrology`](https://pypi.org/project/sevenmlabs-astrology/1.3.0/) | Python ≥3.10; matrix kiểm thử 3.10/3.13 | macOS ARM64, Linux x64 |
+| [`SevenMLabs.Astrology`](https://www.nuget.org/packages/SevenMLabs.Astrology/1.3.0) | .NET 10 / net10.0 | osx-arm64, linux-x64 |
 | Rust / C | Tích hợp source và C ABI | [Hướng dẫn build](docs/packages.md); chưa có gói crates.io riêng |
 
 Linux cần **glibc ≥2.38 và libgcc_s.so.1**. Môi trường CI cho Linux là Ubuntu 24.04. Ubuntu 22.04, Debian 12, Alpine/musl, Windows, Intel Mac và Linux ARM64 chưa có binary phù hợp trong bản này. Native macOS có deployment target 11.0; runtime được chọn còn có yêu cầu OS riêng. **Chưa chạy trực tiếp trong browser bằng WASM**; frontend có thể gọi backend/desktop host dùng SDK.
 
 ```sh
-npm install --save-exact @7mlabs/astrology@1.2.2
-python -m pip install sevenmlabs-astrology==1.2.2
-dotnet add package SevenMLabs.Astrology --version 1.2.2
+npm install --save-exact @7mlabs/astrology@1.3.0
+python -m pip install sevenmlabs-astrology==1.3.0
+dotnet add package SevenMLabs.Astrology --version 1.3.0
 ```
 
 Ba dòng là ba lựa chọn theo ngôn ngữ, không cần cài cả ba. [Chi tiết wheel Linux](docs/python-linux.md).
@@ -103,7 +103,7 @@ const payload = astro.calculate({
   houseSystem: 'placidus',
   includeMetadata: true
 });
-console.log(payload.engineVersion, payload.data.placements.length); // 1.2.2 10
+console.log(payload.engineVersion, payload.data.placements.length); // 1.3.0 10
 const svg = astro.renderChartPart(payload, 'wheel');
 ```
 
@@ -118,7 +118,7 @@ payload = astro.calculate({
     "houseSystem": "placidus",
     "includeMetadata": True,
 })
-print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.2.2 10
+print(payload["engineVersion"], len(payload["data"]["placements"]))  # 1.3.0 10
 svg = astro.render_chart_part(payload, "wheel")
 ```
 
@@ -189,7 +189,7 @@ for (const ruleset of ['western-traditional-v1', 'lilly-1647-v1']) {
 
 Kết quả lần lượt là `true, null` và `false, saturn`. Mặt Trăng đổi cung khoảng **05:52 UTC**, rồi mới giao hội với Sao Thổ khoảng **20:44 UTC** cùng ngày. Tại lúc hỏi, Mặt Trăng vẫn trong orb của góc tam hợp đang tách với Mặt Trời và cách góc giao hội với Sao Thổ **9,36°**, trong ngưỡng 11,25°. Đây là lý do cùng một bầu trời cho hai nhãn khác nhau. Ứng dụng chịu trách nhiệm luận câu hỏi từ các dữ kiện đó.
 
-**Hướng phát triển đề xuất:** bộ mặc định ưu tiên tính tương thích và độ chính xác theo đặc tả. Với Lilly, mốc 1.3.0 hướng tới phẩm chất hành tinh, tiếp nhận và nhà phái sinh. Mốc 1.4.0 hướng tới lịch sử góc và các điều kiện hoàn tất hoặc gián đoạn (*perfection*). Cả hai mốc đang ở mức đề xuất. [Hướng dẫn tích hợp và lộ trình](docs/horary.md)
+**Hướng phát triển đề xuất:** bộ mặc định ưu tiên tính tương thích và độ chính xác theo đặc tả. Với Lilly, giai đoạn kế tiếp hướng tới phẩm chất hành tinh, tiếp nhận và nhà phái sinh. Mốc 1.4.0 hướng tới lịch sử góc và các điều kiện hoàn tất hoặc gián đoạn (*perfection*). Cả hai mốc đang ở mức đề xuất. [Hướng dẫn tích hợp và lộ trình](docs/horary.md)
 
 <a id="payload"></a>
 
@@ -219,10 +219,11 @@ Envelope gồm `schemaVersion`, `engineVersion`, `calculation`, `data`, `warning
 
 ## Kiểm chứng và phiên bản
 
-**Bản mới nhất là 1.2.2, phát hành ngày 21/11/2026 trên npm, PyPI và NuGet.** Cài thử từ cả ba kho cho kết quả khớp ở 339 ca trên mỗi binding. [Bản phát hành và checksum](https://github.com/7mLabs/sdk-astro/releases/tag/v1.2.2) · [Hồ sơ kiểm thử](docs/release-1.2.2.md)
+**Bản 1.2.2 phát hành ngày 21/11/2026 trên npm, PyPI và NuGet.** Cài thử từ cả ba kho cho kết quả khớp ở 339 ca trên mỗi binding. [Bản phát hành và checksum](https://github.com/7mLabs/sdk-astro/releases/tag/v1.2.2) · [Hồ sơ kiểm thử](docs/release-1.2.2.md)
 
 | Phiên bản | Thay đổi đã phát hành |
 | --- | --- |
+| [1.3.0](docs/release-1.3.0.md) | Transit Range trả lần đổi nhà, toàn bộ khoảng trong orb và các nhóm giao nhau. |
 | [1.2.2](docs/release-1.2.2.md) | Bổ sung tùy chọn Lilly. Lời gọi bỏ qua `ruleset` vẫn dùng bộ mặc định. |
 | [1.2.1](docs/release-1.2.1.md) | Sửa danh mục tệp và kiểm tra hash trong wheel Python. Horary dùng cùng công thức với 1.2.0. |
 | [1.2.0](docs/release-1.2.0.md) | Ra mắt Horary với bộ quy ước SDK, chủ tinh, chỉ báo Mặt Trăng và SVG lá số câu hỏi. |

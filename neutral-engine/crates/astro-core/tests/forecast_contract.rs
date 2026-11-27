@@ -318,3 +318,68 @@ fn validation_is_exact_and_precedes_provider_without_partial_payloads() {
     let v: Value = serde_json::from_str(&calculate_json(&invalid)).unwrap();
     assert_eq!(v["errors"][0]["code"], "INVALID_INPUT");
 }
+
+#[test]
+fn transit_range_cross_year_windows_and_reference_closure() {
+    let r: Value = serde_json::from_str(include_str!(
+        "../../../../examples/forecast-transit-range-request.json"
+    ))
+    .unwrap();
+    let v = valid(&r);
+    let d = &v["data"];
+    let range = &d["transitRange"];
+    let windows = range["windows"].as_array().unwrap();
+    let window = windows
+        .iter()
+        .find(|w| w["targetPointId"] == "N:sun" && w["angle"].as_f64() == Some(120.))
+        .unwrap();
+    assert_eq!(window["entry"]["utc"]["year"], 2026);
+    assert_eq!(window["exit"]["utc"]["year"], 2027);
+    assert_eq!(window["exact"].as_array().unwrap().len(), 2);
+    assert_eq!(window["minimumOrb"].as_f64(), Some(0.));
+    assert!(windows.iter().any(
+        |w| w["exact"].as_array().unwrap().is_empty() && w["minimumOrb"].as_f64().unwrap() > 0.
+    ));
+    let ids: HashSet<_> = windows.iter().map(|w| w["id"].as_str().unwrap()).collect();
+    let groups = range["groups"].as_array().unwrap();
+    let mut seen = HashSet::new();
+    for g in groups {
+        let members = members(&g["windowIds"]);
+        for id in &members {
+            assert!(seen.insert(*id));
+        }
+        for (theme, evidence) in g["themeEvidence"].as_object().unwrap() {
+            for id in evidence.as_array().unwrap() {
+                assert!(members.contains(id.as_str().unwrap()));
+                assert!(windows.iter().any(|w| w["id"] == *id
+                    && w["domainIds"].as_array().unwrap().contains(&json!(theme))));
+            }
+        }
+    }
+    assert_eq!(ids, seen);
+    assert_eq!(d["overview"]["months"][1]["year"], 2027);
+    let mut annual = r.clone();
+    annual["period"] = json!({"kind":"year","year":2027});
+    let y = valid(&annual);
+    let same = y["data"]["transitRange"]["windows"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|w| {
+            w["targetPointId"] == "N:sun"
+                && w["angle"].as_f64() == Some(120.)
+                && w["entry"]["utc"]["year"] == 2026
+        })
+        .unwrap();
+    for key in ["entry", "exit", "closest"] {
+        let delta = same[key]["julianDayUt1"].as_f64().unwrap()
+            - window[key]["julianDayUt1"].as_f64().unwrap();
+        assert!(delta.abs() * 86400. < 0.3);
+    }
+    let mut old = r.clone();
+    old.as_object_mut().unwrap().remove("includeTransitRange");
+    assert!(valid(&old)["data"].get("transitRange").is_none());
+    let mut bad = r;
+    bad["includeNatalTransits"] = json!(false);
+    assert!(!run(&bad)["errors"].as_array().unwrap().is_empty());
+}

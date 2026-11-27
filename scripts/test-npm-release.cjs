@@ -203,6 +203,7 @@ function main() {
   const retained = new Map();
   const casesPath = path.join(root, 'tests/conformance/cases.json');
   const cases = json(casesPath);
+  cases.push({name: "forecast transit range", request: json(path.join(root,"examples/forecast-transit-range-request.json"))});
   assert(cases.length >= 339, 'Full conformance set is required');
   for (const [index, fixture] of cases.entries()) {
     const raw = fixture.rawRequest ?? JSON.stringify(fixture.request);

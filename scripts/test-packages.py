@@ -84,6 +84,7 @@ elif sys.platform.startswith("linux"):
 else: raise SystemExit("C consumer builder currently supports macOS/Linux")
 
 cases = json.loads((ROOT / "tests/conformance/cases.json").read_text())
+cases.append({"name":"forecast transit range", "request":json.loads((ROOT / "examples/forecast-transit-range-request.json").read_text())})
 commands = {"node": [node, node_dir / "sample.cjs"], "python": [python, python_dir / "sample.py"],
             "dotnet": ["dotnet", dll], "rust": [rust_binary], "c": [c_binary]}
 

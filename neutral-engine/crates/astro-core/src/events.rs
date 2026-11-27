@@ -5,7 +5,9 @@ use astro_provider_swiss::{CivilUtc, EphemerisSession};
 use std::collections::HashMap;
 
 mod horary;
+mod transit_range;
 pub(super) use horary::horary_moon;
+pub(super) use transit_range::calculate as transit_range;
 
 pub(super) const BODY_IDS: [&str; 10] = [
     "sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto",
@@ -30,7 +32,9 @@ const MAX_REPRESENTABLE_TIME_PROBES: usize = 128;
 const MAX_EVENTS: usize = 30000;
 const MAX_EVALUATIONS: usize = 2_000_000;
 
-fn present_integer<'de, D: serde::Deserializer<'de>>(d: D) -> Result<Option<i32>, D::Error> {
+pub(super) fn present_integer<'de, D: serde::Deserializer<'de>>(
+    d: D,
+) -> Result<Option<i32>, D::Error> {
     numbers::i32(d).map(Some)
 }
 
@@ -52,6 +56,28 @@ pub(super) struct PeriodBounds {
     period: Period,
     start: CivilUtc,
     end: CivilUtc,
+}
+
+impl PeriodBounds {
+    pub(super) fn months(&self) -> impl Iterator<Item = (i32, i32)> {
+        let offset = i64::from(self.period.utc_offset_minutes) * 60_000;
+        let first = civil_from_milliseconds(civil_milliseconds(&self.start) + offset);
+        let last = civil_from_milliseconds(civil_milliseconds(&self.end) + offset - 1);
+        let month_index = |d: CivilUtc| d.year * 12 + d.month - 1;
+        (month_index(first)..=month_index(last)).map(|n| (n / 12, n % 12 + 1))
+    }
+    pub(super) fn extend_days(mut self, count: i32) -> Result<Self, String> {
+        if !(1..=366).contains(&count) {
+            return Err("range dayCount must be 1..366".into());
+        }
+        let end = civil_milliseconds(&self.start) + i64::from(count) * 86_400_000;
+        if end > civil_days(2400, 1, 1) * 86_400_000 {
+            return Err("range end exceeds supported date".into());
+        }
+        self.end = civil_from_milliseconds(end);
+        self.period.kind = "range".into();
+        Ok(self)
+    }
 }
 
 // Gregorian days relative to 1970-01-01; integer civil arithmetic never assumes UT1=UTC.

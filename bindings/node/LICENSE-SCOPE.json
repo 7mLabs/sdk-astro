@@ -17,7 +17,7 @@
     },
     {
       "path": "bindings/node/index.d.ts",
-      "sha256": "77d225114b716d498c98637add25a5c193d6a5491e18a0d087b0e65bd2eb536d"
+      "sha256": "4a39e2dabc94d82fefb21c44c2eedcc6aa34e1b875ee2e82779fd00215baa5b0"
     },
     {
       "path": "bindings/python/setup.py",
@@ -25,7 +25,7 @@
     },
     {
       "path": "bindings/python/sevenmlabs_astrology/__init__.py",
-      "sha256": "78b57a60b16e77abb77c71a5050f3c79994b258759a1cbd5d7dbde544bf3b2b5"
+      "sha256": "0e61fd95a5060a0f89e0ed125b4782825af5505ca3c80dc784305b5eeeb85a1b"
     },
     {
       "path": "examples/c/main.c",
@@ -33,7 +33,7 @@
     },
     {
       "path": "examples/dotnet/Example.csproj",
-      "sha256": "28d004ba9918eefe97c301dfe6c313ee6465527d8fed92525cdeeeb00f9f5978"
+      "sha256": "33bced5b78b6c582f265fd29cb7194e9ac0039253a80c88659dfa82d2e933490"
     },
     {
       "path": "examples/dotnet/Program.cs",
@@ -197,7 +197,7 @@
     },
     {
       "path": "neutral-engine/Cargo.toml",
-      "sha256": "35af74eb67c0f70002ed6e80c7bc6bbea08b32ed710ed43993a5ae482853332a"
+      "sha256": "f674a930d02b5fad4dfad027bb7be670b1d0adda8e5c452f2f7ba8a0d7e379db"
     },
     {
       "path": "neutral-engine/crates/astro-core/Cargo.toml",
@@ -233,15 +233,19 @@
     },
     {
       "path": "neutral-engine/crates/astro-core/src/events.rs",
-      "sha256": "5cbedd47bef5ef7ff26e7799cdf0654c708b1d13075c62ff0752bfc24c7a7916"
+      "sha256": "496f55c996698ac50066a76dccf938778aa039d428f6c0d9d824234c8b93088d"
     },
     {
       "path": "neutral-engine/crates/astro-core/src/events/horary.rs",
       "sha256": "c0c834915955e02e539e00d5d0efc64115ff23fd50f590399016d0d0631ff5f1"
     },
     {
+      "path": "neutral-engine/crates/astro-core/src/events/transit_range.rs",
+      "sha256": "25ba4e2cdd1ae54d54076ea09a262ac3e547874a15e486e13a99f3779b45641d"
+    },
+    {
       "path": "neutral-engine/crates/astro-core/src/forecast.rs",
-      "sha256": "ba358e7606b444f636c4c4db7149773f62ad59f49c4fb07d89a821caa4acd02e"
+      "sha256": "f2e7b8a729b4e1e35b072ff18ab2c3dd6e1f35d797c1b977b89835ea47069a6f"
     },
     {
       "path": "neutral-engine/crates/astro-core/src/horary.rs",
@@ -293,7 +297,7 @@
     },
     {
       "path": "neutral-engine/crates/astro-core/tests/forecast_contract.rs",
-      "sha256": "3df4a8fa6c7ed71f14cbc9f90c1f56c9a15fafc93522a181362bad9db022d58c"
+      "sha256": "6c6a1fb926829320b9e06ef913754524d15fa172f5fafcf279068a282ff3c46e"
     },
     {
       "path": "neutral-engine/crates/astro-core/tests/payload_metadata.rs",
@@ -401,7 +405,7 @@
     },
     {
       "path": "schemas/calculate-from-local.schema.json",
-      "sha256": "cb2a3ce2b13bb9ed6422a175c98455d825e26b7428c6f9cd642c22a2cecbeb34"
+      "sha256": "5964d5f8e787bd2fcf1b634e21b79b0bcc8f1bdc40fced6da41958a5849741f2"
     },
     {
       "path": "schemas/composite-request.schema.json",
@@ -445,11 +449,11 @@
     },
     {
       "path": "schemas/forecast-request.schema.json",
-      "sha256": "7a68dff059b8cffe70f1fe5996ddc7266900aa04fc54a0f53edfed132d01b7d5"
+      "sha256": "ba577e6fdfd86435463b53f4778fc27cea93dc7b9d0de9b89461d13be3300e97"
     },
     {
       "path": "schemas/forecast-response.schema.json",
-      "sha256": "90d4c837ae42c2f56e7cb3af9c60e80101404d89ff5d7c633b3394fe7c724e22"
+      "sha256": "00f85bf130f87e8e7496cffa2bb17f247d2e8e7cd368ba599e4810220a01545c"
     },
     {
       "path": "schemas/geometry-request.schema.json",
@@ -805,7 +809,7 @@
     },
     {
       "path": "third-party/rust/manifest.json",
-      "sha256": "565dc9222ceb3bbcad67de2e2ba2bb88ed76cef4bea7f18974bf5ad98b5c968c"
+      "sha256": "8fac412e0229eba3b8fadef67593399925ca334a8900b1f2739422cd785561d7"
     },
     {
       "path": "third-party/rust/num-traits-0.2.19-LICENSE-APACHE",

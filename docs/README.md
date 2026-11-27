@@ -1,6 +1,8 @@
 <a href="../README.md"><img src="assets/readme/logo-7mlabs.png" width="180" alt="7mlabs"></a>
 
-# Tài liệu Astro SDK 1.2.2
+# Tài liệu Astro SDK 1.3.0
+
+[Transit Range và ví dụ tích hợp](release-1.3.0.md)
 
 [README tiếng Việt](../README.md) · [English README](../README.en.md) · [Tài liệu web 1.1.3](https://7mlabs.com/astro/sdk/docs/1.1.3/overview/)
 

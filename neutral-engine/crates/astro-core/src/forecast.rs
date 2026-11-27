@@ -9,18 +9,60 @@ fn yes() -> bool {
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct ForecastPeriod {
+    kind: String,
+    #[serde(deserialize_with = "numbers::i32")]
+    year: i32,
+    #[serde(default, deserialize_with = "events::present_integer")]
+    month: Option<i32>,
+    #[serde(default, deserialize_with = "events::present_integer")]
+    day: Option<i32>,
+    #[serde(default, deserialize_with = "numbers::i32")]
+    utc_offset_minutes: i32,
+    #[serde(default, deserialize_with = "events::present_integer")]
+    day_count: Option<i32>,
+}
+impl ForecastPeriod {
+    fn validate(&self) -> Result<events::PeriodBounds, String> {
+        let range = self.kind == "range";
+        if range != self.day_count.is_some() {
+            return Err("dayCount is required exclusively for a range period".into());
+        }
+        let bounds = events::Period {
+            kind: if range {
+                "day".into()
+            } else {
+                self.kind.clone()
+            },
+            year: self.year,
+            month: self.month,
+            day: self.day,
+            utc_offset_minutes: self.utc_offset_minutes,
+        }
+        .validate()?;
+        match self.day_count {
+            Some(days) => bounds.extend_days(days),
+            None => Ok(bounds),
+        }
+    }
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct ForecastRequest {
     #[serde(default)]
     include_metadata: bool,
     operation: String,
     birth: Box<RawValue>,
-    period: events::Period,
+    period: ForecastPeriod,
     #[serde(default, deserialize_with = "natal::present")]
     bodies: Option<Vec<String>>,
     #[serde(default, deserialize_with = "natal::present")]
     event_types: Option<Vec<String>>,
     #[serde(default = "yes")]
     include_natal_transits: bool,
+    #[serde(default)]
+    include_transit_range: bool,
     #[serde(default)]
     aspect_rules: natal::AspectSettings,
     #[serde(default, deserialize_with = "natal::present")]
@@ -298,11 +340,17 @@ fn build_view(
     let message_kind = match kind {
         "day" => "dailyMessage",
         "month" => "monthlyOverview",
+        "range" => "rangeOverview",
         _ => "yearlyOverview",
     };
     json!({"id":profile.id,"origin":origin,"profileVersion":profile.version,"definition":profile,"primaryNatalPointIds":primary.points,"primaryNatalHouseIds":primary.houses,"natalPointIds":union.points,"natalHouseIds":union.houses,"snapshotAspectIndexes":aspects,"snapshotOverlayPointIds":overlays,"eventReferences":refs,"highlightEventIds":highlights,"sections":sections,"messageContext":{"kind":message_kind,"snapshotAspectIndexes":aspects,"eventIds":event_ids,"highlightEventIds":highlights,"natalHouseIds":union.houses,"narrative":null}})
 }
-fn overview(period: &Value, events: &[Value], views: &Value, custom: &Value) -> Value {
+fn overview(
+    bounds: &events::PeriodBounds,
+    events: &[Value],
+    views: &Value,
+    custom: &Value,
+) -> Value {
     let mut types: BTreeMap<&str, usize> = [
         "ingress",
         "station",
@@ -317,15 +365,8 @@ fn overview(period: &Value, events: &[Value], views: &Value, custom: &Value) -> 
     .collect();
     let mut houses: BTreeMap<String, usize> = (1..=12).map(|n| (format!("N:H{n}"), 0)).collect();
     let mut days: BTreeMap<String, (Vec<Value>, Vec<Value>)> = BTreeMap::new();
-    let year = period["year"].as_i64().unwrap();
-    let first = if period["kind"] == "year" {
-        1
-    } else {
-        period["month"].as_i64().unwrap()
-    };
-    let last = if period["kind"] == "year" { 12 } else { first };
-    let mut months: BTreeMap<i64, (Vec<Value>, Vec<Value>)> =
-        (first..=last).map(|m| (m, (vec![], vec![]))).collect();
+    let mut months: BTreeMap<_, (Vec<Value>, Vec<Value>)> =
+        bounds.months().map(|ym| (ym, (vec![], vec![]))).collect();
     let mut highlights = Vec::new();
     for e in events {
         *types.get_mut(e["type"].as_str().unwrap()).unwrap() += 1;
@@ -341,7 +382,12 @@ fn overview(period: &Value, events: &[Value], views: &Value, custom: &Value) -> 
         );
         let day = days.entry(key).or_default();
         day.0.push(e["id"].clone());
-        let month = months.get_mut(&local["month"].as_i64().unwrap()).unwrap();
+        let month = months
+            .get_mut(&(
+                local["year"].as_i64().unwrap() as i32,
+                local["month"].as_i64().unwrap() as i32,
+            ))
+            .unwrap();
         month.0.push(e["id"].clone());
         if !array(&e["highlightReasons"]).is_empty() {
             highlights.push(e["id"].clone());
@@ -356,7 +402,7 @@ fn overview(period: &Value, events: &[Value], views: &Value, custom: &Value) -> 
         .chain(custom.as_object().unwrap())
         .map(|(id, v)| (id.as_str(), array(&v["eventReferences"]).len()))
         .collect();
-    json!({"eventCount":events.len(),"byType":types,"natalHouseEventCounts":houses,"domainEventCounts":counts,"highlightEventIds":highlights,"days":days.into_iter().map(|(date,(ids,highlights))|json!({"date":date,"eventIds":ids,"highlightEventIds":highlights})).collect::<Vec<_>>(),"months":months.into_iter().map(|(month,(ids,highlights))|json!({"year":year,"month":month,"eventIds":ids,"highlightEventIds":highlights})).collect::<Vec<_>>()})
+    json!({"eventCount":events.len(),"byType":types,"natalHouseEventCounts":houses,"domainEventCounts":counts,"highlightEventIds":highlights,"days":days.into_iter().map(|(date,(ids,highlights))|json!({"date":date,"eventIds":ids,"highlightEventIds":highlights})).collect::<Vec<_>>(),"months":months.into_iter().map(|((year,month),(ids,highlights))|json!({"year":year,"month":month,"eventIds":ids,"highlightEventIds":highlights})).collect::<Vec<_>>()})
 }
 pub(super) fn calculate_json(raw: &str) -> String {
     let r: ForecastRequest = match serde_json::from_str(raw) {
@@ -365,6 +411,12 @@ pub(super) fn calculate_json(raw: &str) -> String {
     };
     if r.operation != "forecast" {
         return error_json("INVALID_INPUT", "Expected forecast operation");
+    }
+    if r.include_transit_range && !r.include_natal_transits {
+        return error_json(
+            "INVALID_INPUT",
+            "includeTransitRange requires includeNatalTransits",
+        );
     }
     let bounds = match r.period.validate() {
         Ok(v) => v,
@@ -498,8 +550,30 @@ pub(super) fn calculate_json(raw: &str) -> String {
     }
     let views = Value::Object(views);
     let customs = Value::Object(customs);
-    let summary = overview(&scanned.period, &scanned.events, &views, &customs);
+    let summary = overview(&bounds, &scanned.events, &views, &customs);
     let mut result = json!({"schemaVersion":"1.0","engineVersion":VERSION,"calculation":{"scope":"individual-forecast-data","chartKind":"individualForecast","provider":"swiss-ephemeris","providerVersion":"2.10.03","ephemeris":"moshier","zodiac":"tropical","coordinates":"geocentric","positionType":"apparent","referenceFrame":"ecliptic-of-date","calendar":"gregorian","inputTimeScale":"UTC","planetTimeScale":"TT","searchTimeScale":"UT1","timeModel":"Swiss built-in leap seconds and Delta T; pre-1972 civil input treated as UT1","angleUnit":"degrees","speedUnit":"degrees/day","distanceUnit":"AU","bodyIds":options.bodies,"eventTypes":options.event_types,"includeNatalTransits":r.include_natal_transits,"aspectPreset":if r.aspect_rules.provided{"custom"}else{preset},"aspectRules":rules.iter().map(|v|json!({"angle":v.angle,"maxOrb":v.max_orb})).collect::<Vec<_>>(),"rulership":rulership,"domainProfile":{"id":"sevenmlabs-domain-selection","version":"2.0"},"forecastProfile":{"id":"sevenmlabs-individual-forecast","version":"1.0"},"customProfileCount":custom.len(),"transitTargetMotion":"fixedNatalLongitudes","snapshotPolicy":"periodMidpoint","highlightPolicy":{"id":"sevenmlabs-calendar-highlights","version":"1.0","slowBodyIds":SLOW},"search":scanned.metadata},"data":{"chartKind":"individualForecast","subjectCount":1,"subject":{"id":"N","natal":natal,"context":context,"calculation":calculation},"period":scanned.period,"snapshot":scanned.snapshot,"events":scanned.events,"domains":views,"customDomains":customs,"profileCatalog":shared["profileCatalog"],"overview":summary},"warnings":["Moshier analytical ephemeris with the provider's built-in time model; no live Earth-orientation data.","Forecast/message payloads contain geometry and evidence, not narrative, scores or guaranteed outcomes. Highlights follow the declared calendar selection policy.","Civil periods use a fixed UTC offset supplied by the caller, not historical timezone or daylight-saving conversion. Transit targets are fixed tropical natal longitudes."],"errors":[]});
+    if r.include_transit_range {
+        let mut themes: BTreeMap<String, Vec<String>> = BTreeMap::new();
+        for (scope, collection) in [("builtin", &views), ("custom", &customs)] {
+            for (name, view) in collection.as_object().unwrap() {
+                let ids: BTreeSet<_> = array(&view["natalPointIds"])
+                    .iter()
+                    .chain(array(&view["natalHouseIds"]))
+                    .filter_map(Value::as_str)
+                    .collect();
+                for id in ids {
+                    themes
+                        .entry(id.into())
+                        .or_default()
+                        .push(format!("{scope}:{name}"));
+                }
+            }
+        }
+        match events::transit_range(&bounds, &options, &targets, &themes) {
+            Ok(range) => result["data"]["transitRange"] = range,
+            Err(e) => return error_json("CALCULATION_FAILED", &e),
+        }
+    }
     if r.include_metadata {
         result["calculation"]["operation"] = json!("forecast");
     }
