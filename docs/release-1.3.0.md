@@ -24,3 +24,9 @@ Mars enters this 8° trine window on 2 December 2026 at 04:23 UTC, reaches exact
 - `groups` are connected components of overlapping windows, clipped to the requested period. Endpoints that coincide count as contact. A chain A–B–C can form one group even when A and C do not coincide. Each group returns member window IDs and `themeEvidence`, mapping selected built-in/custom profile IDs to the windows whose fixed targets are in that profile's selected natal points or houses. Use the member windows' actual entry/exit times to show which transits are active at a particular instant. Window IDs are references within a response. Numerical search budgets return an error rather than a partial calculation.
 
 The SDK supplies geometry and evidence. Applications choose the period, bodies, aspects, domains and presentation.
+
+## Public release verification
+
+On 28 November 2026, the public 1.3.0 packages from [npm](https://www.npmjs.com/package/@7mlabs/astrology/v/1.3.0), [PyPI](https://pypi.org/project/sevenmlabs-astrology/1.3.0/) and [NuGet](https://www.nuget.org/packages/SevenMLabs.Astrology/1.3.0) produced identical JSON for the integration example on macOS arm64. Python installed the wheel in a fresh virtual environment. The .NET project restored the exact version from nuget.org into an empty package directory. The NuGet package contents matched the release artifact, with the repository signature added by NuGet.
+
+The [tagged release and checksums](https://github.com/7mLabs/sdk-astro/releases/tag/v1.3.0), [release build](https://github.com/7mLabs/sdk-astro/actions/runs/45944692418) and [PyPI publication](https://github.com/7mLabs/sdk-astro/actions/runs/46106381512) are public.
