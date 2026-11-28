@@ -1,0 +1,72 @@
+{
+  "latex": {
+    "pages": 11,
+    "expectedTextUnits": 289,
+    "orderedAllTextUnitsFound": true,
+    "failed": [],
+    "gaps": [
+      {
+        "beforeUnit": 36,
+        "text": "D(E(x))≡xvớimọix∈X.(1)"
+      },
+      {
+        "beforeUnit": 38,
+        "text": "x≡D(E(x))=D(E(y))≡y.(2)"
+      },
+      {
+        "beforeUnit": 44,
+        "text": "∆B=B−C,R=100B−CB=100(1−CB).(3)"
+      },
+      {
+        "beforeUnit": 48,
+        "text": "Rtổng=100∑ni=1(Bi−Ci)∑ni=1Bi=n∑i=1wiRi,wi=Bi∑nj=1Bj.(4)"
+      },
+      {
+        "beforeUnit": 49,
+        "text": "n∑i=1wiRi=n∑i=1Bi∑nj=1Bj100Bi−CiBi=100∑ni=1(Bi−Ci)∑nj=1Bj.(5)"
+      },
+      {
+        "beforeUnit": 54,
+        "text": "δ=|a−b|mod360◦,d(a,b)=min(δ,360◦−δ).(6)"
+      }
+    ]
+  },
+  "word_render": {
+    "pages": 12,
+    "expectedTextUnits": 289,
+    "orderedAllTextUnitsFound": true,
+    "failed": [],
+    "gaps": [
+      {
+        "beforeUnit": 36,
+        "text": "D(E(x))≡xvớimọix∈X.(1)"
+      },
+      {
+        "beforeUnit": 38,
+        "text": "x≡D(E(x))=D(E(y))≡y.(2)"
+      },
+      {
+        "beforeUnit": 44,
+        "text": "ΔB=B−C,R=100×B−CB=100×(1−CB).(3)"
+      },
+      {
+        "beforeUnit": 48,
+        "text": "Rtổng=100×∑i=1n(Bi−Ci)∑i=1nBi=∑i=1nwiRi,wi=Bi∑j=1nBj.(4)"
+      },
+      {
+        "beforeUnit": 49,
+        "text": "∑i=1nwiRi=∑i=1nBi∑j=1nBj×100×Bi−CiBi=100×∑i=1n(Bi−Ci)∑j=1nBj.(5)"
+      },
+      {
+        "beforeUnit": 54,
+        "text": "δ=|a−b|mod360°,d(a,b)=min(δ,360°−δ).(6)"
+      }
+    ]
+  },
+  "officeMathCount": 6,
+  "sha256": {
+    "Paper Astro SDK 7MLabs.pdf": "7998d614c0695889ec210aa1964090fc3cf70f6d5b648a52d9d1ce5bc14fe450",
+    "Paper Astro SDK 7MLabs.docx": "a11e33443c1ea7dd6b5d61423cd634d73d4fc869bd194212d3ce31135df8e190",
+    "latex/main.tex": "fb7c46526e32a2dfb81db49f687858d64edc307608c013f60774da8888dd072d"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "scope": "Kiểm tra phép tính minh họa; không thay chứng minh hoặc kiểm thử sản phẩm",
+  "totalSourceBytes": 20014085,
+  "totalContextBytes": 11554591,
+  "reductionPercent": "42.26770297018324844728100235",
+  "weightedReductionPercent": "42.26770297018324844728100237",
+  "remainingPercent": "57.73229702981675155271899765",
+  "arcExamples": [
+    [
+      "359",
+      "1",
+      "2"
+    ],
+    [
+      "0",
+      "360",
+      "0"
+    ],
+    [
+      "0",
+      "180",
+      "180"
+    ],
+    [
+      "-1",
+      "1",
+      "2"
+    ]
+  ],
+  "arcsecondsFromRoundedReportedDegrees": "0.4367462400",
+  "counterexampleUnweightedMean": 25,
+  "counterexampleWeightedTotal": 45
+}
